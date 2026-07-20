@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schemas/imp8-test-plan.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "objectKind", "testPlanId", "status", "targetTankProfileId", "candidateBinding", "frozenSource", "thresholds", "mandatoryGates", "createdAt", "fingerprint"],
+  "properties": {
+    "schemaVersion": { "const": 1 }, "objectKind": { "const": "CANDIDATE_TEST_PLAN" },
+    "testPlanId": { "type": "string" }, "status": { "enum": ["READY", "BLOCKED"] },
+    "targetTankProfileId": { "const": "v2" },
+    "candidateBinding": { "enum": ["BEFORE_CANDIDATE_FREEZE"] },
+    "frozenSource": {
+      "type": "object", "additionalProperties": false,
+      "required": ["legacyCorpusVersion", "assignmentFingerprint", "expectedMatchCount", "matchUrlIds", "assignmentAvailable"],
+      "properties": {
+        "legacyCorpusVersion": { "type": "string" }, "assignmentFingerprint": { "$ref": "#/$defs/hash" },
+        "expectedMatchCount": { "type": "integer", "minimum": 1 },
+        "matchUrlIds": { "type": "array", "items": { "type": "string", "pattern": "^mat_" }, "uniqueItems": true },
+        "assignmentAvailable": { "type": "boolean" }
+      }
+    },
+    "thresholds": {
+      "type": "object", "additionalProperties": false,
+      "required": ["terminalMismatchMax", "hardFalsePositiveMax", "proofFalsePositiveMax", "rootRestoreFailureMax", "runtimeFailureMax", "positiveWindowRegressionMax", "sourceMinifiedMismatchMax"],
+      "properties": {
+        "terminalMismatchMax": { "const": 0 }, "hardFalsePositiveMax": { "const": 0 },
+        "proofFalsePositiveMax": { "const": 0 }, "rootRestoreFailureMax": { "const": 0 },
+        "runtimeFailureMax": { "const": 0 }, "positiveWindowRegressionMax": { "const": 0 },
+        "sourceMinifiedMismatchMax": { "const": 0 }
+      }
+    },
+    "mandatoryGates": { "type": "array", "minItems": 11, "items": { "type": "string" }, "uniqueItems": true },
+    "createdAt": { "type": "string", "format": "date-time" }, "fingerprint": { "$ref": "#/$defs/hash" }
+  },
+  "$defs": { "hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" } }
+}

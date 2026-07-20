@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schemas/imp8-gate-report.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "reportId", "status", "checks", "artifacts", "blockers", "externalBlockers", "fingerprint"],
+  "properties": {
+    "schemaVersion": { "const": 1 }, "reportId": { "const": "imp8-calibration-candidate-preflight-gate-v1" },
+    "status": { "enum": ["PASS", "FAIL", "BLOCKED"] },
+    "checks": { "type": "array", "minItems": 8, "items": { "type": "object", "additionalProperties": false,
+      "required": ["checkId", "status", "evidence"], "properties": { "checkId": { "type": "string" },
+        "status": { "enum": ["PASS", "FAIL", "BLOCKED"] }, "evidence": { "type": "object" } } } },
+    "artifacts": { "type": "array", "items": { "type": "object", "additionalProperties": false,
+      "required": ["artifactId", "relativePath", "sha256"], "properties": { "artifactId": { "type": "string" },
+        "relativePath": { "type": "string" }, "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" } } } },
+    "blockers": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "externalBlockers": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

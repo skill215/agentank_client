@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fast-regression-run-manifest",
+  "type": "object",
+  "required": ["schemaVersion", "artifactKind", "runId", "properties", "completion", "descriptor", "artifacts", "summary", "fingerprint"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "artifactKind": { "const": "BATTLE_EVIDENCE_RUN" },
+    "runId": { "type": "string", "pattern": "^run-[a-f0-9]{64}$" },
+    "completion": { "enum": ["COMPLETE", "PARTIAL"] },
+    "properties": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "descriptor": { "type": "object" },
+    "artifacts": { "type": "object", "required": ["matches", "step-traces", "decision-traces", "replay-events", "selected-windows"] },
+    "summary": { "type": "object" },
+    "fingerprint": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  },
+  "additionalProperties": true
+}

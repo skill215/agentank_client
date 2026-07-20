@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "registryId": "agentank-local-profiles-v1",
+  "profiles": [
+    {
+      "tankProfileId": "v2",
+      "alias": "minimax-v2",
+      "status": "BOOTSTRAP",
+      "tankId": null,
+      "tankUrlId": null,
+      "ownerScopeId": "agentank-primary-owner",
+      "secretRef": {
+        "provider": "ENV",
+        "name": "AGENTANK_KEY_V2",
+        "keyGenerationId": "initial"
+      },
+      "skillId": "UNKNOWN",
+      "skillProvenance": "UNKNOWN",
+      "branches": [
+        {
+          "branch": "main",
+          "publishedVersion": null,
+          "publishedCodeHash": null,
+          "baselineStatus": "UNKNOWN",
+          "contextArtifactId": null
+        }
+      ],
+      "createdAt": "2026-07-16T00:00:00.000Z",
+      "updatedAt": "2026-07-16T00:00:00.000Z",
+      "lastVerifiedAt": null
+    }
+  ],
+  "updatedAt": "2026-07-16T00:00:00.000Z",
+  "fingerprint": "dd757676d718ee3be7023600d5e5fc831cfb03b9cd7a7d4a9a65007b051033ce"
+}

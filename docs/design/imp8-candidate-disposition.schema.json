@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schemas/imp8-candidate-disposition.schema.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["schemaVersion", "objectKind", "status", "candidateId", "candidateFingerprint", "reason", "gate", "rejectedAt", "fingerprint"],
+  "properties": {
+    "schemaVersion": { "const": 1 }, "objectKind": { "const": "IMP8_CANDIDATE_DISPOSITION" },
+    "status": { "const": "REJECTED" },
+    "candidateId": { "type": "string" }, "candidateFingerprint": { "$ref": "#/$defs/hash" },
+    "reason": { "const": "IMP8_GATE_FAILED" },
+    "gate": { "type": "object", "required": ["relativePath", "sha256", "fingerprint", "status", "failedCheckIds"] },
+    "rejectedAt": { "type": "string", "format": "date-time" },
+    "fingerprint": { "$ref": "#/$defs/hash" }
+  },
+  "$defs": { "hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" } }
+}

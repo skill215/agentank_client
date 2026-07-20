@@ -1,0 +1,62 @@
+{
+  "manifestSchemaVersion": 1,
+  "prototypeVersion": "DD3-AVP-1",
+  "profiles": [
+    {
+      "id": "corpus_max_observed",
+      "sourceKind": "CORPUS_OBSERVED_LOWER_BOUND",
+      "mapWidth": 22,
+      "mapHeight": 20,
+      "tanks": 2,
+      "projectiles": 3,
+      "bombs": 2,
+      "effectsPerTank": 2,
+      "worlds": 64,
+      "exactWorldPrefix": 32,
+      "residualFactors": 6,
+      "enemyInformationSets": 8,
+      "ourActions": 8,
+      "enemyPolicyColumns": 8,
+      "chanceOutcomes": 3,
+      "decisionDepth": 4,
+      "eventsPerTransition": 32,
+      "deltasPerTransition": 48,
+      "cacheEntries": 1024,
+      "notes": "22x20, 3 projectile, 2 bomb and 13 observed events are corpus lower bounds; safety capacities are deliberately larger than the observations."
+    },
+    {
+      "id": "conservative_build",
+      "sourceKind": "BUILD_CONFIGURED",
+      "mapWidth": 32,
+      "mapHeight": 32,
+      "tanks": 2,
+      "projectiles": 8,
+      "bombs": 4,
+      "effectsPerTank": 4,
+      "worlds": 128,
+      "exactWorldPrefix": 48,
+      "residualFactors": 8,
+      "enemyInformationSets": 16,
+      "ourActions": 12,
+      "enemyPolicyColumns": 12,
+      "chanceOutcomes": 4,
+      "decisionDepth": 6,
+      "eventsPerTransition": 64,
+      "deltasPerTransition": 96,
+      "cacheEntries": 4096,
+      "notes": "A conservative DD3 workload, not a confirmed platform maximum. Unknown platform limits remain blocking inputs for DD8 production sizing."
+    }
+  ],
+  "faultInjection": {
+    "mode": "REQUIRED_MINUS_ONE",
+    "classes": [
+      "FACT_CRITICAL",
+      "SUPPORT_CRITICAL",
+      "SEARCH_QUALITY",
+      "CACHE_ONLY",
+      "OUTPUT_CRITICAL",
+      "EVENT_CAPACITY",
+      "DELTA_CAPACITY"
+    ]
+  }
+}

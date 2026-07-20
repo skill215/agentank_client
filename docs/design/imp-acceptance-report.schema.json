@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schema/imp-acceptance-report-v1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "acceptanceContractVersion", "acceptanceContractSha256", "stageId", "status", "previousStageAcceptanceFingerprint", "sourceGate", "criteria", "evidenceArtifacts", "blockers", "fingerprint"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "acceptanceContractVersion": { "const": "IMP-ACCEPTANCE-V1" },
+    "acceptanceContractSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "stageId": { "enum": ["IMP0", "IMP1", "IMP2", "IMP3", "IMP4", "IMP5", "IMP6", "IMP7", "IMP8", "IMP9", "IMP10"] },
+    "status": { "enum": ["NOT_RUN", "BLOCKED", "REJECTED", "ACCEPTED"] },
+    "previousStageAcceptanceFingerprint": {
+      "anyOf": [
+        { "type": "null" },
+        { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      ]
+    },
+    "sourceGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relativePath", "sha256", "fingerprint"],
+      "properties": {
+        "relativePath": { "type": "string", "minLength": 1 },
+        "sha256": { "anyOf": [{ "type": "string", "pattern": "^[a-f0-9]{64}$" }, { "type": "null" }] },
+        "fingerprint": { "anyOf": [{ "type": "string", "pattern": "^[a-f0-9]{64}$" }, { "type": "null" }] }
+      }
+    },
+    "criteria": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["criterionId", "status", "evidence"],
+        "properties": {
+          "criterionId": { "type": "string", "pattern": "^A(?:10|[0-9])-[0-9]{2}$" },
+          "status": { "enum": ["PASS", "FAIL", "BLOCKED", "NOT_APPLICABLE"] },
+          "evidence": { "type": "object" }
+        }
+      }
+    },
+    "evidenceArtifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["artifactId", "relativePath", "sha256"],
+        "properties": {
+          "artifactId": { "type": "string", "minLength": 1 },
+          "relativePath": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        }
+      }
+    },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "fingerprint": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schemas/dd10-corpus.schema.json",
+  "title": "AgenTank Rolling Corpus Artifacts",
+  "oneOf": [
+    { "$ref": "#/$defs/matchLedgerEntry" },
+    { "$ref": "#/$defs/corpusPolicy" },
+    { "$ref": "#/$defs/corpusHead" },
+    { "$ref": "#/$defs/corpusSnapshot" },
+    { "$ref": "#/$defs/cohortAssignment" },
+    { "$ref": "#/$defs/forwardBatch" }
+  ],
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "idOrNull": { "type": ["string", "null"] },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tankId", "codeHash", "codeVersion", "seat"],
+      "properties": {
+        "tankId": { "type": "integer", "minimum": 0 },
+        "codeHash": { "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+        "codeVersion": { "type": ["integer", "null"], "minimum": 0 },
+        "seat": { "enum": [0, 1] }
+      }
+    },
+    "skillEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skillId", "provenance", "evidenceArtifactIds"],
+      "properties": {
+        "skillId": { "enum": ["shield", "freeze", "stun", "overload", "cloak", "poison", "teleport", "boost", "UNKNOWN"] },
+        "provenance": { "enum": ["PUBLIC_INPUT_CAPTURE", "BUILD_MANIFEST", "OBSERVED_CAST", "SAME_TANK_INFERRED", "UNKNOWN"] },
+        "evidenceArtifactIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "inferredFromMatchUrlIds": { "type": "array", "items": { "type": "string", "pattern": "^mat_" }, "uniqueItems": true }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relativePath", "bytes", "sha256", "schemaStatus"],
+      "properties": {
+        "relativePath": { "type": "string", "minLength": 1 },
+        "bytes": { "type": "integer", "minimum": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "schemaStatus": { "enum": ["VALID", "LEGACY_VALID", "INVALID", "CONFLICT"] },
+        "downloadedAt": { "type": ["string", "null"], "format": "date-time" }
+      }
+    },
+    "terminal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resultReasonRaw", "terminalClass", "winnerSeat", "recordCount", "stars", "runtimeMs"],
+      "properties": {
+        "resultReasonRaw": { "type": ["string", "null"] },
+        "terminalClass": { "enum": ["SINGLE_CRASH", "MUTUAL_CRASH_STAR", "MUTUAL_CRASH_RUNTIME", "FRAME_LIMIT_STAR", "FRAME_LIMIT_RUNTIME", "RUNTIME_TIMEOUT", "SCRIPT_ERROR", "EXACT_DRAW", "TERMINAL_INCOMPLETE"] },
+        "winnerSeat": { "enum": [0, 1, null] },
+        "recordCount": { "type": "integer", "minimum": 0 },
+        "stars": {
+          "type": "array",
+          "items": { "type": ["integer", "null"], "minimum": 0 },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "runtimeMs": {
+          "type": "array",
+          "items": { "type": ["integer", "null"], "minimum": 0 },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "recordedMatch": { "type": "boolean" },
+        "scoreEligibility": { "enum": ["ELIGIBLE", "INELIGIBLE_FIXED_MAP_REPEAT", "INELIGIBLE_STREAK_LIMIT", "INELIGIBLE_RANK_RULE", "UNKNOWN", null] },
+        "standingDelta": { "type": ["integer", "null"] }
+      }
+    },
+    "matchLedgerEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "objectKind", "ledgerSequence", "matchUrlId", "platformNumericId", "replayHash", "createdAt", "settledAt", "ingestionAt", "subjectTankProfileId", "subject", "opponent", "mapId", "mapHash", "terminal", "ownSkill", "enemySkill", "artifacts", "sourceBatchId", "firstSeenRunId", "cohortRole", "cohortId", "forwardBatchId", "entrySha256"],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "objectKind": { "const": "MATCH_LEDGER_ENTRY" },
+        "ledgerSequence": { "type": "integer", "minimum": 1 },
+        "matchUrlId": { "type": "string", "pattern": "^mat_" },
+        "platformNumericId": { "type": ["integer", "null"], "minimum": 0 },
+        "replayHash": { "$ref": "#/$defs/sha256" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "settledAt": { "type": ["string", "null"], "format": "date-time" },
+        "ingestionAt": { "type": "string", "format": "date-time" },
+        "subjectTankProfileId": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+        "subject": { "$ref": "#/$defs/actor" },
+        "opponent": { "$ref": "#/$defs/actor" },
+        "mapId": { "type": "string", "minLength": 1 },
+        "mapHash": { "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+        "terminal": { "$ref": "#/$defs/terminal" },
+        "ownSkill": { "$ref": "#/$defs/skillEvidence" },
+        "enemySkill": { "$ref": "#/$defs/skillEvidence" },
+        "artifacts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["summary", "events", "raw"],
+          "properties": {
+            "summary": { "$ref": "#/$defs/artifact" },
+            "events": { "$ref": "#/$defs/artifact" },
+            "raw": { "$ref": "#/$defs/artifact" }
+          }
+        },
+        "sourceBatchId": { "type": "string", "minLength": 1 },
+        "firstSeenRunId": { "type": "string", "minLength": 1 },
+        "legacySourcePaths": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "cohortRole": { "enum": ["DISCOVERY", "DISCOVERY_APPEND", "CALIBRATION", "FROZEN_REGRESSION", "FORWARD_VALIDATION", "INFRASTRUCTURE_ONLY", null] },
+        "cohortId": { "$ref": "#/$defs/idOrNull" },
+        "forwardBatchId": { "$ref": "#/$defs/idOrNull" },
+        "entrySha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "corpusPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "objectKind", "policyId", "algorithmId", "sessionGapMs", "allowedLatenessMs", "closeRequiresCompleteSync", "saltId", "roleAssignmentId", "createdAt", "fingerprint"],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "objectKind": { "const": "CORPUS_POLICY" },
+        "policyId": { "type": "string", "minLength": 1 },
+        "algorithmId": { "const": "APPEND_STABLE_SESSION_V1" },
+        "sessionGapMs": { "type": "integer", "minimum": 1 },
+        "allowedLatenessMs": { "type": "integer", "minimum": 1 },
+        "closeRequiresCompleteSync": { "const": true },
+        "saltId": { "type": "string", "minLength": 1 },
+        "roleAssignmentId": { "type": "string", "minLength": 1 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "fingerprint": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "corpusHead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "objectKind", "headId", "ledgerWatermark", "uniqueMatchCount", "artifactRoot", "latestCreatedAt", "generatedAt", "policyFingerprint", "previousHeadSha256", "fingerprint"],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "objectKind": { "const": "CORPUS_HEAD" },
+        "headId": { "type": "string", "minLength": 1 },
+        "ledgerWatermark": { "type": "integer", "minimum": 0 },
+        "uniqueMatchCount": { "type": "integer", "minimum": 0 },
+        "artifactRoot": { "$ref": "#/$defs/sha256" },
+        "latestCreatedAt": { "type": ["string", "null"], "format": "date-time" },
+        "generatedAt": { "type": "string", "format": "date-time" },
+        "policyFingerprint": { "$ref": "#/$defs/sha256" },
+        "previousHeadSha256": { "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+        "fingerprint": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "corpusSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "objectKind", "snapshotId", "headId", "ledgerWatermark", "subjectTankProfileIds", "matchUrlIds", "matchSetRoot", "artifactRoot", "schemaVersions", "purpose", "createdAt", "policyFingerprint", "fingerprint"],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "objectKind": { "const": "CORPUS_SNAPSHOT" },
+        "snapshotId": { "type": "string", "minLength": 1 },
+        "headId": { "type": "string", "minLength": 1 },
+        "ledgerWatermark": { "type": "integer", "minimum": 0 },
+        "subjectTankProfileIds": { "type": "array", "items": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" }, "minItems": 1, "uniqueItems": true },
+        "matchUrlIds": { "type": "array", "items": { "type": "string", "pattern": "^mat_" }, "uniqueItems": true },
+        "matchSetRoot": { "$ref": "#/$defs/sha256" },
+        "artifactRoot": { "$ref": "#/$defs/sha256" },
+        "schemaVersions": { "type": "object", "additionalProperties": { "type": "string" } },
+        "purpose": { "enum": ["DISCOVERY", "CALIBRATION", "FROZEN_REGRESSION", "FORWARD_VALIDATION", "RULE_EVIDENCE", "RELEASE_CANDIDATE"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "policyFingerprint": { "$ref": "#/$defs/sha256" },
+        "fingerprint": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "cohortAssignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "objectKind", "cohortId", "sessionId", "policyFingerprint", "matchUrlIds", "role", "closedAt", "relatedClosedCohortIds", "fingerprint"],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "objectKind": { "const": "COHORT_ASSIGNMENT" },
+        "cohortId": { "type": "string", "minLength": 1 },
+        "sessionId": { "type": "string", "minLength": 1 },
+        "policyFingerprint": { "$ref": "#/$defs/sha256" },
+        "matchUrlIds": { "type": "array", "items": { "type": "string", "pattern": "^mat_" }, "minItems": 1, "uniqueItems": true },
+        "role": { "enum": ["DISCOVERY", "DISCOVERY_APPEND", "CALIBRATION", "FROZEN_REGRESSION", "FORWARD_VALIDATION"] },
+        "closedAt": { "type": "string", "format": "date-time" },
+        "relatedClosedCohortIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "fingerprint": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "forwardBatch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "objectKind", "forwardBatchId", "tankProfileId", "tankId", "candidateId", "publishArtifactSha256", "profileHashes", "registeredAt", "collectionNotBefore", "startLedgerWatermark", "challengePlanSha256", "targetCount", "stoppingRule", "status", "matchUrlIds", "fingerprint"],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "objectKind": { "const": "FORWARD_BATCH" },
+        "forwardBatchId": { "type": "string", "minLength": 1 },
+        "tankProfileId": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+        "tankId": { "type": "integer", "minimum": 0 },
+        "candidateId": { "type": "string", "pattern": "^cand_" },
+        "publishArtifactSha256": { "$ref": "#/$defs/sha256" },
+        "profileHashes": { "type": "object", "minProperties": 1, "additionalProperties": { "$ref": "#/$defs/sha256" } },
+        "registeredAt": { "type": "string", "format": "date-time" },
+        "collectionNotBefore": { "type": "string", "format": "date-time" },
+        "startLedgerWatermark": { "type": "integer", "minimum": 0 },
+        "challengePlanSha256": { "$ref": "#/$defs/sha256" },
+        "targetCount": { "type": ["integer", "null"], "minimum": 1 },
+        "stoppingRule": { "type": ["string", "null"] },
+        "status": { "enum": ["REGISTERED", "COLLECTING", "CLOSED", "PASSED", "FAILED", "ABORTED"] },
+        "matchUrlIds": { "type": "array", "items": { "type": "string", "pattern": "^mat_" }, "uniqueItems": true },
+        "closedAt": { "type": ["string", "null"], "format": "date-time" },
+        "fingerprint": { "$ref": "#/$defs/sha256" }
+      },
+      "anyOf": [
+        { "properties": { "targetCount": { "type": "integer", "minimum": 1 } } },
+        { "properties": { "stoppingRule": { "type": "string", "minLength": 1 } } }
+      ]
+    }
+  }
+}

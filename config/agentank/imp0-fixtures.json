@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "fixtureSetId": "imp0-harness-v1",
+  "fixtures": [
+    {
+      "fixtureId": "IMP0-DETERMINISM",
+      "relativePath": "engine-v2/test/fixture/imp0/determinism.json"
+    }
+  ]
+}

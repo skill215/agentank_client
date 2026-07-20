@@ -1,0 +1,37 @@
+{
+  "manifestSchemaVersion": 1,
+  "profileId": "IMP5_INTEGER_POLICY_V1",
+  "sourceKind": "BUILD_CONFIGURED",
+  "policyAbiRevision": 1,
+  "limits": {
+    "maxFeatures": 32,
+    "featureCount": 21,
+    "inputCount": 21,
+    "profileCount": 5,
+    "actionFamilyCount": 6,
+    "strategyCount": 5,
+    "opponentEventCount": 10,
+    "opponentContextCount": 4,
+    "riskDimensionCount": 7,
+    "maxPlanSketches": 32,
+    "maxPersistentPlans": 8,
+    "maxPlanEntities": 4,
+    "maxHiddenCells": 1024
+  },
+  "integerScales": {
+    "probability": 10000,
+    "rawFeature": 10000,
+    "weight": 100,
+    "risk": 100
+  },
+  "strategy": {
+    "switchMargin": 400,
+    "minimumDwellRoots": 3
+  },
+  "opponent": {
+    "fastAlpha": 3500,
+    "slowAlpha": 800,
+    "prior": 5000
+  },
+  "notes": "IMP5 cache-off integer policy profile. Thresholds and weights are build configured correctness values, not calibrated production parameters."
+}

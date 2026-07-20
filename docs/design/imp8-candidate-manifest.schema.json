@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schemas/imp8-candidate-manifest.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "objectKind", "status", "candidateId", "target", "selection", "parameters", "parameterProvenance", "build", "testPlan", "discoveryRegression", "frozenAt", "fingerprint"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "objectKind": { "const": "IMP8_CANDIDATE_MANIFEST" },
+    "status": { "const": "FROZEN" },
+    "candidateId": { "type": "string", "pattern": "^imp8-v2-[a-f0-9]{16}$" },
+    "target": {
+      "type": "object", "additionalProperties": false,
+      "required": ["tankProfileId", "tankId", "tankUrlId", "skillId", "branch"],
+      "properties": {
+        "tankProfileId": { "const": "v2" }, "tankId": { "const": 7214 },
+        "tankUrlId": { "const": "tnk_AguYVXrZXBsFiBGEB" }, "skillId": { "const": "poison" },
+        "branch": { "const": "main" }
+      }
+    },
+    "selection": { "type": "object", "required": ["status", "candidateProfileId", "comparisonFingerprint", "comparisonSha256", "planRelativePath", "planSha256", "fullCalibrationRun", "v1SourceChangedDuringRun"] },
+    "parameters": { "type": "object", "required": ["cacheConfig", "runtimeConfig", "searchBudget", "tacticalConfig"] },
+    "parameterProvenance": { "type": "array", "minItems": 7, "maxItems": 7, "items": { "type": "object", "required": ["dimension", "status", "evidenceRefs"] } },
+    "build": { "type": "object", "required": ["status", "sourceRelativePath", "sourceSha256", "sourceBytes", "minifiedRelativePath", "minifiedSha256", "minifiedBytes", "buildManifestRelativePath", "buildManifestFingerprint", "buildManifestSha256", "reproducible"] },
+    "testPlan": { "type": "object", "required": ["relativePath", "fingerprint", "sha256"] },
+    "discoveryRegression": { "type": "object", "required": ["lane", "status", "relativePath", "fingerprint", "sha256", "membershipCount"] },
+    "frozenAt": { "type": "string", "format": "date-time" },
+    "fingerprint": { "$ref": "#/$defs/hash" }
+  },
+  "$defs": { "hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" } }
+}

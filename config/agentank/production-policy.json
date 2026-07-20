@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "policyId": "engine-v2-production-boundary-v1",
+  "allowedRoots": [
+    "engine-v2/src/abi",
+    "engine-v2/src/state",
+    "engine-v2/src/rules",
+    "engine-v2/src/fast",
+    "engine-v2/src/search",
+    "engine-v2/src/policy",
+    "engine-v2/src/cache",
+    "engine-v2/src/runtime",
+    "engine-v2/src/generated"
+  ],
+  "deniedRoots": [
+    "engine-v2/src/reference",
+    "engine-v2/test",
+    "engine-v2/bench",
+    "tools",
+    "battle-records"
+  ],
+  "forbiddenPatterns": [
+    { "patternId": "DEV_CONSOLE", "source": "\\bconsole\\s*\\." },
+    { "patternId": "REFERENCE_KERNEL", "source": "\\bReferenceKernel\\b" },
+    { "patternId": "EXTERNAL_SIMULATOR", "source": "\\bExternalSimulator" },
+    { "patternId": "DYNAMIC_EVAL", "source": "\\beval\\s*\\(|\\bnew\\s+Function\\b|\\bimport\\s*\\(" },
+    { "patternId": "ASYNC_RUNTIME", "source": "\\bWorker\\b|\\bSharedArrayBuffer\\b|\\bAtomics\\b|\\bPromise\\b|\\basync\\b" },
+    { "patternId": "RANDOMNESS", "source": "\\bMath\\.random\\b" },
+    { "patternId": "FLOAT_SEMANTIC_ARRAY", "source": "\\bFloat(?:32|64)Array\\b" },
+    { "patternId": "IO_OR_NETWORK", "source": "\\bfetch\\s*\\(|\\bXMLHttpRequest\\b|\\b(?:node:)?(?:fs|http|https|net|dgram)\\b" },
+    { "patternId": "PLATFORM_UNAVAILABLE_IMUL", "source": "\\bMath\\.imul\\b" }
+  ]
+}

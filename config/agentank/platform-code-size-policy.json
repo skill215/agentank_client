@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "policyId": "agentank-code-size-utf8-v1",
+  "measurement": "UTF8_BYTES",
+  "maximumCodeBytes": 204800,
+  "warningCodeBytes": 190000,
+  "appliesTo": ["simulate", "publish"],
+  "evidence": {
+    "officialGuideUrl": "https://agentank.ai/agent-guide",
+    "officialGuideExactLimitDocumented": false,
+    "frameworkCommit": "b676a7f3b58a3d462635171c73632c00feeafab6",
+    "frameworkReadmeUrl": "https://github.com/mythchen-1024/agentank-framework/blob/b676a7f3b58a3d462635171c73632c00feeafab6/README.md#%E4%BB%A3%E7%A0%81%E5%8E%8B%E7%BC%A9",
+    "frameworkPublisherUrl": "https://github.com/mythchen-1024/agentank-framework/blob/b676a7f3b58a3d462635171c73632c00feeafab6/publish-new.py#L27-L33",
+    "localPublishedLowerBoundBytes": 166598,
+    "localRejectedUpperObservationBytes": 206690
+  },
+  "notes": "Operational fail-closed limit. The official Agent Guide does not publish an exact number; the pinned framework defines 200 KiB UTF-8 and warns at 190,000 bytes, consistent with local V1 publish history. Both candidate simulation and publish are constrained locally so an oversized Candidate cannot enter official workflows."
+}

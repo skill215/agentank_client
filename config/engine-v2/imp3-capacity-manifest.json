@@ -1,0 +1,40 @@
+{
+  "manifestSchemaVersion": 1,
+  "profileId": "IMP3_CONSERVATIVE_BUILD_V1",
+  "sourceKind": "BUILD_CONFIGURED",
+  "physicalAbiRevision": 1,
+  "limits": {
+    "maxMapWidth": 32,
+    "maxMapHeight": 32,
+    "maxCells": 1024,
+    "maxTanks": 2,
+    "maxProjectiles": 8,
+    "maxBombs": 4,
+    "maxEffectsPerTank": 8,
+    "maxEventsPerTransition": 64,
+    "maxDeltasPerTransition": 96,
+    "maxActiveTransitions": 6,
+    "maxHazardFrames": 128,
+    "maxActionPrograms": 16
+  },
+  "capacityClasses": {
+    "terrain": "FACT_CRITICAL",
+    "tanks": "FACT_CRITICAL",
+    "projectiles": "FACT_CRITICAL",
+    "bombs": "FACT_CRITICAL",
+    "events": "OUTPUT_CRITICAL",
+    "deltas": "FACT_CRITICAL",
+    "hazardTimeline": "FACT_CRITICAL",
+    "worldSupport": "SUPPORT_CRITICAL",
+    "actions": "SEARCH_QUALITY",
+    "optionalCache": "CACHE_ONLY"
+  },
+  "overflow": {
+    "entity": "FAST_INCOMPLETE_ENTITY_CAPACITY",
+    "event": "FAST_INCOMPLETE_EVENT_CAPACITY",
+    "delta": "FAST_INCOMPLETE_DELTA_CAPACITY",
+    "hazard": "HARD_INCOMPLETE",
+    "actions": "INCOMPLETE_ACTION_SUPPORT"
+  },
+  "notes": "IMP3 correctness profile. These build-configured values are not platform maxima and remain release-blocking until IMP6 benchmark selection."
+}

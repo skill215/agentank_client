@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schemas/dd10-platform-capability.schema.json",
+  "title": "AgenTank Platform Capability Profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "profileId", "branch", "guideSnapshotSha256", "generatedAt", "facts", "limits", "apiBehaviors", "fingerprint"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "profileId": { "type": "string", "minLength": 1 },
+    "branch": { "enum": ["main", "raid", "multiplayer"] },
+    "engineId": { "type": ["string", "null"] },
+    "guideSnapshotSha256": { "$ref": "#/$defs/sha256" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "evidenceSnapshotIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "evidenceTankProfileIds": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+      "uniqueItems": true
+    },
+    "facts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/fact" },
+      "minItems": 1
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceBytesMax", "publishBytesMax", "coldInitP99Ms", "callbackP99Ms", "wholeMatchRuntimeMs", "mutationRateLimitMs"],
+      "properties": {
+        "sourceBytesMax": { "$ref": "#/$defs/measurement" },
+        "publishBytesMax": { "$ref": "#/$defs/measurement" },
+        "coldInitP99Ms": { "$ref": "#/$defs/measurement" },
+        "callbackP99Ms": { "$ref": "#/$defs/measurement" },
+        "callbackWatchdogMs": { "$ref": "#/$defs/measurement" },
+        "wholeMatchRuntimeMs": { "$ref": "#/$defs/measurement" },
+        "mutationRateLimitMs": { "$ref": "#/$defs/measurement" }
+      }
+    },
+    "apiBehaviors": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/fact" }
+    },
+    "publishedCodeHashNormalizationId": { "type": ["string", "null"] },
+    "fingerprint": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "status", "evidenceLevel", "evidenceArtifactIds"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["PRESENT", "ABSENT", "SUPPORTED", "UNSUPPORTED", "UNKNOWN"] },
+        "evidenceLevel": { "enum": ["OFFICIAL_UPDATE_CONFIRMED", "GUIDE_CONFIRMED", "PLATFORM_REPLAY_CONFIRMED", "PLATFORM_SIMULATION_CONFIRMED", "INFERRED", "UNKNOWN"] },
+        "evidenceArtifactIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "notes": { "type": ["string", "null"] }
+      }
+    },
+    "measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "value", "source", "evidenceArtifactIds"],
+      "properties": {
+        "status": { "enum": ["CONFIRMED", "BENCHMARK_SELECTED", "LOWER_BOUND", "UPPER_BOUND", "UNKNOWN"] },
+        "value": { "type": ["integer", "null"], "minimum": 0 },
+        "source": { "type": "string", "minLength": 1 },
+        "evidenceArtifactIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    }
+  }
+}

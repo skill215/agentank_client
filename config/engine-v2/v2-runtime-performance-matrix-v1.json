@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "planId": "V2_RUNTIME_FALLBACK_MATRIX_V1",
+  "evidenceLane": "CALIBRATION",
+  "role": "CALIBRATION",
+  "scenarioLimit": 16,
+  "arenaRepetitions": 1,
+  "contextRepetitions": 2,
+  "timeoutMs": 200,
+  "contextVariantIds": ["NATIVE_V1_SEAT0", "NATIVE_V2_SEAT0"],
+  "selection": {
+    "requireTotalRuntimeBelowV1": true,
+    "requireP95DecisionBelowV1": true,
+    "maximumNativeWinRegressionFromBaseline": 2,
+    "priority": ["NATIVE_WINS", "TOTAL_RUNTIME", "P95_DECISION"]
+  },
+  "profiles": [
+    {
+      "profileId": "CURRENT_24K_D2",
+      "runtimeConfig": {
+        "DEGRADED_ENTER_WORK_UNITS": 12000,
+        "FALLBACK_ENTER_WORK_UNITS": 24000,
+        "EMERGENCY_ENTER_WORK_UNITS": 48000,
+        "DEGRADED_ENTER_FRAME": 65535,
+        "FALLBACK_ENTER_FRAME": 65535,
+        "EMERGENCY_ENTER_FRAME": 65535,
+        "PER_CALLBACK_WORK_UNIT_LIMIT": 1000,
+        "MINIMUM_EMERGENCY_BATCH_RESERVE": 100,
+        "WORK_CHARGES": [8, 1, 1, 1, 1, 1, 1, 1, 1, 100]
+      },
+      "searchBudget": {
+        "DECISION_DEPTH": [3, 2, 2, 0],
+        "NODE_BUDGET": [128, 128, 128, 0],
+        "PROOF_BUDGET": [128, 128, 128, 0],
+        "MATRIX_ITERATIONS": [48, 40, 24, 0],
+        "MATRIX_BATCH": [8, 8, 4, 0]
+      }
+    },
+    {
+      "profileId": "BALANCED_18K_FRAME104",
+      "runtimeConfig": {
+        "DEGRADED_ENTER_WORK_UNITS": 9000,
+        "FALLBACK_ENTER_WORK_UNITS": 18000,
+        "EMERGENCY_ENTER_WORK_UNITS": 40000,
+        "DEGRADED_ENTER_FRAME": 80,
+        "FALLBACK_ENTER_FRAME": 104,
+        "EMERGENCY_ENTER_FRAME": 124,
+        "PER_CALLBACK_WORK_UNIT_LIMIT": 1000,
+        "MINIMUM_EMERGENCY_BATCH_RESERVE": 100,
+        "WORK_CHARGES": [8, 1, 1, 1, 1, 1, 1, 1, 1, 100]
+      },
+      "searchBudget": {
+        "DECISION_DEPTH": [3, 2, 1, 0],
+        "NODE_BUDGET": [128, 96, 48, 0],
+        "PROOF_BUDGET": [128, 64, 32, 0],
+        "MATRIX_ITERATIONS": [48, 32, 16, 0],
+        "MATRIX_BATCH": [8, 8, 4, 0]
+      }
+    },
+    {
+      "profileId": "V1_STYLE_12K_FRAME96",
+      "runtimeConfig": {
+        "DEGRADED_ENTER_WORK_UNITS": 6000,
+        "FALLBACK_ENTER_WORK_UNITS": 12000,
+        "EMERGENCY_ENTER_WORK_UNITS": 30000,
+        "DEGRADED_ENTER_FRAME": 64,
+        "FALLBACK_ENTER_FRAME": 96,
+        "EMERGENCY_ENTER_FRAME": 120,
+        "PER_CALLBACK_WORK_UNIT_LIMIT": 1000,
+        "MINIMUM_EMERGENCY_BATCH_RESERVE": 100,
+        "WORK_CHARGES": [8, 1, 1, 1, 1, 1, 1, 1, 1, 100]
+      },
+      "searchBudget": {
+        "DECISION_DEPTH": [3, 2, 1, 0],
+        "NODE_BUDGET": [112, 64, 32, 0],
+        "PROOF_BUDGET": [96, 48, 16, 0],
+        "MATRIX_ITERATIONS": [40, 24, 8, 0],
+        "MATRIX_BATCH": [8, 4, 4, 0]
+      }
+    },
+    {
+      "profileId": "FRAME_FLOOR_24K_D1",
+      "runtimeConfig": {
+        "DEGRADED_ENTER_WORK_UNITS": 12000,
+        "FALLBACK_ENTER_WORK_UNITS": 24000,
+        "EMERGENCY_ENTER_WORK_UNITS": 48000,
+        "DEGRADED_ENTER_FRAME": 64,
+        "FALLBACK_ENTER_FRAME": 100,
+        "EMERGENCY_ENTER_FRAME": 124,
+        "PER_CALLBACK_WORK_UNIT_LIMIT": 1000,
+        "MINIMUM_EMERGENCY_BATCH_RESERVE": 100,
+        "WORK_CHARGES": [8, 1, 1, 1, 1, 1, 1, 1, 1, 100]
+      },
+      "searchBudget": {
+        "DECISION_DEPTH": [3, 2, 1, 0],
+        "NODE_BUDGET": [128, 96, 48, 0],
+        "PROOF_BUDGET": [128, 64, 32, 0],
+        "MATRIX_ITERATIONS": [48, 32, 16, 0],
+        "MATRIX_BATCH": [8, 8, 4, 0]
+      }
+    }
+  ]
+}

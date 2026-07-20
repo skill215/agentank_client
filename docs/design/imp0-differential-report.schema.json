@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schema/imp0-differential-report-v1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "fixtureId", "status", "referenceFingerprint", "fastFingerprint", "semanticEqual", "rootRestored", "firstDifference", "fingerprint"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "fixtureId": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["PASS", "FAIL", "NOT_RUN"] },
+    "referenceFingerprint": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+    "fastFingerprint": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+    "semanticEqual": { "type": ["boolean", "null"] },
+    "rootRestored": { "type": ["boolean", "null"] },
+    "firstDifference": { "type": ["string", "null"] },
+    "fingerprint": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

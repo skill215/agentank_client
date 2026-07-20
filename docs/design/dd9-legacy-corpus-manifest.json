@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 1,
+  "legacyCorpusVersion": "LEGACY-244-20260715.1",
+  "status": "IMMUTABLE_NONBLIND_LEGACY_BASELINE",
+  "lockedOn": "2026-07-16",
+  "subjectTank": {
+    "tankId": 6821,
+    "tankName": "tiny tank",
+    "ownSkillId": "stun",
+    "skillEvidence": [
+      "v1 runtime checks me.skill.type === stun",
+      "platform replay skill_cast events by tiny tank"
+    ]
+  },
+  "corpus": {
+    "aggregateDirectory": "battle-records/all-244-20260715-1627-cst",
+    "historicalRegressionDirectory": "battle-records/historical-regression-v24-published-244",
+    "historicalRegressionFingerprint": "965dcfe90d3605e848485dfc0d1a6926e01d52118f299110f8ef6c1491e04e85",
+    "sourceRawFilesBeforeDedup": 246,
+    "uniqueMatches": 244,
+    "wins": 173,
+    "losses": 71,
+    "replayFrames": 10996,
+    "comparableDecisionFrames": 10752,
+    "historicalCodeHashes": 23,
+    "distinctOpponents": 102,
+    "distinctMapHashes": 238,
+    "rawArtifacts": 244,
+    "eventArtifacts": 244,
+    "summaryArtifacts": 244,
+    "missingArtifacts": 0,
+    "resultReasons": {
+      "crashed": 211,
+      "timeout": 7,
+      "star": 24,
+      "runTime": 2
+    },
+    "enemySkills": {
+      "none": 79,
+      "boost": 32,
+      "cloak": 8,
+      "freeze": 18,
+      "overload": 26,
+      "poison": 13,
+      "shield": 12,
+      "stun": 43,
+      "teleport": 13
+    }
+  },
+  "integrity": {
+    "hashAlgorithm": "SHA-256",
+    "aggregateArtifacts": {
+      "analysis.json": "aeabca69d97ac241acfe2858320d2cfc5563492ac1115afa85e78a9a0ed93f40",
+      "manifest.json": "2fe8b73de4ff742d93a02a8bf45b0963d71be1793f7e7bb3cab2c25601c27e47",
+      "matches.csv": "9c307b99974f2b59907ada9a7dc01b47194f6ac55a9867ebbe9e2da6cf350c4d",
+      "failures.csv": "01eac08579722918d30474de5a9a1beca9868d3e9ef86115aadae116f21d7a28"
+    },
+    "historicalRegressionArtifacts": {
+      "REPORT.md": "c3a52ced0a72b3ab9e9af6005fb5dfda1f7012cf89f48f09bccd8a4abaa2c1d4",
+      "result.json": "e9acbb97561473db9d7b544af8c1b06adf49e41698949fa7f048e258116f7f5a",
+      "v24-all-244.json": "2858841f26b523999617309c2e7217fea211adf67b7a38b3428ffba17f69b38b"
+    },
+    "artifactSet": {
+      "leafEncoding": "matchUrlId + '/' + artifactName + NUL + byteLength + NUL + fileSha256 + LF",
+      "sort": "lexicographic by matchUrlId then raw,events,summary",
+      "artifactCount": 732,
+      "root": "c985073623505f9a463d97ca410fffea35e0ff5206593257bbfb7d1f65718f9a",
+      "rawRoot": "3f845d9fb37075789cb42152cdbe230937230a3a3943b67b74384a4cc1c804e6",
+      "eventsRoot": "97ec24553095fde6f2be3bb6ddbf1db93e6ec06d7d59c52d9c26cf8cc8b33c4f",
+      "summaryRoot": "aae2a5442d5ebc9763559448872a7f13392b949a9113b4207235cce0a7350b7a"
+    }
+  },
+  "deduplication": {
+    "matchIdentity": "urlId",
+    "secondaryIdentity": "replayHash",
+    "conflictingDuplicatePolicy": "FAIL_MANIFEST",
+    "frameSplitAllowed": false,
+    "silentCorpusExtensionAllowed": false
+  },
+  "split": {
+    "algorithmId": "DD9_CORRELATION_DSU_HASH_V1",
+    "salt": "agentank-dd9-split-v1",
+    "atom": "one canonical match and all of its frames/windows",
+    "ownSkillId": "stun",
+    "sessionGapSeconds": 1800,
+    "correlationEdges": [
+      "same urlId or replayHash",
+      "same opponentTankId,mapHash,ownSkillId,enemySkillId,ourCodeHash",
+      "same opponentTankId,ownSkillId,enemySkillId,ourCodeHash and adjacent UTC createdAt gap <= 1800 seconds"
+    ],
+    "groupId": "SHA256(salt + NUL + lexicographically sorted matchUrlIds joined by LF)",
+    "bucket": "unsigned first 8 hex digits of groupId modulo 10000",
+    "thresholds": {
+      "DISCOVERY": [0, 4999],
+      "CALIBRATION": [5000, 7499],
+      "FROZEN_REGRESSION": [7500, 9999]
+    },
+    "groupCount": 162,
+    "maxGroupMatches": 10,
+    "groupFingerprint": "59b23868c03535d706be67ead8ed5acf6abb65496403f1cecd79e5eabdb9e34e",
+    "assignmentFingerprint": "46bd2d93615c77d4b87206670d7fb39621cbf8420a0c22fb839d664085ae29c8",
+    "assignmentFingerprintEncoding": "for each match sorted by urlId: urlId + NUL + role + NUL + groupId + LF",
+    "roles": {
+      "DISCOVERY": {
+        "matches": 125,
+        "groups": 89,
+        "frames": 5739,
+        "wins": 90,
+        "losses": 35,
+        "distinctCodeHashes": 17,
+        "distinctOpponents": 66,
+        "distinctMapHashes": 121
+      },
+      "CALIBRATION": {
+        "matches": 56,
+        "groups": 31,
+        "frames": 2693,
+        "wins": 36,
+        "losses": 20,
+        "distinctCodeHashes": 9,
+        "distinctOpponents": 21,
+        "distinctMapHashes": 56
+      },
+      "FROZEN_REGRESSION": {
+        "matches": 63,
+        "groups": 42,
+        "frames": 2564,
+        "wins": 47,
+        "losses": 16,
+        "distinctCodeHashes": 13,
+        "distinctOpponents": 35,
+        "distinctMapHashes": 63,
+        "evidenceClass": "NONBLIND_LOCKED_FOR_FUTURE_V2_ITERATIONS"
+      },
+      "FORWARD_VALIDATION": {
+        "matches": 0,
+        "groups": 0,
+        "evidenceClass": "RESERVED_POST_BUILD_ONLY"
+      }
+    }
+  },
+  "prebuildQuarantine": {
+    "sourceDirectory": "battle-records/all-252-20260716-0805-cst",
+    "relationship": "eight matches newer than LEGACY-244-20260715.1",
+    "matches": 8,
+    "fingerprint": "f87ef7163269caab0d20870c0c56de2162bddf1e46fa96646d200d9f233611d7",
+    "fingerprintEncoding": "for each new match sorted by urlId: urlId + NUL + replayHash + NUL + ourCodeHash + NUL + createdAt + LF",
+    "eligibleAsFinalForwardValidation": false,
+    "matchUrlIds": [
+      "mat_3Erh12MoZaBKormVo",
+      "mat_45SG1xfOyJAGSAoEs",
+      "mat_5EvhGQHB9EA2audfD",
+      "mat_8Lb9U23U5swBHv19E",
+      "mat_ANGK6T283KC1fRBvV",
+      "mat_CFYKFMQLn5F4CdmUH",
+      "mat_KcnbVFM0wemCI7EZC",
+      "mat_LgrryXbgEIZ8RlPHU"
+    ]
+  },
+  "sourceSupport": {
+    "supportMeaning": "EXACT_SOURCE requires local file SHA-256 equal to the platform historical codeHash",
+    "historicalVersions": [
+      { "version": 2, "codeHash": "8b12d952abc31a0e2ba019f0ec66966b1be7173e16a2e0ff2f54ed347a276cf5", "matches": 1, "frames": 44, "support": "REPLAY_ONLY" },
+      { "version": 3, "codeHash": "01493c743c0f1280e9d480c0694b56aa9acf73003ae285b2d5798e9e5834acc6", "matches": 1, "frames": 118, "support": "REPLAY_ONLY" },
+      { "version": 4, "codeHash": "08d772b063ba7974bbb8cfc42da28992fe3cb000997b2a91ee4b1e22fc70f112", "matches": 1, "frames": 52, "support": "REPLAY_ONLY" },
+      { "version": 5, "codeHash": "74cf360886f4bdc0742ef564506ea2883917b55db5c46732520180201e5dc9cc", "matches": 1, "frames": 23, "support": "REPLAY_ONLY" },
+      { "version": 6, "codeHash": "d164cefe04d7a31482d8aa33b8b991249425c6c63deeb684fcb02d41fb913391", "matches": 1, "frames": 21, "support": "REPLAY_ONLY" },
+      { "version": 7, "codeHash": "ea17ccbf46cf1b04f507e0c3067b82c8a7ebbb25ef0ae262e3e25a97d06468da", "matches": 1, "frames": 29, "support": "REPLAY_ONLY" },
+      { "version": 8, "codeHash": "769434a36156fd15b63630dbd42c707b538194281e74d46f0760e1d4f5ed0aa9", "matches": 1, "frames": 28, "support": "REPLAY_ONLY" },
+      { "version": 9, "codeHash": "de2c9a5b620e925b74e23bd2f5ab7413fadc07e513c26adf8d5bf16eb8c29af0", "matches": 1, "frames": 25, "support": "REPLAY_ONLY" },
+      { "version": 10, "codeHash": "c8b555fdab128f967121553b6ee21971c914658aedf71761196b9f9ccece5cc0", "matches": 1, "frames": 24, "support": "REPLAY_ONLY" },
+      { "version": 11, "codeHash": "1b2e0d674505c668bcd2e17b060971807a8cac1c2bbc80986c38bdd7be27c37b", "matches": 2, "frames": 143, "support": "REPLAY_ONLY" },
+      { "version": 12, "codeHash": "f4382c825fcd72b27fce36c77e6271ac9c5dcac35cd0ad4b824d1e15d770e226", "matches": 1, "frames": 128, "support": "REPLAY_ONLY" },
+      { "version": 13, "codeHash": "38350bf7d69c8e7bef51bade937c2cf6bd6f112bfd858c1df0be755c5062c4f2", "matches": 20, "frames": 644, "support": "REPLAY_ONLY" },
+      { "version": 14, "codeHash": "c9f8d1bff51167339b153151aaf3a66ee3294717645e4295be029d89f90be150", "matches": 5, "frames": 265, "support": "REPLAY_ONLY" },
+      { "version": 15, "codeHash": "a968d440bcdb1c3d4b2acc618ee63ce45c4a5e5862b14564b53500b6a63a91d0", "matches": 1, "frames": 22, "support": "REPLAY_ONLY" },
+      { "version": 16, "codeHash": "c53dbe36fe5e1c4de82968179bdb0f9ca2c4fdfa7ee76d8f5a416b5bccf8ae41", "matches": 2, "frames": 36, "support": "REPLAY_ONLY" },
+      { "version": 17, "codeHash": "522f435e5c469763aafdf0cf713049bd3bbbaa0d05b12937019caa69cbc14a57", "matches": 6, "frames": 135, "support": "REPLAY_ONLY" },
+      { "version": 18, "codeHash": "82fc4a51f7dee57639f7e381bdd91ae8347aaa322486ef71eb027bf0f7263f02", "matches": 56, "frames": 2048, "support": "REPLAY_ONLY" },
+      { "version": 19, "codeHash": "877369e5042ed5bcc5768f4096f135ed82facc97536728a7ba110d288bc789fc", "matches": 96, "frames": 4931, "support": "REPLAY_ONLY" },
+      { "version": 20, "codeHash": "a8e2a9832e77977a2963865760101ccaf06a326d71d825e8c0272a6c00ff9b24", "matches": 17, "frames": 803, "support": "EXACT_SOURCE", "sourceFile": "battle-baselines/tiny-tank-v20-published.js" },
+      { "version": 21, "codeHash": "5621d5f6e95e791d7751c56acb53a1a49b117ac3db938786660ecf6899b38b43", "matches": 4, "frames": 288, "support": "REPLAY_ONLY_LOCAL_VERSION_LABEL_HASH_MISMATCH" },
+      { "version": 22, "codeHash": "05aea1188ea7f8a190c59d288f54e056735e33853a768716711be856eaf4bb3a", "matches": 15, "frames": 758, "support": "REPLAY_ONLY_LOCAL_VERSION_LABEL_HASH_MISMATCH" },
+      { "version": 23, "codeHash": "facf7eaa939b222b6251abf2301742e842571d01d110beb20a0816beb8bb1702", "matches": 1, "frames": 34, "support": "REPLAY_ONLY" },
+      { "version": 24, "codeHash": "08d63772ab04d42f864d1f81992dce3ea5f64e04ca5795cbac88ec7fc759a463", "matches": 9, "frames": 397, "support": "REPLAY_ONLY_LOCAL_VERSION_LABEL_HASH_MISMATCH" }
+    ],
+    "localPublishedFiles": [
+      { "versionLabel": 20, "file": "battle-baselines/tiny-tank-v20-published.js", "fileSha256": "a8e2a9832e77977a2963865760101ccaf06a326d71d825e8c0272a6c00ff9b24", "historicalHashMatch": true },
+      { "versionLabel": 21, "file": "battle-baselines/tiny-tank-v21-published.js", "fileSha256": "87ae965f6f70ca9275f6e9ea55eb142522061d72e8ba7149063160ab363298d8", "historicalHashMatch": false },
+      { "versionLabel": 22, "file": "battle-baselines/tiny-tank-v22-published.js", "fileSha256": "80db75f3e3e7f8b31819fbe127c0787c4f25d49aae029baf4a5c2a19fc2f6917", "historicalHashMatch": false },
+      { "versionLabel": 24, "file": "battle-baselines/tiny-tank-v24-published.js", "fileSha256": "3ab856526a07d23e0dc2a0c6c7ded4521dfdb70610fd4c76e54815bf63caca51", "historicalHashMatch": false, "behaviorSnapshotDecisions": 10752 }
+    ]
+  },
+  "governance": {
+    "discoveryMayChangeDesign": true,
+    "calibrationMayTuneSoftParameters": true,
+    "frozenRegressionMayTune": false,
+    "frozenRegressionIsPristineBlindEvidence": false,
+    "prebuildQuarantineMayTune": false,
+    "forwardValidationRequiresFrozenBuildFingerprint": true,
+    "forwardValidationMayTune": false,
+    "anyInspectedFailedValidationBecomesDiscoveryForNextVersion": true
+  }
+}

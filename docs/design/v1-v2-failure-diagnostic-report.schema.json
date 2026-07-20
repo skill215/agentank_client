@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schemas/v1-v2-failure-diagnostic-report.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "reportKind", "status", "evidenceLane", "suite", "candidate", "corpus", "execution", "exact", "failureAnalysis", "evidenceBoundary", "fingerprint"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "reportKind": { "const": "V1_V2_EXACT_PAIRED_FAILURE_DIAGNOSTIC" },
+    "status": { "enum": ["COMPLETE", "PARTIAL", "FAIL"] },
+    "evidenceLane": { "const": "DISCOVERY" },
+    "suite": { "type": "object", "required": ["suiteId", "relativePath", "sha256"] },
+    "candidate": { "type": "object", "required": ["candidateId", "candidateFingerprint", "v1Sha256", "v2Sha256", "manifestRelativePath"] },
+    "corpus": { "type": "object", "required": ["assignmentFingerprint", "roles", "availableScenarioCount", "executedScenarioCount"] },
+    "execution": { "type": "object", "required": ["repetitions", "variantsPerScenario", "expectedExactMatches", "executedExactMatches", "resumedExactMatches", "newExactMatches", "traceCaseCount"] },
+    "exact": { "type": "object", "required": ["reportRelativePath", "reportSha256", "reportFingerprint", "summary"] },
+    "failureAnalysis": { "type": "object", "required": ["traceCases", "classificationCounts", "mirrorDivergenceCount"] },
+    "evidenceBoundary": { "type": "object", "required": ["officialRuleTruth", "localRuntimeIsPlatformRuntime", "futureCandidatePolicy", "knownSimulatorDeviations"] },
+    "fingerprint": { "$ref": "#/$defs/hash" }
+  },
+  "$defs": { "hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" } }
+}

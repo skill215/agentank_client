@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schemas/imp8-g10a-report.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "reportKind", "status", "candidate", "frozenArena", "discoverySkillRegression", "thresholds", "checks", "fingerprint"],
+  "properties": {
+    "schemaVersion": { "const": 1 }, "reportKind": { "const": "IMP8_G10A_FROZEN" },
+    "status": { "enum": ["PASS", "FAIL"] },
+    "candidate": { "type": "object", "required": ["candidateId", "fingerprint", "manifestRelativePath", "manifestSha256", "publishArtifactSha256"] },
+    "frozenArena": { "type": "object", "required": ["status", "relativePath", "fingerprint", "sha256", "gateEligible", "role", "scenarioCount", "matchCount", "invariants"] },
+    "discoverySkillRegression": { "type": "object", "required": ["status", "relativePath", "fingerprint", "sha256", "lane", "membershipCount"] },
+    "thresholds": { "type": "object", "required": ["nativeCriticalErrorsMax", "nativeAvoidableHardRejectsMax", "rootRestoreFailuresMax", "hotAllocationsMax", "discoveryFailuresMax"] },
+    "checks": { "type": "array", "minItems": 6, "items": { "type": "object", "required": ["checkId", "status", "actual", "maximum"] } },
+    "fingerprint": { "$ref": "#/$defs/hash" }
+  },
+  "$defs": { "hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" } }
+}

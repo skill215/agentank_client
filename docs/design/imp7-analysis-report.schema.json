@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schemas/imp7-analysis-report.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "reportKind", "status", "snapshotRef", "denominator", "levelCounts", "terminalClassCounts", "infrastructureFailures", "truthObserved", "strictCounterfactualLabels", "positiveProtection", "windows", "counterfactualResults", "fingerprint"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "reportKind": { "const": "IMP7_CORPUS_ANALYSIS" },
+    "status": { "enum": ["PASS", "FAIL"] },
+    "snapshotRef": { "type": "object", "required": ["snapshotId", "matchSetRoot", "ledgerWatermark"], "additionalProperties": false,
+      "properties": { "snapshotId": { "type": "string" }, "matchSetRoot": { "$ref": "#/$defs/sha" }, "ledgerWatermark": { "type": "integer", "minimum": 0 } } },
+    "denominator": { "type": "object", "required": ["matchCount", "profileCounts", "frameCount", "windowCount", "counterfactualPerspectiveCount"], "additionalProperties": false,
+      "properties": { "matchCount": { "type": "integer", "minimum": 0 }, "profileCounts": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } }, "frameCount": { "type": "integer", "minimum": 0 }, "windowCount": { "type": "integer", "minimum": 0 }, "counterfactualPerspectiveCount": { "type": "integer", "minimum": 0 } } },
+    "levelCounts": { "type": "object", "required": ["L0", "L1", "L2", "L3", "L4"], "additionalProperties": { "type": "integer", "minimum": 0 } },
+    "terminalClassCounts": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+    "infrastructureFailures": { "type": "integer", "minimum": 0 },
+    "truthObserved": { "type": "object", "required": ["trackBytes", "policyTruthHandleCount", "publicInputCaptureCount", "observationUnknownCount", "postDivergenceSuffixFrames"], "additionalProperties": false,
+      "properties": { "trackBytes": { "type": "integer", "minimum": 0 }, "policyTruthHandleCount": { "const": 0 }, "publicInputCaptureCount": { "type": "integer", "minimum": 0 }, "observationUnknownCount": { "type": "integer", "minimum": 0 }, "postDivergenceSuffixFrames": { "const": 0 } } },
+    "strictCounterfactualLabels": { "type": "object", "required": ["ROBUST_AVOIDABLE", "STRICT_UNAVOIDABLE", "UNKNOWN"], "additionalProperties": { "type": "integer", "minimum": 0 } },
+    "positiveProtection": { "type": "object" },
+    "windows": { "type": "array", "items": { "type": "object" } },
+    "counterfactualResults": { "type": "array", "items": { "type": "object", "required": ["resultKind", "controlledSide", "label", "historicalSuffixConsumedFrames", "fingerprint"] } },
+    "fingerprint": { "$ref": "#/$defs/sha" }
+  },
+  "$defs": { "sha": { "type": "string", "pattern": "^[0-9a-f]{64}$" } }
+}

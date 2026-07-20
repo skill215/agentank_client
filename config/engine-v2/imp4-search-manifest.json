@@ -1,0 +1,42 @@
+{
+  "manifestSchemaVersion": 1,
+  "profileId": "IMP4_CONSERVATIVE_SEARCH_V1",
+  "sourceKind": "BUILD_CONFIGURED",
+  "searchAbiRevision": 1,
+  "limits": {
+    "maxNodes": 512,
+    "maxEdges": 4096,
+    "maxDecisionDepth": 6,
+    "maxOurActions": 12,
+    "maxEnemyPolicies": 24,
+    "maxSupportPerNode": 128,
+    "maxChanceOutcomes": 16,
+    "maxProofFrames": 512,
+    "maxCoverageRecords": 16,
+    "maxPolicies": 16,
+    "maxPolicyEntries": 192,
+    "maxMatrixIterations": 512,
+    "maxDoubleOracleExpansions": 24,
+    "maxRiskClasses": 4
+  },
+  "capacityClasses": {
+    "nodes": "SEARCH_QUALITY",
+    "edges": "SUPPORT_CRITICAL",
+    "worldSupport": "SUPPORT_CRITICAL",
+    "chanceSupport": "SUPPORT_CRITICAL",
+    "actionSupport": "SEARCH_QUALITY",
+    "proofFrames": "SUPPORT_CRITICAL",
+    "coverage": "OUTPUT_CRITICAL",
+    "policy": "OUTPUT_CRITICAL",
+    "matrixScratch": "SEARCH_QUALITY"
+  },
+  "overflow": {
+    "nodes": "INCOMPLETE_NODE_CAPACITY",
+    "edges": "INCOMPLETE_SUPPORT_CAPACITY",
+    "proofFrames": "PROOF_UNKNOWN_CAPACITY",
+    "coverage": "PROOF_UNKNOWN_CAPACITY",
+    "policy": "INCOMPLETE_POLICY_CAPACITY",
+    "matrixScratch": "APPROXIMATE_WITH_GAP"
+  },
+  "notes": "IMP4 correctness profile. Values are build configured, not platform maxima or calibrated production budgets."
+}

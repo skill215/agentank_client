@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "registryId": "agentank-local-profiles-v1",
+  "profiles": [
+    {
+      "tankProfileId": "v1",
+      "alias": "legacy-v1",
+      "ownerScopeId": "agentank-primary-owner",
+      "keyEnv": "AGENTANK_KEY_V1",
+      "expectedTankName": "tiny tank",
+      "expectedSkillId": "stun"
+    },
+    {
+      "tankProfileId": "v2",
+      "alias": "minimax-v2",
+      "ownerScopeId": "agentank-primary-owner",
+      "keyEnv": "AGENTANK_KEY_V2",
+      "expectedTankName": "Slay The Tank",
+      "expectedSkillId": "poison"
+    }
+  ]
+}

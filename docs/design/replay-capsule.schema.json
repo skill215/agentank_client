@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "replay-capsule",
+  "type": "object",
+  "required": ["schemaVersion", "artifactKind", "properties", "authority", "source", "simulator", "scenario", "assignment", "window", "prefix", "restorePolicy", "fingerprint"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "artifactKind": { "const": "REPLAY_CAPSULE" },
+    "properties": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "source": { "type": "object", "required": ["runId", "matchId", "v1Sha256", "v2Sha256", "parameterFingerprint"] },
+    "simulator": { "type": "object", "required": ["commit", "archiveSha256", "seed", "maxFrames"] },
+    "scenario": { "type": "object", "required": ["fingerprint", "map", "starts", "stars"] },
+    "assignment": { "type": "object", "required": ["variantId", "seatImplementations", "seatSkills", "v2Seat"] },
+    "window": { "type": "object", "required": ["startFrame", "evaluationFrame", "endFrame", "tags"] },
+    "prefix": { "type": "object", "required": ["stepTrace", "decisionTrace"] },
+    "restorePolicy": { "type": "object", "required": ["physicalState", "factMemory", "plans", "caches", "actionEqualityAssertion"] },
+    "fingerprint": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  },
+  "additionalProperties": true
+}

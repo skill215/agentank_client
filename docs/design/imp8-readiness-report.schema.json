@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schemas/imp8-readiness-report.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "reportKind", "status", "laneIsolation", "parameterProvenance", "profileLock", "buildReproducibility", "candidateIdentity", "testPlan", "localGateMatrix", "internalBlockers", "externalBlockers", "candidateFrozen", "fingerprint"],
+  "properties": {
+    "schemaVersion": { "const": 1 }, "reportKind": { "const": "IMP8_CANDIDATE_READINESS" },
+    "status": { "enum": ["PASS", "BLOCKED", "FAIL"] },
+    "laneIsolation": { "type": "object" }, "parameterProvenance": { "type": "object" },
+    "profileLock": { "type": "object" }, "buildReproducibility": { "type": "object" },
+    "candidateIdentity": { "type": "object" }, "testPlan": { "type": "object", "required": ["objectKind", "status", "testPlanId", "fingerprint"] },
+    "localGateMatrix": { "type": "array", "minItems": 11, "items": { "type": "object", "required": ["gateId", "status", "evidenceRef"] } },
+    "internalBlockers": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "externalBlockers": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "candidateFrozen": { "type": "boolean" }, "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

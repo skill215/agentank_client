@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "benchmarkPlanId": "imp0-six-performance-layers-v1",
+  "seed": 324508639,
+  "warmupIterations": 3,
+  "sampleIterations": 7,
+  "layers": [
+    { "layerId": "function", "directory": "engine-v2/bench/micro" },
+    { "layerId": "composite", "directory": "engine-v2/bench/composite" },
+    { "layerId": "pipeline", "directory": "engine-v2/bench/pipeline" },
+    { "layerId": "terminal", "directory": "engine-v2/bench/terminal" },
+    { "layerId": "full-game", "directory": "engine-v2/bench/full-game" },
+    { "layerId": "platform", "directory": "engine-v2/bench/platform" }
+  ]
+}

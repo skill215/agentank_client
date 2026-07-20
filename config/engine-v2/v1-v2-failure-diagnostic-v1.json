@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "V1_V2_EXACT_PAIRED_FAILURE_DIAGNOSTIC_V1",
+  "evidenceLane": "DISCOVERY",
+  "candidateManifest": "artifacts/imp8/frozen/candidate-manifest.json",
+  "roles": ["DISCOVERY", "CALIBRATION", "FROZEN_REGRESSION"],
+  "repetitions": 2,
+  "timeoutMs": 200,
+  "maxFrames": 128,
+  "maxTraceCases": 24,
+  "traceWindowFrames": 6,
+  "variants": "NATIVE_AND_SKILL_CROSS_FOUR_CELL",
+  "exactExecution": "BOTH_IMPLEMENTATIONS_LOADED_FROM_FROZEN_SCRIPT_BYTES",
+  "traceExecution": "V1_FROZEN_SCRIPT_AND_V2_SAME_PARAMETER_INSTRUMENTED_MIRROR",
+  "futureCandidatePolicy": "ALL_OBSERVED_RESULTS_BECOME_DISCOVERY_AND_REQUIRE_A_NEW_HOLDOUT_SPLIT",
+  "allowProductionMutation": false,
+  "officialRuleTruth": false
+}

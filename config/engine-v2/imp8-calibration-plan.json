@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "planId": "IMP8_CALIBRATION_PLAN_V1",
+  "targetTankProfileId": "v2",
+  "branch": "main",
+  "lanes": {
+    "discovery": "artifacts/imp8/discovery",
+    "calibration": "artifacts/imp8/calibration",
+    "frozen": "artifacts/imp8/frozen"
+  },
+  "dimensions": ["risk", "weights", "depth", "cache", "arena", "batch", "fallback"],
+  "selectionPolicy": "DISCOVERY_PROPOSES_CALIBRATION_SELECTS_FROZEN_NEVER_TUNES",
+  "publishArtifactKind": "PRODUCTION_MINIFIED",
+  "requiredLocalGates": ["G0", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10A_FROZEN"]
+}

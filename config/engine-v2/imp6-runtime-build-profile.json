@@ -1,0 +1,51 @@
+{
+  "manifestSchemaVersion": 1,
+  "profileId": "IMP6_LOCAL_RUNTIME_BUILD_V1",
+  "sourceKind": "LOCAL_BENCHMARK_SELECTED",
+  "cacheAbiRevision": 1,
+  "runtimeAbiRevision": 1,
+  "buildAbiRevision": 1,
+  "cache": {
+    "entryCount": [32, 32, 32, 16, 16, 32, 32, 16, 32, 16, 16],
+    "ways": [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    "enabled": [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0]
+  },
+  "runtime": {
+    "fallbackEquivalentMs": 1500,
+    "emergencyEquivalentMs": 2500,
+    "referencePlatformBudgetMs": 3000,
+    "callbackWatchdogMs": 1500,
+    "emergencyReserveEquivalentMs": 500,
+    "degradedEnterWorkUnits": 120000,
+    "fallbackEnterWorkUnits": 150000,
+    "emergencyEnterWorkUnits": 250000,
+    "perCallbackWorkUnitLimit": 60000,
+    "minimumEmergencyBatchReserve": 10000,
+    "workCharges": [1000, 80, 120, 50, 70, 25, 8, 12, 200, 5000]
+  },
+  "searchBudgetProfiles": [
+    { "mode": 0, "decisionDepth": 6, "nodeBudget": 512, "proofBudget": 512, "matrixIterations": 128, "matrixBatch": 16 },
+    { "mode": 1, "decisionDepth": 5, "nodeBudget": 384, "proofBudget": 256, "matrixIterations": 64, "matrixBatch": 8 },
+    { "mode": 2, "decisionDepth": 3, "nodeBudget": 192, "proofBudget": 128, "matrixIterations": 32, "matrixBatch": 8 },
+    { "mode": 3, "decisionDepth": 0, "nodeBudget": 0, "proofBudget": 0, "matrixIterations": 0, "matrixBatch": 0 }
+  ],
+  "build": {
+    "ownSkillId": 6,
+    "evaluatorMode": "GENERATED",
+    "terserVersion": "5.43.1",
+    "mangle": false,
+    "ecma": 2020,
+    "localMaximumSourceBytes": 500000,
+    "platformMaximumCodeBytes": 204800,
+    "platformWarningCodeBytes": 190000,
+    "localMaximumTypedArrayBytes": 1000000,
+    "localMaximumColdInitMicros": 100000,
+    "localMaximumCallbackMicros": 100000
+  },
+  "platformBlockers": [
+    "PLATFORM_ENGINE_UNKNOWN",
+    "PLATFORM_SCRIPT_BYTE_LIMIT_UNKNOWN",
+    "PLATFORM_RUNTIME_CALIBRATION_PENDING"
+  ],
+  "notes": "Local IMP6 correctness and performance profile. The exact submitted minified artifact is constrained to the operational 200 KiB UTF-8 platform limit; source bytes remain a separate local maintainability gate. Runtime work limits and depth are not release-calibrated platform parameters."
+}

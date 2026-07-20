@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schemas/imp8-calibration-suite.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "suiteId", "lane", "targetTankProfileId", "branch",
+    "scenarioIds", "depthCandidates", "nodeBudgetCandidates", "cacheModes",
+    "samplesPerScenario", "requiredLocalLayers", "zeroToleranceMetrics", "selectionPolicy",
+    "dimensionsMeasured", "dimensionsDeferred", "allowConfigMutation", "allowFrozenInputs"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "suiteId": { "const": "IMP8_LOCAL_CALIBRATION_SUITE_V1" },
+    "lane": { "const": "CALIBRATION" },
+    "targetTankProfileId": { "const": "v2" },
+    "branch": { "const": "main" },
+    "scenarioIds": { "type": "array", "minItems": 4, "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 } },
+    "depthCandidates": { "type": "array", "minItems": 2, "uniqueItems": true,
+      "items": { "type": "integer", "minimum": 1, "maximum": 6 } },
+    "nodeBudgetCandidates": { "type": "array", "minItems": 2, "uniqueItems": true,
+      "items": { "type": "integer", "minimum": 1, "maximum": 512 } },
+    "cacheModes": { "const": ["OFF", "ON"] },
+    "samplesPerScenario": { "type": "integer", "minimum": 2, "maximum": 20 },
+    "requiredLocalLayers": { "const": ["function", "composite", "pipeline", "terminal", "full-game"] },
+    "zeroToleranceMetrics": { "type": "array", "minItems": 7, "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 } },
+    "selectionPolicy": { "const": "MEASURE_FIRST_NO_PARAMETER_WRITE_NO_FROZEN_TUNING" },
+    "dimensionsMeasured": { "const": ["depth", "cache"] },
+    "dimensionsDeferred": { "const": ["risk", "weights", "arena"] },
+    "allowConfigMutation": { "const": false },
+    "allowFrozenInputs": { "const": false }
+  }
+}

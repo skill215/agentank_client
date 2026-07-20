@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schema/imp5-policy-manifest-v1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifestSchemaVersion", "profileId", "sourceKind", "policyAbiRevision", "limits", "integerScales", "strategy", "opponent", "notes"],
+  "properties": {
+    "manifestSchemaVersion": { "const": 1 },
+    "profileId": { "const": "IMP5_INTEGER_POLICY_V1" },
+    "sourceKind": { "enum": ["BUILD_CONFIGURED", "BENCHMARK_SELECTED"] },
+    "policyAbiRevision": { "const": 1 },
+    "limits": {
+      "type": "object",
+      "additionalProperties": { "type": "integer", "minimum": 1 },
+      "required": ["maxFeatures", "featureCount", "inputCount", "profileCount", "actionFamilyCount", "strategyCount", "opponentEventCount", "opponentContextCount", "riskDimensionCount", "maxPlanSketches", "maxPersistentPlans", "maxPlanEntities", "maxHiddenCells"]
+    },
+    "integerScales": {
+      "type": "object", "additionalProperties": false,
+      "required": ["probability", "rawFeature", "weight", "risk"],
+      "properties": {
+        "probability": { "const": 10000 }, "rawFeature": { "const": 10000 },
+        "weight": { "const": 100 }, "risk": { "const": 100 }
+      }
+    },
+    "strategy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["switchMargin", "minimumDwellRoots"],
+      "properties": { "switchMargin": { "type": "integer", "minimum": 0 },
+        "minimumDwellRoots": { "type": "integer", "minimum": 1 } }
+    },
+    "opponent": {
+      "type": "object", "additionalProperties": false,
+      "required": ["fastAlpha", "slowAlpha", "prior"],
+      "properties": { "fastAlpha": { "type": "integer", "minimum": 1, "maximum": 10000 },
+        "slowAlpha": { "type": "integer", "minimum": 1, "maximum": 10000 },
+        "prior": { "type": "integer", "minimum": 0, "maximum": 10000 } }
+    },
+    "notes": { "type": "string", "minLength": 1 }
+  }
+}

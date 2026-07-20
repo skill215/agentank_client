@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schemas/imp9-readiness-report.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "reportKind", "status", "prerequisite", "target", "suite",
+    "candidate", "rollback", "localQualification", "liveContext", "simulation", "publish", "reconciliation",
+    "profileIsolation", "forwardPlan", "operationAudit", "blockers", "fingerprint"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "reportKind": { "const": "IMP9_CANARY_READINESS" },
+    "status": { "enum": ["PASS", "BLOCKED", "FAIL"] },
+    "prerequisite": { "type": "object" },
+    "target": { "type": "object" },
+    "suite": { "type": "object" },
+    "candidate": { "type": "object" },
+    "rollback": { "type": "object" },
+    "localQualification": { "type": "object" },
+    "liveContext": { "type": "object" },
+    "simulation": { "type": "object" },
+    "publish": { "type": "object" },
+    "reconciliation": { "type": "object" },
+    "profileIsolation": { "type": "object" },
+    "forwardPlan": { "type": "object" },
+    "operationAudit": { "type": "object" },
+    "blockers": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "IMP8_CANDIDATE_COMPARISON_V1",
+  "registeredAt": "2026-07-16T18:00:00+08:00",
+  "lane": "CALIBRATION",
+  "role": "CALIBRATION",
+  "repetitions": 2,
+  "timeoutMs": 200,
+  "integerScale": 10000,
+  "selectionPolicy": {
+    "kind": "LEXICOGRAPHIC_PREREGISTERED_V1",
+    "hardZeroMetrics": [
+      "nativeCriticalErrors",
+      "nativeAvoidableHardRejects",
+      "rootRestoreFailures",
+      "hotAllocations"
+    ],
+    "maximumFallbackRatePer10000": 2500,
+    "minimumNativeWinRatePer10000": 3500,
+    "minimumNativeWinRateGainOverBaselinePer10000": 1000,
+    "ranking": [
+      "QUALIFIED_DESC",
+      "NATIVE_WIN_RATE_DESC",
+      "NATIVE_CRASH_LOSSES_ASC",
+      "ALL_WIN_RATE_DESC",
+      "V2_P95_RUNTIME_ASC",
+      "CANDIDATE_ID_ASC"
+    ],
+    "noneQualifiedVerdict": "NO_SELECTION"
+  },
+  "runtimeTemplate": {
+    "DEGRADED_ENTER_WORK_UNITS": 120000,
+    "FALLBACK_ENTER_WORK_UNITS": 150000,
+    "EMERGENCY_ENTER_WORK_UNITS": 250000,
+    "PER_CALLBACK_WORK_UNIT_LIMIT": 60000,
+    "MINIMUM_EMERGENCY_BATCH_RESERVE": 10000
+  },
+  "searchBudget": {
+    "DECISION_DEPTH": [6, 5, 3, 0],
+    "NODE_BUDGET": [512, 384, 192, 0],
+    "PROOF_BUDGET": [512, 256, 128, 0],
+    "MATRIX_ITERATIONS": [128, 64, 32, 0],
+    "MATRIX_BATCH": [16, 8, 8, 0]
+  },
+  "candidates": [
+    {
+      "candidateProfileId": "BASELINE_WORK_V1",
+      "workCharges": [1000, 80, 120, 50, 70, 25, 8, 12, 200, 5000],
+      "tactical": {
+        "PROFILE_ID": "IMP8_TACTICAL_BASELINE_V1",
+        "MODEL_VERSION": 0,
+        "RISK_DENOMINATOR": 20,
+        "FIRE_DIRECT_MULTIPLIER": 2,
+        "FIRE_VISIBLE_MISS_SCORE": -2500,
+        "FIRE_HIDDEN_SCORE": 800,
+        "POISON_VISIBLE_SCORE": 6500,
+        "POISON_REJECT_SCORE": -4000,
+        "BOMB_NEAR_SCORE": 3500,
+        "BOMB_FAR_SCORE": -1200,
+        "BOMB_GRASS_SCORE": -2500,
+        "TURN_ALIGN_SCORE": 1500,
+        "TURN_REPEAT_SCORE": -700,
+        "TURN_STREAK_PENALTY": 0,
+        "TURN_REVERSAL_PENALTY": 0,
+        "GO_AFTER_TURN_SCORE": 0
+      }
+    },
+    {
+      "candidateProfileId": "RESCALED_WORK_V1",
+      "workCharges": [50, 1, 1, 1, 1, 1, 1, 1, 5, 100],
+      "tactical": {
+        "PROFILE_ID": "IMP8_TACTICAL_BASELINE_V1",
+        "MODEL_VERSION": 0,
+        "RISK_DENOMINATOR": 20,
+        "FIRE_DIRECT_MULTIPLIER": 2,
+        "FIRE_VISIBLE_MISS_SCORE": -2500,
+        "FIRE_HIDDEN_SCORE": 800,
+        "POISON_VISIBLE_SCORE": 6500,
+        "POISON_REJECT_SCORE": -4000,
+        "BOMB_NEAR_SCORE": 3500,
+        "BOMB_FAR_SCORE": -1200,
+        "BOMB_GRASS_SCORE": -2500,
+        "TURN_ALIGN_SCORE": 1500,
+        "TURN_REPEAT_SCORE": -700,
+        "TURN_STREAK_PENALTY": 0,
+        "TURN_REVERSAL_PENALTY": 0,
+        "GO_AFTER_TURN_SCORE": 0
+      }
+    },
+    {
+      "candidateProfileId": "BALANCED_TACTICAL_V1",
+      "workCharges": [50, 1, 1, 1, 1, 1, 1, 1, 5, 100],
+      "tactical": {
+        "PROFILE_ID": "IMP8_TACTICAL_BALANCED_V1",
+        "MODEL_VERSION": 1,
+        "RISK_DENOMINATOR": 24,
+        "FIRE_DIRECT_MULTIPLIER": 2,
+        "FIRE_VISIBLE_MISS_SCORE": -2200,
+        "FIRE_HIDDEN_SCORE": 1000,
+        "POISON_VISIBLE_SCORE": 6500,
+        "POISON_REJECT_SCORE": -4000,
+        "BOMB_NEAR_SCORE": 3500,
+        "BOMB_FAR_SCORE": -1200,
+        "BOMB_GRASS_SCORE": -2500,
+        "TURN_ALIGN_SCORE": 1900,
+        "TURN_REPEAT_SCORE": -900,
+        "TURN_STREAK_PENALTY": 1500,
+        "TURN_REVERSAL_PENALTY": 1800,
+        "GO_AFTER_TURN_SCORE": 900
+      }
+    },
+    {
+      "candidateProfileId": "ASSERTIVE_TACTICAL_V1",
+      "workCharges": [50, 1, 1, 1, 1, 1, 1, 1, 5, 100],
+      "tactical": {
+        "PROFILE_ID": "IMP8_TACTICAL_ASSERTIVE_V1",
+        "MODEL_VERSION": 1,
+        "RISK_DENOMINATOR": 32,
+        "FIRE_DIRECT_MULTIPLIER": 3,
+        "FIRE_VISIBLE_MISS_SCORE": -1600,
+        "FIRE_HIDDEN_SCORE": 1400,
+        "POISON_VISIBLE_SCORE": 6500,
+        "POISON_REJECT_SCORE": -4000,
+        "BOMB_NEAR_SCORE": 3500,
+        "BOMB_FAR_SCORE": -1200,
+        "BOMB_GRASS_SCORE": -2500,
+        "TURN_ALIGN_SCORE": 2100,
+        "TURN_REPEAT_SCORE": -800,
+        "TURN_STREAK_PENALTY": 1300,
+        "TURN_REVERSAL_PENALTY": 1500,
+        "GO_AFTER_TURN_SCORE": 1100
+      }
+    }
+  ]
+}

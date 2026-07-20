@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schema/imp3-capacity-manifest-v1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifestSchemaVersion", "profileId", "sourceKind", "physicalAbiRevision", "limits", "capacityClasses", "overflow", "notes"],
+  "properties": {
+    "manifestSchemaVersion": { "const": 1 },
+    "profileId": { "const": "IMP3_CONSERVATIVE_BUILD_V1" },
+    "sourceKind": { "enum": ["BUILD_CONFIGURED", "BENCHMARK_SELECTED"] },
+    "physicalAbiRevision": { "const": 1 },
+    "limits": {
+      "type": "object",
+      "additionalProperties": { "type": "integer", "minimum": 1 },
+      "required": ["maxMapWidth", "maxMapHeight", "maxCells", "maxTanks", "maxProjectiles", "maxBombs", "maxEffectsPerTank", "maxEventsPerTransition", "maxDeltasPerTransition", "maxActiveTransitions", "maxHazardFrames", "maxActionPrograms"]
+    },
+    "capacityClasses": {
+      "type": "object",
+      "additionalProperties": { "enum": ["FACT_CRITICAL", "SUPPORT_CRITICAL", "SEARCH_QUALITY", "CACHE_ONLY", "OUTPUT_CRITICAL"] },
+      "required": ["terrain", "tanks", "projectiles", "bombs", "events", "deltas", "hazardTimeline", "worldSupport", "actions", "optionalCache"]
+    },
+    "overflow": {
+      "type": "object",
+      "additionalProperties": { "type": "string", "minLength": 1 },
+      "required": ["entity", "event", "delta", "hazard", "actions"]
+    },
+    "notes": { "type": "string", "minLength": 1 }
+  }
+}

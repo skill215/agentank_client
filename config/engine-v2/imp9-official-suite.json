@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "IMP9_OFFICIAL_CANDIDATE_SUITE_V1",
+  "suiteVersion": "1.1.0",
+  "target": {
+    "tankProfileId": "v2",
+    "tankId": 7214,
+    "tankUrlId": "tnk_AguYVXrZXBsFiBGEB",
+    "skillId": "poison",
+    "branch": "main"
+  },
+  "cases": [
+    {
+      "caseId": "cold-smoke-classic",
+      "opponentBot": "nova-scout",
+      "mapId": "classic",
+      "mandatory": true,
+      "role": "COLD_SMOKE"
+    },
+    {
+      "caseId": "pressure-arena",
+      "opponentBot": "azure-hunter",
+      "mapId": "arena",
+      "mandatory": true,
+      "role": "AIMING_PRESSURE_RUNTIME"
+    },
+    {
+      "caseId": "robustness-random",
+      "opponentBot": "crimson-bastion",
+      "mapId": "random",
+      "mandatory": true,
+      "role": "MAP_TERMINAL_SKILL"
+    }
+  ],
+  "qualification": {
+    "requireLiveContext": true,
+    "requireCandidateCode": true,
+    "requireUsedCandidateCode": true,
+    "requireReplaySetup": true,
+    "requireReplayResult": true,
+    "maximumScriptErrors": 0,
+    "maximumRuntimeTimeouts": 0,
+    "maximumMissingCases": 0,
+    "tacticalLossIsReliabilityFailure": false
+  },
+  "localQualification": {
+    "contractRelativePath": "docs/design/v2-candidate-release-qualification-contract.md",
+    "requirementsRelativePath": "config/engine-v2/v2-local-release-qualification-v1.json",
+    "candidateAttestationFileName": "local-qualification-attestation.json",
+    "requireEngineEvidencePass": true,
+    "requireGameplayReviewClosed": true,
+    "requireExactPublishArtifactBinding": true
+  },
+  "rateLimit": {
+    "respectServerNextSimulationAt": true,
+    "minimumIntervalMs": 2000,
+    "maximumAttemptsPerCase": 3,
+    "postAmbiguityPolicy": "RECONCILE_BEFORE_RETRY"
+  },
+  "publish": {
+    "artifactKind": "PRODUCTION_MINIFIED",
+    "requireVerifiedBaseline": true,
+    "requireIntentBeforePost": true,
+    "requireExplicitAuthorization": true,
+    "requirePostGetReconciliation": true,
+    "allowChallenge": false
+  },
+  "forwardPlan": {
+    "planId": "IMP10_FORWARD_PLAN_V1",
+    "status": "PREREGISTERED_NOT_EXECUTABLE_IN_IMP9",
+    "candidateParametersMutableAfterFirstMatch": false,
+    "challengeAuthorization": "SEPARATE_EXPLICIT_RANKED_AUTHORIZATION_REQUIRED",
+    "minimumRecordedMatches": 12,
+    "maps": ["classic", "arena", "random"],
+    "stopOn": ["SCRIPT_ERROR", "RUNTIME_TIMEOUT", "IDENTITY_MISMATCH", "PUBLISHED_HASH_DRIFT"],
+    "executeInImp9": false
+  }
+}

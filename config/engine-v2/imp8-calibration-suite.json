@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "IMP8_LOCAL_CALIBRATION_SUITE_V1",
+  "lane": "CALIBRATION",
+  "targetTankProfileId": "v2",
+  "branch": "main",
+  "scenarioIds": [
+    "open-fire-5x5",
+    "projectile-escape-7x5",
+    "bomb-escape-9x7",
+    "terminal-wide-20x20"
+  ],
+  "depthCandidates": [2, 3, 4, 6],
+  "nodeBudgetCandidates": [96, 192, 250],
+  "cacheModes": ["OFF", "ON"],
+  "samplesPerScenario": 3,
+  "requiredLocalLayers": ["function", "composite", "pipeline", "terminal", "full-game"],
+  "zeroToleranceMetrics": [
+    "rootRestoreFailures",
+    "hotAllocations",
+    "cacheActionMismatches",
+    "cacheHardMismatches",
+    "cacheProofMismatches",
+    "sourceMinifiedMismatches",
+    "frozenInputCount"
+  ],
+  "selectionPolicy": "MEASURE_FIRST_NO_PARAMETER_WRITE_NO_FROZEN_TUNING",
+  "dimensionsMeasured": ["depth", "cache"],
+  "dimensionsDeferred": ["risk", "weights", "arena"],
+  "allowConfigMutation": false,
+  "allowFrozenInputs": false
+}

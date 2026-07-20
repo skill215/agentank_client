@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "trackId": "V2_STRUCTURAL_REPAIR_SR0_SR6",
+  "fixedCohort": {
+    "overviewRelativePath": "artifacts/diagnostics/v1-v2-working/9c0c3f6b246a2e76-r2-discovery-calibration-frozen-pd71e5ee1339e-rolling-3c663bc6/working-arena-overview.json",
+    "scenarioCount": 266,
+    "repetitions": 2,
+    "variants": 4,
+    "matchCount": 2128,
+    "pairCount": 1064,
+    "expectedAnalysis": {
+      "V1_WIN": 907,
+      "V2_WIN": 1029,
+      "DRAW": 192,
+      "V2_SWEEP": 238,
+      "V1_SWEEP": 186,
+      "SPLIT": 464,
+      "V2_WIN_DRAW": 89,
+      "V1_WIN_DRAW": 71,
+      "DOUBLE_DRAW": 16,
+      "FRAME_LIMIT_EQUAL_STAR_DRAW": 161,
+      "MUTUAL_CRASH_EQUAL_STAR_DRAW": 31
+    }
+  },
+  "sr0ProductionBaseline": {
+    "sourceSha256": "4a9b75112abaee605803f933d76369feabf8656af21e8018b999794752e1d994",
+    "minifiedSha256": "baac3bb756b2bbf63e79ddda1e52910f9739b63abe78e782908d7c9360f01646",
+    "moduleCount": 42
+  },
+  "historicalCandidate": {
+    "candidateId": "imp8-v2-a5ce6f8ef59abb61",
+    "manifestRelativePath": "artifacts/imp8/frozen/candidates/imp8-v2-a5ce6f8ef59abb61/candidate-manifest.json",
+    "manifestSha256": "76d3c4cf6ed5a9bd75cd2283a7a7d6523fbc2238aa6a0d2f92b012759d1b87db",
+    "sourceSha256": "df10877b90fe3948bb140ad9b4df4aebaa6cdd5af947f14029e4c9dafc8e39cd",
+    "minifiedSha256": "45a96d1c4c7a2b5ae7957a2c7813fa1cc2840a9d1937f164e5df3fb982d2eea4",
+    "publishEligible": false
+  }
+}

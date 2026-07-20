@@ -1,0 +1,289 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schemas/dd10-platform-run.schema.json",
+  "title": "AgenTank DD10 Platform Run Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "runId",
+    "purpose",
+    "state",
+    "createdAt",
+    "updatedAt",
+    "revision",
+    "previousRevisionSha256",
+    "tankProfile",
+    "candidate",
+    "toolVersions",
+    "stages",
+    "mutations",
+    "artifacts",
+    "errors",
+    "secretMaterialPersisted",
+    "fingerprint"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "runId": { "type": "string", "minLength": 1 },
+    "purpose": {
+      "enum": ["DISCOVERY", "CALIBRATION", "FROZEN_REGRESSION", "FORWARD_VALIDATION", "EMERGENCY_ROLLBACK"]
+    },
+    "state": {
+      "enum": [
+        "DRAFT",
+        "LOCAL_VALIDATED",
+        "SIMULATION_BLOCKED",
+        "SIMULATION_QUALIFIED",
+        "PUBLISH_AUTHORIZED",
+        "PUBLISHED_VERIFIED",
+        "CHALLENGE_AUTHORIZED",
+        "MATCH_RECORDED",
+        "ARTIFACTS_VERIFIED",
+        "ANALYZED",
+        "LEDGER_INGESTED",
+        "RUN_CLOSED",
+        "FAILED"
+      ]
+    },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "revision": { "type": "integer", "minimum": 0 },
+    "previousRevisionSha256": { "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+    "tankProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tankProfileId", "tankId", "tankUrlId", "ownerScopeId", "keyGenerationId", "skillId", "branch"],
+      "properties": {
+        "tankProfileId": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+        "tankId": { "type": "integer", "minimum": 0 },
+        "tankUrlId": { "type": ["string", "null"] },
+        "ownerScopeId": { "type": "string", "minLength": 1 },
+        "keyGenerationId": { "type": "string", "minLength": 1 },
+        "skillId": { "enum": ["shield", "freeze", "stun", "overload", "cloak", "poison", "teleport", "boost"] },
+        "branch": { "enum": ["main", "raid", "multiplayer"] }
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidateId", "candidateFingerprint", "buildManifestSha256", "targetTankProfileId", "targetTankId", "targetSkillId", "sourceSha256", "minifiedSha256", "publishArtifactKind", "publishArtifactSha256", "branch", "basePublishedCodeHash", "basePublishedVersion", "rollbackMode", "capabilityProfileSha256", "corpusSnapshotSha256", "profiles"],
+      "properties": {
+        "candidateId": { "type": "string", "pattern": "^cand_" },
+        "candidateFingerprint": { "$ref": "#/$defs/sha256" },
+        "buildManifestSha256": { "$ref": "#/$defs/sha256" },
+        "targetTankProfileId": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+        "targetTankId": { "type": "integer", "minimum": 0 },
+        "targetSkillId": { "enum": ["shield", "freeze", "stun", "overload", "cloak", "poison", "teleport", "boost"] },
+        "sourceSha256": { "$ref": "#/$defs/sha256" },
+        "minifiedSha256": { "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+        "publishArtifactKind": { "enum": ["PRODUCTION_SOURCE", "PRODUCTION_MINIFIED"] },
+        "publishArtifactSha256": { "$ref": "#/$defs/sha256" },
+        "branch": { "enum": ["main", "raid", "multiplayer"] },
+        "basePublishedCodeHash": { "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+        "basePublishedVersion": { "type": ["integer", "null"], "minimum": 0 },
+        "rollbackMode": { "enum": ["VERIFIED_BASELINE", "FIRST_PUBLISH_NO_ROLLBACK"] },
+        "publishedCodeHash": { "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+        "publishedVersion": { "type": ["integer", "null"], "minimum": 0 },
+        "ownSkillId": { "type": ["string", "null"] },
+        "capabilityProfileSha256": { "$ref": "#/$defs/sha256" },
+        "corpusSnapshotSha256": { "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+        "profiles": {
+          "type": "object",
+          "required": ["ruleset", "feature", "search", "runtime", "memory", "capability"],
+          "properties": {
+            "ruleset": { "type": "string" },
+            "feature": { "type": "string" },
+            "search": { "type": "string" },
+            "runtime": { "type": "string" },
+            "memory": { "type": "string" },
+            "capability": { "type": "string" }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "toolVersions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["opsRunner", "artifactSchema", "analyzer", "ledger"],
+      "properties": {
+        "opsRunner": { "type": "string", "minLength": 1 },
+        "artifactSchema": { "type": "string", "minLength": 1 },
+        "analyzer": { "type": "string", "minLength": 1 },
+        "ledger": { "type": "string", "minLength": 1 },
+        "terminalClassifier": { "type": ["string", "null"] },
+        "counterfactual": { "type": ["string", "null"] }
+      }
+    },
+    "corpusSnapshot": {
+      "anyOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["snapshotId", "fingerprint", "ledgerWatermark", "subjectTankProfileIds"],
+          "properties": {
+            "snapshotId": { "type": "string", "minLength": 1 },
+            "fingerprint": { "$ref": "#/$defs/sha256" },
+            "ledgerWatermark": {
+              "anyOf": [
+                { "type": "string", "minLength": 1 },
+                { "type": "integer", "minimum": 0 }
+              ]
+            },
+            "subjectTankProfileIds": {
+              "type": "array",
+              "items": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+              "minItems": 1,
+              "uniqueItems": true
+            }
+          }
+        }
+      ]
+    },
+    "forwardBatchId": { "type": ["string", "null"] },
+    "stages": {
+      "type": "object",
+      "required": ["context", "localValidation", "simulation", "publish", "challenge", "download", "analysis", "ingestion"],
+      "additionalProperties": false,
+      "properties": {
+        "context": { "$ref": "#/$defs/stage" },
+        "localValidation": { "$ref": "#/$defs/stage" },
+        "simulation": { "$ref": "#/$defs/stage" },
+        "publish": { "$ref": "#/$defs/stage" },
+        "challenge": { "$ref": "#/$defs/stage" },
+        "download": { "$ref": "#/$defs/stage" },
+        "analysis": { "$ref": "#/$defs/stage" },
+        "ingestion": { "$ref": "#/$defs/stage" }
+      }
+    },
+    "simulationAttestation": {
+      "type": ["object", "null"],
+      "properties": {
+        "suiteVersion": { "type": "string" },
+        "tankProfileId": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+        "tankId": { "type": "integer", "minimum": 0 },
+        "candidateId": { "type": "string", "pattern": "^cand_" },
+        "publishArtifactKind": { "enum": ["PRODUCTION_SOURCE", "PRODUCTION_MINIFIED"] },
+        "publishArtifactSha256": { "$ref": "#/$defs/sha256" },
+        "capabilityProfileSha256": { "$ref": "#/$defs/sha256" },
+        "caseIds": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
+        "qualifiedAt": { "type": "string", "format": "date-time" },
+        "verdict": { "const": "PASS" }
+      },
+      "required": ["suiteVersion", "tankProfileId", "tankId", "candidateId", "publishArtifactKind", "publishArtifactSha256", "capabilityProfileSha256", "caseIds", "qualifiedAt", "verdict"],
+      "additionalProperties": false
+    },
+    "matchUrlIds": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^mat_" },
+      "uniqueItems": true
+    },
+    "mutations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/mutation" }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/artifact" }
+    },
+    "errors": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/error" }
+    },
+    "secretMaterialPersisted": { "const": false },
+    "fingerprint": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "attempts"],
+      "properties": {
+        "status": { "enum": ["NOT_RUN", "RUNNING", "PASS", "FAIL", "BLOCKED", "SKIPPED_BY_PURPOSE"] },
+        "attempts": { "type": "integer", "minimum": 0 },
+        "startedAt": { "type": ["string", "null"], "format": "date-time" },
+        "completedAt": { "type": ["string", "null"], "format": "date-time" },
+        "evidenceArtifactIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifactId", "role", "relativePath", "bytes", "sha256"],
+      "properties": {
+        "artifactId": { "type": "string", "minLength": 1 },
+        "role": {
+          "enum": [
+            "CANDIDATE_SOURCE",
+            "CANDIDATE_MINIFIED",
+            "CANDIDATE_MANIFEST",
+            "LOCAL_VALIDATION",
+            "CONTEXT",
+            "CAPABILITY_PROFILE",
+            "SIMULATION_REQUEST",
+            "SIMULATION_RESPONSE",
+            "SIMULATION_RAW",
+            "SIMULATION_VERDICT",
+            "PUBLISH_INTENT",
+            "PUBLISH_RESPONSE",
+            "PUBLISH_VERIFY",
+            "CHALLENGE_INTENT",
+            "CHALLENGE_RESPONSE",
+            "RECONCILIATION",
+            "MATCH_LIST",
+            "MATCH_SUMMARY",
+            "MATCH_EVENTS",
+            "MATCH_RAW",
+            "ARTIFACT_MANIFEST",
+            "ANALYSIS",
+            "FINDING",
+            "WINDOW",
+            "REPORT",
+            "LEDGER_ENTRY",
+            "ERROR_DETAIL"
+          ]
+        },
+        "relativePath": { "type": "string", "minLength": 1 },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "matchUrlId": { "type": ["string", "null"] },
+        "createdAt": { "type": ["string", "null"], "format": "date-time" }
+      }
+    },
+    "error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stage", "code", "retryClass", "message", "occurredAt"],
+      "properties": {
+        "stage": { "type": "string" },
+        "code": { "type": "string" },
+        "retryClass": { "enum": ["NO_RETRY", "SAFE_GET_RETRY", "RECONCILE_BEFORE_RETRY", "RATE_LIMIT_WAIT"] },
+        "httpStatus": { "type": ["integer", "null"] },
+        "message": { "type": "string" },
+        "occurredAt": { "type": "string", "format": "date-time" },
+        "attempt": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "mutation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operationId", "tankProfileId", "kind", "intentArtifactId", "requestSha256", "authorizationMode", "disposition", "attempts"],
+      "properties": {
+        "operationId": { "type": "string", "minLength": 1 },
+        "tankProfileId": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+        "kind": { "enum": ["SIMULATION", "PUBLISH", "CHALLENGE"] },
+        "intentArtifactId": { "type": "string", "minLength": 1 },
+        "requestSha256": { "$ref": "#/$defs/sha256" },
+        "authorizationMode": { "enum": ["NOT_REQUIRED", "EXPLICIT_FLAG"] },
+        "disposition": { "enum": ["NOT_SENT", "CONFIRMED", "RESPONSE_LOST_CONFIRMED", "UNKNOWN", "CONFLICT"] },
+        "attempts": { "type": "integer", "minimum": 0 },
+        "remoteRequestId": { "type": ["string", "null"] },
+        "responseArtifactId": { "type": ["string", "null"] },
+        "reconciliationArtifactId": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

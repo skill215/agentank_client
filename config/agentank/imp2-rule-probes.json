@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "planId": "imp2-official-rule-probes-v1",
+  "operation": "OFFICIAL_SIMULATE_RULE_PROBE",
+  "endpoint": "/api/agent/tank/simulate",
+  "probes": [
+    { "probeId": "P2-MOVE-CONTEST", "ruleOrVariantId": "MOVE_CONTEST_V1", "reachability": "CONDITIONALLY_REACHABLE", "tankProfileIds": ["v1", "v2"], "mapId": "arena", "objective": "Force both tanks to contest the same target or swap cells." },
+    { "probeId": "P2-STAR-CONTEST", "ruleOrVariantId": "STAR_CONTEST_V1", "reachability": "CONDITIONALLY_REACHABLE", "tankProfileIds": ["v1", "v2"], "mapId": "arena", "objective": "Reach a shared star collection interaction without assuming move semantics." },
+    { "probeId": "P2-PROJECTILE-SHARED", "ruleOrVariantId": "PROJECTILE_SHARED_RESOURCE_V1", "reachability": "CONDITIONALLY_REACHABLE", "tankProfileIds": ["v1", "v2"], "mapId": "classic", "objective": "Make multiple projectiles reach one dirt shield or tank resource in the same substep." },
+    { "probeId": "P2-MULTI-BOMB", "ruleOrVariantId": "MULTI_BOMB_BATCH_V1", "reachability": "CONDITIONALLY_REACHABLE", "tankProfileIds": ["v1", "v2"], "mapId": "arena", "objective": "Create two bombs with the same explosion frame and shared blast resource." },
+    { "probeId": "P2-FREEZE-EMPTY", "ruleOrVariantId": "FREEZE_EMPTY_QUEUE_POLL_V1", "reachability": "CONDITIONALLY_REACHABLE", "tankProfileIds": ["v1", "v2"], "mapId": "arena", "objective": "Observe callback polling while a frozen queue is empty." },
+    { "probeId": "P2-BOOST-EMPTY", "ruleOrVariantId": "BOOST_EMPTY_QUEUE_REPOLL_V1", "reachability": "CONDITIONALLY_REACHABLE", "tankProfileIds": ["v1", "v2"], "mapId": "arena", "objective": "Observe same-frame callback behavior after a boosted free turn empties the queue." },
+    { "probeId": "P2-POISON-EMPTY", "ruleOrVariantId": "POISON_EMPTY_QUEUE_REPOLL_V1", "reachability": "REACHABLE", "tankProfileIds": ["v2"], "mapId": "arena", "objective": "Use the v2 poison skill to observe empty-queue repoll at an ACT/HOLD boundary." },
+    { "probeId": "P2-TELEPORT-REVEAL", "ruleOrVariantId": "TELEPORT_REVEAL_DEADLINE_V1", "reachability": "CONDITIONALLY_REACHABLE", "tankProfileIds": ["v1", "v2"], "mapId": "public-map-55", "objective": "Measure visibility observations after a successful teleport landing." },
+    { "probeId": "P2-TIMEOUT-BOUNDARY", "ruleOrVariantId": "TIMEOUT_COMPARATOR_V1", "reachability": "CONDITIONALLY_REACHABLE", "tankProfileIds": ["v1", "v2"], "mapId": "arena", "objective": "Bracket the exact 3000 ms timeout comparator without publishing code." },
+    { "probeId": "P2-RUNTIME-CLOCK", "ruleOrVariantId": "RUNTIME_CLOCK_CAPABILITY_V1", "reachability": "REACHABLE", "tankProfileIds": ["v2"], "mapId": "arena", "objective": "Inspect clock globals and public root fields after the callback watchdog showed Date is unavailable." },
+    { "probeId": "P2-EXACT-RUNTIME-TIE", "ruleOrVariantId": "EXACT_RUNTIME_TIE_V1", "reachability": "CONDITIONALLY_REACHABLE", "tankProfileIds": ["v1", "v2"], "mapId": "arena", "objective": "Reach equal stars and exactly equal measured runtime at terminal." },
+    { "probeId": "P2-FAILED-CAST", "ruleOrVariantId": "FAILED_CAST_COOLDOWN_V1", "reachability": "REACHABLE", "tankProfileIds": ["v1", "v2"], "mapId": "arena", "objective": "Submit a failed cast and observe family-specific cooldown consumption." }
+  ]
+}

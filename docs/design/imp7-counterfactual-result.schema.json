@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schemas/imp7-counterfactual-result.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "resultKind", "checkpointId", "controlledSide", "perspective", "quantifiers", "supportComplete", "assumptionMask", "divergenceFrame", "historicalSuffixConsumedFrames", "label", "labelCode", "proofGoal", "proofStatus", "visitedNodes", "coverageMask", "observationSignature", "fingerprint"],
+  "properties": {
+    "schemaVersion": { "const": 1 }, "resultKind": { "const": "BIDIRECTIONAL_COUNTERFACTUAL" },
+    "checkpointId": { "type": "string", "minLength": 1 }, "controlledSide": { "enum": [0, 1] },
+    "perspective": { "enum": ["CHALLENGER", "DEFENDER"] },
+    "quantifiers": { "type": "object", "additionalProperties": false, "required": ["ourAction", "enemyAction", "hiddenWorld", "chanceOutcome", "observation"],
+      "properties": { "ourAction": { "const": "EXISTS" }, "enemyAction": { "const": "FOR_ALL" }, "hiddenWorld": { "const": "FOR_ALL" }, "chanceOutcome": { "const": "FOR_ALL_SUPPORT" }, "observation": { "const": "STRATEGY_CONSISTENT" } } },
+    "supportComplete": { "type": "boolean" }, "assumptionMask": { "type": "integer", "minimum": 0 },
+    "divergenceFrame": { "type": ["integer", "null"], "minimum": 0 }, "historicalSuffixConsumedFrames": { "const": 0 },
+    "label": { "enum": ["UNKNOWN", "ROBUST_AVOIDABLE", "STRICT_UNAVOIDABLE"] }, "labelCode": { "enum": [0, 1, 2] },
+    "proofGoal": { "enum": ["NONE", "FORCED_NONLOSS", "FORCED_LOSS"] }, "proofStatus": { "enum": ["UNKNOWN", "PROVEN"] },
+    "visitedNodes": { "type": "integer", "minimum": 0 }, "coverageMask": { "type": "integer", "minimum": 0 },
+    "observationSignature": { "type": "string" }, "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

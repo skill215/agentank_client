@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schemas/discovery-skill-regression-suite.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "suiteId", "lane", "role", "tuningAllowed", "calibrationEligible", "frozenEligible", "runs"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "suiteId": { "type": "string", "minLength": 1 },
+    "lane": { "const": "DISCOVERY" },
+    "role": { "const": "REGRESSION_ONLY" },
+    "tuningAllowed": { "const": false },
+    "calibrationEligible": { "const": false },
+    "frozenEligible": { "const": false },
+    "runs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["skill", "tankUrlId", "runId", "minimumMatchCount", "requiredClaims"],
+        "properties": {
+          "skill": { "enum": ["shield", "freeze", "stun", "overload", "cloak", "poison", "teleport", "boost"] },
+          "tankUrlId": { "type": "string", "pattern": "^tnk_[A-Za-z0-9]+$" },
+          "runId": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+          "minimumMatchCount": { "type": "integer", "minimum": 1 },
+          "requiredClaims": { "type": "object", "minProperties": 1, "additionalProperties": { "type": "integer", "minimum": 1 } }
+        }
+      }
+    }
+  }
+}

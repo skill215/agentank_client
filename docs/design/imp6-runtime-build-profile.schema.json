@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schema/imp6-runtime-build-profile-v1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifestSchemaVersion", "profileId", "sourceKind", "cacheAbiRevision", "runtimeAbiRevision", "buildAbiRevision", "cache", "runtime", "searchBudgetProfiles", "build", "platformBlockers", "notes"],
+  "properties": {
+    "manifestSchemaVersion": { "const": 1 },
+    "profileId": { "const": "IMP6_LOCAL_RUNTIME_BUILD_V1" },
+    "sourceKind": { "enum": ["BUILD_CONFIGURED", "LOCAL_BENCHMARK_SELECTED", "PLATFORM_BENCHMARK_SELECTED"] },
+    "cacheAbiRevision": { "const": 1 },
+    "runtimeAbiRevision": { "const": 1 },
+    "buildAbiRevision": { "const": 1 },
+    "cache": {
+      "type": "object", "additionalProperties": false,
+      "required": ["entryCount", "ways", "enabled"],
+      "properties": {
+        "entryCount": { "type": "array", "minItems": 11, "maxItems": 11, "items": { "type": "integer", "minimum": 2 } },
+        "ways": { "type": "array", "minItems": 11, "maxItems": 11, "items": { "enum": [2, 4] } },
+        "enabled": { "type": "array", "minItems": 11, "maxItems": 11, "items": { "enum": [0, 1] } }
+      }
+    },
+    "runtime": {
+      "type": "object", "additionalProperties": false,
+      "required": ["fallbackEquivalentMs", "emergencyEquivalentMs", "referencePlatformBudgetMs", "callbackWatchdogMs", "emergencyReserveEquivalentMs", "degradedEnterWorkUnits", "fallbackEnterWorkUnits", "emergencyEnterWorkUnits", "perCallbackWorkUnitLimit", "minimumEmergencyBatchReserve", "workCharges"],
+      "properties": {
+        "fallbackEquivalentMs": { "const": 1500 }, "emergencyEquivalentMs": { "const": 2500 },
+        "referencePlatformBudgetMs": { "const": 3000 }, "callbackWatchdogMs": { "const": 1500 },
+        "emergencyReserveEquivalentMs": { "const": 500 },
+        "degradedEnterWorkUnits": { "type": "integer", "minimum": 1 },
+        "fallbackEnterWorkUnits": { "type": "integer", "minimum": 1 },
+        "emergencyEnterWorkUnits": { "type": "integer", "minimum": 1 },
+        "perCallbackWorkUnitLimit": { "type": "integer", "minimum": 1 },
+        "minimumEmergencyBatchReserve": { "type": "integer", "minimum": 1 },
+        "workCharges": { "type": "array", "minItems": 10, "maxItems": 10, "items": { "type": "integer", "minimum": 1 } }
+      }
+    },
+    "searchBudgetProfiles": {
+      "type": "array", "minItems": 4, "maxItems": 4,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["mode", "decisionDepth", "nodeBudget", "proofBudget", "matrixIterations", "matrixBatch"],
+        "properties": {
+          "mode": { "type": "integer", "minimum": 0, "maximum": 3 },
+          "decisionDepth": { "type": "integer", "minimum": 0 }, "nodeBudget": { "type": "integer", "minimum": 0 },
+          "proofBudget": { "type": "integer", "minimum": 0 }, "matrixIterations": { "type": "integer", "minimum": 0 },
+          "matrixBatch": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "build": {
+      "type": "object", "additionalProperties": false,
+      "required": ["ownSkillId", "evaluatorMode", "terserVersion", "mangle", "ecma", "localMaximumSourceBytes", "platformMaximumCodeBytes", "platformWarningCodeBytes", "localMaximumTypedArrayBytes", "localMaximumColdInitMicros", "localMaximumCallbackMicros"],
+      "properties": {
+        "ownSkillId": { "const": 6 }, "evaluatorMode": { "const": "GENERATED" },
+        "terserVersion": { "const": "5.43.1" }, "mangle": { "const": false }, "ecma": { "const": 2020 },
+        "localMaximumSourceBytes": { "type": "integer", "minimum": 1 },
+        "platformMaximumCodeBytes": { "const": 204800 },
+        "platformWarningCodeBytes": { "const": 190000 },
+        "localMaximumTypedArrayBytes": { "type": "integer", "minimum": 1 },
+        "localMaximumColdInitMicros": { "type": "integer", "minimum": 1 },
+        "localMaximumCallbackMicros": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "platformBlockers": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "notes": { "type": "string", "minLength": 1 }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "DISCOVERY_SKILL_REGRESSION_20260717_V1",
+  "lane": "DISCOVERY",
+  "role": "REGRESSION_ONLY",
+  "tuningAllowed": false,
+  "calibrationEligible": false,
+  "frozenEligible": false,
+  "runs": [
+    {
+      "skill": "boost",
+      "tankUrlId": "tnk_9Gn7nNb7EqODtynnS",
+      "runId": "boost-wumiguo-20260717-v1",
+      "minimumMatchCount": 10,
+      "requiredClaims": {
+        "claims.durationSixFrames": 1,
+        "claims.goMovesUpToTwoTiles": 1,
+        "claims.firstTurnCanBeFree": 1
+      }
+    },
+    {
+      "skill": "shield",
+      "tankUrlId": "tnk_5Lpbgtl0JCnJuk5xZ",
+      "runId": "shield-feizai-20260717-v1",
+      "minimumMatchCount": 10,
+      "requiredClaims": {
+        "claims.durationFourFrames": 1,
+        "claims.absorbsBulletWithoutDestroyingTank": 1,
+        "claims.firstBulletLeavesOneCharge": 1,
+        "claims.secondBulletConsumesShield": 1
+      }
+    },
+    {
+      "skill": "cloak",
+      "tankUrlId": "tnk_30YaQEAipUaFRAXNr",
+      "runId": "cloak-nightjar-20260717-v1",
+      "minimumMatchCount": 10,
+      "requiredClaims": {
+        "claims.durationSixFrames": 1,
+        "claims.doesNotPreventNormalActions": 1,
+        "implementationBehavior.manualCampPattern": 1
+      }
+    },
+    {
+      "skill": "teleport",
+      "tankUrlId": "tnk_ImhCqFPsuwD7p12xg",
+      "runId": "teleport-hajimiovo-20260717-v1",
+      "minimumMatchCount": 10,
+      "requiredClaims": {
+        "claims.movesInstantlyToLegalTarget": 1,
+        "claims.supportsTargetsBeyondStarAdjacency": 1
+      }
+    }
+  ]
+}

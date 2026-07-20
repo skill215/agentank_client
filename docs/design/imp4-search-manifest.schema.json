@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schema/imp4-search-manifest-v1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifestSchemaVersion", "profileId", "sourceKind", "searchAbiRevision", "limits", "capacityClasses", "overflow", "notes"],
+  "properties": {
+    "manifestSchemaVersion": { "const": 1 },
+    "profileId": { "const": "IMP4_CONSERVATIVE_SEARCH_V1" },
+    "sourceKind": { "enum": ["BUILD_CONFIGURED", "BENCHMARK_SELECTED"] },
+    "searchAbiRevision": { "const": 1 },
+    "limits": {
+      "type": "object",
+      "additionalProperties": { "type": "integer", "minimum": 1 },
+      "required": ["maxNodes", "maxEdges", "maxDecisionDepth", "maxOurActions", "maxEnemyPolicies", "maxSupportPerNode", "maxChanceOutcomes", "maxProofFrames", "maxCoverageRecords", "maxPolicies", "maxPolicyEntries", "maxMatrixIterations", "maxDoubleOracleExpansions", "maxRiskClasses"]
+    },
+    "capacityClasses": {
+      "type": "object",
+      "additionalProperties": { "enum": ["FACT_CRITICAL", "SUPPORT_CRITICAL", "SEARCH_QUALITY", "CACHE_ONLY", "OUTPUT_CRITICAL"] },
+      "required": ["nodes", "edges", "worldSupport", "chanceSupport", "actionSupport", "proofFrames", "coverage", "policy", "matrixScratch"]
+    },
+    "overflow": {
+      "type": "object",
+      "additionalProperties": { "type": "string", "minLength": 1 },
+      "required": ["nodes", "edges", "proofFrames", "coverage", "policy", "matrixScratch"]
+    },
+    "notes": { "type": "string", "minLength": 1 }
+  }
+}

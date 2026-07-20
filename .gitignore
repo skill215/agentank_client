@@ -1,0 +1,42 @@
+node_modules/
+.env
+.env.*
+!.env.example
+
+# Local battle evidence. Keep only the control-directory contract in Git;
+# downloaded matches, rolling corpora, replay indexes and battle baselines stay local.
+/battle-records/*
+!/battle-records/control/
+/battle-records/control/*
+!/battle-records/control/README.md
+!/battle-records/control/locks/
+!/battle-records/control/rate-limit/
+/battle-baselines/
+
+# Alternate raw-data locations are also local-only. These explicit rules keep
+# future V1 downloads and ad-hoc match exports out of Git even when they are
+# not stored under the canonical battle-records directory.
+/battle-data/
+/match-data/
+/v1-battle-data/
+/v1-match-data/
+/v1-battle-records/
+/v1-match-records/
+/data/battles/
+/data/matches/
+/data/v1-battles/
+/data/v1-matches/
+
+# Generated build, replay and benchmark evidence can be reproduced locally and
+# includes multi-gigabyte historical battle derivatives.
+/artifacts/
+
+# Local profile identity and locks. The registry contains no key value, but is machine-local.
+battle-records/control/tank-registry.json
+battle-records/control/locks/*
+!battle-records/control/locks/.gitkeep
+battle-records/control/rate-limit/*
+!battle-records/control/rate-limit/.gitkeep
+
+# Same-directory atomic-write scratch files.
+*.tmp-*

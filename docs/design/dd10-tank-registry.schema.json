@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentank.local/schemas/dd10-tank-registry.schema.json",
+  "title": "AgenTank Non-secret Tank Profile Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "registryId", "profiles", "updatedAt", "fingerprint"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "registryId": { "type": "string", "minLength": 1 },
+    "profiles": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/profile" },
+      "minItems": 1
+    },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "fingerprint": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "secretRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "name", "keyGenerationId"],
+      "properties": {
+        "provider": { "enum": ["ENV", "SECRET_PROVIDER"] },
+        "name": { "type": "string", "minLength": 1 },
+        "keyGenerationId": { "type": "string", "minLength": 1 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "provider": { "const": "ENV" } }, "required": ["provider"] },
+          "then": { "properties": { "name": { "pattern": "^[A-Z][A-Z0-9_]*$" } } }
+        }
+      ]
+    },
+    "branch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["branch", "publishedVersion", "publishedCodeHash", "baselineStatus"],
+      "properties": {
+        "branch": { "enum": ["main", "raid", "multiplayer"] },
+        "publishedVersion": { "type": ["integer", "null"], "minimum": 0 },
+        "publishedCodeHash": { "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+        "baselineStatus": { "enum": ["VERIFIED_BASELINE", "UNPUBLISHED", "FALLS_BACK_TO_MAIN", "UNKNOWN"] },
+        "contextArtifactId": { "type": ["string", "null"] }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tankProfileId", "alias", "status", "tankId", "tankUrlId", "ownerScopeId", "secretRef", "skillId", "skillProvenance", "branches", "createdAt", "updatedAt", "lastVerifiedAt"],
+      "properties": {
+        "tankProfileId": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+        "alias": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["BOOTSTRAP", "ACTIVE", "READ_ONLY", "RETIRED"] },
+        "tankId": { "type": ["integer", "null"], "minimum": 0 },
+        "tankUrlId": { "type": ["string", "null"] },
+        "ownerScopeId": { "type": "string", "minLength": 1 },
+        "secretRef": { "$ref": "#/$defs/secretRef" },
+        "skillId": { "enum": ["shield", "freeze", "stun", "overload", "cloak", "poison", "teleport", "boost", "UNKNOWN"] },
+        "skillProvenance": { "enum": ["PLATFORM_CONTEXT", "UNKNOWN"] },
+        "branches": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/branch" },
+          "minItems": 1
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "lastVerifiedAt": { "type": ["string", "null"], "format": "date-time" }
+      }
+    }
+  }
+}

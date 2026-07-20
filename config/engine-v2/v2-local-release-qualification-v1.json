@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "qualificationId": "V2_LOCAL_RELEASE_QUALIFICATION_V1",
+  "contractRelativePath": "docs/design/v2-candidate-release-qualification-contract.md",
+  "requirements": {
+    "minimumRepetitions": 2,
+    "requiredTraceMode": "ACTIONS",
+    "requireDynamicRollingCorpus": true,
+    "requireSameInputTotalRuntimeBelowV1": true,
+    "requireSameInputP95BelowV1": true,
+    "requireAvoidableHardRejectsZero": true,
+    "requireRootRestoreFailuresZero": true,
+    "requireHotAllocationsZero": true,
+    "requireV2TimeoutsAndErrorsZero": true,
+    "nativeRegressionDisposition": "EXPLICIT_USER_REVIEW_REQUIRED",
+    "frozenCandidateBindingRequiredBeforeOfficialSimulation": true
+  }
+}
