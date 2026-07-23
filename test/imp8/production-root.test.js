@@ -34,6 +34,31 @@ function game(frame, map, overrides = {}) {
   return { frames: frame, map, star: null, bombs: [], ...overrides };
 }
 
+test("Information A/B switches are opt-in and cannot change production defaults", () => {
+  const production = new ProductionRootEngine();
+  assert.equal(production.diagnosticLegacyInformationSearch, 0);
+  assert.equal(production.diagnosticInformationDepthOne, 0);
+  assert.equal(production.diagnosticDisableShallowInfoAdjustment, 0);
+  assert.equal(production.diagnosticDisableShallowClearLineReversal, 0);
+  assert.equal(production.diagnosticDisableShallowEscapeBonus, 0);
+  assert.equal(production.diagnosticEnableLegacyShallowFacingPenalty, 0);
+  const diagnostic = new ProductionRootEngine({
+    diagnosticLegacyInformationSearch: true,
+    diagnosticInformationDepthOne: true,
+    diagnosticDisableShallowInfoAdjustment: true,
+    diagnosticDisableShallowClearLineReversal: true,
+    diagnosticDisableShallowEscapeBonus: true,
+    diagnosticEnableLegacyShallowFacingPenalty: true
+  });
+  assert.equal(diagnostic.diagnosticLegacyInformationSearch, 1);
+  assert.equal(diagnostic.diagnosticInformationDepthOne, 1);
+  assert.equal(diagnostic.diagnosticDisableShallowInfoAdjustment, 1);
+  assert.equal(diagnostic.informationSearch.diagnosticDisableShallowAdjustment, 1);
+  assert.equal(diagnostic.informationSearch.diagnosticDisableShallowClearLineReversal, 1);
+  assert.equal(diagnostic.informationSearch.diagnosticDisableShallowEscapeBonus, 1);
+  assert.equal(diagnostic.informationSearch.diagnosticEnableLegacyShallowFacingPenalty, 1);
+});
+
 test("production root maps a complete platform root and emits the selected action", () => {
   const calls = []; const map = boxedMap(5, 5);
   const me = side("own", [1, 1], "right", "poison", calls);

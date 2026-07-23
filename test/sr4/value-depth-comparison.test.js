@@ -143,8 +143,13 @@ test("SR4 proximity leaf prefers facing away from a close enemy", () => {
   state.arrays[ARRAY.SCALAR] = scalar;
   depth.clearLine = () => 1;
   depth.mobility = () => 2;
-  const toward = info.adjustShallowLeaf(depth, state, depth.heuristic(state));
+  const towardBase = depth.heuristic(state);
+  const toward = info.adjustShallowLeaf(depth, state, towardBase);
   tankDir[0] = 0;
-  const away = info.adjustShallowLeaf(depth, state, depth.heuristic(state));
+  const awayBase = depth.heuristic(state);
+  const away = info.adjustShallowLeaf(depth, state, awayBase);
+  assert.equal(toward - towardBase, -1200,
+    "clear-line reversal must not also apply the rejected legacy facing penalty");
+  assert.equal(away - awayBase, 400, "the independently positive escape bonus remains");
   assert.ok(away > toward, "facing away must outrank facing into proximity threat");
 });

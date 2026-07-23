@@ -11,6 +11,8 @@ syntax_files=(
   engine-v2/src/search/risk-acceptance-controller.js
   tools/agentank/cli/artifact-retention-ops.js
   tools/agentank/cli/v1-v2-working-arena.js
+  tools/agentank/diagnostics/gr0-change-ablation.js
+  tools/agentank/diagnostics/gr0-parent-sample.js
   tools/agentank/diagnostics/v1-v2-working-arena.js
   tools/agentank/fast-regression/death-category-probe.js
   tools/agentank/retention/artifact-retention.js

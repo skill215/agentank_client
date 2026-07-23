@@ -3,6 +3,7 @@
 Each IMP stage writes one immutable overview here with input hashes, commands, test denominators, benchmark evidence, deviations, unresolved issues, and the next-stage decision.
 
 - [gr0-global-recovery.md](gr0-global-recovery.md) — GR0 artifact retention、committed danger 所有权、Minimax/Risk/EO 纯 UT 门和 6,608 局 compact arena 合同。
+- [gr0-change-causality.md](gr0-change-causality.md) — rejected 变更区间的单因素/holdout 因果审计、正负修改分类和选择性 shallow Information 恢复。
 - [imp0-overview.md](imp0-overview.md) — IMP0 implementation overview and accepted machine-evidence link.
 - [imp0-platform-foundation-overview.md](imp0-platform-foundation-overview.md) — earlier platform-control slice retained as supporting history, not the IMP0 completion owner.
 - [imp1-overview.md](imp1-overview.md) — IMP1 multi-profile/read-only platform implementation and accepted real-context evidence.

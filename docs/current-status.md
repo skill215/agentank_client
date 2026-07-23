@@ -85,7 +85,7 @@ npm run test:gr0
 ```
 
 该脚本只做修改文件语法检查和纯 UT，不读取 `battle-records`、旧回归、Capsule、focused cohort
-或对战模拟。当前结果：**122/122 PASS**。
+或对战模拟。当前结果：**123/123 PASS**。
 
 覆盖：
 
@@ -98,26 +98,27 @@ npm run test:gr0
 - committed Deadline/EO、实体复用、possible/future threat 隔离；
 - FIRE/NONE/技能 survivor 保留、Hard 不可恢复、Safety mass 不被 EO 修改。
 
-## 下一步：唯一一次 6,608 局全量对战
+## 已完成：GR0 6,608 局全量对战（REJECTED）
 
-GR0 源码提交后，直接执行：
+GR0 完整运行已得到：
 
-```bash
-./tools/v1-v2-working-arena.sh \
-  --repetitions 2 \
-  --trace compact \
-  --progress-every 32 \
-  --output artifacts/diagnostics/v1-v2-working/<content-addressed-directory>
-```
+| 项 | 结果 |
+|---|---:|
+| 完成局数 | 6,608 / 6,608 |
+| V2胜 / V1胜 / 平 | 1,125 / 4,630 / 853 |
+| `V2胜 + 0.5×平` | 23.47% |
+| 固定266场景 V2单方击毁胜 / 负 | 111 / 465 |
+| avoidable Hard / dominated / root restore / timeout / error | 0 / 0 / 0 / 0 / 0 |
 
-固定目标分母为 `826 × 2 × 4 = 6,608`。只允许生成：
+结构可靠性通过，但玩法门失败，GR0 状态为 `REJECTED`。
 
-```text
-manifest.json
-working-arena-overview.json
-matches.ndjson.gz
-diagnostic-samples.ndjson.gz
-```
+## 已完成：未提交变更因果审计与选择性恢复
 
-运行通过或失败都不自动补丁、不进行第二轮、不执行官方 simulate/publish/challenge。完整门槛和
-证据布局见 [GR0 全局恢复](implementation/gr0-global-recovery.md)。
+整段回退到 `643ae1e` 在同样本上更差且约慢 2.3 倍。已证明并保留 Information depth 2、
+inexact Information 路由、clear-line 反转和 committed-only EO；已证明并删除近距离面向敌人
+的重复 `-800` 惩罚。独立 holdout 从 54/284/46 改善为 60/277/47，得分
+20.05%→21.74%。详见 [GR0 变更因果审计](implementation/gr0-change-causality.md)。
+
+下一步必须在新的完整 arena 前先继续定位其余独立结构原因；本次选择性修复本身不宣称满足
+60% 资格门。Production source/minified 语义一致，但临时构建为 427,475 bytes，仍超过平台
+204,800 bytes 限制。

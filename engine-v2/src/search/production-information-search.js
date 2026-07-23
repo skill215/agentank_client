@@ -26,6 +26,10 @@ class ProductionInformationSearch {
     this.projectilePresenceBackupCount = 0; this.immediateFireBackupCount = 0;
     this.trapProbeBudget = 0; this.continuationLeafBudget = 0;
     this.continuationPoolRemaining = 0;
+    this.diagnosticDisableShallowAdjustment = 0;
+    this.diagnosticDisableShallowClearLineReversal = 0;
+    this.diagnosticDisableShallowEscapeBonus = 0;
+    this.diagnosticEnableLegacyShallowFacingPenalty = 0;
   }
 
   resetRoot() {
@@ -115,6 +119,7 @@ class ProductionInformationSearch {
     bundle.state.undoTo(mark); return value;
   }
   adjustShallowLeaf(evaluator, state, value) {
+    if (this.diagnosticDisableShallowAdjustment) return value;
     const a = state.arrays; const own = a[ARRAY.TANK_CELL][0]; const enemy = a[ARRAY.TANK_CELL][1];
     const proximity = evaluator.distance(state, own, enemy);
     if (proximity > 2) return value;
@@ -122,10 +127,15 @@ class ProductionInformationSearch {
     if (ownWanted < 0) return value;
     const dir = a[ARRAY.TANK_DIR][0];
     // Reverse the clear-line +1200 when it fired inside adjacency, then apply
-    // the shallow facing liability / escape bonus.
-    if (evaluator.clearLine(state, own, enemy) && dir === ownWanted) value -= 1200;
-    if (dir === ownWanted) value -= 800;
-    else if (dir === ((ownWanted + 2) & 3)) value += 400;
+    // only the independently retained escape bonus.
+    if (!this.diagnosticDisableShallowClearLineReversal &&
+        evaluator.clearLine(state, own, enemy) && dir === ownWanted) value -= 1200;
+    // The former unconditional -800 facing penalty was negative in both the
+    // failure-focused cohort and an independent holdout. Clear-line reversal
+    // already removes the adjacency attack bonus; do not penalize it twice.
+    if (dir === ownWanted && this.diagnosticEnableLegacyShallowFacingPenalty) value -= 800;
+    else if (dir === ((ownWanted + 2) & 3) &&
+        !this.diagnosticDisableShallowEscapeBonus) value += 400;
     return Math.max(-25000, Math.min(25000, value));
   }
   evaluateChance(bundle, evaluator, action0, argument0, action1, argument1,

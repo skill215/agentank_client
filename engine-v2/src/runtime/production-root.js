@@ -542,6 +542,27 @@ class ProductionRootEngine {
     this.escapeObligation = new EscapeObligation();
     this.diagnosticDisableEscapeQuality = options.diagnosticDisableEscapeQuality ? 1 : 0;
     this.diagnosticDisableEscapeObligation = options.diagnosticDisableEscapeObligation ? 1 : 0;
+    // A/B-only switches. They default off and never alter production behavior.
+    // Together they reproduce the pre-Step-5 Information routing without
+    // replacing the current Hard/Risk/EO implementation.
+    this.diagnosticLegacyInformationSearch = options.diagnosticLegacyInformationSearch ? 1 : 0;
+    this.diagnosticInformationDepthOne = options.diagnosticInformationDepthOne ? 1 : 0;
+    this.diagnosticDisableShallowInfoAdjustment =
+      options.diagnosticDisableShallowInfoAdjustment ? 1 : 0;
+    this.diagnosticDisableShallowClearLineReversal =
+      options.diagnosticDisableShallowClearLineReversal ? 1 : 0;
+    this.diagnosticDisableShallowEscapeBonus =
+      options.diagnosticDisableShallowEscapeBonus ? 1 : 0;
+    this.diagnosticEnableLegacyShallowFacingPenalty =
+      options.diagnosticEnableLegacyShallowFacingPenalty ? 1 : 0;
+    this.informationSearch.diagnosticDisableShallowAdjustment =
+      this.diagnosticDisableShallowInfoAdjustment;
+    this.informationSearch.diagnosticDisableShallowClearLineReversal =
+      this.diagnosticDisableShallowClearLineReversal;
+    this.informationSearch.diagnosticDisableShallowEscapeBonus =
+      this.diagnosticDisableShallowEscapeBonus;
+    this.informationSearch.diagnosticEnableLegacyShallowFacingPenalty =
+      this.diagnosticEnableLegacyShallowFacingPenalty;
     this.possibleProjectiles = new PossibleProjectileTracker();
     this.tactical = options.tactical || TACTICAL_CONFIG;
     this.ourActions = new Uint8Array(SEARCH_CAPACITY.MAX_OUR_ACTIONS);
@@ -1665,25 +1686,36 @@ class ProductionRootEngine {
         const nominalCount = this.policy.opponent.buildNominalPolicy(this.enemyActionFamilies,
           this.enemyCount, this.opponentContext(), this.informationSearch.enemyProbability);
         if (nominalCount === this.enemyCount) {
-          // Prefer Information search for every inexact contact — including a
-          // visible singleton world. The old Physical-adopt shortcut spent the
-          // whole node budget on depth-1 breadth and never funded the depth-2
-          // continuation leaves that separate escape from commitment.
-          const infoOk = this.informationSearch.search(bundle, this.depthSearch,
-            this.ourActions, this.ourArguments, valueOurCount, this.enemyActions,
-            this.enemyArguments, this.enemyCount, this.hiddenWorldCell,
-            this.hiddenWorldMass, this.hiddenWorldCount,
-            this.hiddenSupportComplete && exact, valueNodeBudget, this.policy.baseRisk,
-            this.adapter.lastEnemyDirection, this.adapter.enemyVisible,
-            this.informationSearch.enemyProbability, this.searchOptions.decisionDepth);
-          if (!infoOk && this.adapter.enemyVisible) {
-            // Fallback only: Physical approximate bound when the Information
-            // matrix cannot fit. Still cannot authorize Hard or strict Proof.
+          if (this.adapter.enemyVisible && this.diagnosticLegacyInformationSearch) {
+            // Diagnostic reproduction of the pre-Step-5 route: a visible pose
+            // with another incomplete observation dimension uses Physical
+            // bounds as approximate Information values.
             this.depthSearch.search(bundle, this.ourActions, this.ourArguments,
               valueOurCount, this.enemyActions, this.enemyArguments, this.enemyCount,
               this.searchOptions.decisionDepth, valueNodeBudget, this.policy.baseRisk);
             this.informationSearch.adoptPhysicalBounds(this.depthSearch);
             this.depthSearch.resetRoot();
+          } else {
+            // Prefer Information search for every inexact contact — including a
+            // visible singleton world. A/B can independently cap it at depth 1.
+            const informationDepth = this.diagnosticInformationDepthOne ||
+              this.diagnosticLegacyInformationSearch ? 1 : this.searchOptions.decisionDepth;
+            const infoOk = this.informationSearch.search(bundle, this.depthSearch,
+              this.ourActions, this.ourArguments, valueOurCount, this.enemyActions,
+              this.enemyArguments, this.enemyCount, this.hiddenWorldCell,
+              this.hiddenWorldMass, this.hiddenWorldCount,
+              this.hiddenSupportComplete && exact, valueNodeBudget, this.policy.baseRisk,
+              this.adapter.lastEnemyDirection, this.adapter.enemyVisible,
+              this.informationSearch.enemyProbability, informationDepth);
+            if (!infoOk && this.adapter.enemyVisible) {
+              // Fallback only: Physical approximate bound when the Information
+              // matrix cannot fit. Still cannot authorize Hard or strict Proof.
+              this.depthSearch.search(bundle, this.ourActions, this.ourArguments,
+                valueOurCount, this.enemyActions, this.enemyArguments, this.enemyCount,
+                this.searchOptions.decisionDepth, valueNodeBudget, this.policy.baseRisk);
+              this.informationSearch.adoptPhysicalBounds(this.depthSearch);
+              this.depthSearch.resetRoot();
+            }
           }
           this.runtime.charge(WORK_KIND.FAST_TRANSITION, this.informationSearch.nodes);
           this.runtime.charge(WORK_KIND.HARD, this.informationSearch.nodes);
