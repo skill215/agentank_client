@@ -1,91 +1,123 @@
 # 当前状态
 
-更新时间：2026-07-21（Asia/Shanghai）。
+更新时间：2026-07-23（Asia/Shanghai）。
 
-## 工作区
+## 工作区与恢复分支
 
-- 当前唯一工作区：`/home/skill/workspace/git/agentank_client`。
-- Git 分支：`main`（HEAD `643ae1e9…`，提交说明 `draft`）。
-- Remote：`git@github.com:skill215/agentank_client.git`。
+- 唯一工作区：`/home/skill/workspace/git/agentank_client`。
+- 当前恢复分支：`codex/v2-global-recovery`。
+- `REJECTED` dirty 源码检查点：`17f0979`。
 - Node：`v24.16.0`。
+- V1、旧 IMP8 Candidate、官方 context/simulate attestation 和真实 `battle-records/`
+  均保持只读。
 
-## 结构修复基线 B0（已冻结）
+本轮是 **GR0 全局恢复**。它替代 R21–R23 的逐帧 Capsule 工作流，不再把历史完整回归负载
+当成长期资产。旧报告仍是历史说明，但其中被清理的 artifact 路径不再是可用证据入口。
 
-语义修复开始前的锚点见
-[structural-repair-baseline-b0.md](implementation/structural-repair-baseline-b0.md)：
+## 已完成：旧证据瘦身
 
-| 项 | 值 |
-|---|---|
-| `workingSourceSha256`（B0） | `d2f0791de39267d6742a9c8e83dd70b441b25e7a631c98d51be3f265dbc9d892` |
-| `npm run test:4`（B0） | 183/183 PASS |
-| R21 Capsule 不变量 | 全部为 0 失败（19,136 根，证据未重跑） |
-| `DOMINATED_RESCUE` / `NO_ACCEPTABLE_RESCUE` | 39 / 55 |
-| production minified（现有产物） | 397,799 UTF-8 字节（超限；且相对工作源有 1 模块漂移） |
+固定工具：
 
-Production 压缩保持**独立流水线**，不与搜索语义改动共用验收指纹。
+```bash
+./tools/artifact-retention-toolchain.sh inventory
+./tools/artifact-retention-toolchain.sh compact
+./tools/artifact-retention-toolchain.sh verify
+./tools/artifact-retention-toolchain.sh prune --manifest \
+  artifacts/retention/gr0/verified-prune-manifest.json
+```
 
-## 算法状态
+结果：
 
-V2 当前包括 Physical/Information 分离、committed/possible 弹丸、Safety/Hard/Proof、
-多维风险、StageMatrix/Minimax、PersistentPlan + **EscapeObligation（Step 3a）**、Replay Capsule 等。
+| 项 | 结果 |
+|---|---:|
+| 删除文件 | 24,825 |
+| 释放空间 | 4,592,945,690 bytes |
+| 清理后 `artifacts/` | 约 16 MB |
+| `battle-records/` | 约 162 MB，未删除 |
+| Verified manifest | `493a144e2f6291844c2a71f8294322084ba6e1e403f11e96a94337d24bc94ccb` |
+| Prune receipt | `0e84f433fc4bea60f9b1d595d7cd5d046fc7ae2f451f0d3cebcf4ef4bd2525ab` |
 
-相对 B0 的语义改动：EscapeObligation + DeadlineKernel + Step 4–5 value-depth +
-**短收敛 R22b** + **Step 6 ForcedWin→Info** + **projectile/bomb-aware Deadline** +
-**CONTINUATION 清零 R23** + **短收敛 R23b** + **Escape Quality Phase0–4**。
-当前工作源以 `sourceIdentity()` 为准；`npm run test:4` → **209/209 PASS**。
+紧凑 `LegacyArenaBaselineV1` 保留：
 
-## Step 1–6 与 DeadlineKernel 进度
+| 基线 | 分母 | V2 胜 | V1 胜 | 平 |
+|---|---:|---:|---:|---:|
+| IMP8 common | 1,952 | 731 | 1,091 | 130 |
+| working `0ed5c5…` common | 5,936 | 550 | 4,849 | 537 |
+| SR3 final | 2,128 | 1,225 | 792 | 111 |
+| SR4 final | 2,128 | 1,179 | 828 | 121 |
 
-| Step | 状态 | 文档 |
-|---|---|---|
-| 1 死亡四类分桶 | 完成 | [death-category-probe-b0](implementation/death-category-probe-b0.md) |
-| 2 事实层扫描 | 完成 | [fact-layer-scan-b0](implementation/fact-layer-scan-b0.md) |
-| 3a EscapeObligation | 完成 | [escape-obligation-step3a](implementation/escape-obligation-step3a.md) |
-| 3b value-depth 诊断 | 完成 | [value-depth-probe-b0](implementation/value-depth-probe-b0.md) |
-| 3b 复访（残差+性能） | 完成 | [value-depth-residual-post-s5](implementation/value-depth-residual-post-s5.md) |
-| 短收敛 R22b | 完成 | [value-depth-convergence-r22b](implementation/value-depth-convergence-r22b.md) |
-| CONTINUATION 再探针（EO） | 完成 | [continuation-reprobe-post-eo](implementation/continuation-reprobe-post-eo.md)：0/8 |
-| DeadlineKernel | 完成 | [deadline-kernel](implementation/deadline-kernel.md)：1/8 |
-| Projectile Deadline | 完成 | [deadline-projectile-aware](implementation/deadline-projectile-aware.md)：3/8 |
-| **CONTINUATION 清零** | **完成** | [continuation-cleared-r23](implementation/continuation-cleared-r23.md)：**8/8** |
-| **短收敛 R23b** | **完成** | [short-convergence-r23b](implementation/short-convergence-r23b.md)：vs R22c S2D=0，主池 75→87 |
-| **Escape Quality P0–4** | **完成** | [escape-quality-phases](implementation/escape-quality-phases.md)：Membership/Quality 拆分；部分 demote 退役 |
-| 4 value-depth 比较语义 | 完成 | [value-depth-step4](implementation/value-depth-step4.md) |
-| 5 Information 递归 | 完成 | [information-recursion-step5](implementation/information-recursion-step5.md) |
-| 6 ForcedWin→Info | 完成 | [forced-win-information-step6](implementation/forced-win-information-step6.md) |
+同时保留历史 55.6% 汇总及其源码指纹，并明确标记其精确源码字节缺失。紧凑基线位于本地忽略目录
+`artifacts/retention/gr0/baselines/`；它们只保存逐局结果，不保存逐帧 state、candidate rows、
+replay events 或重复地图/星序列。
 
-## 当前阻塞
+## 已完成：GR0 结构修复
 
-1. **体积**：平台上限 204,800。
+生产选择顺序固定为：
 
-## 回归基线（已替换：742 场景）
+```text
+Hard
+→ Risk 多维可接受集
+→ committed escape 交集
+→ Pareto 支配
+→ 最大 robustLower safe floor
+→ StageMatrix
+→ expected / tactical / 稳定行号
+```
 
-2026-07-21 已 `sync-history` + V1/V2 working-arena + 全量 capture，**替换**本地回归证据
-（不保留多份旧报告/run）。明细：[regression-refresh-742](implementation/regression-refresh-742.md)。
+关键约束：
 
-| 项 | 值 |
-|---|---|
-| History | **742** 场景 / **735** 地图（旧 598，**+144**） |
-| Working-arena | 5936 场，V2 **1085** 胜 / 4851 负（≈**18.3%**） |
-| 同局 vs IMP8 基线 | 1952 场：**731→368**（≈37.5%→18.9%，净 −363） |
-| Capture run | `run-068b60d6…`：2968 场 / **23744** Capsule |
-| Capsule-all | **ACCEPTED** `965111e7863987e2…`（失败 0） |
-| Focused | `native-poison-death`：主池 58/64 固定续局可逃；控制 75/96 存活 |
-| 玩法门 analyze-run | REJECTED（可靠性 PASS；分数门未过） |
-| 工作源 | `0ed5c5b27938bf3e…`（与 capture 一致） |
+- Information 风险不再清空 tactical、不再降低 safe floor，也不禁用 mixed policy。
+- `NO_ACCEPTABLE_ACTION` 只在 Risk 可接受集为空时按最小风险字典序回退，Hard 永不放宽。
+- `EscapeObligation.evaluateCommitted(...)` 只绑定真实炸弹和敌方 committed 弹丸。
+- 实体身份是 `kind + owner + id + generation`。
+- possible projectile、future FIRE、己方弹丸和枪口朝向不创建 Escape obligation。
+- ReverseViability 证明可活的 FIRE、NONE、技能和移动动作一律保留。
+- support 不完整不限制动作；EO 不再制造 Safety 死亡概率。
+- `null` 弹丸观察只对严格可见射线做反证；单数弹丸仍不代表完整集合。
+- 同平台帧重复求值保持幂等，Physical TT 可以复用。
 
-胜率骤降分析：[v2-winrate-drop-analysis](implementation/v2-winrate-drop-analysis.md)
-（主因整局星竞争崩，非新地图过拟合）。
+## 已完成：纯结构门禁
 
-星翻转消融：[star-flip-escape-ablation](implementation/star-flip-escape-ablation.md)：
-Quality/demote 无效；关整段 EscapeObligation 胜率 8%→22% 仍远低于基线 51%，TURN 占比不降
-→ 主因在 EO 外 Soft/Info/搜索栈。
+唯一入口：
 
-旧 Escape Quality 对照（19,136 Capsule / 主池 87）已作废；后续 focused/compare 以本基线为准。
+```bash
+npm run test:gr0
+```
 
-## 下一步
+该脚本只做修改文件语法检查和纯 UT，不读取 `battle-records`、旧回归、Capsule、focused cohort
+或对战模拟。当前结果：**122/122 PASS**。
 
-1. **开野 Soft 误触发**：`!committed && !stayExposed` 时禁止 Soft/deathPressure 压 GO（优先消融验证）。
-2. EO 仅保留接触/committed；远距离帧不 `applyToSafety` / first-action restrict。
-3. 整局星差 / frameLimit 胜率纳入门禁；focused S2D 不能单独合格。
-4. 语义冻结后再做 Production 瘦身与 Candidate。
+覆盖：
+
+- exhaustive 小型 Minimax max-min/min-max、simultaneous matrix、chance/hidden robust backup；
+- Proof AND/OR、HiddenWorld/Chance/Observation 严格量词和所有预算前缀不产生假 Proof；
+- StageMatrix exact bounds、exploitability、dominated row 和不完整矩阵语义；
+- iterative deepening 中断只保留最后完整深度；
+- root restore、状态复用、物理 TT、cache on/off；
+- Risk 阈值、Pareto、robust floor、emergency lexicographic fallback；
+- committed Deadline/EO、实体复用、possible/future threat 隔离；
+- FIRE/NONE/技能 survivor 保留、Hard 不可恢复、Safety mass 不被 EO 修改。
+
+## 下一步：唯一一次 6,608 局全量对战
+
+GR0 源码提交后，直接执行：
+
+```bash
+./tools/v1-v2-working-arena.sh \
+  --repetitions 2 \
+  --trace compact \
+  --progress-every 32 \
+  --output artifacts/diagnostics/v1-v2-working/<content-addressed-directory>
+```
+
+固定目标分母为 `826 × 2 × 4 = 6,608`。只允许生成：
+
+```text
+manifest.json
+working-arena-overview.json
+matches.ndjson.gz
+diagnostic-samples.ndjson.gz
+```
+
+运行通过或失败都不自动补丁、不进行第二轮、不执行官方 simulate/publish/challenge。完整门槛和
+证据布局见 [GR0 全局恢复](implementation/gr0-global-recovery.md)。

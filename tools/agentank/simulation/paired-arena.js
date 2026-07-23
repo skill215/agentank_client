@@ -10,6 +10,7 @@ const { ensureDirectory, writeJsonAtomic, writeJsonImmutable } = require("../cor
 const { loadDd9Assignment, idsForRole } = require("./dd9-assignment");
 const { scenariosForIds, createHistoricalStarProvider } = require("./historical-scenarios");
 const { ProductionDiagnosticBot, diagnosticCopy } = require("./production-diagnostic-bot");
+const { ACTION } = require("../../../engine-v2/src/abi/fast-codes");
 
 const SIMULATOR_COMMIT = "1ef804eb2c187138c4c8e5229fb37cd0126beddf";
 const SIMULATOR_ARCHIVE_SHA256 = "b9498c1a7d8a2d5bcc015c05fe838ca5a87b7c211629884d3a830cfb6eae70a4";
@@ -36,12 +37,20 @@ class DecisionAudit {
     this.bot = bot; this.decisions = 0; this.timeoutCount = 0; this.errorCount = 0;
     this.runtimeMicros = []; this.actionCounts = {}; this.actionFrames = [];
     this.captureActionFrames = Boolean(options.captureActionFrames);
+    this.captureCompactFrames = Boolean(options.captureCompactFrames);
+    this.compactActionCodes = []; this.compactArguments = [];
   }
   decide(context) {
     const decision = this.bot.decide(context); const action = decision?.action || null;
     const runtimeMicros = Math.max(0, Math.round(Number(decision?.runtimeMs || 0) * 1000));
     this.decisions += 1; this.runtimeMicros.push(runtimeMicros);
     const name = action?.type || "none"; this.actionCounts[name] = (this.actionCounts[name] || 0) + 1;
+    if (this.captureCompactFrames) {
+      this.compactActionCodes.push(actionCode(action));
+      if (action?.type === "teleport" && Number.isSafeInteger(action.x) &&
+          Number.isSafeInteger(action.y))
+        this.compactArguments.push([this.decisions - 1, action.x, action.y]);
+    }
     if (name === "timeout") this.timeoutCount += 1;
     if (name === "error") this.errorCount += 1;
     if (this.captureActionFrames) this.actionFrames.push({
@@ -58,8 +67,25 @@ class DecisionAudit {
       p95RuntimeMicros: percentile(this.runtimeMicros, 95),
       maxRuntimeMicros: this.runtimeMicros.length ? Math.max(...this.runtimeMicros) : 0,
       actionCounts: this.actionCounts,
-      ...(this.captureActionFrames ? { actionFrames: this.actionFrames } : {}) };
+      ...(this.captureActionFrames ? { actionFrames: this.actionFrames } : {}),
+      ...(this.captureCompactFrames ? {
+        compactActionStream: Buffer.from(this.compactActionCodes).toString("base64"),
+        compactArguments: this.compactArguments
+      } : {}) };
   }
+}
+
+function actionCode(action) {
+  if (!action || typeof action !== "object") return ACTION.NONE;
+  if (action.type === "go") return ACTION.GO;
+  if (action.type === "turn") return action.side === "left" ? ACTION.TURN_LEFT : ACTION.TURN_RIGHT;
+  if (action.type === "fire") return ACTION.FIRE;
+  if (action.type === "throwBomb") return ACTION.THROW_BOMB;
+  const skills = { shield: ACTION.CAST_SHIELD, freeze: ACTION.CAST_FREEZE,
+    stun: ACTION.CAST_STUN, overload: ACTION.CAST_OVERLOAD, cloak: ACTION.CAST_CLOAK,
+    poison: ACTION.CAST_POISON, teleport: ACTION.CAST_TELEPORT, boost: ACTION.CAST_BOOST };
+  if (skills[action.type] !== undefined) return skills[action.type];
+  return action.type === "timeout" ? 254 : action.type === "error" ? 255 : ACTION.NONE;
 }
 
 function mergeActionTrace(v1, v2, v1Seat, v2Seat, skills) {
@@ -183,10 +209,14 @@ async function runMatch(simulatorModule, scenario, variant, repetition, v1Code, 
   for (let seat = 0; seat < 2; seat += 1) {
     if (variant.bots[seat] === "v2") bots.push(createV2Bot({ ...(v2Options || {}),
       captureActionFrames: diagnostics.captureActions === true,
-      captureAllFrames: diagnostics.captureAllFrames === true }));
+      captureAllFrames: diagnostics.captureAllFrames === true,
+      captureCompactFrames: diagnostics.captureCompact === true,
+      captureSampleFrames: diagnostics.captureCompact === true,
+      captureExceptionalFrames: diagnostics.captureCompact !== true }));
     else bots.push(new DecisionAudit(simulatorModule.loadBotFromCode(v1Code,
       { timeoutMs, loadTimeoutMs: 2000 }),
-      { captureActionFrames: diagnostics.captureActions === true }));
+      { captureActionFrames: diagnostics.captureActions === true,
+        captureCompactFrames: diagnostics.captureCompact === true }));
   }
   const contexts = diagnostics.includeContexts ? [[], []] : null;
   if (contexts) for (let seat = 0; seat < 2; seat += 1) {
@@ -317,8 +347,11 @@ async function runPairedArena(options = {}) {
   const expectedMatches = scenarios.length * repetitions * VARIANTS.length;
   for (const scenario of scenarios) for (let repetition = 0; repetition < repetitions; repetition += 1)
     for (const variant of VARIANTS) {
-      matches.push(await runMatch(simulator.module, scenario, variant, repetition, v1Code, timeoutMs,
-        options.v2Options, options.diagnostics));
+      const match = await runMatch(simulator.module, scenario, variant, repetition, v1Code, timeoutMs,
+        options.v2Options, options.diagnostics);
+      match.cohort = "DD9_FIXED_244";
+      if (typeof options.onMatch === "function") options.onMatch(match);
+      matches.push(match);
       if (typeof options.onProgress === "function") options.onProgress(matches.length, expectedMatches,
         scenario.matchUrlId, variant.variantId);
     }
@@ -368,12 +401,15 @@ async function runPairedArena(options = {}) {
     role === "DISCOVERY" ? contained(root, "artifacts", "diagnostics", "paired-arena-discovery-v1") :
       role === "CALIBRATION" ? contained(root, "artifacts", "imp8", "calibration",
         "paired-arena-v1") : contained(root, "artifacts", "imp8", "frozen", "g10a-paired-arena-v1");
-  ensureDirectory(base); writeJsonAtomic(path.join(base, "paired-arena-report.json"), report, { mode: 0o644 });
-  writeJsonImmutable(path.join(base, "history", `paired-arena-${report.fingerprint}.json`),
-    report, { mode: 0o644 });
+  if (options.persistReport !== false) {
+    ensureDirectory(base);
+    writeJsonAtomic(path.join(base, "paired-arena-report.json"), report, { mode: 0o644 });
+    writeJsonImmutable(path.join(base, "history", `paired-arena-${report.fingerprint}.json`),
+      report, { mode: 0o644 });
+  }
   return { report, directory: base };
 }
 
 module.exports = { SIMULATOR_COMMIT, SIMULATOR_ARCHIVE_SHA256, VARIANTS,
   DecisionAudit, mergeActionTrace, simulatorDirectory, loadSimulator, collectCounts, aggregate,
-  portableScheduledAction, portableScheduledDecision, runMatch, runPairedArena };
+  actionCode, portableScheduledAction, portableScheduledDecision, runMatch, runPairedArena };

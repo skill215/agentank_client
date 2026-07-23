@@ -37,7 +37,7 @@ const { RuntimeController, RuntimeSearchCoordinator, EmergencyEmitter } = requir
 const { PossibleProjectileTracker } = require("./possible-projectiles");
 const { ProjectileTrackPool, PROJECTILE_FACT } = require("./projectile-track-pool");
 const { FinalActionGate } = require("./final-action-gate");
-const { EscapeObligation } = require("./escape-obligation");
+const { EscapeObligation, SUPPORT_STATUS } = require("./escape-obligation");
 const { POSSIBLE_HAZARD } = require("../policy/hidden-risk");
 
 const ROOT_STATUS = Object.freeze({ OK: 1, INCOMPLETE: 2, INVALID: 3, CAPACITY: 4 });
@@ -176,9 +176,10 @@ class ProductionEntityTracker {
     }
     return 1;
   }
-  reconcileMissingEnemyProjectiles(observerCell, observerDirection, terrain, width) {
+  reconcileMissingEnemyProjectiles(observerCell, observerDirection, terrain, width,
+      strictVisibleEmpty = false) {
     return this.projectiles.refuteMissing(1, observerCell, observerDirection, terrain, width,
-      this.enemyObservationSetComplete);
+      this.enemyObservationSetComplete || strictVisibleEmpty);
   }
   hasActiveProjectile(owner) {
     return this.projectiles.count(owner) > 0 ? 1 : 0;
@@ -435,8 +436,11 @@ class ProductionObservationAdapter {
     if (me.bullet === undefined || enemy.bullet === undefined) this.informationComplete = 0;
     this.tracker.observeProjectiles(me.bullet, 0, frame, this.width, this.height);
     this.tracker.observeProjectiles(enemy.bullet, 1, frame, this.width, this.height);
+    // A scalar bullet observation is never a complete projectile set. A null
+    // observation is nevertheless complete evidence for the observer's strict
+    // forward-visible ray, so predicted tracks on that ray may be refuted.
     this.tracker.reconcileMissingEnemyProjectiles(ownCell, ownDirection,
-      this.state.arrays[ARRAY.TERRAIN], this.width);
+      this.state.arrays[ARRAY.TERRAIN], this.width, enemy.bullet === null);
     this.tracker.observeBombs(game.bombs, frame, this.width, this.height,
       me.tank.id, enemy.tank && enemy.tank.id);
     if (!this.tracker.complete || enemy.bullet === undefined)
@@ -481,7 +485,11 @@ class ProductionObservationAdapter {
     // root, null with no exact tracked projectile means two hidden worlds:
     // no projectile, or an unobserved active projectile. Never promote that
     // relation to an exact PhysicalState/strict Proof.
-    if (hadPriorRoot && !hasProjectile(enemy.bullet) &&
+    // Re-evaluating the identical platform frame is idempotent. Only a later
+    // callback introduces the hidden-world alternative "no bullet vs unseen
+    // bullet"; treating a same-frame diagnostic/cache probe as new evidence
+    // would change PhysicalState and suppress valid TT reuse.
+    if (hadPriorRoot && frame > this.lastFrame && !hasProjectile(enemy.bullet) &&
         !this.tracker.hasActiveProjectile(1)) this.informationComplete = 0;
     this.ownCanFire = !hasProjectile(me.bullet) && !this.tracker.hasActiveProjectile(0) &&
       !ownStatus.fireLocked;
@@ -531,10 +539,7 @@ class ProductionRootEngine {
     this.forcedWinSearch = new ProductionForcedWinSearch();
     this.emergency = new EmergencyEmitter(this.runtime.emergency);
     this.finalGate = new FinalActionGate();
-    this.escapeObligation = new EscapeObligation({
-      diagnosticDisableGoDemote: options.diagnosticDisableGoDemote,
-      diagnosticDisableSoftEscape: options.diagnosticDisableSoftEscape
-    });
+    this.escapeObligation = new EscapeObligation();
     this.diagnosticDisableEscapeQuality = options.diagnosticDisableEscapeQuality ? 1 : 0;
     this.diagnosticDisableEscapeObligation = options.diagnosticDisableEscapeObligation ? 1 : 0;
     this.possibleProjectiles = new PossibleProjectileTracker();
@@ -1361,8 +1366,10 @@ class ProductionRootEngine {
     const state = this.adapter.state; const a = state.arrays; const controller = this.riskController;
     const starDelta = a[ARRAY.TANK_STARS][0] - a[ARRAY.TANK_STARS][1];
     const remaining = Math.max(0, RULE.FRAME_RECORD_LIMIT - 1 - a[ARRAY.SCALAR][SCALAR.FRAME]);
+    const committedSlack = this.escapeObligation.supportStatus === SUPPORT_STATUS.COMPLETE ?
+      this.escapeObligation.rootSlack : 0;
     const stateClass = this.informationSearch.risk.classify(starDelta, remaining,
-      this.escapeObligation.deadline.slack, 1,
+      committedSlack, 1,
       this.adapter.informationComplete ? 0 : 2, 0);
     // NONE is an emitter-level emergency hold, not a searched tactical row.
     // Feeding it to the controller would compare an unsearched zero root value
@@ -1371,15 +1378,14 @@ class ProductionRootEngine {
       this.ourActions[this.ourCount - 1] === ACTION.NONE ? this.ourCount - 1 : this.ourCount;
     controller.populate(selectionCount, this.hardStatus, this.safetyClosure.outcome,
       this.score, this.depthSearch, this.informationSearch, this.enemyCount, this.combat.vector,
-      Math.max(1, this.tactical.ROBUST_SEARCH_DIVISOR || 2), this.ourActions);
+      Math.max(1, this.tactical.ROBUST_SEARCH_DIVISOR || 2));
     controller.gate(this.policy.baseRisk, stateClass);
-    this.escapeObligation.restrictRiskController(controller, state, selectionCount);
-    // Escape Quality ranking inputs (Deadline per-successor); does not alter Hard.
-    // Recompute domination after publish — gate() ran before quality was available.
     if (!this.diagnosticDisableEscapeQuality && !this.diagnosticDisableEscapeObligation) {
       this.escapeObligation.publishSuccessorQuality(controller, selectionCount);
-      controller.recomputeSelectionFrontier();
     }
+    // Committed membership is intersected only after the Risk gate. The
+    // controller then rebuilds Pareto and the robust safe floor on that set.
+    this.escapeObligation.restrictRiskController(controller, state, selectionCount);
     if (continuationAction !== ACTION.NONE) {
       let continuationRow = -1;
       for (let row = 0; row < selectionCount; row += 1)
@@ -1395,20 +1401,6 @@ class ProductionRootEngine {
     const information = this.informationSearch.completedDepth > 0;
     const physical = this.depthSearch.completedDepth > 0;
     const source = information ? this.informationSearch : physical ? this.depthSearch : null;
-    // Under Information + Safety death pressure, a tactical-blended mixed policy
-    // re-selects GO/FIRE even when robust is search-tied. Prefer lexicographic
-    // risk/value selection (search-first, then lower tactical) instead.
-    let deathPressureFrontier = 0;
-    if (information) {
-      for (let index = 0; index < rows; index += 1) {
-        const rootRow = this.stageRowMap[index];
-        if (controller.outcome.immediateFatalMass[rootRow] > 0 ||
-            controller.outcome.horizonFatalMass[rootRow] > 0 ||
-            controller.outcome.escapeSlack[rootRow] < 0) {
-          deathPressureFrontier = 1; break;
-        }
-      }
-    }
     // A matrix with no evaluated interaction cells is just a duplicated
     // tactical vector.  Solving it manufactures a mixed policy from no game
     // evidence, so non-contact roots remain deterministic expected/tactical
@@ -1417,15 +1409,10 @@ class ProductionRootEngine {
         this.search.matrix.initialize(rows, this.enemyCount) === 1) {
       for (let matrixRow = 0; matrixRow < rows; matrixRow += 1) {
         const rootRow = this.stageRowMap[matrixRow];
-        const rowDeath = controller.outcome.immediateFatalMass[rootRow] > 0 ||
-          controller.outcome.horizonFatalMass[rootRow] > 0 ||
-          controller.outcome.escapeSlack[rootRow] < 0;
         for (let column = 0; column < this.enemyCount; column += 1) {
           const raw = source ? source.rootCellScore[rootRow *
             SEARCH_CAPACITY.MAX_ENEMY_POLICIES + column] : controller.outcome.robustLower[rootRow];
-          const tacticalPart = !source || (information && rowDeath) ? 0 :
-            controller.outcome.tacticalValue[rootRow] - controller.outcome.combatPressure[rootRow] +
-            controller.outcome.combatRobustPressure[rootRow];
+          const tacticalPart = controller.outcome.tacticalValue[rootRow];
           const value = source ? Math.max(-10000, Math.min(10000,
             tacticalPart + Math.trunc(raw / controller.searchDivisor))) :
             Math.max(-10000, Math.min(10000, raw));
@@ -1447,10 +1434,6 @@ class ProductionRootEngine {
       }
       controller.stageMatrixUseCount += 1; this.stageMatrixSolveCount += 1;
     }
-    // Under Information + Safety death pressure, keep solving the matrix for
-    // diagnostics/accounting, but do not sample the mixed policy — tactical
-    // mass in the solver re-selects GO/FIRE when search robust is tied.
-    if (deathPressureFrontier) this.policyProbability.fill(0);
     if (controller.noAcceptableAction) this.noAcceptableActionCount += 1;
     const seed = mix(mix(state.hashLo, state.hashHi), a[ARRAY.SCALAR][SCALAR.FRAME]);
     return controller.select(seed, this.policyProbability);
@@ -1607,10 +1590,8 @@ class ProductionRootEngine {
       this.runtime.charge(WORK_KIND.FEATURE_PLAN, this.multiFrameRisk.nodes);
     this.refineObservationSafety(bundle);
     if (!this.diagnosticDisableEscapeObligation) {
-      this.escapeObligation.evaluate(bundle, this.ourActions, this.ourArguments, selectionCount,
-        this.hardStatus, this.projectedCell,
-        this.threatCapability?.earliestFireDepth ?? 255);
-      this.escapeObligation.applyToSafety(this.safetyClosure.outcome, selectionCount);
+      this.escapeObligation.evaluateCommitted(bundle, this.ourActions, this.ourArguments,
+        this.projectedCell, this.projectedDirection, this.hardStatus, selectionCount);
     }
     const contact = this.tacticalContact();
     const valueOurCount = selectionCount;

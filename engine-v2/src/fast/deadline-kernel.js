@@ -10,8 +10,8 @@ const DEADLINE_PROOF = Object.freeze({
   TRAPPED: 2
 });
 
-// Per-successor closure status for Escape Quality ranking. Independent of the
-// Soft committedPressure tiers that already feed Safety death mass.
+// Per-successor committed closure status for Escape membership and quality.
+// It is independent of Safety probability mass.
 const SUCCESSOR_PROOF = Object.freeze({
   PROVEN_DEAD: 0,
   UNKNOWN: 1,
@@ -281,17 +281,6 @@ class DeadlineKernel {
       if (action === ACTION.GO || action === ACTION.TURN_LEFT || action === ACTION.TURN_RIGHT)
         this.moveEscapeCount += 1;
       else this.holdEscapeCount += 1;
-    }
-
-    // Prefer movement/turn first-actions when they exist; drop pure hold/FIRE so
-    // EscapeObligation can force the escape chain to start this frame.
-    if (this.moveEscapeCount > 0) {
-      this.actionEscape[ACTION.NONE] = 0;
-      this.actionEscape[ACTION.FIRE] = 0;
-      this.actionEscape[ACTION.THROW_BOMB] = 0;
-      this.actionEscape[ACTION.CAST_POISON] = 0;
-      this.firstActionCodeCount = this.moveEscapeCount;
-      this.holdEscapeCount = 0;
     }
 
     this.earliestArrival = this.rootViable ? 0 : this.moveEscapeCount || this.holdEscapeCount ?

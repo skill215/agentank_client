@@ -167,7 +167,7 @@ test("SR3 future-FIRE-only fallback keeps the conservative risk tuple", () => {
   assert.equal(controller.select(0), 1);
 });
 
-test("SR3 tied possible-projectile support delegates future FIRE to robust backup", () => {
+test("SR3 no-acceptable fallback is value-independent after the risk tuple differs", () => {
   const controller = controllerFixture(); const o = controller.outcome; o.reset(2);
   for (let row = 0; row < 2; row += 1) {
     o.hard[row] = HARD_STATUS.ALLOW; o.safety[row] = SAFETY_STATUS.POSSIBLE_DEATH;
@@ -180,10 +180,67 @@ test("SR3 tied possible-projectile support delegates future FIRE to robust backu
   o.robustLower[1] = -9821; o.expectedValue[1] = -5690; o.tacticalValue[1] = 1704;
   controller.gate(26, 3);
   assert.equal(controller.acceptableCount, 0);
-  assert.equal(controller.select(0), 0);
+  assert.equal(controller.select(0), 1);
   o.robustLower[0] = -9800; o.expectedValue[0] = -4000;
   assert.equal(controller.select(0), 1,
-    "a marginal value change cannot override the conservative risk tuple");
+    "value changes cannot override the conservative risk tuple in emergency fallback");
+});
+
+test("GR0 acceptable actions use maximum robustLower before expected or tactical value", () => {
+  const controller = new RiskAcceptanceController(); const o = controller.outcome;
+  o.reset(2);
+  for (let row = 0; row < 2; row += 1) {
+    o.hard[row] = HARD_STATUS.ALLOW;
+    o.safety[row] = SAFETY_STATUS.POSSIBLE_DEATH;
+    o.coverage[row] = 10000;
+    o.earliestFatalFrame[row] = 4;
+    o.escapeSlack[row] = 0;
+  }
+  // Both rows pass risk=100. Row 0 has greater modeled risk and therefore
+  // cannot dominate row 1, while row 1 cannot dominate row 0's robust value.
+  o.immediateFatalMass[0] = 100;
+  o.horizonFatalMass[0] = 100;
+  o.robustLower[0] = 500;
+  o.expectedValue[0] = 0;
+  o.tacticalValue[0] = 0;
+  o.robustLower[1] = 400;
+  o.expectedValue[1] = 10000;
+  o.tacticalValue[1] = 10000;
+  controller.gate(100, 0);
+  assert.equal(controller.acceptableCount, 2);
+  assert.equal(controller.safeFloor, 500);
+  assert.equal(controller.select(0), 0,
+    "expected/tactical value cannot cross the robustLower safe floor");
+});
+
+test("GR0 Information search preserves full tactical and search cells", () => {
+  const controller = new RiskAcceptanceController();
+  const safety = new SafetyOutcomeSlab();
+  safety.reset(2);
+  for (let row = 0; row < 2; row += 1) {
+    safety.status[row] = SAFETY_STATUS.POSSIBLE_DEATH;
+    safety.coverage[row] = 10000;
+    safety.unknownMass[row] = 100;
+  }
+  const information = {
+    completedDepth: 1,
+    rootScore: new Int32Array([200, -200]),
+    rootCellScore: new Int32Array(SEARCH_CAPACITY.MAX_ENEMY_POLICIES * 2)
+  };
+  information.rootCellScore[0] = 400;
+  information.rootCellScore[1] = -400;
+  information.rootCellScore[SEARCH_CAPACITY.MAX_ENEMY_POLICIES] = 100;
+  information.rootCellScore[SEARCH_CAPACITY.MAX_ENEMY_POLICIES + 1] = -100;
+  controller.populate(2, new Uint8Array([HARD_STATUS.ALLOW, HARD_STATUS.ALLOW]),
+    safety, new Int16Array([700, -300]), null, information, 2);
+  assert.deepEqual(Array.from(controller.outcome.tacticalValue.slice(0, 2)),
+    [700, -300]);
+  assert.deepEqual(Array.from(controller.outcome.robustLower.slice(0, 2)),
+    [800, -400]);
+  assert.deepEqual(Array.from(controller.outcome.expectedValue.slice(0, 2)),
+    [800, -400]);
+  assert.deepEqual(Array.from(controller.outcome.worstValue.slice(0, 2)),
+    [500, -350]);
 });
 
 test("SR3 no-acceptable fallback preserves possible projectile priority", () => {

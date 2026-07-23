@@ -28,6 +28,12 @@ PowerShell 转调 Windows Node。
 
 ## 2. 常用测试
 
+GR0 结构门（语法 + 不读取历史战斗的 122 个纯 UT）：
+
+```bash
+npm run test:gr0
+```
+
 Minimax 核心：
 
 ```bash
@@ -46,8 +52,9 @@ npm run test:4
 npm run test:gate
 ```
 
-修改搜索、Safety、风险门或生产控制器后，至少执行 `test:minimax-core` 和 `test:4`。修改平台、
-Candidate 或发布工具后还必须执行 `test:gate`。
+GR0 冻结期间，修改 Minimax、Safety、Risk、Deadline/EO 或生产控制器后必须先执行
+`test:gr0`。`test:4` 包含已清理的历史回归依赖，不能再作为 GR0 前置门。修改平台、
+Candidate 或发布工具后仍必须执行 `test:gate`。
 
 ## 3. 构建与代码大小
 
@@ -79,23 +86,35 @@ wc -c artifacts/build/imp6/production-minified.js
 - Hard/Proof/root restore 不变量仍为零；
 - 完整测试通过。
 
-## 4. 快速回归与性能
+## 4. GR0 证据保留与全量对战
 
-快速回归入口：
-
-```bash
-npm run fast-regression:verify
-```
-
-关键基准：
+旧回归 inventory/compact/verify/prune：
 
 ```bash
-npm run benchmark:multi-frame-risk
-npm run benchmark:search-frontier
+npm run artifacts:retention -- inventory
+npm run artifacts:retention -- compact
+npm run artifacts:retention -- verify
 ```
 
-历史对战、Replay Capsule 和报告位于 Git 忽略目录。它们是本地验证证据，不应被删除后再用
-Git 恢复，也不应提交到 GitHub。
+`prune` 只能使用 verify 生成的精确 manifest，禁止手工通配符删除：
+
+```bash
+./tools/artifact-retention-toolchain.sh prune --manifest \
+  artifacts/retention/gr0/verified-prune-manifest.json
+```
+
+GR0 全量对战：
+
+```bash
+./tools/v1-v2-working-arena.sh \
+  --repetitions 2 \
+  --trace compact \
+  --progress-every 32 \
+  --output artifacts/diagnostics/v1-v2-working/<content-addressed-directory>
+```
+
+本轮禁止运行旧历史 replay、Capsule、focused 或小范围 arena。全量运行只保留 compact
+逐局结果和最多 64 个确定性诊断样本。真实 `battle-records/` 不得清理。
 
 ## 5. 平台工具
 
@@ -131,4 +150,3 @@ git check-ignore -v battle-records artifacts battle-baselines .env.agentank.loca
 - `.env` 和 `.env.*`。
 
 不要用 `git add -f` 绕过这些忽略规则。
-

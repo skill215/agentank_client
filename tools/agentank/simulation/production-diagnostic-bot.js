@@ -9,6 +9,12 @@ const ACTION_NAME = Object.freeze(Object.fromEntries(Object.entries(ACTION).map(
 const ROOT_NAME = Object.freeze(Object.fromEntries(Object.entries(ROOT_STATUS).map(([name, value]) => [value, name])));
 const HARD_NAME = Object.freeze(Object.fromEntries(Object.entries(HARD_STATUS).map(([name, value]) => [value, name])));
 const PROOF_NAME = Object.freeze(Object.fromEntries(Object.entries(PROOF_STATUS).map(([name, value]) => [value, name])));
+const SAMPLE_FRAME_STRIDE = 19;
+
+function rootFlag(status) {
+  return status === ROOT_STATUS.OK ? 0 : status === ROOT_STATUS.INCOMPLETE ? 1 :
+    status === ROOT_STATUS.INVALID ? 2 : 3;
+}
 
 function actionProxy(snapshot, actions) {
   const proxy = {
@@ -41,8 +47,15 @@ class ProductionDiagnosticBot {
     this.engine = new ProductionRootEngine(options.engine || options);
     this.captureAllFrames = Boolean(options.captureAllFrames);
     this.captureActionFrames = Boolean(options.captureActionFrames || options.captureAllFrames);
+    this.captureCompactFrames = Boolean(options.captureCompactFrames);
+    this.captureSampleFrames = Boolean(options.captureSampleFrames);
+    this.captureExceptionalFrames = options.captureExceptionalFrames !== false;
     this.runtimeMicros = []; this.frames = []; this.actionCounts = {};
     this.diagnosticFrames = []; this.actionFrames = [];
+    this.compactActionCodes = []; this.compactFrameFlags = [];
+    this.compactArguments = [];
+    this.sampleFrameWords = new Int32Array(128 * SAMPLE_FRAME_STRIDE);
+    this.sampleFrameCount = 0;
     this.rootCounts = {}; this.runtimeModeCounts = {};
     this.exceptionalFrameCount = 0;
     this.hardSelectedRejectCount = 0; this.avoidableHardRejectCount = 0;
@@ -70,10 +83,12 @@ class ProductionDiagnosticBot {
     this.rootCounts[rootName] = (this.rootCounts[rootName] || 0) + 1;
     const runtimeMode = this.engine.runtime.runtimeMode;
     this.runtimeModeCounts[runtimeMode] = (this.runtimeModeCounts[runtimeMode] || 0) + 1;
-    let selectedHard = "NOT_INDEXED"; let allowCount = 0;
+    let selectedHard = "NOT_INDEXED"; let selectedHardCode = HARD_STATUS.INCOMPLETE;
+    let allowCount = 0;
     for (let index = 0; index < this.engine.ourCount; index += 1) {
       if (this.engine.hardStatus[index] === HARD_STATUS.ALLOW) allowCount += 1;
       if (this.engine.ourActions[index] === returned) {
+        selectedHardCode = this.engine.hardStatus[index];
         selectedHard = HARD_NAME[this.engine.hardStatus[index]] || String(this.engine.hardStatus[index]);
       }
     }
@@ -117,6 +132,32 @@ class ProductionDiagnosticBot {
       runtimeMicros,
       workUnits: this.engine.runtime.accumulatedWorkUnits - beforeWorkUnits
     };
+    if (this.captureCompactFrames) {
+      this.compactActionCodes.push(returned & 0xff);
+      this.compactFrameFlags.push(rootFlag(this.engine.lastRootStatus) |
+        ((selectedHardCode & 3) << 2) | ((this.engine.lastProofStatus & 3) << 4) |
+        ((runtimeMode & 3) << 6));
+      if (action?.type === "teleport" && Number.isSafeInteger(action.x) &&
+          Number.isSafeInteger(action.y))
+        this.compactArguments.push([frame.frame, action.x, action.y]);
+    }
+    if (this.captureSampleFrames && this.sampleFrameCount < 128) {
+      let at = this.sampleFrameCount * SAMPLE_FRAME_STRIDE;
+      const words = this.sampleFrameWords;
+      words[at++] = frame.frame; words[at++] = returned;
+      words[at++] = this.engine.lastRootStatus; words[at++] = selectedHardCode;
+      words[at++] = this.engine.lastProofStatus; words[at++] = runtimeMode;
+      words[at++] = allowCount; words[at++] = frame.physicalCompletedDepth;
+      words[at++] = frame.informationCompletedDepth; words[at++] = frame.informationWorlds;
+      words[at++] = frame.depthNodes; words[at++] = frame.score; words[at++] = frame.workUnits;
+      words[at++] = this.engine.escapeObligation.supportStatus;
+      words[at++] = this.engine.escapeObligation.firstActionCount;
+      words[at++] = this.engine.escapeObligation.rootSlack;
+      words[at++] = this.engine.riskController.noAcceptableAction;
+      words[at++] = this.engine.riskController.acceptableCount;
+      words[at++] = this.engine.stageMatrixSolveCount;
+      this.sampleFrameCount += 1;
+    }
     if (this.captureActionFrames) this.actionFrames.push({ frame: frame.frame,
       action: frame.action, command: action ? diagnosticCopy(action) : null,
       workUnits: frame.workUnits, root: frame.root, informationComplete: frame.informationComplete,
@@ -175,8 +216,9 @@ class ProductionDiagnosticBot {
         bombs: diagnosticCopy(context.game?.bombs) };
       frame.candidates = candidates; this.diagnosticFrames.push(frame);
     }
-    if (frame.root !== "OK" || frame.selectedHard !== "ALLOW" || frame.fallback ||
-        frame.proof === "PROVEN" || frame.completedDepth === 0) {
+    if (this.captureExceptionalFrames && (frame.root !== "OK" ||
+        frame.selectedHard !== "ALLOW" || frame.fallback ||
+        frame.proof === "PROVEN" || frame.completedDepth === 0)) {
       this.exceptionalFrameCount += 1;
       if (this.frames.length < 32) this.frames.push(frame);
     }
@@ -218,13 +260,26 @@ class ProductionDiagnosticBot {
           engine.observationSafety.hotAllocationCount +
           engine.observationSafety.stateArena.hotAllocationCount
       },
-      exceptionalFrames: this.frames
+      ...(this.captureExceptionalFrames ? { exceptionalFrames: this.frames } : {})
     };
     if (this.captureActionFrames) summary.actionFrames = this.actionFrames;
     if (this.captureAllFrames) summary.diagnosticFrames = this.diagnosticFrames;
+    if (this.captureCompactFrames) {
+      summary.compactActionStream = Buffer.from(this.compactActionCodes).toString("base64");
+      summary.compactFrameFlags = Buffer.from(this.compactFrameFlags).toString("base64");
+      summary.compactArguments = this.compactArguments;
+    }
+    if (this.captureSampleFrames) {
+      summary.sampleFrameStride = SAMPLE_FRAME_STRIDE;
+      summary.sampleFrameCount = this.sampleFrameCount;
+      summary.sampleFrameWords = this.sampleFrameWords.subarray(
+        0, this.sampleFrameCount * SAMPLE_FRAME_STRIDE);
+    }
+    summary.layerTotals.escapeRestrictions = engine.escapeObligation.restrictedSelectionCount;
+    summary.layerTotals.escapeRescueOverrides = engine.escapeObligation.rescueOverrideCount;
     return summary;
   }
 }
 
-module.exports = { ACTION_NAME, ROOT_NAME, HARD_NAME, PROOF_NAME, actionProxy, diagnosticCopy,
-  ProductionDiagnosticBot };
+module.exports = { ACTION_NAME, ROOT_NAME, HARD_NAME, PROOF_NAME, SAMPLE_FRAME_STRIDE,
+  rootFlag, actionProxy, diagnosticCopy, ProductionDiagnosticBot };

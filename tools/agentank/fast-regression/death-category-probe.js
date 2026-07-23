@@ -206,10 +206,10 @@ function escapeObligationSnapshot(engine, selectedIndex) {
     firstActionCount: obligation.firstActionCount,
     firstActions: firstActions.slice(0, 8),
     selectedStillExposed: selectedIndex >= 0 ? obligation.stillExposed[selectedIndex] : null,
-    selectedCommittedPressure: selectedIndex >= 0 ?
-      obligation.committedPressure[selectedIndex] : null,
-    selectedEscapeSlackDelta: selectedIndex >= 0 ?
-      obligation.escapeSlackDelta[selectedIndex] : null,
+    selectedSuccessorProof: selectedIndex >= 0 ?
+      obligation.successorProof[selectedIndex] : null,
+    selectedSuccessorSlack: selectedIndex >= 0 ?
+      obligation.successorSlack[selectedIndex] : null,
     selectedIsFirstAction: selectedIndex >= 0 ? obligation.firstAction[selectedIndex] : null
   };
 }

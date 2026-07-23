@@ -17,10 +17,11 @@ function roles(value) {
 }
 function traceMode(value) {
   const mode = String(value || "none").toLowerCase();
-  invariant(mode === "none" || mode === "actions" || mode === "full",
+  invariant(mode === "none" || mode === "actions" || mode === "full" || mode === "compact",
     "V1_V2_WORKING_TRACE_MODE_INVALID", mode);
   return { captureActions: mode === "actions" || mode === "full",
-    captureAllFrames: mode === "full", includeReplay: mode === "full" };
+    captureAllFrames: mode === "full", includeReplay: mode === "full",
+    captureCompact: mode === "compact" };
 }
 function performanceSelection(value) {
   if (!value) return null; const file = path.resolve(value);
@@ -56,11 +57,11 @@ async function main() {
     } });
   const report = result.overview;
   process.stdout.write(`${JSON.stringify({ status: report.status, sourceSha256: report.source.sha256,
-    matches: report.execution.matchCount, combined: { wins: report.combined.v2Wins,
-      losses: report.combined.v2Losses, native: report.combined.native,
-      skillCross: report.combined.skillCross, crashCauses: report.combined.v2CrashCauses },
-    baselineComparison: report.baselineComparison, fingerprint: report.fingerprint,
+    matches: report.execution.matchCount, summary: report.summary,
+    comparisons: report.comparisons, checks: report.checks,
+    storageChecks: report.storageChecks, fingerprint: report.fingerprint,
     reportFile: result.file }, null, 2)}\n`);
+  if (report.status !== "ACCEPTED") process.exitCode = 2;
 }
 
 if (require.main === module) main().catch(error => {
