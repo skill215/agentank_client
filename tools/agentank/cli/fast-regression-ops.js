@@ -19,6 +19,12 @@ const { analyzeDominatedRescues } =
   require("../fast-regression/dominated-rescue-analysis");
 const { analyzePolicyContinuations } =
   require("../fast-regression/policy-continuation-analysis");
+const { probeDeathCategories } =
+  require("../fast-regression/death-category-probe");
+const { scanFactLayer } =
+  require("../fast-regression/fact-layer-scan");
+const { analyzeValueDepth } =
+  require("../fast-regression/value-depth-probe");
 const { compareFocusedRegression } =
   require("../fast-regression/focused-regression-comparison");
 const { buildSafetyDefectCorpus } = require("../fast-regression/safety-defect-corpus");
@@ -46,6 +52,11 @@ function help() {
   analyze-dominated-rescues [--report-name NAME] [--report PATH] [--output-name NAME]
   analyze-policy-continuations [--joint-source PATH] [--target-analysis PATH]
     [--focused-report PATH] [--selection-bucket BUCKET] [--output-name NAME]
+  probe-death-categories [--focused-report PATH] [--limit N] [--seed N]
+    [--output-name NAME] [--allow-source-drift] [--prior-report PATH]
+    [--category-filter NAME] [--replay-prior] [--no-check-survival]
+  scan-fact-layer [--focused-report PATH] [--verify-limit N] [--output-name NAME]
+  probe-value-depth [--dominated-report PATH] [--focused-report PATH] [--output-name NAME]
   compare-focused [--before-name NAME|--before PATH] [--after-name NAME|--after PATH]
     [--verification-name NAME|--verification PATH] [--output-name NAME]
   build-safety-corpus [--report-name NAME] [--report PATH]
@@ -115,7 +126,8 @@ async function main(argv = process.argv.slice(2)) {
         if (done === total) process.stderr.write("\n");
       } });
     process.stdout.write(`${JSON.stringify({ status: "CAPTURED", runId: result.run.manifest.runId,
-      matches: result.summary.matchCount, capsules: result.capsules.length }, null, 2)}\n`); return;
+      matches: result.summary.matchCount,
+      capsules: result.capsuleCount ?? result.capsules.length }, null, 2)}\n`); return;
   }
   if (command === "materialize-spool") {
     onlyOptions(options, ["root", "spool", "run-id"]);
@@ -192,6 +204,50 @@ async function main(argv = process.argv.slice(2)) {
           `${defect ? "DEFECT" : "CONTROL"}`);
         if (done === total) process.stderr.write("\n");
       } });
+    process.stdout.write(`${JSON.stringify({ status: result.report.status, file: result.file,
+      fingerprint: result.report.fingerprint, denominator: result.report.denominator }, null, 2)}\n`);
+    return;
+  }
+  if (command === "probe-death-categories") {
+    onlyOptions(options, ["root", "focused-report", "limit", "seed", "output-name",
+      "allow-source-drift", "prior-report", "category-filter", "replay-prior",
+      "no-check-survival"]);
+    const result = await probeDeathCategories(root, {
+      focusedReportPath: options["focused-report"],
+      limit: options.limit, seed: options.seed, outputName: options["output-name"],
+      allowSourceDrift: Boolean(options["allow-source-drift"]),
+      priorReportPath: options["prior-report"],
+      categoryFilter: options["category-filter"] || null,
+      replayPrior: Boolean(options["replay-prior"]),
+      checkSurvival: !options["no-check-survival"],
+      onProgress(done, total, fingerprint, frame, category) {
+        process.stderr.write(`\rdeath-category ${done}/${total} ${String(fingerprint).slice(0, 12)}:${frame}` +
+          (category ? ` ${category}` : ""));
+        if (done === total) process.stderr.write("\n");
+      }
+    });
+    process.stdout.write(`${JSON.stringify({ status: result.report.status, file: result.file,
+      fingerprint: result.report.fingerprint, sampling: result.report.sampling,
+      denominator: result.report.denominator }, null, 2)}\n`);
+    return;
+  }
+  if (command === "scan-fact-layer") {
+    onlyOptions(options, ["root", "focused-report", "verify-limit", "output-name"]);
+    const result = await scanFactLayer(root, {
+      focusedReportPath: options["focused-report"],
+      verifyLimit: options["verify-limit"], outputName: options["output-name"]
+    });
+    process.stdout.write(`${JSON.stringify({ status: result.report.status, file: result.file,
+      fingerprint: result.report.fingerprint, denominator: result.report.denominator }, null, 2)}\n`);
+    return;
+  }
+  if (command === "probe-value-depth") {
+    onlyOptions(options, ["root", "dominated-report", "focused-report", "output-name"]);
+    const result = analyzeValueDepth(root, {
+      dominatedReportPath: options["dominated-report"],
+      focusedReportPath: options["focused-report"],
+      outputName: options["output-name"]
+    });
     process.stdout.write(`${JSON.stringify({ status: result.report.status, file: result.file,
       fingerprint: result.report.fingerprint, denominator: result.report.denominator }, null, 2)}\n`);
     return;

@@ -55,15 +55,16 @@ function materializeCapsuleSpool(workspaceRoot, spoolPath, runId, options = {}) 
   const names = fs.readdirSync(spool).filter(name => name.endsWith(".json")).sort();
   invariant(names.length === manifest.summary.capsuleCount, "FAST_REGRESSION_SPOOL_COUNT_MISMATCH",
     `${names.length}/${manifest.summary.capsuleCount}`);
-  const capsules = [];
+  // Do not retain materialized capsule objects: 20k+ full drafts OOM the default heap.
+  let count = 0;
   for (let index = 0; index < names.length; index += 1) {
     const draft = JSON.parse(fs.readFileSync(path.join(spool, names[index]), "utf8"));
-    capsules.push(store.writeCapsule({ ...draft,
-      source: { ...draft.source, runId } }));
+    store.writeCapsule({ ...draft, source: { ...draft.source, runId } });
+    count += 1;
     if (typeof options.onProgress === "function") options.onProgress(index + 1, names.length);
   }
   fs.rmSync(spool, { recursive: true, force: true });
-  return { runId, capsules, count: capsules.length };
+  return { runId, capsules: [], count };
 }
 
 async function captureBattleEvidence(options = {}) {
@@ -144,8 +145,8 @@ async function captureBattleEvidence(options = {}) {
       capsuleCount, arena: summary }, "COMPLETE");
     const materialized = materializeCapsuleSpool(root, spool, finalized.manifest.runId,
       { onProgress: options.onMaterializeProgress });
-    const capsules = materialized.capsules;
-    return { run: finalized, capsules, summary, history: history.snapshot };
+    return { run: finalized, capsules: materialized.capsules, capsuleCount: materialized.count,
+      summary, history: history.snapshot };
   } catch (error) {
     if (!writer.closed) {
       writer.abort(`${error.code || "FAST_REGRESSION_CAPTURE_ERROR"}: ${error.message}`);

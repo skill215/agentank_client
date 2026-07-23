@@ -37,6 +37,7 @@ const { RuntimeController, RuntimeSearchCoordinator, EmergencyEmitter } = requir
 const { PossibleProjectileTracker } = require("./possible-projectiles");
 const { ProjectileTrackPool, PROJECTILE_FACT } = require("./projectile-track-pool");
 const { FinalActionGate } = require("./final-action-gate");
+const { EscapeObligation } = require("./escape-obligation");
 const { POSSIBLE_HAZARD } = require("../policy/hidden-risk");
 
 const ROOT_STATUS = Object.freeze({ OK: 1, INCOMPLETE: 2, INVALID: 3, CAPACITY: 4 });
@@ -530,6 +531,12 @@ class ProductionRootEngine {
     this.forcedWinSearch = new ProductionForcedWinSearch();
     this.emergency = new EmergencyEmitter(this.runtime.emergency);
     this.finalGate = new FinalActionGate();
+    this.escapeObligation = new EscapeObligation({
+      diagnosticDisableGoDemote: options.diagnosticDisableGoDemote,
+      diagnosticDisableSoftEscape: options.diagnosticDisableSoftEscape
+    });
+    this.diagnosticDisableEscapeQuality = options.diagnosticDisableEscapeQuality ? 1 : 0;
+    this.diagnosticDisableEscapeObligation = options.diagnosticDisableEscapeObligation ? 1 : 0;
     this.possibleProjectiles = new PossibleProjectileTracker();
     this.tactical = options.tactical || TACTICAL_CONFIG;
     this.ourActions = new Uint8Array(SEARCH_CAPACITY.MAX_OUR_ACTIONS);
@@ -1354,7 +1361,8 @@ class ProductionRootEngine {
     const state = this.adapter.state; const a = state.arrays; const controller = this.riskController;
     const starDelta = a[ARRAY.TANK_STARS][0] - a[ARRAY.TANK_STARS][1];
     const remaining = Math.max(0, RULE.FRAME_RECORD_LIMIT - 1 - a[ARRAY.SCALAR][SCALAR.FRAME]);
-    const stateClass = this.informationSearch.risk.classify(starDelta, remaining, 0, 1,
+    const stateClass = this.informationSearch.risk.classify(starDelta, remaining,
+      this.escapeObligation.deadline.slack, 1,
       this.adapter.informationComplete ? 0 : 2, 0);
     // NONE is an emitter-level emergency hold, not a searched tactical row.
     // Feeding it to the controller would compare an unsearched zero root value
@@ -1363,8 +1371,15 @@ class ProductionRootEngine {
       this.ourActions[this.ourCount - 1] === ACTION.NONE ? this.ourCount - 1 : this.ourCount;
     controller.populate(selectionCount, this.hardStatus, this.safetyClosure.outcome,
       this.score, this.depthSearch, this.informationSearch, this.enemyCount, this.combat.vector,
-      Math.max(1, this.tactical.ROBUST_SEARCH_DIVISOR || 2));
+      Math.max(1, this.tactical.ROBUST_SEARCH_DIVISOR || 2), this.ourActions);
     controller.gate(this.policy.baseRisk, stateClass);
+    this.escapeObligation.restrictRiskController(controller, state, selectionCount);
+    // Escape Quality ranking inputs (Deadline per-successor); does not alter Hard.
+    // Recompute domination after publish — gate() ran before quality was available.
+    if (!this.diagnosticDisableEscapeQuality && !this.diagnosticDisableEscapeObligation) {
+      this.escapeObligation.publishSuccessorQuality(controller, selectionCount);
+      controller.recomputeSelectionFrontier();
+    }
     if (continuationAction !== ACTION.NONE) {
       let continuationRow = -1;
       for (let row = 0; row < selectionCount; row += 1)
@@ -1380,6 +1395,20 @@ class ProductionRootEngine {
     const information = this.informationSearch.completedDepth > 0;
     const physical = this.depthSearch.completedDepth > 0;
     const source = information ? this.informationSearch : physical ? this.depthSearch : null;
+    // Under Information + Safety death pressure, a tactical-blended mixed policy
+    // re-selects GO/FIRE even when robust is search-tied. Prefer lexicographic
+    // risk/value selection (search-first, then lower tactical) instead.
+    let deathPressureFrontier = 0;
+    if (information) {
+      for (let index = 0; index < rows; index += 1) {
+        const rootRow = this.stageRowMap[index];
+        if (controller.outcome.immediateFatalMass[rootRow] > 0 ||
+            controller.outcome.horizonFatalMass[rootRow] > 0 ||
+            controller.outcome.escapeSlack[rootRow] < 0) {
+          deathPressureFrontier = 1; break;
+        }
+      }
+    }
     // A matrix with no evaluated interaction cells is just a duplicated
     // tactical vector.  Solving it manufactures a mixed policy from no game
     // evidence, so non-contact roots remain deterministic expected/tactical
@@ -1388,14 +1417,17 @@ class ProductionRootEngine {
         this.search.matrix.initialize(rows, this.enemyCount) === 1) {
       for (let matrixRow = 0; matrixRow < rows; matrixRow += 1) {
         const rootRow = this.stageRowMap[matrixRow];
+        const rowDeath = controller.outcome.immediateFatalMass[rootRow] > 0 ||
+          controller.outcome.horizonFatalMass[rootRow] > 0 ||
+          controller.outcome.escapeSlack[rootRow] < 0;
         for (let column = 0; column < this.enemyCount; column += 1) {
           const raw = source ? source.rootCellScore[rootRow *
             SEARCH_CAPACITY.MAX_ENEMY_POLICIES + column] : controller.outcome.robustLower[rootRow];
+          const tacticalPart = !source || (information && rowDeath) ? 0 :
+            controller.outcome.tacticalValue[rootRow] - controller.outcome.combatPressure[rootRow] +
+            controller.outcome.combatRobustPressure[rootRow];
           const value = source ? Math.max(-10000, Math.min(10000,
-            controller.outcome.tacticalValue[rootRow] -
-            controller.outcome.combatPressure[rootRow] + Math.trunc(raw /
-              controller.searchDivisor) +
-            controller.outcome.combatRobustPressure[rootRow])) :
+            tacticalPart + Math.trunc(raw / controller.searchDivisor))) :
             Math.max(-10000, Math.min(10000, raw));
           const valueSupportComplete = productionValueSupportComplete(source, information);
           this.search.matrix.setCell(matrixRow, column, value, value,
@@ -1415,6 +1447,10 @@ class ProductionRootEngine {
       }
       controller.stageMatrixUseCount += 1; this.stageMatrixSolveCount += 1;
     }
+    // Under Information + Safety death pressure, keep solving the matrix for
+    // diagnostics/accounting, but do not sample the mixed policy — tactical
+    // mass in the solver re-selects GO/FIRE when search robust is tied.
+    if (deathPressureFrontier) this.policyProbability.fill(0);
     if (controller.noAcceptableAction) this.noAcceptableActionCount += 1;
     const seed = mix(mix(state.hashLo, state.hashHi), a[ARRAY.SCALAR][SCALAR.FRAME]);
     return controller.select(seed, this.policyProbability);
@@ -1570,29 +1606,56 @@ class ProductionRootEngine {
     if (this.multiFrameRisk.nodes > 0)
       this.runtime.charge(WORK_KIND.FEATURE_PLAN, this.multiFrameRisk.nodes);
     this.refineObservationSafety(bundle);
+    if (!this.diagnosticDisableEscapeObligation) {
+      this.escapeObligation.evaluate(bundle, this.ourActions, this.ourArguments, selectionCount,
+        this.hardStatus, this.projectedCell,
+        this.threatCapability?.earliestFireDepth ?? 255);
+      this.escapeObligation.applyToSafety(this.safetyClosure.outcome, selectionCount);
+    }
     const contact = this.tacticalContact();
     const valueOurCount = selectionCount;
-    if (exact && contact && this.runtime.runtimeMode !== RUNTIME_MODE.EMERGENCY &&
+    if (contact && this.runtime.runtimeMode !== RUNTIME_MODE.EMERGENCY &&
         this.searchOptions.decisionDepth > 0 && this.searchOptions.proofBudget > 0) {
-      // Production proof is a multi-frame AND/OR search over the exact
-      // singleton PhysicalState. It must not consume ordinary horizon leaves
-      // as if they were final minimax values or mixed-policy probabilities.
+      // Exact visible poses keep Physical ForcedWin. Information ForcedWin is
+      // a true AND over a small complete HiddenWorld set — never a singleton
+      // under inexact observation (that would skip Value/Risk unsoundly).
       const proofBudget = this.availableNodeBudget(Math.min(128,
         this.searchOptions.proofBudget), this.runtime.runtimeConfig.WORK_CHARGES[WORK_KIND.PROOF_NODE]);
       if (proofBudget > 0) {
-        this.lastSearchStatus = this.forcedWinSearch.search(bundle, this.ourActions,
-          this.ourArguments, valueOurCount, this.enemyActions, this.enemyArguments,
-          this.enemyCount, this.searchOptions.decisionDepth, proofBudget);
-        this.lastProofStatus = this.forcedWinSearch.lastStatus;
-        this.runtime.charge(WORK_KIND.PROOF_NODE, this.forcedWinSearch.nodes);
-        const forced = this.forcedWinSearch.winningRootRow;
-        if (forced >= 0 && this.lastProofStatus === PROOF_STATUS.PROVEN &&
-            this.hardStatus[forced] === HARD_STATUS.ALLOW) {
-          this.forcedWinCount += 1; this.lastScore = 100000000;
-          this.score.fill(SCORE_REJECTED, 0, this.ourCount); this.score[forced] = this.lastScore;
-          this.orderForEmergency();
-          return this.finalGate.select(bundle, this.ourActions, this.ourArguments,
-            this.ourCount, forced, this.orderedIndexes, this.ourCount);
+        let ranProof = 0; let infoProof = 0;
+        if (exact && this.adapter.enemyVisible) {
+          this.lastSearchStatus = this.forcedWinSearch.search(bundle, this.ourActions,
+            this.ourArguments, valueOurCount, this.enemyActions, this.enemyArguments,
+            this.enemyCount, this.searchOptions.decisionDepth, proofBudget);
+          ranProof = 1;
+        } else if (!this.adapter.enemyVisible && this.hiddenRiskSupportComplete &&
+            this.hiddenWorldCount >= 2 && this.hiddenWorldCount <= 4 &&
+            this.hiddenWorldCount < this.hiddenWorldCell.length) {
+          // Proof-eligible small complete belief without flipping
+          // hiddenSupportComplete (Safety/Risk still treat the set as approximate).
+          this.lastSearchStatus = this.forcedWinSearch.searchInformation(bundle,
+            this.ourActions, this.ourArguments, valueOurCount, this.enemyActions,
+            this.enemyArguments, this.enemyCount, this.hiddenWorldCell,
+            this.hiddenWorldCount, 1, this.adapter.lastEnemyDirection,
+            0, this.searchOptions.decisionDepth, proofBudget);
+          ranProof = 1; infoProof = 1;
+        }
+        if (ranProof) {
+          this.lastProofStatus = this.forcedWinSearch.lastStatus;
+          this.runtime.charge(WORK_KIND.PROOF_NODE, this.forcedWinSearch.nodes);
+          const forced = this.forcedWinSearch.winningRootRow;
+          if (forced >= 0 && this.forcedWinSearch.lastStatus === PROOF_STATUS.PROVEN &&
+              this.hardStatus[forced] === HARD_STATUS.ALLOW) {
+            // Information ForcedWin AND-proves a small belief while observation
+            // may remain incomplete. Keep the forced selection, but do not
+            // publish Hard PROVEN (capsule strictProofOnIncomplete).
+            if (infoProof) this.lastProofStatus = PROOF_STATUS.UNKNOWN;
+            this.forcedWinCount += 1; this.lastScore = 100000000;
+            this.score.fill(SCORE_REJECTED, 0, this.ourCount); this.score[forced] = this.lastScore;
+            this.orderForEmergency();
+            return this.finalGate.select(bundle, this.ourActions, this.ourArguments,
+              this.ourCount, forced, this.orderedIndexes, this.ourCount);
+          }
         }
       }
     }
@@ -1621,22 +1684,26 @@ class ProductionRootEngine {
         const nominalCount = this.policy.opponent.buildNominalPolicy(this.enemyActionFamilies,
           this.enemyCount, this.opponentContext(), this.informationSearch.enemyProbability);
         if (nominalCount === this.enemyCount) {
-          if (this.adapter.enemyVisible) {
-            // The visible pose is exact while another observation dimension is
-            // incomplete. Reuse the deep PhysicalState result only as an
-            // approximate bound for this InformationState; it may score, but
-            // it can never authorize Hard or strict Proof.
-            this.depthSearch.search(bundle, this.ourActions, this.ourArguments, valueOurCount,
-              this.enemyActions, this.enemyArguments, this.enemyCount,
+          // Prefer Information search for every inexact contact — including a
+          // visible singleton world. The old Physical-adopt shortcut spent the
+          // whole node budget on depth-1 breadth and never funded the depth-2
+          // continuation leaves that separate escape from commitment.
+          const infoOk = this.informationSearch.search(bundle, this.depthSearch,
+            this.ourActions, this.ourArguments, valueOurCount, this.enemyActions,
+            this.enemyArguments, this.enemyCount, this.hiddenWorldCell,
+            this.hiddenWorldMass, this.hiddenWorldCount,
+            this.hiddenSupportComplete && exact, valueNodeBudget, this.policy.baseRisk,
+            this.adapter.lastEnemyDirection, this.adapter.enemyVisible,
+            this.informationSearch.enemyProbability, this.searchOptions.decisionDepth);
+          if (!infoOk && this.adapter.enemyVisible) {
+            // Fallback only: Physical approximate bound when the Information
+            // matrix cannot fit. Still cannot authorize Hard or strict Proof.
+            this.depthSearch.search(bundle, this.ourActions, this.ourArguments,
+              valueOurCount, this.enemyActions, this.enemyArguments, this.enemyCount,
               this.searchOptions.decisionDepth, valueNodeBudget, this.policy.baseRisk);
             this.informationSearch.adoptPhysicalBounds(this.depthSearch);
             this.depthSearch.resetRoot();
-          } else this.informationSearch.search(bundle, this.depthSearch, this.ourActions,
-            this.ourArguments, valueOurCount, this.enemyActions, this.enemyArguments,
-            this.enemyCount, this.hiddenWorldCell, this.hiddenWorldMass, this.hiddenWorldCount,
-            this.hiddenSupportComplete && exact, valueNodeBudget, this.policy.baseRisk,
-            this.adapter.lastEnemyDirection, this.adapter.enemyVisible,
-            this.informationSearch.enemyProbability);
+          }
           this.runtime.charge(WORK_KIND.FAST_TRANSITION, this.informationSearch.nodes);
           this.runtime.charge(WORK_KIND.HARD, this.informationSearch.nodes);
           this.informationSearch.applyRiskEnvelopes(bundle, this.ourActions, valueOurCount,
@@ -1660,6 +1727,7 @@ class ProductionRootEngine {
     const selected = this.finalGate.select(bundle, this.ourActions, this.ourArguments,
       this.ourCount, best, this.orderedIndexes, this.ourCount);
     if (selected !== best) this.fallbackCount += 1;
+    this.escapeObligation.activateAfterSelection(selected);
     return selected;
   }
   geometricFallback(me, enemy, game) {
@@ -1695,6 +1763,7 @@ class ProductionRootEngine {
     if (newMatch) {
       this.resetActionHistory(); this.opponentObservationReady = 0;
       this.policy.beginMatch(this.runtime.matchRuntimeGeneration + 1);
+      this.escapeObligation.resetMatch();
     } else this.updateActionHistory();
     this.updateOpponentModel(newMatch);
     this.runtime.beginCallback(adapted.frame, adapted.mapHashLo, adapted.mapHashHi,
@@ -1718,7 +1787,8 @@ class ProductionRootEngine {
     else {
       const newMatch = adapted.matchReset || this.runtime.matchRuntimeGeneration === 0;
       if (newMatch) { this.resetActionHistory(); this.opponentObservationReady = 0;
-        this.policy.beginMatch(this.runtime.matchRuntimeGeneration + 1); }
+        this.policy.beginMatch(this.runtime.matchRuntimeGeneration + 1);
+        this.escapeObligation.resetMatch(); }
       else this.updateActionHistory();
       this.updateOpponentModel(newMatch);
       this.runtime.beginCallback(adapted.frame, adapted.mapHashLo, adapted.mapHashHi,

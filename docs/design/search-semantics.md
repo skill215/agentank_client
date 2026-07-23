@@ -325,6 +325,19 @@ ValueSearch 节点记录：
 
 对枪能否躲闪由命中 deadline 与最早安全退出时间精确比较，不使用固定距离阈值。
 
+### 13.1 Per-successor Escape Quality（Phase 0+）
+
+在根级 `solve` 之后，可对任意 successor pose `(cell, direction)` 评估：
+
+- `SUCCESSOR_PROOF`：`PROVEN_DEAD` / `UNKNOWN` / `PROVEN_VIABLE`
+- `stillExposedAtDeadline`：committed 炸弹 footprint 或敌弹 hit-timeline（布尔，非 soft mass）
+- `slack`：相对当前 deadline 的 per-pose slack
+- `viableNextActionCount`：下一步 GO/TURN 落在 `viableTick2` 的分支数
+- `coverageComplete`：`hazard.complete && narrowProofComplete`
+
+这些字段供 Escape Quality 字典序使用，**不得**与已写入 Safety 的
+`committedPressure` 分段值重复计分。批接口：`evaluateSuccessorActions`。
+
 ## 14. 迭代加深
 
 - 保留最后完整深度。

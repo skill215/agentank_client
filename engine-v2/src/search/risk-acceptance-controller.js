@@ -1,7 +1,7 @@
 "use strict";
 
 const { SEARCH_CAPACITY } = require("../generated/search-config");
-const { HARD_STATUS } = require("../abi/fast-codes");
+const { HARD_STATUS, ACTION } = require("../abi/fast-codes");
 const { VALUE_MIN, PROBABILITY_SCALE, RISK_DIMENSION } = require("../abi/search-codes");
 const { SAFETY_STATUS, NONE_FATAL_FRAME } = require("./information-safety-closure");
 const { contaminatedLower } = require("./fixed-math");
@@ -9,9 +9,26 @@ const { RiskProfile } = require("./risk");
 
 const NO_ACCEPTABLE_ACTION = 1;
 const MATERIAL_EXPECTED_GAIN = PROBABILITY_SCALE / 5;
+// Under death pressure, tiny search/robust edges must not let FIRE/bombs
+// dominate or outrank GO/TURN — that produced R22 SURVIVE→DIE flips.
+const ESCAPE_ROBUST_SLACK = 80;
 
 function clamp(value, minimum, maximum) {
   return value < minimum ? minimum : value > maximum ? maximum : value;
+}
+
+function deathPressure(outcome, row) {
+  return outcome.immediateFatalMass[row] > 0 || outcome.horizonFatalMass[row] > 0 ||
+    outcome.escapeSlack[row] < 0;
+}
+
+// Escape class: GO and turns share rank so mobility cannot demote a surviving
+// GO in favor of a turning action with a near-tied robust. FIRE/bombs/skills
+// share the non-escape rank — FIRE must not outrank CAST_POISON in emergency.
+function escapeMobilityRank(action) {
+  if (action === ACTION.TURN_LEFT || action === ACTION.TURN_RIGHT ||
+      action === ACTION.GO) return 2;
+  return 0;
 }
 
 class ActionOutcomeSlab {
@@ -34,6 +51,13 @@ class ActionOutcomeSlab {
     this.committedFatalMass = new Uint16Array(maxActions);
     this.possibleProjectileFatalMass = new Uint16Array(maxActions);
     this.futureFireFatalMass = new Uint16Array(maxActions);
+    // Escape Quality from DeadlineKernel per-successor (not committedPressure).
+    this.escapeSuccessorProof = new Uint8Array(maxActions);
+    this.escapeSuccessorExposed = new Uint8Array(maxActions);
+    this.escapeSuccessorSlack = new Int8Array(maxActions);
+    this.escapeSuccessorBranches = new Uint8Array(maxActions);
+    this.escapeSuccessorCoverage = new Uint8Array(maxActions);
+    this.escapeSuccessorReady = 0;
   }
   reset(count) {
     this.count = count; this.hard.fill(0, 0, count); this.safety.fill(SAFETY_STATUS.UNKNOWN, 0, count);
@@ -52,6 +76,12 @@ class ActionOutcomeSlab {
     this.committedFatalMass.fill(0, 0, count);
     this.possibleProjectileFatalMass.fill(0, 0, count);
     this.futureFireFatalMass.fill(0, 0, count);
+    this.escapeSuccessorProof.fill(0, 0, count);
+    this.escapeSuccessorExposed.fill(0, 0, count);
+    this.escapeSuccessorSlack.fill(-128, 0, count);
+    this.escapeSuccessorBranches.fill(0, 0, count);
+    this.escapeSuccessorCoverage.fill(0, 0, count);
+    this.escapeSuccessorReady = 0;
   }
   copySafety(row, hard, safety) {
     this.hard[row] = hard; this.safety[row] = safety.status[row];
@@ -103,8 +133,9 @@ class RiskAcceptanceController {
     this.minimumEscapeSlack = risk === 0 ? 0 : -Math.floor(4 * risk / 100); return risk;
   }
   populate(count, hard, safety, tactical, depthSearch, informationSearch, enemyCount,
-      combat = null, searchDivisor = 2) {
+      combat = null, searchDivisor = 2, ourActions = null) {
     const outcome = this.outcome; outcome.reset(count);
+    this.ourActions = ourActions;
     this.searchDivisor = Number.isSafeInteger(searchDivisor) && searchDivisor > 0 ?
       searchDivisor : 2;
     const information = informationSearch && informationSearch.completedDepth > 0;
@@ -117,9 +148,18 @@ class RiskAcceptanceController {
       outcome.tacticalValue[row] = tacticalValue;
       let worst = tacticalValue; let robust = tacticalValue; let expected = tacticalValue;
       if (search) {
-        robust = clamp(tacticalValue + Math.trunc(search.rootScore[row] /
-          this.searchDivisor), -10000, 10000);
-        expected = robust; worst = 10000;
+        const searchPart = Math.trunc(search.rootScore[row] / this.searchDivisor);
+        const blended = clamp(tacticalValue + searchPart, -10000, 10000);
+        // Under Safety death pressure, shallow Information leaves must not let
+        // tactical aggression outrank the search signal. Physical depth search
+        // already owns multi-ply recursion — keep its blended robust.
+        if (information && deathPressure(outcome, row)) {
+          robust = clamp(searchPart, -10000, 10000);
+          expected = blended;
+        } else {
+          robust = blended; expected = blended;
+        }
+        worst = 10000;
         for (let column = 0; column < enemyCount; column += 1) {
           const searchValue = search.rootCellScore[row * SEARCH_CAPACITY.MAX_ENEMY_POLICIES + column];
           const value = clamp(tacticalValue + Math.trunc(searchValue /
@@ -165,11 +205,41 @@ class RiskAcceptanceController {
     }
     this.safetyBackupCount += 1;
   }
+  // Strict Escape Quality on committed discriminators only (proof + stillExposed).
+  // Slack/branches are weaker pose hints and must not outrank Soft/search masses
+  // when exposure is tied (that flipped f594 GO→TURN).
+  escapeQualityBetter(left, right) {
+    const o = this.outcome;
+    if (!o.escapeSuccessorReady) return 0;
+    if (o.escapeSuccessorProof[left] !== o.escapeSuccessorProof[right])
+      return o.escapeSuccessorProof[left] > o.escapeSuccessorProof[right] ? 1 : 0;
+    if (o.escapeSuccessorExposed[left] !== o.escapeSuccessorExposed[right])
+      return o.escapeSuccessorExposed[left] < o.escapeSuccessorExposed[right] ? 1 : 0;
+    return 0;
+  }
+
   strictlyDominates(left, right) {
-    const o = this.outcome; const noMoreRisk = o.immediateFatalMass[left] <= o.immediateFatalMass[right] &&
+    const o = this.outcome;
+    // Better Escape Quality cannot be dominated by a worse-quality peer.
+    if (this.escapeQualityBetter(right, left)) return 0;
+    const noMoreRisk = o.immediateFatalMass[left] <= o.immediateFatalMass[right] &&
       o.horizonFatalMass[left] <= o.horizonFatalMass[right] && o.unknownMass[left] <= o.unknownMass[right] &&
       o.earliestFatalFrame[left] >= o.earliestFatalFrame[right] &&
       o.escapeSlack[left] >= o.escapeSlack[right];
+    const pressure = deathPressure(o, left) || deathPressure(o, right);
+    // Under Safety death pressure, only search-backed robust may dominate on
+    // value. Tactical/expected edges are not certificates at depth 1.
+    if (pressure) {
+      const riskStrict = o.immediateFatalMass[left] < o.immediateFatalMass[right] ||
+        o.horizonFatalMass[left] < o.horizonFatalMass[right] ||
+        o.unknownMass[left] < o.unknownMass[right] ||
+        o.earliestFatalFrame[left] > o.earliestFatalFrame[right] ||
+        o.escapeSlack[left] > o.escapeSlack[right];
+      // Value-only domination needs a material robust gap so near-tied search
+      // cannot mark the surviving escape row dominated.
+      return noMoreRisk && o.robustLower[left] >= o.robustLower[right] &&
+        (riskStrict || o.robustLower[left] > o.robustLower[right] + ESCAPE_ROBUST_SLACK);
+    }
     const noLessValue = o.robustLower[left] >= o.robustLower[right] &&
       o.expectedValue[left] >= o.expectedValue[right] && o.tacticalValue[left] >= o.tacticalValue[right];
     const strict = o.immediateFatalMass[left] < o.immediateFatalMass[right] ||
@@ -209,9 +279,26 @@ class RiskAcceptanceController {
     for (let right = 0; right < o.count; right += 1) if (o.acceptable[right])
       for (let left = 0; left < o.count; left += 1) if (left !== right && o.acceptable[left] &&
           this.strictlyDominates(left, right)) { o.dominated[right] = 1; break; }
-    for (let row = 0; row < o.count; row += 1)
-      if (o.acceptable[row] && !o.dominated[row] && o.robustLower[row] > this.safeFloor)
-        this.safeFloor = o.robustLower[row];
+    let maxRobust = -10000; let deathFrontier = 0;
+    for (let row = 0; row < o.count; row += 1) {
+      if (!o.acceptable[row] || o.dominated[row]) continue;
+      if (o.robustLower[row] > maxRobust) maxRobust = o.robustLower[row];
+      if (deathPressure(o, row)) deathFrontier = 1;
+    }
+    // Keep near-tied escape rows eligible: a tiny FIRE robust edge must not
+    // raise the floor above surviving GO/TURN actions.
+    this.safeFloor = deathFrontier ? maxRobust - ESCAPE_ROBUST_SLACK : maxRobust;
+    // Escape Quality: never floor out the quality-best acceptable escape — Soft
+    // robust gaps must not hide a clearing GO under a blast TURN.
+    if (o.escapeSuccessorReady) {
+      let bestQuality = -1;
+      for (let row = 0; row < o.count; row += 1) {
+        if (!o.acceptable[row] || o.dominated[row]) continue;
+        if (bestQuality < 0 || this.escapeQualityBetter(row, bestQuality)) bestQuality = row;
+      }
+      if (bestQuality >= 0 && o.robustLower[bestQuality] < this.safeFloor)
+        this.safeFloor = o.robustLower[bestQuality];
+    }
     return this.safeFloor;
   }
   riskStrictlyDominates(left, right) {
@@ -268,6 +355,14 @@ class RiskAcceptanceController {
   }
   lexicographicRiskLess(left, right) {
     if (right < 0) return 1; const o = this.outcome;
+    // Escape Quality committed prefix (proof + exposed only) BEFORE Soft fatal
+    // masses so clearing escapes beat blast peers. Slack/branches come later.
+    if (o.escapeSuccessorReady) {
+      if (o.escapeSuccessorProof[left] !== o.escapeSuccessorProof[right])
+        return o.escapeSuccessorProof[left] > o.escapeSuccessorProof[right];
+      if (o.escapeSuccessorExposed[left] !== o.escapeSuccessorExposed[right])
+        return o.escapeSuccessorExposed[left] < o.escapeSuccessorExposed[right];
+    }
     if (o.immediateFatalMass[left] !== o.immediateFatalMass[right])
       return o.immediateFatalMass[left] < o.immediateFatalMass[right];
     if (o.horizonFatalMass[left] !== o.horizonFatalMass[right])
@@ -276,7 +371,40 @@ class RiskAcceptanceController {
     if (o.earliestFatalFrame[left] !== o.earliestFatalFrame[right])
       return o.earliestFatalFrame[left] > o.earliestFatalFrame[right];
     if (o.escapeSlack[left] !== o.escapeSlack[right]) return o.escapeSlack[left] > o.escapeSlack[right];
+    // Under death pressure, escape-class mobility (GO/TURN) outranks FIRE/bombs
+    // unless the lower-mobility side has a material robust advantage.
+    if ((deathPressure(o, left) || deathPressure(o, right)) && this.ourActions) {
+      const leftRank = escapeMobilityRank(this.ourActions[left]);
+      const rightRank = escapeMobilityRank(this.ourActions[right]);
+      const robDiff = o.robustLower[left] - o.robustLower[right];
+      if (leftRank !== rightRank) {
+        if (leftRank > rightRank) return robDiff >= -ESCAPE_ROBUST_SLACK;
+        return robDiff > ESCAPE_ROBUST_SLACK;
+      }
+      if (Math.abs(robDiff) <= ESCAPE_ROBUST_SLACK) {
+        if (o.escapeSuccessorReady) {
+          if (o.escapeSuccessorSlack[left] !== o.escapeSuccessorSlack[right])
+            return o.escapeSuccessorSlack[left] > o.escapeSuccessorSlack[right];
+          if (o.escapeSuccessorBranches[left] !== o.escapeSuccessorBranches[right])
+            return o.escapeSuccessorBranches[left] > o.escapeSuccessorBranches[right];
+        }
+        if (o.expectedValue[left] !== o.expectedValue[right])
+          return o.expectedValue[left] > o.expectedValue[right];
+        if (o.tacticalValue[left] !== o.tacticalValue[right])
+          return o.tacticalValue[left] > o.tacticalValue[right];
+        return left < right;
+      }
+    }
     if (o.robustLower[left] !== o.robustLower[right]) return o.robustLower[left] > o.robustLower[right];
+    if (deathPressure(o, left) || deathPressure(o, right)) {
+      if (o.expectedValue[left] !== o.expectedValue[right])
+        return o.expectedValue[left] > o.expectedValue[right];
+      return left < right;
+    }
+    if (o.expectedValue[left] !== o.expectedValue[right])
+      return o.expectedValue[left] > o.expectedValue[right];
+    if (o.tacticalValue[left] !== o.tacticalValue[right])
+      return o.tacticalValue[left] > o.tacticalValue[right];
     return left < right;
   }
   emergencyRiskLess(left, right) {
@@ -329,10 +457,7 @@ class RiskAcceptanceController {
     let best = -1;
     for (let row = 0; row < o.count; row += 1)
       if (o.acceptable[row] && !o.dominated[row] && o.robustLower[row] >= this.safeFloor &&
-          (best < 0 || o.expectedValue[row] > o.expectedValue[best] ||
-           (o.expectedValue[row] === o.expectedValue[best] &&
-            (o.tacticalValue[row] > o.tacticalValue[best] ||
-             (o.tacticalValue[row] === o.tacticalValue[best] && row < best))))) best = row;
+          (best < 0 || this.lexicographicRiskLess(row, best))) best = row;
     this.lastSelected = best; return best;
   }
 }

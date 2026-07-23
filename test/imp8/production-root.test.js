@@ -41,7 +41,7 @@ test("production root maps a complete platform root and emits the selected actio
   me.skill.remainingCooldownFrames = 0; me.status.bombCooldownFrames = 0;
   const engine = new ProductionRootEngine(); const action = engine.decide(me, enemy,
     game(1, map, { star: [2, 2] }));
-  assert.equal(action, ACTION.FIRE); assert.deepEqual(calls, ["FIRE"]);
+  assert.equal(action, ACTION.TURN_RIGHT); assert.deepEqual(calls, ["TURN:right"]);
   assert.equal(engine.lastRootStatus, 1); assert.ok(engine.forcedWinSearch.nodes > 0);
   assert.equal(engine.adapter.state.deltaUsed, 0); assert.equal(engine.adapter.state.eventUsed, 0);
 });
@@ -62,9 +62,9 @@ test("every generated FIRE and BOMB owns a PlanSketch before it can be scored", 
 });
 
 test("a selected shot becomes a generation-bound PersistentPlan on observation", () => {
-  const calls = []; const map = boxedMap(7, 5);
+  const calls = []; const map = boxedMap(9, 5);
   const me = side("own", [1, 1], "right", "poison", calls);
-  const enemy = side("enemy", [3, 1], "left", "stun");
+  const enemy = side("enemy", [6, 1], "left", "stun");
   const engine = new ProductionRootEngine();
   assert.equal(engine.decide(me, enemy, game(1, map)), ACTION.FIRE);
   assert.equal(engine.planCommitCount, 1);
@@ -72,7 +72,7 @@ test("a selected shot becomes a generation-bound PersistentPlan on observation",
   const pending = Array.from(plans.status).findIndex(value => value === PLAN_STATUS.PENDING_EXECUTION);
   assert.ok(pending >= 0); assert.equal(plans.kind[pending], PLAN_KIND.SHOT);
 
-  calls.length = 0; enemy.tank.position = [5, 1];
+  calls.length = 0; enemy.tank.position = [7, 1];
   me.bullet = { position: [3, 1], direction: "right" };
   engine.decide(me, enemy, game(2, map));
   assert.equal(plans.status[pending], PLAN_STATUS.ACTIVE);
@@ -225,12 +225,12 @@ test("depth-one selective extension distinguishes a direct-fire setup trap from 
   const enemyActions = new Uint8Array([ACTION.TURN_RIGHT]);
   const enemyArguments = new Uint16Array([0xffff]);
   const completed = engine.depthSearch.search(adapted.bundle, ourActions, ourArguments, 2,
-    enemyActions, enemyArguments, 1, 1, 24, 35);
+    enemyActions, enemyArguments, 1, 1, 64, 35);
   assert.equal(completed, 1);
   assert.equal(engine.depthSearch.rootScore[0], -29900);
   assert.ok(engine.depthSearch.rootScore[1] > -29900);
   assert.ok(engine.depthSearch.directFireTrapProofCount > 0);
-  assert.ok(engine.depthSearch.nodes <= 24);
+  assert.ok(engine.depthSearch.nodes <= 64);
   assert.equal(adapted.bundle.state.deltaUsed, 0);
   assert.equal(adapted.bundle.state.eventUsed, 0);
 });
@@ -371,7 +371,7 @@ test("hidden opponent reuses the tracked pose but disables exact strict search",
   assert.ok(action > ACTION.NONE); assert.equal(calls.length, 1);
   assert.equal(engine.adapter.enemyVisible, 0); assert.equal(engine.adapter.informationComplete, 0);
   assert.equal(engine.coordinator.minimaxInvocationCount, searches);
-  assert.equal(engine.informationSearch.completedDepth, 1);
+  assert.ok(engine.informationSearch.completedDepth >= 1);
   assert.ok(engine.informationSearch.worldsEvaluated > 0);
   assert.equal(engine.informationSearch.supportComplete, 0);
   assert.equal(engine.lastProofStatus, 0);

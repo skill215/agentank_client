@@ -177,6 +177,64 @@ class ProductionForcedWinSearch {
     }
     return this.lastStatus;
   }
+
+  // Information ForcedWin: AND over every HiddenWorld pose. Soft-topping is
+  // forbidden — partial world coverage must not authorize PROVEN.
+  searchInformation(bundle, rootActions, rootArguments, rootOurCount,
+      rootEnemyActions, rootEnemyArguments, rootEnemyCount,
+      worldCells, worldCount, supportComplete, lastDirection, directionComplete,
+      depth, nodeBudget) {
+    this.resetRoot();
+    if (!bundle || !supportComplete || !Number.isInteger(worldCount) || worldCount < 1 ||
+        worldCount > 4 || !Number.isInteger(rootOurCount) || !Number.isInteger(rootEnemyCount) ||
+        !Number.isInteger(depth) || !Number.isInteger(nodeBudget) || nodeBudget < 1 ||
+        rootOurCount < 1 || rootEnemyCount < 1 || depth < 1 ||
+        rootOurCount > SEARCH_CAPACITY.MAX_OUR_ACTIONS ||
+        rootEnemyCount > SEARCH_CAPACITY.MAX_ENEMY_POLICIES) return this.lastStatus;
+    this.nodeBudget = nodeBudget;
+    this.ourCount[0] = rootOurCount; this.enemyCount[0] = rootEnemyCount;
+    for (let index = 0; index < rootOurCount; index += 1) {
+      this.ourActions[index] = rootActions[index]; this.ourArguments[index] = rootArguments[index];
+    }
+    for (let index = 0; index < rootEnemyCount; index += 1) {
+      this.enemyActions[index] = rootEnemyActions[index];
+      this.enemyArguments[index] = rootEnemyArguments[index];
+    }
+    const state = bundle.state; const a = state.arrays;
+    const originalCell = a[ARRAY.TANK_CELL][1]; const originalDirection = a[ARRAY.TANK_DIR][1];
+    const rootLo = state.hashLo; const rootHi = state.hashHi;
+    const rootMark = state.deltaUsed * 1024 + state.eventUsed;
+    for (let horizon = 1; horizon <= depth && this.nodes < this.nodeBudget; horizon += 1) {
+      let unknown = 0; let proven = 0;
+      for (let row = 0; row < rootOurCount; row += 1) {
+        let rowUnknown = 0; let rowProven = 1;
+        for (let world = 0; world < worldCount; world += 1) {
+          a[ARRAY.TANK_CELL][1] = worldCells[world];
+          if (directionComplete) a[ARRAY.TANK_DIR][1] = lastDirection;
+          state.initializeHash();
+          const result = this.proveRow(bundle, horizon, 0, row);
+          if (result === PROOF_STATUS.DISPROVEN) { rowProven = 0; break; }
+          if (result === PROOF_STATUS.UNKNOWN) { rowUnknown = 1; rowProven = 0; break; }
+        }
+        if (rowProven) {
+          this.winningRootRow = row; this.lastStatus = PROOF_STATUS.PROVEN;
+          proven = 1; break;
+        }
+        if (rowUnknown) unknown = 1;
+      }
+      if (proven) { this.completedDepth = horizon; break; }
+      this.lastStatus = unknown ? PROOF_STATUS.UNKNOWN : PROOF_STATUS.DISPROVEN;
+      if (!unknown) this.completedDepth = horizon;
+    }
+    a[ARRAY.TANK_CELL][1] = originalCell; a[ARRAY.TANK_DIR][1] = originalDirection;
+    state.initializeHash(); state.undoTo(rootMark);
+    if (state.hashLo !== rootLo || state.hashHi !== rootHi ||
+        state.deltaUsed * 1024 + state.eventUsed !== rootMark) {
+      this.rootRestoreFailures += 1; this.lastStatus = PROOF_STATUS.UNKNOWN;
+      this.winningRootRow = -1; this.completedDepth = 0;
+    }
+    return this.lastStatus;
+  }
 }
 
 module.exports = { ProductionForcedWinSearch };

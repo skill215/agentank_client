@@ -1,78 +1,91 @@
 # 当前状态
 
-更新时间：2026-07-20（Asia/Shanghai）。
+更新时间：2026-07-21（Asia/Shanghai）。
 
 ## 工作区
 
 - 当前唯一工作区：`/home/skill/workspace/git/agentank_client`。
-- Git 分支：`main`。
+- Git 分支：`main`（HEAD `643ae1e9…`，提交说明 `draft`）。
 - Remote：`git@github.com:skill215/agentank_client.git`。
-- 项目已从 Windows 挂载路径迁移到 WSL 原生文件系统。
-- 迁移量：7,031,485,059 字节、25,650 个文件。
-- 迁移后 `test:4` 为 183/183 通过。
-- 当前文件仍是首次导入状态，尚未由本轮操作 commit 或 push。
+- Node：`v24.16.0`。
 
-历史对战、baseline 和约 6.5 GB 的生成 artifact 已物理保留在新工作区，但由 `.gitignore`
-排除。源码、测试、工具、配置和文档仍可进入 Git。
+## 结构修复基线 B0（已冻结）
+
+语义修复开始前的锚点见
+[structural-repair-baseline-b0.md](implementation/structural-repair-baseline-b0.md)：
+
+| 项 | 值 |
+|---|---|
+| `workingSourceSha256`（B0） | `d2f0791de39267d6742a9c8e83dd70b441b25e7a631c98d51be3f265dbc9d892` |
+| `npm run test:4`（B0） | 183/183 PASS |
+| R21 Capsule 不变量 | 全部为 0 失败（19,136 根，证据未重跑） |
+| `DOMINATED_RESCUE` / `NO_ACCEPTABLE_RESCUE` | 39 / 55 |
+| production minified（现有产物） | 397,799 UTF-8 字节（超限；且相对工作源有 1 模块漂移） |
+
+Production 压缩保持**独立流水线**，不与搜索语义改动共用验收指纹。
 
 ## 算法状态
 
-V2 当前包括：
+V2 当前包括 Physical/Information 分离、committed/possible 弹丸、Safety/Hard/Proof、
+多维风险、StageMatrix/Minimax、PersistentPlan + **EscapeObligation（Step 3a）**、Replay Capsule 等。
 
-- PhysicalState 与 InformationState 分离；
-- committed/possible projectile 的独立生命周期；
-- 四帧选择性 Information Safety closure；
-- Hard gate、AND/OR ForcedWin Proof 和 ReverseViability；
-- 整数化多维风险门与递归 epsilon-contamination backup；
-- StageMatrix/Minimax 生产路径；
-- CombatPressure、ShotPlan、技能策略和持续 Plan；
-- Replay Capsule、Minimax 独立 oracle、mutant corpus 和历史快速回归。
+相对 B0 的语义改动：EscapeObligation + DeadlineKernel + Step 4–5 value-depth +
+**短收敛 R22b** + **Step 6 ForcedWin→Info** + **projectile/bomb-aware Deadline** +
+**CONTINUATION 清零 R23** + **短收敛 R23b** + **Escape Quality Phase0–4**。
+当前工作源以 `sourceIdentity()` 为准；`npm run test:4` → **209/209 PASS**。
 
-最近完成的 `NO_ACCEPTABLE_RESCUE` 结构修复：
+## Step 1–6 与 DeadlineKernel 进度
 
-- fixed-continuation 存活根由 49 增至 50；
-- `NO_ACCEPTABLE_RESCUE` 从 56 降至 55；
-- 策略一致存活由 23 增至 25；
-- 新增存活控制退化为 0；
-- 19,136 个历史根完成验证；
-- avoidable Hard reject、risk-dominated selection、strict Proof false positive、root restore failure
-  和 Capsule failure 均为 0。
+| Step | 状态 | 文档 |
+|---|---|---|
+| 1 死亡四类分桶 | 完成 | [death-category-probe-b0](implementation/death-category-probe-b0.md) |
+| 2 事实层扫描 | 完成 | [fact-layer-scan-b0](implementation/fact-layer-scan-b0.md) |
+| 3a EscapeObligation | 完成 | [escape-obligation-step3a](implementation/escape-obligation-step3a.md) |
+| 3b value-depth 诊断 | 完成 | [value-depth-probe-b0](implementation/value-depth-probe-b0.md) |
+| 3b 复访（残差+性能） | 完成 | [value-depth-residual-post-s5](implementation/value-depth-residual-post-s5.md) |
+| 短收敛 R22b | 完成 | [value-depth-convergence-r22b](implementation/value-depth-convergence-r22b.md) |
+| CONTINUATION 再探针（EO） | 完成 | [continuation-reprobe-post-eo](implementation/continuation-reprobe-post-eo.md)：0/8 |
+| DeadlineKernel | 完成 | [deadline-kernel](implementation/deadline-kernel.md)：1/8 |
+| Projectile Deadline | 完成 | [deadline-projectile-aware](implementation/deadline-projectile-aware.md)：3/8 |
+| **CONTINUATION 清零** | **完成** | [continuation-cleared-r23](implementation/continuation-cleared-r23.md)：**8/8** |
+| **短收敛 R23b** | **完成** | [short-convergence-r23b](implementation/short-convergence-r23b.md)：vs R22c S2D=0，主池 75→87 |
+| **Escape Quality P0–4** | **完成** | [escape-quality-phases](implementation/escape-quality-phases.md)：Membership/Quality 拆分；部分 demote 退役 |
+| 4 value-depth 比较语义 | 完成 | [value-depth-step4](implementation/value-depth-step4.md) |
+| 5 Information 递归 | 完成 | [information-recursion-step5](implementation/information-recursion-step5.md) |
+| 6 ForcedWin→Info | 完成 | [forced-win-information-step6](implementation/forced-win-information-step6.md) |
 
-详细证据见 [NO_ACCEPTABLE_RESCUE 结构修复](implementation/no-acceptable-rescue-structural-repair.md)。
+## 当前阻塞
 
-## 当前阻塞：Production 代码大小
+1. **体积**：平台上限 204,800。
 
-当前 IMP6 生成物：
+## 回归基线（已替换：742 场景）
 
-| 文件 | UTF-8 字节 | 状态 |
-|---|---:|---|
-| normalized production source | 412,201 | 不可上传 |
-| production minified | 397,799 | 不可上传 |
-| 实验性普通变量 mangle | 289,849 | 仍不可上传 |
+2026-07-21 已 `sync-history` + V1/V2 working-arena + 全量 capture，**替换**本地回归证据
+（不保留多份旧报告/run）。明细：[regression-refresh-742](implementation/regression-refresh-742.md)。
 
-平台操作硬限制为 204,800 字节，本地安全目标为不超过 190,000 字节。当前 working source、旧
-IMP8 Candidate 和现有 minified bundle 都没有官方 simulate/publish 资格。
+| 项 | 值 |
+|---|---|
+| History | **742** 场景 / **735** 地图（旧 598，**+144**） |
+| Working-arena | 5936 场，V2 **1085** 胜 / 4851 负（≈**18.3%**） |
+| 同局 vs IMP8 基线 | 1952 场：**731→368**（≈37.5%→18.9%，净 −363） |
+| Capture run | `run-068b60d6…`：2968 场 / **23744** Capsule |
+| Capsule-all | **ACCEPTED** `965111e7863987e2…`（失败 0） |
+| Focused | `native-poison-death`：主池 58/64 固定续局可逃；控制 75/96 存活 |
+| 玩法门 analyze-run | REJECTED（可靠性 PASS；分数门未过） |
+| 工作源 | `0ed5c5b27938bf3e…`（与 capture 一致） |
 
-旧 IMP8 frozen Candidate 是历史 artifact，不能覆盖、不能冒充当前 working source，也不能因为
-迁移进入新 Git 仓库就恢复发布资格。
+胜率骤降分析：[v2-winrate-drop-analysis](implementation/v2-winrate-drop-analysis.md)
+（主因整局星竞争崩，非新地图过拟合）。
 
-## 当前验证状态
+星翻转消融：[star-flip-escape-ablation](implementation/star-flip-escape-ablation.md)：
+Quality/demote 无效；关整段 EscapeObligation 胜率 8%→22% 仍远低于基线 51%，TURN 占比不降
+→ 主因在 EO 外 Soft/Info/搜索栈。
 
-- `npm run test:4`：183/183 PASS。
-- multi-frame risk benchmark：PASS，热路径分配为 0。
-- search-frontier benchmark：PASS，root restore failure 为 0。
-- 本轮迁移没有运行新 V1/V2 arena，也没有改变算法参数。
-- 本轮迁移没有调用官方 simulate、publish 或 challenge。
+旧 Escape Quality 对照（19,136 Capsule / 主池 87）已作废；后续 focused/compare 以本基线为准。
 
 ## 下一步
 
-下一阶段只处理 Production 代码压缩，不改变算法语义：
-
-1. 盘点 Production 依赖图和不可达/重复模块；
-2. 将 Reference、diagnostic、日志、平台和报告代码排除在 bundle 外；
-3. 对生产专用常量、配置和模块做构建期 specialization；
-4. 调整固定 Terser 5.43.1 配置并保持可重现构建；
-5. 每个压缩步骤执行 source/minified differential、183 项测试和代码大小测量；
-6. 达到 190,000 字节以内后，才进入新的 Candidate 资格与官方 simulate。
-
-压缩阶段不得降低搜索深度、修改风险参数、删除 Hard/Safety/Proof 语义或用历史样本补丁换体积。
+1. **开野 Soft 误触发**：`!committed && !stayExposed` 时禁止 Soft/deathPressure 压 GO（优先消融验证）。
+2. EO 仅保留接触/committed；远距离帧不 `applyToSafety` / first-action restrict。
+3. 整局星差 / frameLimit 胜率纳入门禁；focused S2D 不能单独合格。
+4. 语义冻结后再做 Production 瘦身与 Candidate。

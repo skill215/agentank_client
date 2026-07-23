@@ -20,18 +20,20 @@ class ProductionInformationSearch {
     this.selectedWorld = new Uint16Array(SEARCH_CAPACITY.MAX_SUPPORT_PER_NODE);
     this.selectedMass = new Uint16Array(SEARCH_CAPACITY.MAX_SUPPORT_PER_NODE);
     this.direction = new Uint8Array(2); this.risk = new RiskProfile();
-    this.completedDepth = 0; this.nodes = 0; this.worldsEvaluated = 0;
+    this.completedDepth = 0; this.attemptedDepth = 0; this.nodes = 0; this.worldsEvaluated = 0;
     this.supportComplete = 0; this.approximate = 1; this.interruptedCount = 0;
     this.rootRestoreFailures = 0; this.hotAllocationCount = 0;
     this.projectilePresenceBackupCount = 0; this.immediateFireBackupCount = 0;
-    this.trapProbeBudget = 0;
+    this.trapProbeBudget = 0; this.continuationLeafBudget = 0;
+    this.continuationPoolRemaining = 0;
   }
 
   resetRoot() {
     this.rootScore.fill(0); this.rootCellScore.fill(INFORMATION_VALUE_MIN);
-    this.completedDepth = 0; this.nodes = 0; this.worldsEvaluated = 0;
+    this.completedDepth = 0; this.attemptedDepth = 0; this.nodes = 0; this.worldsEvaluated = 0;
     this.supportComplete = 0; this.approximate = 1;
-    this.trapProbeBudget = 0;
+    this.trapProbeBudget = 0; this.continuationLeafBudget = 0;
+    this.continuationPoolRemaining = 0;
   }
   adoptPhysicalBounds(evaluator) {
     this.resetRoot();
@@ -79,7 +81,7 @@ class ProductionInformationSearch {
       bundle.hard.chanceAlternativeCount(1, action1);
   }
   evaluateOutcome(bundle, evaluator, action0, argument0, action1, argument1,
-      chance0, chance1, nodeBudget) {
+      chance0, chance1, nodeBudget, remainingDepth = 1, baseRisk = 0) {
     const status = bundle.kernel.applyFrame(action0, argument0, action1, argument1,
       chance0, chance1); this.nodes += 1;
     if (status !== FAST_STATUS.APPLIED && status !== FAST_STATUS.APPLIED_TERMINAL) return -22000;
@@ -89,22 +91,52 @@ class ProductionInformationSearch {
     else if (terminal && terminal !== TERMINAL.INCOMPLETE) value = this.terminalValue(terminal);
     else if (hard === HARD_STATUS.REJECT_PROVEN) value = -28000;
     else if (hard === HARD_STATUS.INCOMPLETE) value = evaluator.heuristic(bundle.state) - 6000;
-    else {
+    else if (remainingDepth > 1 && this.continuationPoolRemaining >= 4 &&
+        typeof evaluator.continuationValue === "function" &&
+        nodeBudget > this.nodes + 4) {
+      const leafBudget = Math.min(this.continuationLeafBudget, this.continuationPoolRemaining,
+        Math.max(0, nodeBudget - this.nodes));
+      value = evaluator.continuationValue(bundle, Math.min(2, remainingDepth - 1),
+        leafBudget, baseRisk);
+      const spent = evaluator.lastContinuationNodes || 0;
+      this.nodes += spent;
+      this.continuationPoolRemaining = Math.max(0, this.continuationPoolRemaining - spent);
+      // Physical continuation ignores Info adjacency posture; apply the same
+      // shallow liability so escape vs commitment still separates when the
+      // Physical 1-ply returns near-ties.
+      value = this.adjustShallowLeaf(evaluator, bundle.state, value);
+    } else {
       const trap = evaluator.probeDirectFireTrap(bundle, this.trapProbeBudget);
       this.trapProbeBudget -= evaluator.lastTrapProbeNodes;
       this.nodes += evaluator.lastTrapProbeNodes;
       value = trap === 1 ? -29900 : evaluator.heuristic(bundle.state);
+      if (trap !== 1) value = this.adjustShallowLeaf(evaluator, bundle.state, value);
     }
     bundle.state.undoTo(mark); return value;
   }
+  adjustShallowLeaf(evaluator, state, value) {
+    const a = state.arrays; const own = a[ARRAY.TANK_CELL][0]; const enemy = a[ARRAY.TANK_CELL][1];
+    const proximity = evaluator.distance(state, own, enemy);
+    if (proximity > 2) return value;
+    const ownWanted = evaluator.desiredDirection(state, own, enemy);
+    if (ownWanted < 0) return value;
+    const dir = a[ARRAY.TANK_DIR][0];
+    // Reverse the clear-line +1200 when it fired inside adjacency, then apply
+    // the shallow facing liability / escape bonus.
+    if (evaluator.clearLine(state, own, enemy) && dir === ownWanted) value -= 1200;
+    if (dir === ownWanted) value -= 800;
+    else if (dir === ((ownWanted + 2) & 3)) value += 400;
+    return Math.max(-25000, Math.min(25000, value));
+  }
   evaluateChance(bundle, evaluator, action0, argument0, action1, argument1,
-      baseRisk, stateClass, nodeBudget) {
+      baseRisk, stateClass, nodeBudget, remainingDepth = 1) {
     const own = bundle.hard.chanceAlternativeCount(0, action0);
     const enemy = bundle.hard.chanceAlternativeCount(1, action1);
     const count = own * enemy; let sum = 0; let worst = INFORMATION_VALUE_MAX;
     for (let index = 0; index < count; index += 1) {
       const value = this.evaluateOutcome(bundle, evaluator, action0, argument0,
-        action1, argument1, index % own, Math.floor(index / own), nodeBudget);
+        action1, argument1, index % own, Math.floor(index / own), nodeBudget,
+        remainingDepth, baseRisk);
       sum += value; if (value < worst) worst = value;
     }
     const expected = Math.floor(sum / count);
@@ -129,43 +161,116 @@ class ProductionInformationSearch {
   }
   search(bundle, evaluator, ourActions, ourArguments, ourCount,
       enemyActions, enemyArguments, enemyCount, worldCells, worldMass, worldCount,
-      supportComplete, nodeBudget, baseRisk, lastDirection, directionComplete, enemyProbability) {
+      supportComplete, nodeBudget, baseRisk, lastDirection, directionComplete, enemyProbability,
+      decisionDepth = 1) {
     this.resetRoot();
     this.supportComplete = supportComplete ? 1 : 0; this.approximate = supportComplete ? 0 : 1;
     if (!bundle || !worldCount || !ourCount || !enemyCount || nodeBudget < 1) return 0;
+    const requestedDepth = Math.max(1, Math.min(2,
+      Number.isInteger(decisionDepth) ? decisionDepth : 1));
+    this.attemptedDepth = requestedDepth;
     const state = bundle.state; const a = state.arrays; const originalCell = a[ARRAY.TANK_CELL][1];
     const originalDirection = a[ARRAY.TANK_DIR][1]; const rootLo = state.hashLo; const rootHi = state.hashHi;
     const rootMark = state.deltaUsed * 1024 + state.eventUsed;
-    let matrixNodes = 0;
-    for (let row = 0; row < ourCount; row += 1)
-      for (let column = 0; column < enemyCount; column += 1)
-        matrixNodes += this.chanceCount(bundle, ourActions[row], enemyActions[column]);
-    if (!matrixNodes || matrixNodes > nodeBudget) return 0;
-    // A reduced runtime mode keeps the nominal last-seen direction. The
-    // all-support muzzle envelope below still covers critical alternative
-    // directions, so this reduction is bounded and the node budget is real.
-    const maximumDirections = nodeBudget >= matrixNodes * 2 ? 2 : 1;
-    const maximumWorlds = Math.floor(nodeBudget / (matrixNodes * maximumDirections));
+    // Soft-top enemy columns by nominal probability when the full matrix cannot
+    // leave room for depth-2 continuation. Never drop below two columns.
+    let effectiveEnemyCount = enemyCount;
+    const enemyOrder = new Uint8Array(enemyCount);
+    for (let column = 0; column < enemyCount; column += 1) enemyOrder[column] = column;
+    for (let i = 0; i < enemyCount; i += 1)
+      for (let j = i + 1; j < enemyCount; j += 1)
+        if (enemyProbability[enemyOrder[j]] > enemyProbability[enemyOrder[i]]) {
+          const swap = enemyOrder[i]; enemyOrder[i] = enemyOrder[j]; enemyOrder[j] = swap;
+        }
+    const matrixNodesFor = (enemies) => {
+      let nodes = 0;
+      for (let row = 0; row < ourCount; row += 1)
+        for (let index = 0; index < enemies; index += 1)
+          nodes += this.chanceCount(bundle, ourActions[row], enemyActions[enemyOrder[index]]);
+      return nodes;
+    };
+    // Reserve continuation first when recursion is requested — depth-2 value
+    // discrimination beats an oversized depth-1 matrix that leaves no leftover.
+    let continuationReserve = 0;
+    if (requestedDepth > 1 && typeof evaluator.continuationValue === "function" &&
+        nodeBudget >= 48) {
+      continuationReserve = Math.min(64, Math.max(40, Math.floor(nodeBudget / 2)));
+      // Cap enemy breadth so every our-row can still receive a fair leaf share.
+      if (effectiveEnemyCount > 4) effectiveEnemyCount = 4;
+    }
+    let matrixBudget = Math.max(1, nodeBudget - continuationReserve);
+    let matrixNodes = matrixNodesFor(effectiveEnemyCount);
+    while (effectiveEnemyCount > 2 && matrixNodes > matrixBudget) {
+      effectiveEnemyCount -= 1;
+      matrixNodes = matrixNodesFor(effectiveEnemyCount);
+    }
+    if (!matrixNodes || matrixNodes > matrixBudget) {
+      // Still too large even at two enemy columns: drop the reserve and try a
+      // pure depth-1 matrix inside the full budget.
+      continuationReserve = 0; matrixBudget = nodeBudget;
+      effectiveEnemyCount = enemyCount;
+      matrixNodes = matrixNodesFor(effectiveEnemyCount);
+      while (effectiveEnemyCount > 2 && matrixNodes > matrixBudget) {
+        effectiveEnemyCount -= 1;
+        matrixNodes = matrixNodesFor(effectiveEnemyCount);
+      }
+      if (!matrixNodes || matrixNodes > matrixBudget) return 0;
+    }
+    // Prefer one world / one muzzle direction so leftover funds continuations.
+    let maximumDirections = 1;
+    let maximumWorlds = Math.floor(matrixBudget / matrixNodes);
     if (maximumWorlds < 1) return 0;
+    if (continuationReserve === 0 && matrixBudget >= matrixNodes * 2) {
+      maximumDirections = 2;
+      maximumWorlds = Math.floor(matrixBudget / (matrixNodes * maximumDirections));
+      if (maximumWorlds < 1) {
+        maximumDirections = 1;
+        maximumWorlds = Math.floor(matrixBudget / matrixNodes);
+      }
+    }
+    if (continuationReserve > 0 && maximumWorlds > 2) maximumWorlds = 2;
     let inputMass = 0;
     for (let world = 0; world < worldCount; world += 1) inputMass += worldMass[world];
     const selected = this.selectWorlds(worldCells, worldMass, worldCount, maximumWorlds);
     if (!selected) return 0;
-    // Completeness is monotone: budget truncation, missing probability mass,
-    // or an unresolved direction support can only downgrade the value search.
+    const matrixCost = matrixNodes * maximumDirections * selected;
+    let infoDepth = 1;
+    let continuationPool = 0;
+    this.continuationLeafBudget = 0;
+    this.continuationPoolRemaining = 0;
+    if (continuationReserve > 0 && matrixCost <= matrixBudget) {
+      infoDepth = 2;
+      continuationPool = Math.min(continuationReserve, Math.max(0, nodeBudget - matrixCost));
+      // Fair per-row leaf budget: a shared depleting pool biased early rows.
+      this.continuationLeafBudget = Math.min(16, Math.max(6,
+        Math.floor(continuationPool / Math.max(1, ourCount * 2))));
+    }
+    this.attemptedDepth = Math.max(this.attemptedDepth, infoDepth);
     this.supportComplete = this.supportComplete && selected === worldCount && inputMass === 10000 &&
-      directionComplete ? 1 : 0;
+      directionComplete && infoDepth === 1 && effectiveEnemyCount === enemyCount ? 1 : 0;
     this.approximate = this.supportComplete ? 0 : 1;
     this.trapProbeBudget = Math.min(DIRECT_FIRE_TRAP_NODE_CAP, Math.max(0,
-      nodeBudget - matrixNodes * maximumDirections * selected));
+      nodeBudget - matrixCost - continuationPool));
+    // Renormalize enemy probabilities over the retained columns.
+    let retainedMass = 0;
+    for (let index = 0; index < effectiveEnemyCount; index += 1)
+      retainedMass += enemyProbability[enemyOrder[index]];
     const starDelta = a[ARRAY.TANK_STARS][0] - a[ARRAY.TANK_STARS][1];
     const remaining = Math.max(0, 127 - a[ARRAY.SCALAR][SCALAR.FRAME]);
     const stateClass = this.risk.classify(starDelta, remaining, 0, 1, 2, 0);
     const hiddenLambda = this.risk.lambda(baseRisk, stateClass, RISK_DIMENSION.HIDDEN_WORLD);
     const enemyLambda = this.risk.lambda(baseRisk, stateClass, RISK_DIMENSION.ENEMY_ACTION);
+    const poolPerRow = infoDepth > 1 ?
+      Math.max(this.continuationLeafBudget, Math.floor(continuationPool / Math.max(1, ourCount))) : 0;
+    const retainedMask = effectiveEnemyCount < enemyCount ? new Uint8Array(enemyCount) : null;
+    if (retainedMask)
+      for (let index = 0; index < effectiveEnemyCount; index += 1)
+        retainedMask[enemyOrder[index]] = 1;
     for (let row = 0; row < ourCount; row += 1) {
+      this.continuationPoolRemaining = poolPerRow;
       let enemyExpected = 0; let enemyWorst = INFORMATION_VALUE_MAX;
-      for (let column = 0; column < enemyCount; column += 1) {
+      for (let index = 0; index < effectiveEnemyCount; index += 1) {
+        const column = enemyOrder[index];
         let hiddenExpected = 0; let hiddenWorst = INFORMATION_VALUE_MAX;
         for (let world = 0; world < selected; world += 1) {
           a[ARRAY.TANK_CELL][1] = this.selectedWorld[world];
@@ -175,7 +280,8 @@ class ProductionInformationSearch {
           for (let directionIndex = 0; directionIndex < directions; directionIndex += 1) {
             a[ARRAY.TANK_DIR][1] = this.direction[directionIndex]; state.initializeHash();
             const value = this.evaluateChance(bundle, evaluator, ourActions[row], ourArguments[row],
-              enemyActions[column], enemyArguments[column], baseRisk, stateClass, nodeBudget);
+              enemyActions[column], enemyArguments[column], baseRisk, stateClass, nodeBudget,
+              infoDepth);
             directionSum += value; if (value < directionWorst) directionWorst = value;
           }
           const directionExpected = Math.floor(directionSum / directions);
@@ -185,13 +291,24 @@ class ProductionInformationSearch {
         hiddenExpected = Math.floor(hiddenExpected / 10000);
         const cellValue = this.contaminated(hiddenExpected, hiddenWorst, hiddenLambda);
         this.rootCellScore[row * SEARCH_CAPACITY.MAX_ENEMY_POLICIES + column] = cellValue;
-        const probability = enemyProbability[column]; enemyExpected += probability * cellValue;
+        const probability = retainedMass > 0 ?
+          Math.floor(enemyProbability[column] * 10000 / retainedMass) : 0;
+        enemyExpected += probability * cellValue;
         if (cellValue < enemyWorst) enemyWorst = cellValue;
       }
       enemyExpected = Math.floor(enemyExpected / 10000);
       this.rootScore[row] = this.contaminated(enemyExpected, enemyWorst, enemyLambda);
+      // Soft-topped columns stay at INFORMATION_VALUE_MIN otherwise; fill them
+      // with this row's retained worst so envelopes / matrix consumers never see
+      // an unscored sentinel.
+      if (retainedMask) {
+        for (let column = 0; column < enemyCount; column += 1) {
+          if (retainedMask[column]) continue;
+          this.rootCellScore[row * SEARCH_CAPACITY.MAX_ENEMY_POLICIES + column] = enemyWorst;
+        }
+      }
     }
-    this.worldsEvaluated = selected; this.completedDepth = 1;
+    this.worldsEvaluated = selected; this.completedDepth = infoDepth;
     a[ARRAY.TANK_CELL][1] = originalCell; a[ARRAY.TANK_DIR][1] = originalDirection;
     state.initializeHash(); state.undoTo(rootMark);
     if (state.hashLo !== rootLo || state.hashHi !== rootHi ||

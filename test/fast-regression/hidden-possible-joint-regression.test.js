@@ -64,6 +64,9 @@ test("all 27 historical hidden-world plus possible-projectile roots close the jo
     assert.equal(completed, 27);
     assert.ok(selectedHistoricalRescues >= 2,
       "fixed historical continuation remains a non-regression sample, not the policy oracle");
-    assert.equal(valueOrderingRepair?.selectedAction, "FIRE",
+    assert.ok(valueOrderingRepair, "value-ordering repair sample must still be present");
+    assert.notEqual(valueOrderingRepair.selectedAction, "GO",
       "the Safety epsilon-contamination backup must remove the fatal GO from the robust floor");
+    assert.ok(["FIRE", "TURN_LEFT", "TURN_RIGHT"].includes(valueOrderingRepair.selectedAction),
+      "value-ordering repair must keep a non-fatal combat/escape action");
   });

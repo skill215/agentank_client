@@ -56,6 +56,11 @@ class ProductionDepthSearch {
       SEARCH_CAPACITY.MAX_ENEMY_POLICIES);
     this.trapActions = new Uint8Array(SEARCH_CAPACITY.MAX_OUR_ACTIONS);
     this.trapArguments = new Uint16Array(SEARCH_CAPACITY.MAX_OUR_ACTIONS);
+    this.continuationOurActions = new Uint8Array(DEEP_WIDTH);
+    this.continuationOurArguments = new Uint16Array(DEEP_WIDTH);
+    this.continuationEnemyActions = new Uint8Array(DEEP_WIDTH);
+    this.continuationEnemyArguments = new Uint16Array(DEEP_WIDTH);
+    this.lastContinuationNodes = 0;
     this.completedDepth = 0; this.attemptedDepth = 0; this.bestRow = 0;
     this.bestValue = DEPTH_VALUE_MIN; this.nodes = 0; this.cacheProbes = 0; this.baseRisk = 0;
     this.cacheHits = 0; this.cacheWrites = 0; this.interruptedCount = 0;
@@ -540,6 +545,58 @@ class ProductionDepthSearch {
           this.clearLine(state, own, enemy)) return 1;
     }
     return 0;
+  }
+  // Budgeted Physical continuation used as an Information depth-2 leaf. Does not
+  // commit completedDepth — InformationSearch owns the published depth.
+  continuationValue(bundle, depth, nodeBudget, baseRisk = 0) {
+    this.lastContinuationNodes = 0;
+    const state = bundle && bundle.state;
+    if (!state || !Number.isInteger(depth) || depth < 1 ||
+        !Number.isInteger(nodeBudget) || nodeBudget < 4) {
+      return this.heuristic(state);
+    }
+    const before = this.nodes;
+    // Cheap trap proof before spending a full Physical iteration.
+    const trap = this.probeDirectFireTrap(bundle, Math.min(8, nodeBudget));
+    this.nodes += this.lastTrapProbeNodes;
+    if (trap === 1) {
+      this.lastContinuationNodes = Math.max(0, this.nodes - before);
+      return -29900;
+    }
+    if (nodeBudget - (this.nodes - before) < 8) {
+      this.lastContinuationNodes = Math.max(0, this.nodes - before);
+      return this.heuristic(state);
+    }
+    const savedCompleted = this.completedDepth;
+    const savedAttempted = this.attemptedDepth;
+    this.baseRisk = Math.max(0, Math.min(100, baseRisk | 0));
+    // One Physical ply at width 2 after the Information apply — cheaper than
+    // Physical depth 2 while still separating escape vs commitment leaves.
+    this.configureIteration(1, 2);
+    this.generateDeep(0, state, 0); this.generateDeep(0, state, 1);
+    let ourCount = this.frameOurCount[0]; let enemyCount = this.frameEnemyCount[0];
+    if (ourCount < 1) { this.pushDeep(0, 0, ACTION.NONE); ourCount = 1; }
+    if (enemyCount < 1) { this.pushDeep(0, 1, ACTION.NONE); enemyCount = 1; }
+    for (let index = 0; index < ourCount; index += 1) {
+      this.continuationOurActions[index] = this.deepOurActions[index];
+      this.continuationOurArguments[index] = this.deepOurArguments[index];
+    }
+    for (let index = 0; index < enemyCount; index += 1) {
+      this.continuationEnemyActions[index] = this.deepEnemyActions[index];
+      this.continuationEnemyArguments[index] = this.deepEnemyArguments[index];
+    }
+    this.rootActions = this.continuationOurActions;
+    this.rootArguments = this.continuationOurArguments;
+    this.rootOurCount = ourCount;
+    this.rootEnemyActions = this.continuationEnemyActions;
+    this.rootEnemyArguments = this.continuationEnemyArguments;
+    this.rootEnemyCount = enemyCount;
+    this.bestValue = DEPTH_VALUE_MIN;
+    const ok = this.runIteration(bundle, 1, before + nodeBudget, 2);
+    this.lastContinuationNodes = Math.max(0, this.nodes - before);
+    this.completedDepth = savedCompleted;
+    this.attemptedDepth = savedAttempted;
+    return ok ? this.bestValue : this.heuristic(state);
   }
   search(bundle, ourActions, ourArguments, ourCount, enemyActions, enemyArguments,
       enemyCount, targetDepth, nodeBudget, baseRisk = 0) {

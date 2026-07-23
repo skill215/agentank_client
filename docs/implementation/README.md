@@ -18,3 +18,19 @@ Each IMP stage writes one immutable overview here with input hashes, commands, t
 - [possible-projectile-path-support-repair.md](possible-projectile-path-support-repair.md) — possible-projectile joint path support, revision-keyed shared hazard cache, 25/165 current survivors, root-cause split, and performance evidence.
 - [current-full-historical-regression-r17.md](current-full-historical-regression-r17.md) — current-source full historical replay, exact R12-to-R17 death rescue/regression transitions, remaining failure surfaces, and 19,136-root invariant evidence.
 - [no-acceptable-rescue-structural-repair.md](no-acceptable-rescue-structural-repair.md) — policy-consistent reclassification of the four apparent regressions, the constrained causal fallback repair, rejected broad alternatives, and R20 no-regression evidence.
+- [full-regression-r21.md](full-regression-r21.md) — post-migration 19,136-root verification, R17/R12 survival deltas, remaining failure buckets, and the local-runtime caveat.
+- [full-regression-r22.md](full-regression-r22.md) — post value-depth/perf repair vs R21: +35 primary survivors, 5 regressions, controls flat, capsule-all faster.
+- [structural-repair-baseline-b0.md](structural-repair-baseline-b0.md) — frozen pre-repair baseline: workingSourceSha256, test:4, R21 buckets, production byte snapshot, and build-drift caveat.
+- [death-category-probe-b0.md](death-category-probe-b0.md) — Step-1 stratified 25-root death categories: 0 Hard wiring leaks, 8 continuation gaps, 17 information-only.
+- [fact-layer-scan-b0.md](fact-layer-scan-b0.md) — Step-2 full R21 frame observation↔Physical mismatch scan: 0 mismatches.
+- [escape-obligation-step3a.md](escape-obligation-step3a.md) — Step-3a EscapeObligation production wiring, UT, and test:4 gate.
+- [continuation-reprobe-post-eo.md](continuation-reprobe-post-eo.md) — post-EO CONTINUATION re-probe: 8/8 still die; same-frame clearing-only scope.
+- [deadline-kernel.md](deadline-kernel.md) — DeadlineKernel + EscapeObligation: 1/8 CONTINUATION survival (FIRE→TURN_LEFT).
+- [deadline-projectile-aware.md](deadline-projectile-aware.md) — projectile hit-tick + GO-into-contact demotion: 3/8 CONTINUATION, 826c TURN_LEFT live.
+- [continuation-cleared-r23.md](continuation-cleared-r23.md) — remaining CONTINUATION cleared 8/8; R23 full regression vs R21/R22c.
+- [value-depth-probe-b0.md](value-depth-probe-b0.md) — Step-3b offline diagnosis of 23 VALUE_DEPTH_NON_DISCRIMINATION cases.
+- [value-depth-step4.md](value-depth-step4.md) — Step-4 leaf/Risk comparison semantics: 4/23 live survival flips.
+- [information-recursion-step5.md](information-recursion-step5.md) — Step-5 budgeted Information depth≤2 with Physical continuation leaves.
+- [value-depth-residual-post-s5.md](value-depth-residual-post-s5.md) — Post-S5 residual diagnosis + perf: 12/23 survival, ~54 avg nodes.
+- [value-depth-convergence-r22b.md](value-depth-convergence-r22b.md) — Tighten death-pressure slack: 5→1 SURVIVE→DIE, 75/256 survivors.
+- [forced-win-information-step6.md](forced-win-information-step6.md) — Step-6 Information ForcedWin AND over small complete HiddenWorld sets.
