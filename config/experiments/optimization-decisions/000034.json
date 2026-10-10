@@ -1,0 +1,80 @@
+{
+  "seq": 34,
+  "previous": "c13a38ce15e86aff5148ec333066599ece0f4923a81121b19f0840112666cf31",
+  "record": {
+    "version": 1,
+    "type": "register",
+    "at": "2026-10-09T03:31:06.430Z",
+    "process": "OPT-P-005",
+    "registration": "prospective",
+    "scope": "8 independent maps across24 pairs, same V3 policy with3 loadouts; not different algorithm opponents. Small exploratory sample, no production adoption.",
+    "baseline": "285f9863227d6af3638bed74e008f0260fd25440034d95eec5e3f8cac44d9120",
+    "falsifier": "score gain>=2, deaths delta<=1, transitions ratio<=1.2; each opponent score gain>=-0.5 and death delta<=1; integrity and mechanism active",
+    "nextStep": "Complete48 games, close by frozen subgroup and aggregate rules",
+    "alternatives": [
+      {
+        "name": "继续单一对手",
+        "benefit": "便宜",
+        "risk": "泛化未知",
+        "reason": "不采用"
+      },
+      {
+        "name": "三技能共同地图对照",
+        "benefit": "快速发现配置退步",
+        "risk": "仍为同一策略且小样本",
+        "reason": "采用"
+      }
+    ],
+    "budget": {
+      "games": 24,
+      "seconds": 600
+    },
+    "id": "OPT-D-0018",
+    "category": "algorithm",
+    "parent": "OPT-D-0014",
+    "title": "期望权重跨对手技能配置复核",
+    "hypothesis": "BP421固定候选在新地图三技能对手上仍满足整体和分层标准",
+    "criteria": [
+      {
+        "id": "integrity",
+        "metric": "health and trigger",
+        "rule": "all checks pass, active blend",
+        "unit": "game",
+        "kind": "hard"
+      },
+      {
+        "id": "eligible",
+        "metric": "paired score/death/work and subgroup guard",
+        "rule": "score gain>=2, deaths delta<=1, transitions ratio<=1.2; each opponent score gain>=-0.5 and death delta<=1; integrity and mechanism active",
+        "unit": "24 pairs /8 maps",
+        "kind": "soft"
+      },
+      {
+        "id": "release",
+        "metric": "platform/runtime",
+        "rule": "not established by screen",
+        "unit": "platform",
+        "kind": "hard"
+      }
+    ],
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp422-opponent-validation/reward-plan.json",
+        "sha256": "1c736e436c21b4d5bab9a4d1cd9f33f65fe25046cb524263ba0138282aebaa99"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp422-opponent-validation/campaign.json",
+        "sha256": "ce6147459798bb34f34068a7a2d2fe5c29b7b27e9a5136d3e0a788f48c2faf4b"
+      },
+      {
+        "path": "docs/implementation/optimization-decisions/fast-multi-objective-opt-p005.md",
+        "sha256": "0e1667fbeb38d59d40bb8f43bcda50743cca17b7c6c89cc78663c3869569c34d"
+      },
+      {
+        "path": "tools/agentank/diagnostics/opponent-skill-screen.js",
+        "sha256": "0d5a82d789ac61956333a7058494c451c708be9940d879dad2e86daf11b0b69d"
+      }
+    ]
+  },
+  "sha256": "9fd811b6f1acd15f973a5d90cbf092acd5f4eeba158b383c6d75c41cee2634e7"
+}

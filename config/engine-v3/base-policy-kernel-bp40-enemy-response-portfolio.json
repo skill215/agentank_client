@@ -1,0 +1,70 @@
+{
+  "objectKind": "BasePolicyKernelEvidenceV1",
+  "stage": "BP40",
+  "status": "ACCEPTED_AS_NOMINAL_FRONTIER_ONLY",
+  "scope": "diagnostic-only",
+  "productionChanged": false,
+  "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7",
+  "sourceSha256": "b1807328f5295c2ba8229a7f8e63b35e8acaf5d11d30f306dfcb59fdfa942034",
+  "cohort": { "scenarios": 8, "physicalMatches": 16, "skill": "STUN" },
+  "policies": ["ATTACK", "POSITION", "DEFENSE"],
+  "policyWeights": [4000, 3500, 2500],
+  "frontier": [
+    {
+      "primitivePrefixDepth": 1,
+      "roots": 259,
+      "fullCompleteRoots": 124,
+      "fullCompleteRelationAgreement": 91,
+      "fullCompleteAgreementBasisPoints": 7339,
+      "optionTransitions": 69199,
+      "fullTransitions": 217805,
+      "transitionRatioBasisPoints": 3177,
+      "budgetStops": 0,
+      "policyConsensus": 79,
+      "policyConsensusAgreement": 44,
+      "candidateDominanceConsensus": 19,
+      "candidateDominanceConsensusTrue": 9,
+      "candidateDominanceConsensusFalse": 10,
+      "overviewSha256": "7338b1102e8f1441bd0da4013f471781b38a5276244e2d66091fd10afe4ba70c"
+    },
+    {
+      "primitivePrefixDepth": 2,
+      "roots": 259,
+      "fullCompleteRoots": 124,
+      "fullCompleteRelationAgreement": 97,
+      "fullCompleteAgreementBasisPoints": 7823,
+      "optionTransitions": 138614,
+      "fullTransitions": 217805,
+      "transitionRatioBasisPoints": 6364,
+      "budgetStops": 0,
+      "policyConsensus": 79,
+      "policyConsensusAgreement": 55,
+      "candidateDominanceConsensus": 10,
+      "candidateDominanceConsensusTrue": 6,
+      "candidateDominanceConsensusFalse": 4,
+      "overviewSha256": "9c5a1a8a00930f803dc7b9826e10260d700469eea7bc88acbb85e95a19c8f8d1"
+    },
+    {
+      "primitivePrefixDepth": 3,
+      "roots": 259,
+      "fullCompleteRoots": 124,
+      "fullCompleteRelationAgreement": 112,
+      "fullCompleteAgreementBasisPoints": 9032,
+      "optionTransitions": 256371,
+      "fullTransitions": 217805,
+      "transitionRatioBasisPoints": 11771,
+      "budgetStops": 0,
+      "status": "REJECTED_DOMINATED_WORK",
+      "overviewSha256": "fbd8245c7879f148f01e6663af0ad4b4f8008c87f482b5a79468b1370bfcb48a"
+    }
+  ],
+  "selectedFrontier": 1,
+  "ownershipBoundary": {
+    "hard": "full per-frame committed quantifier",
+    "proof": "full AND/OR quantifier",
+    "nominalRisk": "prefix-1 persistent-policy portfolio may rank and bound",
+    "actionOverride": "requires a separate complete primitive verifier",
+    "reason": "Even unanimous policy candidate dominance had 9 true and 10 false cases at prefix 1; policy consensus is not a certificate."
+  },
+  "decision": "Use prefix 1 as the nominal performance frontier. Prefix 2 is an optional selective refinement. Never promote portfolio relation directly to action ownership."
+}

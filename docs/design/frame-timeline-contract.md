@@ -45,7 +45,10 @@ pickupLockUntilFrame
 - timed skill expiry 位于 action 前；overload 成功射击的 expiry 位于两颗 bullet creation 后，属于消费事件而非计时到期；
 - freeze：seat 0 施放的 14 个样本均抑制 seat 1 当帧 action；seat 1 施放的 5 个样本均不撤销 seat 0 已完成 action。
 
-这些结论是已观察 support 上的 `PLATFORM_REPLAY_CONFIRMED`。未出现的同目标移动、多 bomb 同帧、多 projectile 同时命中同一资源等仍不得推断。
+这些结论是已观察 support 上的 `PLATFORM_REPLAY_CONFIRMED`。后续动态历史扫描又在1,283个去重
+replay中确认31个普通单位GO“进入对方在同一record腾空的帧初位置”的成功样本，且两种seat方向
+都有覆盖；该共同路径不再属于move variant。仍未出现的成功swap、同目标移动、多 bomb 同帧、
+多 projectile 同时命中同一资源等不得推断。
 
 ## 3. Active PhaseOrder
 

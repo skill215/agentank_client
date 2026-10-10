@@ -1,0 +1,1344 @@
+{
+  "objectKind": "MinimaxSupportRestorationEvidenceV1",
+  "generatedAt": "2026-09-02T03:55:51.079Z",
+  "contract": {
+    "restoredPhysicalSupport": "gap == POSSIBLE_ENEMY_PROJECTILE && pool.complete && possibleCount == 0",
+    "futureEnemyFire": "remains an EnemyAction in Physical Minimax",
+    "defaultProductionBehavior": "unchanged; every candidate is diagnostic-only"
+  },
+  "census": {
+    "roots": 8322,
+    "exact": 312,
+    "inexact": 8010,
+    "recoverablePhysical": 6487,
+    "recoverableOfInexactBasisPoints": 8098,
+    "possibleOnlyTracked": 7890,
+    "possibleWithOther": 110,
+    "otherGap": 10,
+    "possibleCount": [
+      6582,
+      1242,
+      140,
+      32,
+      8,
+      6,
+      0,
+      0,
+      0
+    ],
+    "gapBitCount": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      120,
+      0,
+      8000
+    ]
+  },
+  "experiments": {
+    "broadPhysicalFixed16": {
+      "baseline": {
+        "matches": 32,
+        "wins": 2,
+        "losses": 28,
+        "draws": 2,
+        "scorePercent": "9.38",
+        "stars": {
+          "candidate": 7,
+          "control": 47
+        },
+        "crashes": {
+          "candidate": 13,
+          "control": 1
+        },
+        "actions": {
+          "candidate": {
+            "turn": 1327,
+            "go": 1490,
+            "fire": 151,
+            "throwBomb": 41,
+            "none": 21
+          },
+          "control": {
+            "turn": 1159,
+            "go": 1622,
+            "fire": 166,
+            "stun": 78,
+            "throwBomb": 5
+          }
+        },
+        "runtime": {
+          "candidateTotalMicros": 2064324,
+          "controlTotalMicros": 12322203,
+          "candidateP95Max": 6052,
+          "controlP95Max": 19668
+        },
+        "invariants": {
+          "timeoutError": 0,
+          "avoidableHardReject": 0,
+          "riskDominatedSelection": 0,
+          "rootRestoreFailure": 0,
+          "riskOnlyDominatedSelection": 0,
+          "jointDominatedSelection": 0
+        },
+        "contactSearchFunnel": {
+          "exact": 73,
+          "inexact": 1937,
+          "emergency": 0,
+          "valueBudget": 2009,
+          "valueBudgetBlocked": 0,
+          "informationConsumerBlocked": 1937,
+          "nominalPhysicalCalls": 0,
+          "nominalPhysicalCompleted": 0,
+          "nominalPhysicalScheduleBlocked": 0,
+          "refutedPossiblePhysicalEligible": 0,
+          "refutedPossiblePhysicalCalls": 0,
+          "refutedPossiblePhysicalCompleted": 0
+        },
+        "contactSupportCensus": {
+          "gapBitCount": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            49,
+            0,
+            1933
+          ],
+          "possibleCount": [
+            1600,
+            292,
+            36,
+            4,
+            2,
+            3,
+            0,
+            0,
+            0
+          ],
+          "roots": 2010,
+          "exact": 73,
+          "recoverablePhysical": 1562,
+          "possibleOnlyTracked": 1888,
+          "possibleOnlyIncomplete": 0,
+          "possibleWithOther": 45,
+          "otherGap": 4
+        },
+        "selective": {
+          "frames": 37,
+          "nodes": 12768,
+          "depthCounts": [
+            0,
+            0,
+            0,
+            28,
+            7,
+            2,
+            0,
+            0
+          ]
+        }
+      },
+      "candidate": {
+        "matches": 32,
+        "wins": 2,
+        "losses": 30,
+        "draws": 0,
+        "scorePercent": "6.25",
+        "stars": {
+          "candidate": 11,
+          "control": 56
+        },
+        "crashes": {
+          "candidate": 14,
+          "control": 1
+        },
+        "actions": {
+          "candidate": {
+            "turn": 1354,
+            "go": 1660,
+            "fire": 207,
+            "throwBomb": 56,
+            "none": 23
+          },
+          "control": {
+            "turn": 1279,
+            "go": 1729,
+            "fire": 193,
+            "stun": 91,
+            "throwBomb": 8
+          }
+        },
+        "runtime": {
+          "candidateTotalMicros": 3676700,
+          "controlTotalMicros": 14175777,
+          "candidateP95Max": 5351,
+          "controlP95Max": 16604
+        },
+        "invariants": {
+          "timeoutError": 0,
+          "avoidableHardReject": 0,
+          "riskDominatedSelection": 0,
+          "rootRestoreFailure": 0,
+          "riskOnlyDominatedSelection": 0,
+          "jointDominatedSelection": 0
+        },
+        "contactSearchFunnel": {
+          "exact": 151,
+          "inexact": 2075,
+          "emergency": 493,
+          "valueBudget": 1406,
+          "valueBudgetBlocked": 820,
+          "informationConsumerBlocked": 1044,
+          "nominalPhysicalCalls": 0,
+          "nominalPhysicalCompleted": 0,
+          "nominalPhysicalScheduleBlocked": 0,
+          "refutedPossiblePhysicalEligible": 2142,
+          "refutedPossiblePhysicalCalls": 1031,
+          "refutedPossiblePhysicalCompleted": 1028
+        },
+        "contactSupportCensus": {
+          "gapBitCount": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            75,
+            0,
+            2075
+          ],
+          "possibleCount": [
+            1661,
+            376,
+            28,
+            5,
+            5,
+            0,
+            0,
+            0,
+            0
+          ],
+          "roots": 2226,
+          "exact": 151,
+          "recoverablePhysical": 1592,
+          "possibleOnlyTracked": 2000,
+          "possibleOnlyIncomplete": 0,
+          "possibleWithOther": 75,
+          "otherGap": 0
+        },
+        "selective": {
+          "frames": 351,
+          "nodes": 108955,
+          "depthCounts": [
+            0,
+            0,
+            0,
+            256,
+            84,
+            10,
+            1,
+            0
+          ]
+        }
+      },
+      "comparison": {
+        "scoreBasisPointDelta": -313,
+        "winDelta": 0,
+        "lossDelta": 2,
+        "drawDelta": -2,
+        "starDelta": -5,
+        "crashDelta": 1,
+        "fireDelta": 56,
+        "bombDelta": 15,
+        "skillDelta": 0,
+        "positive": false
+      },
+      "paired": {
+        "paired": 32,
+        "actionStreamDifferences": 29,
+        "transitions": {
+          "V1_WIN->V1_WIN": 27,
+          "V2_WIN->V2_WIN": 1,
+          "DRAW->V1_WIN": 2,
+          "V1_WIN->V2_WIN": 1,
+          "V2_WIN->V1_WIN": 1
+        }
+      }
+    },
+    "combatGateZeroFixed16": {
+      "baseline": {
+        "matches": 32,
+        "wins": 2,
+        "losses": 28,
+        "draws": 2,
+        "scorePercent": "9.38",
+        "stars": {
+          "candidate": 7,
+          "control": 47
+        },
+        "crashes": {
+          "candidate": 13,
+          "control": 1
+        },
+        "actions": {
+          "candidate": {
+            "turn": 1327,
+            "go": 1490,
+            "fire": 151,
+            "throwBomb": 41,
+            "none": 21
+          },
+          "control": {
+            "turn": 1159,
+            "go": 1622,
+            "fire": 166,
+            "stun": 78,
+            "throwBomb": 5
+          }
+        },
+        "runtime": {
+          "candidateTotalMicros": 1616809,
+          "controlTotalMicros": 9968595,
+          "candidateP95Max": 7491,
+          "controlP95Max": 15308
+        },
+        "invariants": {
+          "timeoutError": 0,
+          "avoidableHardReject": 0,
+          "riskDominatedSelection": 0,
+          "rootRestoreFailure": 0,
+          "riskOnlyDominatedSelection": 0,
+          "jointDominatedSelection": 0
+        },
+        "contactSearchFunnel": {
+          "exact": 73,
+          "inexact": 1937,
+          "emergency": 0,
+          "valueBudget": 2009,
+          "valueBudgetBlocked": 0,
+          "informationConsumerBlocked": 1937,
+          "nominalPhysicalCalls": 0,
+          "nominalPhysicalCompleted": 0,
+          "nominalPhysicalScheduleBlocked": 0,
+          "refutedPossiblePhysicalEligible": 0,
+          "refutedPossiblePhysicalCalls": 0,
+          "refutedPossiblePhysicalCompleted": 0,
+          "refutedPossiblePhysicalCombatBlocked": 0
+        },
+        "contactSupportCensus": {
+          "gapBitCount": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            49,
+            0,
+            1933
+          ],
+          "possibleCount": [
+            1600,
+            292,
+            36,
+            4,
+            2,
+            3,
+            0,
+            0,
+            0
+          ],
+          "roots": 2010,
+          "exact": 73,
+          "recoverablePhysical": 1562,
+          "possibleOnlyTracked": 1888,
+          "possibleOnlyIncomplete": 0,
+          "possibleWithOther": 45,
+          "otherGap": 4
+        },
+        "selective": {
+          "frames": 37,
+          "nodes": 12768,
+          "depthCounts": [
+            0,
+            0,
+            0,
+            28,
+            7,
+            2,
+            0,
+            0
+          ]
+        }
+      },
+      "candidate": {
+        "matches": 32,
+        "wins": 2,
+        "losses": 28,
+        "draws": 2,
+        "scorePercent": "9.38",
+        "stars": {
+          "candidate": 7,
+          "control": 47
+        },
+        "crashes": {
+          "candidate": 13,
+          "control": 1
+        },
+        "actions": {
+          "candidate": {
+            "turn": 1327,
+            "go": 1490,
+            "fire": 151,
+            "throwBomb": 41,
+            "none": 21
+          },
+          "control": {
+            "turn": 1159,
+            "go": 1622,
+            "fire": 166,
+            "stun": 78,
+            "throwBomb": 5
+          }
+        },
+        "runtime": {
+          "candidateTotalMicros": 1363035,
+          "controlTotalMicros": 9875338,
+          "candidateP95Max": 2855,
+          "controlP95Max": 14057
+        },
+        "invariants": {
+          "timeoutError": 0,
+          "avoidableHardReject": 0,
+          "riskDominatedSelection": 0,
+          "rootRestoreFailure": 0,
+          "riskOnlyDominatedSelection": 0,
+          "jointDominatedSelection": 0
+        },
+        "contactSearchFunnel": {
+          "exact": 73,
+          "inexact": 1937,
+          "emergency": 0,
+          "valueBudget": 2009,
+          "valueBudgetBlocked": 0,
+          "informationConsumerBlocked": 1937,
+          "nominalPhysicalCalls": 0,
+          "nominalPhysicalCompleted": 0,
+          "nominalPhysicalScheduleBlocked": 0,
+          "refutedPossiblePhysicalEligible": 1562,
+          "refutedPossiblePhysicalCalls": 0,
+          "refutedPossiblePhysicalCompleted": 0,
+          "refutedPossiblePhysicalCombatBlocked": 1562
+        },
+        "contactSupportCensus": {
+          "gapBitCount": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            49,
+            0,
+            1933
+          ],
+          "possibleCount": [
+            1600,
+            292,
+            36,
+            4,
+            2,
+            3,
+            0,
+            0,
+            0
+          ],
+          "roots": 2010,
+          "exact": 73,
+          "recoverablePhysical": 1562,
+          "possibleOnlyTracked": 1888,
+          "possibleOnlyIncomplete": 0,
+          "possibleWithOther": 45,
+          "otherGap": 4
+        },
+        "selective": {
+          "frames": 37,
+          "nodes": 12768,
+          "depthCounts": [
+            0,
+            0,
+            0,
+            28,
+            7,
+            2,
+            0,
+            0
+          ]
+        }
+      },
+      "comparison": {
+        "scoreBasisPointDelta": 0,
+        "winDelta": 0,
+        "lossDelta": 0,
+        "drawDelta": 0,
+        "starDelta": 0,
+        "crashDelta": 0,
+        "fireDelta": 0,
+        "bombDelta": 0,
+        "skillDelta": 0,
+        "positive": false
+      }
+    },
+    "safeFireGateFixed16": {
+      "baseline": {
+        "matches": 32,
+        "wins": 2,
+        "losses": 28,
+        "draws": 2,
+        "scorePercent": "9.38",
+        "stars": {
+          "candidate": 7,
+          "control": 47
+        },
+        "crashes": {
+          "candidate": 13,
+          "control": 1
+        },
+        "actions": {
+          "candidate": {
+            "turn": 1327,
+            "go": 1490,
+            "fire": 151,
+            "throwBomb": 41,
+            "none": 21
+          },
+          "control": {
+            "turn": 1159,
+            "go": 1622,
+            "fire": 166,
+            "stun": 78,
+            "throwBomb": 5
+          }
+        },
+        "runtime": {
+          "candidateTotalMicros": 1512422,
+          "controlTotalMicros": 9668892,
+          "candidateP95Max": 4701,
+          "controlP95Max": 11846
+        },
+        "invariants": {
+          "timeoutError": 0,
+          "avoidableHardReject": 0,
+          "riskDominatedSelection": 0,
+          "rootRestoreFailure": 0,
+          "riskOnlyDominatedSelection": 0,
+          "jointDominatedSelection": 0
+        },
+        "contactSearchFunnel": {
+          "exact": 73,
+          "inexact": 1937,
+          "emergency": 0,
+          "valueBudget": 2009,
+          "valueBudgetBlocked": 0,
+          "informationConsumerBlocked": 1937,
+          "nominalPhysicalCalls": 0,
+          "nominalPhysicalCompleted": 0,
+          "nominalPhysicalScheduleBlocked": 0,
+          "refutedPossiblePhysicalEligible": 0,
+          "refutedPossiblePhysicalCalls": 0,
+          "refutedPossiblePhysicalCompleted": 0,
+          "refutedPossiblePhysicalCombatBlocked": 0
+        },
+        "contactSupportCensus": {
+          "gapBitCount": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            49,
+            0,
+            1933
+          ],
+          "possibleCount": [
+            1600,
+            292,
+            36,
+            4,
+            2,
+            3,
+            0,
+            0,
+            0
+          ],
+          "roots": 2010,
+          "exact": 73,
+          "recoverablePhysical": 1562,
+          "possibleOnlyTracked": 1888,
+          "possibleOnlyIncomplete": 0,
+          "possibleWithOther": 45,
+          "otherGap": 4
+        },
+        "selective": {
+          "frames": 37,
+          "nodes": 12768,
+          "depthCounts": [
+            0,
+            0,
+            0,
+            28,
+            7,
+            2,
+            0,
+            0
+          ]
+        }
+      },
+      "candidate": {
+        "matches": 32,
+        "wins": 2,
+        "losses": 27,
+        "draws": 3,
+        "scorePercent": "10.94",
+        "stars": {
+          "candidate": 9,
+          "control": 48
+        },
+        "crashes": {
+          "candidate": 15,
+          "control": 1
+        },
+        "actions": {
+          "candidate": {
+            "turn": 1324,
+            "go": 1473,
+            "fire": 161,
+            "throwBomb": 43,
+            "none": 20
+          },
+          "control": {
+            "turn": 1174,
+            "go": 1587,
+            "fire": 175,
+            "stun": 79,
+            "throwBomb": 6
+          }
+        },
+        "runtime": {
+          "candidateTotalMicros": 1764174,
+          "controlTotalMicros": 9687388,
+          "candidateP95Max": 3799,
+          "controlP95Max": 11766
+        },
+        "invariants": {
+          "timeoutError": 0,
+          "avoidableHardReject": 0,
+          "riskDominatedSelection": 0,
+          "rootRestoreFailure": 0,
+          "riskOnlyDominatedSelection": 0,
+          "jointDominatedSelection": 0
+        },
+        "contactSearchFunnel": {
+          "exact": 68,
+          "inexact": 1930,
+          "emergency": 0,
+          "valueBudget": 1958,
+          "valueBudgetBlocked": 39,
+          "informationConsumerBlocked": 1696,
+          "nominalPhysicalCalls": 0,
+          "nominalPhysicalCompleted": 0,
+          "nominalPhysicalScheduleBlocked": 0,
+          "refutedPossiblePhysicalEligible": 1517,
+          "refutedPossiblePhysicalCalls": 234,
+          "refutedPossiblePhysicalCompleted": 234,
+          "refutedPossiblePhysicalCombatBlocked": 1276
+        },
+        "contactSupportCensus": {
+          "gapBitCount": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            52,
+            0,
+            1927
+          ],
+          "possibleCount": [
+            1559,
+            318,
+            40,
+            5,
+            5,
+            3,
+            0,
+            0,
+            0
+          ],
+          "roots": 1998,
+          "exact": 68,
+          "recoverablePhysical": 1517,
+          "possibleOnlyTracked": 1878,
+          "possibleOnlyIncomplete": 0,
+          "possibleWithOther": 49,
+          "otherGap": 3
+        },
+        "selective": {
+          "frames": 103,
+          "nodes": 32686,
+          "depthCounts": [
+            0,
+            0,
+            0,
+            85,
+            16,
+            1,
+            1,
+            0
+          ]
+        }
+      },
+      "comparison": {
+        "scoreBasisPointDelta": 156,
+        "winDelta": 0,
+        "lossDelta": -1,
+        "drawDelta": 1,
+        "starDelta": 1,
+        "crashDelta": 2,
+        "fireDelta": 10,
+        "bombDelta": 2,
+        "skillDelta": 0,
+        "positive": false
+      },
+      "paired": {
+        "paired": 32,
+        "actionStreamDifferences": 10,
+        "transitions": {
+          "V1_WIN->V1_WIN": 27,
+          "V1_WIN->DRAW": 1,
+          "V2_WIN->V2_WIN": 2,
+          "DRAW->DRAW": 2
+        }
+      }
+    },
+    "safeFireGateDiscovery64": {
+      "baseline": {
+        "matches": 128,
+        "wins": 9,
+        "losses": 116,
+        "draws": 3,
+        "scorePercent": "8.20",
+        "stars": {
+          "candidate": 20,
+          "control": 222
+        },
+        "crashes": {
+          "candidate": 49,
+          "control": 8
+        },
+        "actions": {
+          "candidate": {
+            "turn": 5598,
+            "go": 6126,
+            "fire": 681,
+            "throwBomb": 155,
+            "none": 79
+          },
+          "control": {
+            "turn": 4840,
+            "go": 6803,
+            "fire": 671,
+            "stun": 308,
+            "throwBomb": 17
+          }
+        },
+        "runtime": {
+          "candidateTotalMicros": 7762650,
+          "controlTotalMicros": 50203332,
+          "candidateP95Max": 10473,
+          "controlP95Max": 20697
+        },
+        "invariants": {
+          "timeoutError": 0,
+          "avoidableHardReject": 0,
+          "riskDominatedSelection": 1,
+          "rootRestoreFailure": 0,
+          "riskOnlyDominatedSelection": 1,
+          "jointDominatedSelection": 0
+        },
+        "contactSearchFunnel": {
+          "exact": 312,
+          "inexact": 8010,
+          "emergency": 51,
+          "valueBudget": 8241,
+          "valueBudgetBlocked": 80,
+          "informationConsumerBlocked": 8010,
+          "nominalPhysicalCalls": 0,
+          "nominalPhysicalCompleted": 0,
+          "nominalPhysicalScheduleBlocked": 0,
+          "refutedPossiblePhysicalEligible": 0,
+          "refutedPossiblePhysicalCalls": 0,
+          "refutedPossiblePhysicalCompleted": 0,
+          "refutedPossiblePhysicalCombatBlocked": 0
+        },
+        "contactSupportCensus": {
+          "gapBitCount": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            120,
+            0,
+            8000
+          ],
+          "possibleCount": [
+            6582,
+            1242,
+            140,
+            32,
+            8,
+            6,
+            0,
+            0,
+            0
+          ],
+          "roots": 8322,
+          "exact": 312,
+          "recoverablePhysical": 6487,
+          "possibleOnlyTracked": 7890,
+          "possibleOnlyIncomplete": 0,
+          "possibleWithOther": 110,
+          "otherGap": 10
+        },
+        "selective": {
+          "frames": 179,
+          "nodes": 62649,
+          "depthCounts": [
+            0,
+            0,
+            0,
+            131,
+            44,
+            4,
+            0,
+            0
+          ]
+        }
+      },
+      "candidate": {
+        "matches": 128,
+        "wins": 7,
+        "losses": 118,
+        "draws": 3,
+        "scorePercent": "6.64",
+        "stars": {
+          "candidate": 23,
+          "control": 225
+        },
+        "crashes": {
+          "candidate": 54,
+          "control": 6
+        },
+        "actions": {
+          "candidate": {
+            "turn": 5634,
+            "go": 6193,
+            "fire": 711,
+            "throwBomb": 158,
+            "none": 81
+          },
+          "control": {
+            "turn": 4940,
+            "go": 6827,
+            "fire": 684,
+            "stun": 309,
+            "throwBomb": 17
+          }
+        },
+        "runtime": {
+          "candidateTotalMicros": 9534926,
+          "controlTotalMicros": 50723154,
+          "candidateP95Max": 5588,
+          "controlP95Max": 24774
+        },
+        "invariants": {
+          "timeoutError": 0,
+          "avoidableHardReject": 0,
+          "riskDominatedSelection": 1,
+          "rootRestoreFailure": 0,
+          "riskOnlyDominatedSelection": 1,
+          "jointDominatedSelection": 0
+        },
+        "contactSearchFunnel": {
+          "exact": 284,
+          "inexact": 8136,
+          "emergency": 41,
+          "valueBudget": 8167,
+          "valueBudgetBlocked": 252,
+          "informationConsumerBlocked": 7140,
+          "nominalPhysicalCalls": 0,
+          "nominalPhysicalCompleted": 0,
+          "nominalPhysicalScheduleBlocked": 0,
+          "refutedPossiblePhysicalEligible": 6556,
+          "refutedPossiblePhysicalCalls": 996,
+          "refutedPossiblePhysicalCompleted": 994,
+          "refutedPossiblePhysicalCombatBlocked": 5517
+        },
+        "contactSupportCensus": {
+          "gapBitCount": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            123,
+            0,
+            8127
+          ],
+          "possibleCount": [
+            6655,
+            1268,
+            157,
+            38,
+            12,
+            6,
+            0,
+            0,
+            0
+          ],
+          "roots": 8420,
+          "exact": 284,
+          "recoverablePhysical": 6556,
+          "possibleOnlyTracked": 8013,
+          "possibleOnlyIncomplete": 0,
+          "possibleWithOther": 114,
+          "otherGap": 9
+        },
+        "selective": {
+          "frames": 443,
+          "nodes": 141823,
+          "depthCounts": [
+            0,
+            0,
+            0,
+            340,
+            95,
+            6,
+            2,
+            0
+          ]
+        }
+      },
+      "comparison": {
+        "scoreBasisPointDelta": -156,
+        "winDelta": -2,
+        "lossDelta": 2,
+        "drawDelta": 0,
+        "starDelta": 0,
+        "crashDelta": 5,
+        "fireDelta": 30,
+        "bombDelta": 3,
+        "skillDelta": 0,
+        "positive": false
+      },
+      "paired": {
+        "paired": 128,
+        "actionStreamDifferences": 39,
+        "transitions": {
+          "V1_WIN->V1_WIN": 115,
+          "V1_WIN->DRAW": 1,
+          "V2_WIN->V2_WIN": 7,
+          "DRAW->DRAW": 2,
+          "DRAW->V1_WIN": 1,
+          "V2_WIN->V1_WIN": 2
+        }
+      }
+    },
+    "exactFireVerifierFixed16": {
+      "baseline": {
+        "matches": 32,
+        "wins": 2,
+        "losses": 28,
+        "draws": 2,
+        "scorePercent": "9.38",
+        "stars": {
+          "candidate": 7,
+          "control": 47
+        },
+        "crashes": {
+          "candidate": 13,
+          "control": 1
+        },
+        "actions": {
+          "candidate": {
+            "turn": 1327,
+            "go": 1490,
+            "fire": 151,
+            "throwBomb": 41,
+            "none": 21
+          },
+          "control": {
+            "turn": 1159,
+            "go": 1622,
+            "fire": 166,
+            "stun": 78,
+            "throwBomb": 5
+          }
+        },
+        "runtime": {
+          "candidateTotalMicros": 2355924,
+          "controlTotalMicros": 12910302,
+          "candidateP95Max": 9831,
+          "controlP95Max": 22002
+        },
+        "invariants": {
+          "timeoutError": 0,
+          "avoidableHardReject": 0,
+          "riskDominatedSelection": 0,
+          "rootRestoreFailure": 0,
+          "riskOnlyDominatedSelection": 0,
+          "jointDominatedSelection": 0
+        },
+        "contactSearchFunnel": {
+          "exact": 73,
+          "inexact": 1937,
+          "emergency": 0,
+          "valueBudget": 2009,
+          "valueBudgetBlocked": 0,
+          "informationConsumerBlocked": 1937,
+          "nominalPhysicalCalls": 0,
+          "nominalPhysicalCompleted": 0,
+          "nominalPhysicalScheduleBlocked": 0,
+          "refutedPossiblePhysicalEligible": 0,
+          "refutedPossiblePhysicalCalls": 0,
+          "refutedPossiblePhysicalCompleted": 0,
+          "refutedPossiblePhysicalCombatBlocked": 0,
+          "refutedPossiblePhysicalVerifierChecks": 0,
+          "refutedPossiblePhysicalVerifierProposals": 0,
+          "refutedPossiblePhysicalVerifierOverrides": 0,
+          "refutedPossiblePhysicalVerifierIncomplete": 0,
+          "refutedPossiblePhysicalVerifierRiskBlocked": 0
+        },
+        "contactSupportCensus": {
+          "gapBitCount": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            49,
+            0,
+            1933
+          ],
+          "possibleCount": [
+            1600,
+            292,
+            36,
+            4,
+            2,
+            3,
+            0,
+            0,
+            0
+          ],
+          "roots": 2010,
+          "exact": 73,
+          "recoverablePhysical": 1562,
+          "possibleOnlyTracked": 1888,
+          "possibleOnlyIncomplete": 0,
+          "possibleWithOther": 45,
+          "otherGap": 4
+        },
+        "selective": {
+          "frames": 37,
+          "nodes": 12768,
+          "depthCounts": [
+            0,
+            0,
+            0,
+            28,
+            7,
+            2,
+            0,
+            0
+          ]
+        }
+      },
+      "candidate": {
+        "matches": 32,
+        "wins": 2,
+        "losses": 28,
+        "draws": 2,
+        "scorePercent": "9.38",
+        "stars": {
+          "candidate": 7,
+          "control": 47
+        },
+        "crashes": {
+          "candidate": 14,
+          "control": 1
+        },
+        "actions": {
+          "candidate": {
+            "turn": 1309,
+            "go": 1480,
+            "fire": 151,
+            "throwBomb": 43,
+            "none": 20
+          },
+          "control": {
+            "turn": 1157,
+            "go": 1592,
+            "fire": 170,
+            "stun": 79,
+            "throwBomb": 5
+          }
+        },
+        "runtime": {
+          "candidateTotalMicros": 2335703,
+          "controlTotalMicros": 11776485,
+          "candidateP95Max": 4322,
+          "controlP95Max": 23688
+        },
+        "invariants": {
+          "timeoutError": 0,
+          "avoidableHardReject": 0,
+          "riskDominatedSelection": 0,
+          "rootRestoreFailure": 0,
+          "riskOnlyDominatedSelection": 0,
+          "jointDominatedSelection": 0
+        },
+        "contactSearchFunnel": {
+          "exact": 76,
+          "inexact": 1917,
+          "emergency": 12,
+          "valueBudget": 1931,
+          "valueBudgetBlocked": 61,
+          "informationConsumerBlocked": 1685,
+          "nominalPhysicalCalls": 0,
+          "nominalPhysicalCompleted": 0,
+          "nominalPhysicalScheduleBlocked": 0,
+          "refutedPossiblePhysicalEligible": 1546,
+          "refutedPossiblePhysicalCalls": 232,
+          "refutedPossiblePhysicalCompleted": 231,
+          "refutedPossiblePhysicalCombatBlocked": 1303,
+          "refutedPossiblePhysicalVerifierChecks": 231,
+          "refutedPossiblePhysicalVerifierProposals": 0,
+          "refutedPossiblePhysicalVerifierOverrides": 0,
+          "refutedPossiblePhysicalVerifierIncomplete": 94,
+          "refutedPossiblePhysicalVerifierRiskBlocked": 42
+        },
+        "contactSupportCensus": {
+          "gapBitCount": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            42,
+            0,
+            1916
+          ],
+          "possibleCount": [
+            1576,
+            295,
+            37,
+            4,
+            2,
+            3,
+            0,
+            0,
+            0
+          ],
+          "roots": 1993,
+          "exact": 76,
+          "recoverablePhysical": 1546,
+          "possibleOnlyTracked": 1875,
+          "possibleOnlyIncomplete": 0,
+          "possibleWithOther": 41,
+          "otherGap": 1
+        },
+        "selective": {
+          "frames": 103,
+          "nodes": 32503,
+          "depthCounts": [
+            0,
+            0,
+            0,
+            84,
+            18,
+            0,
+            1,
+            0
+          ]
+        }
+      },
+      "comparison": {
+        "scoreBasisPointDelta": 0,
+        "winDelta": 0,
+        "lossDelta": 0,
+        "drawDelta": 0,
+        "starDelta": 0,
+        "crashDelta": 1,
+        "fireDelta": 0,
+        "bombDelta": 2,
+        "skillDelta": 0,
+        "positive": false
+      },
+      "paired": {
+        "paired": 32,
+        "actionStreamDifferences": 7,
+        "transitions": {
+          "V1_WIN->V1_WIN": 28,
+          "V2_WIN->V2_WIN": 2,
+          "DRAW->DRAW": 2
+        }
+      }
+    }
+  },
+  "baselineIdentity": {
+    "fixed16Fingerprints": {
+      "broad": {
+        "matches": 32,
+        "sha256": "e640912862acc81e882030556ea95a1f5535c6560d4a58552841c2a00a0cba78"
+      },
+      "zeroGate": {
+        "matches": 32,
+        "sha256": "e640912862acc81e882030556ea95a1f5535c6560d4a58552841c2a00a0cba78"
+      },
+      "safeFire": {
+        "matches": 32,
+        "sha256": "e640912862acc81e882030556ea95a1f5535c6560d4a58552841c2a00a0cba78"
+      },
+      "verifier": {
+        "matches": 32,
+        "sha256": "e640912862acc81e882030556ea95a1f5535c6560d4a58552841c2a00a0cba78"
+      }
+    },
+    "uniqueActionFingerprintCount": 1,
+    "defaultActionIdentity": true
+  },
+  "artifacts": {
+    "census": {
+      "path": "artifacts/v2-native-initiative/bp154-minimax-contact-support-census-discovery64",
+      "manifestSha256": "ec6ddcf9eaa4388cdf438f30cec7b04e93e5f1df16770c8974287b45549f9920",
+      "overviewSha256": "13b71b3df833c096d99a0e9897f60ddeba5f9f131c555d823a873815789349c7",
+      "matchesSha256": "6e5f2b0ec744a533817827148837c1c976ae828807bfbf65576bbd069261495a",
+      "productionRootSha256": "a2ad1572f6e8831b486da4106c21396d896d277e4fa22632d4468f3b6eada58b"
+    },
+    "broad": {
+      "path": "artifacts/v2-native-initiative/bp154-refuted-possible-physical-search-fixed16",
+      "manifestSha256": "37f03d60e256c4de1a3b5e1f4ae8608333d53f36249e8fa4cd86f2444e357f46",
+      "overviewSha256": "e9d47d2f6dcf75ecff428033681ddc9638cace256b34a3dc1641b854d947ecab",
+      "matchesSha256": "72403d3836e7c565beb609e9615884c87ef1ecc02274af17992ef858a402de33",
+      "productionRootSha256": "dd6eed269bb9bcf71a810cd6c3f270fd4f78a8f0c6a0d3a12ec81441dfb23a33"
+    },
+    "zeroGate": {
+      "path": "artifacts/v2-native-initiative/bp154-refuted-possible-physical-combat-search-fixed16",
+      "manifestSha256": "c34d6dbbbc850bbf56caaba59eb84dad21921bf2e9e372877acb93967288d39e",
+      "overviewSha256": "5149fb5ed393516f023abd43ff0a4db83515212f5759409bc7af402a129386cf",
+      "matchesSha256": "6e1842901e2d5bdbb3974d8f49df5ccb8e4c5e98e470680382bac0b8dc3fa894",
+      "productionRootSha256": "9e44d13351c0680b9596bbaa0dcf393078d71e6519ea10c44609b1675a004fc8"
+    },
+    "safeFire16": {
+      "path": "artifacts/v2-native-initiative/bp154b-refuted-possible-safe-fire-search-fixed16",
+      "manifestSha256": "b529d3ec93bba306b0b2d2dceb29100d94bed95be951c1f30a1ceb0d6142bf02",
+      "overviewSha256": "e5eaab65854b68c2e78c80408b8741113dd62c4d91bc0908d529f01f2ec91db9",
+      "matchesSha256": "d108ee89e8ea9b9eea7f7dcc5104e20834c882e5ed305bc5c09f9627d8146d8e",
+      "productionRootSha256": "d5ee67d6066b985490788945f050ea48688ec42cc274c2b2ffd6115f0ecf3602"
+    },
+    "safeFire64": {
+      "path": "artifacts/v2-native-initiative/bp154b-refuted-possible-safe-fire-search-discovery64",
+      "manifestSha256": "9fc929db4932e2159f6e671a36f4e3cf8ffa57bcaa947d6252ac713848148916",
+      "overviewSha256": "8d7f7decc77bebe736a976adcd2d3b79805501e3151368b514c626e41f43d6ac",
+      "matchesSha256": "799e27f1eee418100aa168346e2803d9cffb062157ffd20a55e24eeaa062e51b",
+      "productionRootSha256": "d5ee67d6066b985490788945f050ea48688ec42cc274c2b2ffd6115f0ecf3602"
+    },
+    "verifier16": {
+      "path": "artifacts/v2-native-initiative/bp155-refuted-possible-fire-verifier-fixed16",
+      "manifestSha256": "d0e41dcc322e251bdc6a5b3e80f2d6f883fafa92676a0ce2b7b729fad254ac4f",
+      "overviewSha256": "44255811ff76a26797a4fbc7e6772c1c95540fce113c36e77b6b603fe0fe0aaf",
+      "matchesSha256": "6b360ad9c54d7d94108c2a9b6aa5c7e359cca6208a93b8fbc833958fcebf517c",
+      "productionRootSha256": "73e08f1471a450967e26e931c639c88bf88d986870cb5b07a72e456ec2a8b551"
+    }
+  },
+  "verdicts": [
+    "REFUTED_POSSIBLE_GAP_CAN_RESTORE_PHYSICAL_SUPPORT",
+    "SUPPORT_RESTORATION_DOES_NOT_AUTHORIZE_GLOBAL_SEARCH",
+    "BROAD_RESTORED_PHYSICAL_SEARCH_REGRESSES_OUTCOME_AND_RUNTIME",
+    "SAFE_FIRE_GATE_REDUCES_WORK_BUT_STAGE_MATRIX_OWNERSHIP_REGRESSES_DISCOVERY64",
+    "FINITE_DEPTH_CELLWISE_FIRE_DOMINANCE_PRODUCES_ZERO_PROPOSALS",
+    "SEARCH_WITHOUT_CONSUMER_PERTURBS_RUNTIME_FALLBACK",
+    "NEXT_OWNER_IS_NATIVE_BASE_POLICY_INCUMBENT_WITH_GATED_TACTICAL_REFUTATION"
+  ],
+  "fingerprint": "198361010beb1b81bd7dcd3ba93c2206ec6e36699302f9b82050234bd63b2797"
+}

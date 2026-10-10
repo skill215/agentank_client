@@ -1,0 +1,107 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP43_HOST_CONTINUATION_EVIDENCE_V1",
+  "status": "REJECTED_AS_ACTION_OWNER",
+  "decision": {
+    "retainDiagnosticVerifier": true,
+    "enableProductionOwnership": false,
+    "reason": "Discovery improved, but the non-overlapping Tactical Holdout had exactly zero net analysis-score gain."
+  },
+  "contract": {
+    "proposal": "AttackPose may choose only the candidate root action.",
+    "continuation": "Both incumbent and candidate roots use the same host-shaped continuation policy.",
+    "enemyQuantifier": "The prefix-1 enemy-policy portfolio may schedule work but may never own an action; a complete primitive response verifier is required.",
+    "hard": "Every emitted override must pass FinalActionGate."
+  },
+  "source": {
+    "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7",
+    "hostContinuationVerifierSha256": "d28e013404bb2beea84cc1d53f6cf220ed5d3c781b2ed98c2127a531a10168e3",
+    "selectiveVerifierSha256": "15de665489e18c88b12860e2bb59ecfb928d9fc5b303f618169dd2fa0647e760",
+    "arenaSha256": "df43568c6bb4fd840c1fb816a797800d5d2c8fcbdc5f1e45ed6d1bbc0fa5f880",
+    "bp18RunnerSha256": "a43f44a7320829fe6cf8564f240dd5d7473d1df4361b651ea745e2aeb7475a18",
+    "bp43RunnerSha256": "4b444127e5bfd5282091e920fcd5bef2e604204576735162b2b5679a3dcd1f53"
+  },
+  "tests": {
+    "targetedPassed": 26,
+    "targetedFailed": 0,
+    "rootRestoreFailures": 0,
+    "finalGateRejects": 0
+  },
+  "discovery": {
+    "role": "DISCOVERY",
+    "scenarios": 64,
+    "candidateMatches": 128,
+    "shadow": {
+      "wins": 69,
+      "losses": 53,
+      "draws": 6,
+      "scoreBasisPoints": 5625,
+      "certificates": 34,
+      "overviewSha256": "9f45a732d1bc857d19fe575123eae638292c07cec2277f38899615ae214574b2"
+    },
+    "active": {
+      "wins": 75,
+      "losses": 49,
+      "draws": 4,
+      "scoreBasisPoints": 6016,
+      "overrides": 32,
+      "overviewSha256": "bbef49913d966e45b497485d5496320ee30e6d832b21f8de474d1c648d2f02f8"
+    },
+    "transitions": {
+      "lossToWin": 8,
+      "drawToWin": 2,
+      "winToLoss": 4,
+      "scoreBasisPointDelta": 391,
+      "scenarioPositive": 9,
+      "scenarioNegative": 4,
+      "oneSidedScenarioSignP": 0.1334228515625
+    },
+    "invariantDelta": {
+      "avoidableHardReject": -2,
+      "riskDominatedSelection": 0,
+      "rootRestoreFailure": 0,
+      "timeoutError": 0
+    }
+  },
+  "holdout": {
+    "role": "TACTICAL_HOLDOUT",
+    "scenarios": 64,
+    "candidateMatches": 128,
+    "shadow": {
+      "wins": 62,
+      "losses": 55,
+      "draws": 11,
+      "scoreBasisPoints": 5273,
+      "certificates": 26,
+      "overviewSha256": "e0cbc8a87f47e952b5bf5539cc7f7a7e6dffca26f8e4c5889bcc8537349c4d73"
+    },
+    "active": {
+      "wins": 61,
+      "losses": 54,
+      "draws": 13,
+      "scoreBasisPoints": 5273,
+      "overrides": 26,
+      "overviewSha256": "689c472a085a576362345460626ca6da89626f0092a29ee057ad2d0ad4c957d4"
+    },
+    "transitions": {
+      "lossToWin": 1,
+      "lossToDraw": 1,
+      "winToLoss": 1,
+      "winToDraw": 1,
+      "scoreBasisPointDelta": 0,
+      "scenarioPositive": 2,
+      "scenarioNegative": 2,
+      "oneSidedScenarioSignP": 0.6875
+    },
+    "invariantDelta": {
+      "avoidableHardReject": 0,
+      "riskDominatedSelection": 0,
+      "rootRestoreFailure": 0,
+      "timeoutError": 0
+    }
+  },
+  "next": {
+    "doNotIncreaseSampleForThisOwner": true,
+    "doNotTuneThresholdsOnHoldout": true,
+    "investigate": "Separate terminal/non-loss value from star/position value inside the exact response vector; audit the 26 Holdout overrides by value class before proposing another owner."
+  }
+}

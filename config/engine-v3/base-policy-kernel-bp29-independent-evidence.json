@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_RESPONSE_MASS_INDEPENDENT_VALIDATION_V1",
+  "stage": "BP29",
+  "date": "2026-08-26",
+  "productionChanged": false,
+  "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7",
+  "diagnosticSource": {
+    "responseMassSha256": "32c65faf4bc6f6bbeb986e2d5ac9e02e0eadf1aacd335e247c3bfff515982b05",
+    "arenaSha256": "8267fd3365f6b10af74c095b25f83e9486e2bded9df45fbbb278fd38d5ff25c3",
+    "shadowRunnerSha256": "700883ea7ee86f1e96cdb10291109dabe7ba9e8c4f44a07433836a8e3cf529cc",
+    "pairedRunnerSha256": "ffed308c36f1c2cb4a995de6c14a6a2df49da3b395fde9c688cd95e7d68ee10c",
+    "unitTestSha256": "f112ae0e748d1057568e720056a773d894f782e847d8ae5a34b510f5951ebb90"
+  },
+  "cohort": {
+    "offset": 16,
+    "scenarios": 32,
+    "matchesPerMode": 64,
+    "skill": "stun",
+    "seatSwap": true,
+    "previouslyUsedForTuning": false
+  },
+  "control": {
+    "mode": "GUARDED_SHADOW",
+    "responseOwnershipActive": false,
+    "hostClosureActive": true,
+    "wins": 34,
+    "losses": 28,
+    "draws": 2,
+    "scoreBasisPoints": 5469,
+    "stars": 53,
+    "crashes": 28,
+    "fires": 314,
+    "candidateDominanceRoots": 83,
+    "avoidableHardReject": 0,
+    "timeoutError": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0
+  },
+  "candidate": {
+    "mode": "ACTIVE",
+    "responseOwnershipActive": true,
+    "hostClosureActive": true,
+    "wins": 28,
+    "losses": 32,
+    "draws": 4,
+    "scoreBasisPoints": 4688,
+    "stars": 47,
+    "crashes": 31,
+    "fires": 340,
+    "candidateDominanceRoots": 71,
+    "overrides": 71,
+    "overrideByAction": {
+      "GO": 16,
+      "TURN_LEFT": 31,
+      "TURN_RIGHT": 24
+    },
+    "candidateFinalGateChecks": 71,
+    "candidateFinalGateRejects": 0,
+    "avoidableHardReject": 0,
+    "timeoutError": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0
+  },
+  "pairedResult": {
+    "scoreBasisPointDelta": -781,
+    "matchPositive": 6,
+    "matchNegative": 12,
+    "matchEqual": 46,
+    "matchExactTwoSidedSignP": 0.237884521484375,
+    "scenarioPositive": 4,
+    "scenarioNegative": 11,
+    "scenarioEqual": 17,
+    "scenarioExactTwoSidedSignP": 0.11846923828124999,
+    "transitions": {
+      "V1_WIN_TO_V2_WIN": 5,
+      "V1_WIN_TO_DRAW": 1,
+      "V2_WIN_TO_V1_WIN": 9,
+      "V2_WIN_TO_DRAW": 2,
+      "V1_WIN_UNCHANGED": 22,
+      "V2_WIN_UNCHANGED": 23,
+      "DRAW_TO_V1_WIN": 1,
+      "DRAW_UNCHANGED": 1
+    }
+  },
+  "hostFinalClosure": {
+    "controlFallbackFailure": 0,
+    "candidateFallbackFailure": 0,
+    "controlAvoidableHardReject": 0,
+    "candidateAvoidableHardReject": 0
+  },
+  "artifacts": {
+    "comparisonSha256": "b2d0885055ddaf7d96204424363ff33baa43502965e2860a8e7840e823cca64f",
+    "controlOverviewSha256": "edb97e1aa17c2e8cce9c520c01b169753a13ee3425e0af29b3d90f30d8b15d1b",
+    "candidateOverviewSha256": "c60255e14d024628cdc738d6674fc7d9b0253dd6a37f268476d0e30acd3c85f6",
+    "controlManifestSha256": "bf51fc53f186d1fb5ae4fd3fe73031993c54096a090a347cfd8b3aca46f98d20",
+    "candidateManifestSha256": "1793e5c88d96bb7ce7163ceb39ed3e4f7fcc421c60af86f5f688e5c0d1746fe1"
+  },
+  "decision": "REJECT_RESPONSE_MASS_ACTION_OWNER_RETAIN_GUARDED_SHADOW",
+  "rootCause": [
+    "FIRE is currently included in the derived SUCCESS dimension even though emission is not a hit or kill.",
+    "Both paired roots use the AttackPose continuation, so dominance is conditional on that policy and does not compare against the actual incumbent continuation.",
+    "A Physical-state TT can be shared only while continuation policy identity is the same; a dual-policy comparison must include policy identity in cache semantics."
+  ],
+  "next": "Do not tune the current Pareto thresholds or rerun this holdout. If work continues, separate FIRE from terminal/kill success and compare complete incumbent versus AttackPose policies with policy-aware TT identity."
+}

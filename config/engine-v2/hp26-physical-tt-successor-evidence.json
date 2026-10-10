@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "HP26_PHYSICAL_TT_SUCCESSOR_EVIDENCE_V1",
+  "status": "REJECTED_CAPACITY_EXPANSION_ACCEPTED_DIAGNOSTIC_HARNESS",
+  "productionPhysicalTTEntries": 32,
+  "productionSearchSemanticsChanged": false,
+  "productionRuntimeProfileChanged": false,
+  "sourceIdentityRepair": {
+    "omission": "HP25 source identity did not include production-cache.js or cache-runtime-codes.js",
+    "addedFiles": [
+      "engine-v2/src/cache/production-cache.js",
+      "engine-v2/src/abi/cache-runtime-codes.js"
+    ],
+    "oldReportsRetained": true,
+    "oldReportsReclassified": "VALID_MEASUREMENTS_WITH_INCOMPLETE_SOURCE_IDENTITY",
+    "currentSourceFingerprint": "372f3b4469f1c6b6ab8cb7aabfcad7b8a7f5ba567b201977d5d31ae2d78a6e1c"
+  },
+  "capacitySweep": {
+    "scenarios": 16,
+    "targetDepth": 3,
+    "nodeBudget": 512,
+    "method": "SEARCH_PARENT_THEN_APPLY_ONE_FIXED_EXACT_JOINT_ACTION_AND_COMPARE_RETAINED_PARENT_CACHE_WITH_FRESH_CACHE_ON_IDENTICAL_CHILD",
+    "reportFingerprint": "cce657ee3fcd6807a3ab418696f162f3e99f961ee8477e4a03544ef6646d75e7",
+    "reportSha256": "724e0e812da07209b1afe0ca6d5203941faad2d2221b480f4dd38713eac447fc",
+    "capacities": {
+      "32": { "additionalBytes": 0, "chainNodes": 4562, "coldNodes": 4498,
+        "nodesSaved": -64, "chainWorkUnits": 53284, "coldWorkUnits": 60162,
+        "workUnitsSaved": 6878, "selectiveDepthGainCalls": 0 },
+      "64": { "additionalBytes": 1504, "chainNodes": 4482, "coldNodes": 4461,
+        "nodesSaved": -21, "chainWorkUnits": 52670, "coldWorkUnits": 59783,
+        "workUnitsSaved": 7113, "selectiveDepthGainCalls": 0 },
+      "128": { "additionalBytes": 4512, "chainNodes": 4473, "coldNodes": 4461,
+        "nodesSaved": -12, "chainWorkUnits": 52580, "coldWorkUnits": 59783,
+        "workUnitsSaved": 7203, "selectiveDepthGainCalls": 0 },
+      "256": { "additionalBytes": 10528, "chainNodes": 4461, "coldNodes": 4461,
+        "nodesSaved": 0, "chainWorkUnits": 52457, "coldWorkUnits": 59783,
+        "workUnitsSaved": 7326, "selectiveDepthGainCalls": 0 }
+    },
+    "invariants": {
+      "identicalSuccessorFailures": 0,
+      "comparableExactOwnerSemanticMismatches": 0,
+      "rootRestoreFailures": 0
+    }
+  },
+  "standardCalibration": {
+    "status": "PASS",
+    "profileCount": 24,
+    "callsPerProfile": 80,
+    "reportFingerprint": "f63203be7a8f260b9fc0c19972b9b98b8aa827c311a7b5353ace22e7a0143a04",
+    "reportSha256": "d14be4c1315d55cb3b3ec77806f55680002c9edd2da2e8ac638f9b0a58a3ecbe",
+    "baseline": "config/engine-v2/minimax-depth-baselines/after-hp26.json",
+    "baselineFingerprint": "2fdbcc6fbaa4a17f6332a392d907b19074a658c6c5fc12d4a00dabf69d7dd49b",
+    "baselineSha256": "26b9dc620682d74f30982d8bba1d14f5aebffe516bb0f7bbab6a16294fc32359",
+    "statusAfterFreeze": "CURRENT",
+    "semanticDepthDifferencesVersusHP25": 0,
+    "meanNodeDifferencesVersusHP25": 0,
+    "formalCompareStatus": "NOT_COMPARABLE_BY_TOOL_AFTER_EXPECTED_HARNESS_IDENTITY_CHANGE"
+  },
+  "decision": {
+    "classification": "PHYSICAL_TT_CAPACITY_IS_NOT_THE_COLD_P3_SCALING_LEVER",
+    "selectedEntries": 32,
+    "reason": "Larger tables produced no child-frame depth gain and no material node reduction. Retaining the whole parent cache bank saved work, but most of that benefit was independent of Physical TT capacity.",
+    "next": "MEASURE_EXACT_UNIQUE_AND_CROSS_DEPTH_STATE_REVISITS_AT_PLY_TWO_THEN_TARGET_BRANCH_ORDERING_OR_TRANSITION_COST"
+  }
+}

@@ -2,9 +2,10 @@
 
 const fs = require("node:fs");
 const path = require("node:path");
+const zlib = require("node:zlib");
 const { contained } = require("../core/paths");
 const { invariant } = require("../core/errors");
-const { fingerprintObject } = require("../core/hash");
+const { fingerprintObject, sha256Bytes } = require("../core/hash");
 const { writeJsonAtomic, writeJsonImmutable, ensureDirectory } = require("../core/atomic-file");
 const { loadDd9Assignment } = require("../simulation/dd9-assignment");
 const { scenariosForIds, loadRollingV1Scenarios } = require("../simulation/historical-scenarios");
@@ -14,6 +15,24 @@ const { sourceIdentity } = require("../diagnostics/v1-v2-working-arena");
 const { classifyAnalysisOutcome } = require("../analysis/analysis-outcome");
 
 function fixedIds(root, baseline) {
+  if (baseline.fixedCohort.scenarioIdentityManifestRelativePath) {
+    const manifestRelativePath = baseline.fixedCohort.scenarioIdentityManifestRelativePath;
+    const manifest = JSON.parse(fs.readFileSync(contained(root, manifestRelativePath)));
+    invariant(manifest.fingerprint === fingerprintObject(manifest),
+      "SR_FIXED_ID_MANIFEST_FINGERPRINT_INVALID", manifestRelativePath);
+    const compactFile = contained(root, manifest.compact.relativePath);
+    const compactBytes = fs.readFileSync(compactFile);
+    invariant(sha256Bytes(compactBytes) === manifest.compact.sha256,
+      "SR_FIXED_ID_COMPACT_HASH_INVALID", manifest.compact.relativePath);
+    const ids = []; const seen = new Set();
+    const lines = zlib.gunzipSync(compactBytes).toString("utf8").trim().split("\n");
+    for (const line of lines) {
+      const id = JSON.parse(line).historicalMatchUrlId;
+      if (!seen.has(id)) { seen.add(id); ids.push(id); }
+    }
+    invariant(ids.length === baseline.fixedCohort.scenarioCount, "SR_FIXED_ID_DENOMINATOR_INVALID",
+      `${ids.length}/${baseline.fixedCohort.scenarioCount}`); return ids;
+  }
   const overview = JSON.parse(fs.readFileSync(contained(root,
     baseline.fixedCohort.overviewRelativePath))); const ids = []; const seen = new Set();
   for (const ref of overview.reports) {

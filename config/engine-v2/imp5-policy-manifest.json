@@ -1,8 +1,8 @@
 {
-  "manifestSchemaVersion": 1,
-  "profileId": "IMP5_INTEGER_POLICY_V1",
+  "manifestSchemaVersion": 2,
+  "profileId": "STRAT3_PORTFOLIO_POLICY_V3",
   "sourceKind": "BUILD_CONFIGURED",
-  "policyAbiRevision": 1,
+  "policyAbiRevision": 3,
   "limits": {
     "maxFeatures": 32,
     "featureCount": 21,
@@ -26,12 +26,17 @@
   },
   "strategy": {
     "switchMargin": 400,
-    "minimumDwellRoots": 3
+    "minimumDwellRoots": 3,
+    "defaultStrategy": "KILL_PRESSURE",
+    "canonicalEvalProfile": "BASELINE_OUTCOME",
+    "defaultBaseRisk": 65,
+    "allowedStrategicRobustLoss": 0,
+    "strategyDescriptorFingerprint": "519291b6c2877b8c1dbff00725521ed6665d46d8f20a2c0bb9c85e4aa136a7ea"
   },
   "opponent": {
     "fastAlpha": 3500,
     "slowAlpha": 800,
     "prior": 5000
   },
-  "notes": "IMP5 cache-off integer policy profile. Thresholds and weights are build configured correctness values, not calibrated production parameters."
+  "notes": "STRAT3 portfolio ABI. A strategy-neutral baseline evaluator runs once; only post-Risk qualified actions can create strategy proposals; the selected action commits strategy state."
 }

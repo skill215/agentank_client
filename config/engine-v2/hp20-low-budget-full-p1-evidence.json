@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "HP20_LOW_BUDGET_FULL_P1_EVIDENCE_V1",
+  "status": "REJECTED",
+  "productionThreshold": 250,
+  "candidateThreshold": 192,
+  "productionDefaultChanged": false,
+  "sourceFingerprint": "3b664292f8fe176bc00acdd982fb7e74cf4f03bbc67df66b004bc5da2c11f11b",
+  "cohort": {
+    "role": "DISCOVERY",
+    "scenarios": 16,
+    "matchesPerProfile": 32,
+    "abReportFingerprint": "d75460e5b78d9a6bd1946fb360ab2f39d4bf77b22605deb54dbf87ebd53dabe9",
+    "abReportSha256": "8d7d38f34587d761124bb901084e46d761e0dc6d3cb634e77946ecc943839f51",
+    "auditReportFingerprint": "a5ef4633773abeb39192eb1565dc82233b24165eb308fc0668c0bc9f65de2ad9",
+    "auditReportSha256": "b39093ab969c980d3beb54e7b925e4306b8b76c1c4643b9a63a82668e71d0693"
+  },
+  "baseline": {
+    "physicalFrames": 73,
+    "physicalNodes": 24366,
+    "workUnits": 4383247,
+    "completeValueOwners": 70,
+    "evidenceOnlyValues": 3,
+    "completedDepthHistogram": [0, 19, 49, 1, 4, 0, 0, 0]
+  },
+  "candidate": {
+    "physicalFrames": 73,
+    "physicalNodes": 24457,
+    "workUnits": 4383759,
+    "completeValueOwners": 70,
+    "evidenceOnlyValues": 3,
+    "completedDepthHistogram": [0, 19, 49, 1, 4, 0, 0, 0],
+    "newDirectRoots": 9,
+    "p2Attempts": 55,
+    "p2Completed": 49,
+    "p2SupportAborted": 6
+  },
+  "delta": {
+    "physicalNodes": 91,
+    "workUnits": 512,
+    "completeValueOwners": 0,
+    "depthHistogramChanges": 0,
+    "actionStreamChanges": 0,
+    "outcomeChanges": 0
+  },
+  "invariants": {
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "hotAllocation": 0
+  },
+  "decision": {
+    "reason": "Nine roots changed schedule but gained no depth or complete owner and consumed more nodes and work.",
+    "next": "AUDIT_STUN_SCHEDULE_WITHOUT_CHANGING_LOW_BUDGET_THRESHOLD"
+  }
+}

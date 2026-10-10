@@ -1,0 +1,54 @@
+{
+  "objectKind": "BasePolicyKernelTransitionReuseCensusV1",
+  "stage": "BP34",
+  "status": "ACCEPTED_AS_DIAGNOSTIC_EVIDENCE",
+  "mode": "SHADOW",
+  "actionOwnership": false,
+  "cohort": {
+    "scenarioLimit": 16,
+    "matches": 32,
+    "pairRoots": 606,
+    "frames": 6,
+    "nodeBudgetPerPolicy": 2048
+  },
+  "result": {
+    "physicalTransitionRequests": 535138,
+    "uniqueExactRequests": 499531,
+    "exactRequestRepeats": 35607,
+    "crossPolicyExactRepeats": 35607,
+    "samePolicyExactRepeats": 0,
+    "successfulSuccessorObservations": 534005,
+    "uniqueParentSuccessors": 456877,
+    "repeatedParentSuccessors": 76850,
+    "crossCommandSameSuccessor": 44601,
+    "deltaWrites": 3609046,
+    "repeatDeltaWrites": 264672,
+    "maximumDeltaWritesPerTransition": 30,
+    "requestTableOverflow": 0,
+    "successorProbeOverflow": 278,
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0
+  },
+  "ratesBasisPoints": {
+    "exactRequestReuse": 665,
+    "crossPolicyShareOfExactReuse": 10000,
+    "sameParentSuccessorReuse": 1439,
+    "crossCommandSameSuccessor": 835
+  },
+  "averagesScaled1000": {
+    "deltaWritesPerSuccessfulTransition": 6758,
+    "deltaWritesPerExactRepeat": 7433
+  },
+  "decision": {
+    "retainShadowCensus": true,
+    "implementGenericReplayExperiment": true,
+    "safeImmediateTarget": "Exact requests shared from one continuation policy to the other.",
+    "deferredTarget": "Different commands with identical successors require proven pre-execution normalization."
+  },
+  "fingerprints": {
+    "overviewSha256": "5ce804991fdb659cd1d451fbdb7cc40c0fcf6effd47b0d00d46ecc72ac94c3d0",
+    "censusPocSha256": "78b746918baeff940a1f3cce804063bdc3db5174c00bb22e5c4c7fef52d8e374",
+    "responseMassPocSha256": "59db914f9d5f26d55b86f5b7ddfb062aae772ef54c2564db50a75486ccb6d0d7",
+    "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7"
+  }
+}

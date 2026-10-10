@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "SR0_FIXED_COHORT_COMPACT_ACCEPTANCE",
+  "sourcePayloadRetained": false,
+  "prunedSource": {
+    "relativePath": "artifacts/diagnostics/v1-v2-working/9c0c3f6b246a2e76-r2-discovery-calibration-frozen-pd71e5ee1339e-rolling-3c663bc6/working-arena-overview.json",
+    "fingerprint": "f424e0f4c2f6968712fb856c9ee0ec17e073b43a91d732f31eb08bf4d089557a"
+  },
+  "acceptanceAttestation": {
+    "relativePath": "artifacts/reports/structural-repair/SR0/sr0-acceptance-report.json",
+    "sha256": "e580b834464126b0967985b33f9cdc069d63adf28e6cde046c6bb493842120f1",
+    "fingerprint": "2deb0ad03329534bf79805990bbba4c450315a1acbb18aec55c2c2a3333a029e",
+    "status": "ACCEPTED"
+  },
+  "cohort": {
+    "scenarioCount": 266,
+    "repetitions": 2,
+    "variants": 4,
+    "matchCount": 2128,
+    "pairCount": 1064
+  },
+  "analysisCounts": {
+    "V1_WIN": 907,
+    "V2_WIN": 1029,
+    "DRAW": 192
+  },
+  "seatPairs": {
+    "V2_SWEEP": 238,
+    "V1_SWEEP": 186,
+    "SPLIT": 464,
+    "V2_WIN_DRAW": 89,
+    "V1_WIN_DRAW": 71,
+    "DOUBLE_DRAW": 16
+  },
+  "terminalCategories": {
+    "FRAME_LIMIT_EQUAL_STARS": 161,
+    "MUTUAL_CRASH_EQUAL_STARS": 31
+  },
+  "verification": {
+    "mode": "RETAINED_ACCEPTANCE_ATTESTATION",
+    "rawPayloadRecomputationAvailable": false,
+    "mutationCountAtAcceptance": 0
+  },
+  "fingerprint": "7c82ee691082e5aa80ee2c058adfe523bdfa04986cddfce02a919b431375701e"
+}

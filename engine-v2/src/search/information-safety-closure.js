@@ -117,10 +117,16 @@ class SafetyOutcomeSlab {
 }
 
 class InformationSafetyClosure {
-  constructor() {
+  constructor(options = null) {
     this.outcome = new SafetyOutcomeSlab(); this.nodes = 0; this.completedActions = 0;
     this.supportComplete = 0; this.interrupted = 0; this.rootRestoreFailures = 0;
     this.capabilityComplete = 0; this.capabilityFireSupport = 0; this.hotAllocationCount = 0;
+    // Diagnostic-only nominal ChanceOutcome model. The official stun branch
+    // probabilities are not documented, so production keeps the conservative
+    // fatal-support upper bound. Arena diagnostics may assign equal nominal
+    // mass to every complete support member to test whether collapsing
+    // partially-fatal and wholly-fatal actions is causally harmful.
+    this.uniformChanceMass = options && options.uniformChanceMass ? 1 : 0;
   }
   target(state, cell, direction) {
     const x = state.x(cell) + DX[direction]; const y = state.y(cell) + DY[direction];
@@ -143,6 +149,24 @@ class InformationSafetyClosure {
     next = this.target(state, cell, right);
     if (next !== NONE_CELL && terrain[next] !== TERRAIN.WALL && terrain[next] !== TERRAIN.DIRT) count += 1;
     return count;
+  }
+  escapeActionDelay(state, cell, tankDirection, shotDirection) {
+    const terrain = state.arrays[ARRAY.TERRAIN];
+    const enemyCell = state.arrays[ARRAY.TANK_CELL][1];
+    const first = (shotDirection + 3) & 3; const second = (shotDirection + 1) & 3;
+    let best = 0xff;
+    for (let index = 0; index < 2; index += 1) {
+      const escapeDirection = index === 0 ? first : second;
+      const next = this.target(state, cell, escapeDirection);
+      if (next === NONE_CELL || next === enemyCell || terrain[next] === TERRAIN.WALL ||
+          terrain[next] === TERRAIN.DIRT) continue;
+      const clockwise = (escapeDirection - tankDirection) & 3;
+      const counterClockwise = (tankDirection - escapeDirection) & 3;
+      const turns = Math.min(clockwise, counterClockwise);
+      const delay = turns + 1;
+      if (delay < best) best = delay;
+    }
+    return best;
   }
   threatDepth(state, worldCell, worldDirection, targetCell) {
     const wx = state.x(worldCell); const wy = state.y(worldCell);
@@ -169,7 +193,8 @@ class InformationSafetyClosure {
       enemyCanFire, lastEnemyDirection, nodeBudget = 0xffff, strategyConsistent = 1,
       enemyFireProbability = 10000, chanceSupportCount = null,
       chanceFatalSupportCount = null, chanceIncompleteSupportCount = null,
-      capabilityTimeline = null, chanceProjectedCell = null, chanceProjectedDirection = null) {
+      capabilityTimeline = null, chanceProjectedCell = null, chanceProjectedDirection = null,
+      fastDeadlineMode = 0) {
     const output = this.outcome; output.reset(actionCount); this.nodes = 0;
     const capabilityComplete = capabilityTimeline ? capabilityTimeline.complete : 1;
     const fireSupport = capabilityTimeline ? capabilityTimeline.hasFireSupport : enemyCanFire;
@@ -180,8 +205,6 @@ class InformationSafetyClosure {
     const state = bundle.state; const committedDeadline = Math.floor(
       bundle.hazard.horizonTick / Math.max(1, RULE.PROJECTILE_STEPS));
     for (let row = 0; row < actionCount; row += 1) {
-      if (this.nodes >= nodeBudget) { output.status[row] = SAFETY_STATUS.UNKNOWN;
-        output.unknownMass[row] = 10000; this.interrupted = 1; continue; }
       output.committedDeadlineFrames[row] = committedDeadline;
       if (hardStatus[row] === HARD_STATUS.REJECT_PROVEN ||
           hardStatus[row] === HARD_STATUS.REJECT_POLICY) {
@@ -201,7 +224,10 @@ class InformationSafetyClosure {
         // Stun probabilities are not platform-confirmed. Safety therefore consumes
         // the fatal support upper bound, while Hard remains existentially ALLOW when
         // another supported outcome survives.
-        output.addDeath(row, 1, 10000); threatened = 1; minimumSlack = -1;
+        const fatalMass = this.uniformChanceMass && ownChanceSupport > 0 ?
+          Math.min(10000, Math.floor((ownFatalSupport * 10000 + ownChanceSupport - 1) /
+            ownChanceSupport)) : 10000;
+        output.addDeath(row, 1, fatalMass); threatened = 1; minimumSlack = -1;
       }
       if (chanceIncompleteSupportCount && chanceIncompleteSupportCount[row] > 0)
         output.unknownMass[row] = 10000;
@@ -214,7 +240,13 @@ class InformationSafetyClosure {
       if (committedPossible > 0) {
         output.addPossibleProjectile(row, possibleFrame, committedPossible); threatened = 1;
       }
-      if (fireSupport) {
+      const frontierBudgetAvailable = this.nodes < nodeBudget;
+      if (fireSupport && !frontierBudgetAvailable) {
+        // Fixed-cost physical and tracked-projectile checks above are never
+        // budget-cancellable. Only the expandable hidden/future-FIRE frontier
+        // may become UNKNOWN when its node budget is exhausted.
+        output.unknownMass[row] = 10000; this.interrupted = 1;
+      } else if (fireSupport) {
         // ChanceOutcome changes geometry before the simultaneous enemy action
         // (stun reversal is one example). The old nominal-only projection could
         // therefore evaluate a safe target cell while another supported result
@@ -234,7 +266,6 @@ class InformationSafetyClosure {
             const depth = capabilityTimeline ? capabilityTimeline.earliestCompletion(requiredActions) :
               requiredActions;
             if (depth > SAFETY_HORIZON) continue; threatened = 1;
-            if (depth < output.futureFireDepth[row]) output.futureFireDepth[row] = depth;
             const mass = this.jointThreatMass(worldMass[world], enemyFireProbability, depth);
             const aligned = this.clearLine(state, worldCells[world], chanceTarget);
             const distance = Math.abs(state.x(worldCells[world]) - state.x(chanceTarget)) +
@@ -243,15 +274,32 @@ class InformationSafetyClosure {
               state.x(worldCells[world]) === state.x(chanceTarget) ?
                 state.y(chanceTarget) < state.y(worldCells[world]) ? 0 : 2 :
                 state.x(chanceTarget) > state.x(worldCells[world]) ? 1 : 3) : 0;
-            const unavoidableAtFire = aligned &&
-              (distance <= RULE.PROJECTILE_STEPS || escapes === 0);
-            if (unavoidableAtFire || !aligned) {
-              if (depth === 1) mass1 = Math.min(10000, mass1 + mass);
-              else if (depth === 2) mass2 = Math.min(10000, mass2 + mass);
-              else if (depth === 3) mass3 = Math.min(10000, mass3 + mass);
+            let fatalDepth = depth;
+            let locallyUnavoidable = aligned ?
+              distance <= RULE.PROJECTILE_STEPS || escapes === 0 : 1;
+            if (aligned && fastDeadlineMode) {
+              const travelFrames = Math.max(1, Math.floor(
+                (distance + RULE.PROJECTILE_STEPS - 1) / RULE.PROJECTILE_STEPS));
+              fatalDepth = depth + travelFrames - 1;
+              const escapeDelay = this.escapeActionDelay(state, chanceTarget,
+                chanceProjectedDirection ? chanceProjectedDirection[chanceBase + chance] :
+                  direction, state.x(worldCells[world]) === state.x(chanceTarget) ?
+                  state.y(chanceTarget) < state.y(worldCells[world]) ? 0 : 2 :
+                  state.x(chanceTarget) > state.x(worldCells[world]) ? 1 : 3);
+              const availableEscapeActions = Math.max(0, fatalDepth - depth);
+              const slack = escapeDelay === 0xff ? -4 : availableEscapeActions - escapeDelay;
+              minimumSlack = Math.min(minimumSlack, slack);
+              locallyUnavoidable = escapeDelay === 0xff ||
+                escapeDelay > availableEscapeActions;
+            } else minimumSlack = Math.min(minimumSlack, escapes - 1);
+            if (locallyUnavoidable && fatalDepth <= SAFETY_HORIZON) {
+              if (fatalDepth === 1) mass1 = Math.min(10000, mass1 + mass);
+              else if (fatalDepth === 2) mass2 = Math.min(10000, mass2 + mass);
+              else if (fatalDepth === 3) mass3 = Math.min(10000, mass3 + mass);
               else mass4 = Math.min(10000, mass4 + mass);
+              if (fatalDepth < output.futureFireDepth[row])
+                output.futureFireDepth[row] = fatalDepth;
             }
-            minimumSlack = Math.min(minimumSlack, escapes - 1);
           }
           if (mass1 > maximum1) maximum1 = mass1;
           if (mass2 > maximum2) maximum2 = mass2;

@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "HP29_NODE_BUDGET_ALLOCATION_EVIDENCE_V1",
+  "status": "REJECTED_GLOBAL_NODE_INCREASE_KEEP_512",
+  "productionRuntimeProfileChanged": false,
+  "productionNodeBudget": 512,
+  "sourceFingerprintBeforeFinalCalibration": "56e7b50ab282a0ca0e51104594a3a8d7dbdcb6ce78c5f61a7c03bb4325a73278",
+  "finalCalibration": {
+    "status": "CURRENT",
+    "sourceFingerprint": "23df833ffad8f2644ee91fc02c18f4f7bb9cc720eaa6758b56fdc4c4ddbab49a",
+    "harnessFingerprint": "8cf6e3941231399d062d470ac0e6072952f7ec0c3d51b1cceac589235a021eef",
+    "reportFingerprint": "40617f965127ecbbd1a295c671ecaf28eab880d2f75eecae772ca20e6c3f9522",
+    "reportSha256": "9352275da6c3b2b0fded04e0e2d0ed8644018864f394417ef5bf92d73fe0bd8e",
+    "baseline": "config/engine-v2/minimax-depth-baselines/after-hp29.json",
+    "baselineFingerprint": "95db3cf8973249673528b2e97a37e5b49546e164ae18cae3f2cc43419ba09770",
+    "baselineSha256": "365c7dc2c3eb04f28452e2738983f53a403c9876d4fff4a10f1e550b3df7be48",
+    "hp28DepthValueNodeHistogramMismatches": 0,
+    "invariantFailures": 0
+  },
+  "fixedRootFrontier": {
+    "scenarios": 16,
+    "targetDepth": 3,
+    "windowedBounds": true,
+    "points": [
+      {
+        "nodeBudget": 512,
+        "coldSelectiveProofs": 6,
+        "warmSelectiveProofs": 9,
+        "coldNodes": 6297,
+        "coldWorkUnits": 92950,
+        "reportFingerprint": "17da89a5685bc3fbcc15417f0f71babb344cf6633dbdd05e2a69a198c41b0aec",
+        "reportSha256": "1821db9bb2b6b806545325e969c154d23a7d83b237b2f3fd6c26d5ef540872d3"
+      },
+      {
+        "nodeBudget": 576,
+        "coldSelectiveProofs": 8,
+        "warmSelectiveProofs": 9,
+        "coldNodes": 6370,
+        "coldWorkUnits": 94058,
+        "reportFingerprint": "afc8b3d8486cb6709be0f8255eb899f01aa14a605cb42512610bfc4789762e68",
+        "reportSha256": "6e59f776133c9b9c9df84e77f940c984fe1f7c050d4d9b20de5c9fb806075081"
+      },
+      {
+        "nodeBudget": 620,
+        "coldSelectiveProofs": 9,
+        "warmSelectiveProofs": 9,
+        "coldNodes": 6414,
+        "coldWorkUnits": 94684,
+        "reportFingerprint": "c231b806a8773d101c5f02aeaa2f6d1e5d3fd8a06507e3d114bf88cd7e50d80c",
+        "reportSha256": "f2ba49975bd066bc6577ca3cb2db55a1f231a346b677524d7e17b789de01ef23"
+      }
+    ],
+    "exactLongTailCompletionNodes": {
+      "scenario13": 520,
+      "scenario15": 513,
+      "scenario4": 620
+    },
+    "finding": "HP28_REDUCES_ALL_COLD_P3_THRESHOLD_FROM_896_TO_620_BUT_GLOBAL_BUDGET_IS_NOT_FREE"
+  },
+  "discoveryRuntimeAB": {
+    "role": "DISCOVERY",
+    "scenarios": 16,
+    "matchesPerProfile": 32,
+    "baseline": {
+      "nodeBudget": 512,
+      "searchFrames": 78,
+      "searchNodes": 25801,
+      "selectiveFrames": 45,
+      "selectiveDepthUnits": 150,
+      "workUnits": 4463863,
+      "degradedMedianFrame": 87,
+      "fallbackMedianFrame": 103,
+      "emergencyFrames": 0
+    },
+    "candidate576": {
+      "searchFrames": 78,
+      "searchNodes": 27718,
+      "selectiveFrames": 46,
+      "selectiveDepthUnits": 156,
+      "workUnits": 4485376,
+      "workRatioBasisPoints": 10048,
+      "degradedMedianFrame": 87,
+      "fallbackMedianFrame": 103,
+      "emergencyFrames": 0,
+      "actionStreamDifferences": 1,
+      "terminalDifferences": 0
+    },
+    "candidate620": {
+      "searchFrames": 78,
+      "searchNodes": 28651,
+      "selectiveDepthUnits": 158,
+      "workUnits": 4492168,
+      "workRatioBasisPoints": 10063,
+      "degradedMedianFrame": 87,
+      "fallbackMedianFrame": 103,
+      "emergencyMatches": 1,
+      "emergencyFrames": 3,
+      "actionStreamDifferences": 2,
+      "terminalDifferences": 0
+    },
+    "candidate576ReportFingerprint": "f7f537b8a815081440e7072471017f48d8f1e029d842989c91630117900ff451",
+    "candidate576ReportSha256": "39a75ad88f65e4cc2ffc4d73b04cf80789f48bd2778d71552d3628601db4b543",
+    "candidate620ReportFingerprint": "958ac3fedfe13b8855ab2c2c59a3b01d0c528ce45044973358ec3851e1dd1eb7",
+    "candidate620ReportSha256": "8612cb1d9d2cadb71c4c1f406e186af9f9d05c10d6480036328e78389e123792"
+  },
+  "independentRuntimeHoldout": {
+    "role": "TACTICAL_HOLDOUT",
+    "scenarios": 32,
+    "matchesPerProfile": 64,
+    "baseline": {
+      "searchFrames": 171,
+      "searchNodes": 62771,
+      "selectiveFrames": 88,
+      "selectiveDepthUnits": 298,
+      "completeValueOwners": 155,
+      "workUnits": 9283883,
+      "degradedMedianFrame": 88,
+      "fallbackMedianFrame": 105,
+      "emergencyMatches": 1,
+      "emergencyFrames": 56
+    },
+    "candidate576": {
+      "searchFrames": 170,
+      "searchNodes": 67533,
+      "selectiveFrames": 88,
+      "selectiveDepthUnits": 304,
+      "completeValueOwners": 154,
+      "workUnits": 9340511,
+      "workRatioBasisPoints": 10060,
+      "degradedMedianFrame": 88,
+      "fallbackMedianFrame": 105,
+      "emergencyMatches": 1,
+      "emergencyFrames": 56,
+      "actionStreamDifferences": 0,
+      "terminalDifferences": 0
+    },
+    "reportFingerprint": "68d309239475b79271a8f6e1e0f24e8143124ab01532e79077a20932ee7a8621",
+    "reportSha256": "13b7f534ff6c26f344fc5912da9bf428bec648130c3730199fb9f1fea1ad5a2d"
+  },
+  "invariants": {
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "hotAllocation": 0
+  },
+  "build": {
+    "sourceBytes": 631179,
+    "minifiedBytes": 609201,
+    "productionRootTypedArrayBytes": 889188,
+    "sourceMinifiedSemanticMismatches": 0,
+    "platformScriptByteLimitExceeded": true
+  },
+  "tests": {
+    "minimaxCore": 163,
+    "diagnostics": 121,
+    "gr0": 297,
+    "imp2": 53,
+    "imp3": 28,
+    "imp5": 14,
+    "imp6": 16,
+    "total": 692,
+    "failed": 0
+  },
+  "decision": {
+    "classification": "MORE_NODES_MOVE_WORK_BETWEEN_FRAMES_INSTEAD_OF_IMPROVING_ENGINE_EFFICIENCY",
+    "rejectedProfiles": [
+      "NODE_BUDGET_576",
+      "NODE_BUDGET_620"
+    ],
+    "retainedDiagnosticHooks": true,
+    "next": "ISOLATE_SCENARIO4_WINDOWED_P3_BRANCH_COST_AND_REMOVE_AT_LEAST_108_NODES_WITHOUT_INCREASING_THE_512_NODE_BUDGET"
+  }
+}

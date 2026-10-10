@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_RESPONSE_CONDITIONED_EVIDENCE_V1",
+  "stage": "BP137",
+  "status": "ACCEPT_ONE_STEP_RESPONSE_LIMIT_CLASSIFIED",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "contract": {
+    "fixedPairRootCount": 211,
+    "analyzedRootCount": 35,
+    "movementWorldCount": 3,
+    "completeRootCount": 35,
+    "incompleteRootCount": 0,
+    "crossWorldMismatchCount": 0,
+    "uniqueHistoricalColumnCount": 35,
+    "ambiguousHistoricalColumnCount": 0,
+    "missingHistoricalColumnCount": 0,
+    "hotAllocationCount": 0,
+    "behaviorNeutral": true,
+    "actionOwnership": false,
+    "historicalActionUsage": "Offline label only; never read by runtime Shadow or action selection."
+  },
+  "opponentPolicy": {
+    "nearUniformRootCount": 35,
+    "historicalActionMassMinimum": 1428,
+    "historicalActionMassMaximum": 1667,
+    "interpretation": "Every observable nominal policy is uniform within one probability unit, so the current opponent model contributes no useful root-conditioned discrimination on this corpus."
+  },
+  "historicalDirection": {
+    "regressions": {
+      "roots": 2,
+      "historicalFullCandidateHigher": 2,
+      "historicalNoAttackEqual": 2,
+      "historicalAttackContributionPositive": 2,
+      "nominalFullCandidateHigher": 2,
+      "verifiedStructuralProgress": 0
+    },
+    "improvements": {
+      "roots": 2,
+      "historicalFullCandidateHigher": 2,
+      "historicalNoAttackEqual": 2,
+      "historicalAttackContributionPositive": 2,
+      "nominalFullCandidateHigher": 2,
+      "verifiedStructuralProgress": 1
+    },
+    "interpretation": "The realized next enemy action and nominal one-step expectation support both improvements and both regressions. Removing ATTACK makes all four realized columns equal, proving that their direction is manufactured by the one-step ATTACK leaf family rather than response discrimination."
+  },
+  "structuralCertificate": {
+    "definition": "Objective Pareto dominance plus at least one verified muzzle-coverage, response-viability, escape-branch or counter-exposure gain; generic route PROGRESS alone is excluded.",
+    "historicalImprovementTruePositive": 1,
+    "historicalImprovementFalseNegative": 1,
+    "historicalRegressionFalsePositive": 0,
+    "precisionOnDirectionalRoots": 10000,
+    "recallOnHistoricalImprovements": 5000,
+    "decision": "Retain as a strict Shadow certificate only. Coverage is insufficient for action ownership."
+  },
+  "performance": {
+    "elapsedMs": 34910,
+    "shadowArtifactBytes": 395000,
+    "reportArtifactBytes": 9732
+  },
+  "artifacts": {
+    "shadowDirectory": "artifacts/v2-native-initiative/bp137-response-conditioned-shadow",
+    "shadowManifestSha256": "3664c7c2720b3f353f69f4648fda60787fabdfb10fea2aa1df6aea84ff925e7c",
+    "shadowOverviewSha256": "09042331c08967241febe7f367215a11a9dd342f17e10d4f0fce2ad3a63326cd",
+    "shadowMatchesSha256": "3ea37e99cbeaa3ce7d6833095e0ae6acae46036fe3f2445a97eabe89fd0e50e9",
+    "reportDirectory": "artifacts/v2-native-initiative/bp137-semantic-attack-response-conditioned",
+    "reportManifestSha256": "01289d04defe40e50311c3b559c8ed51c9b647f5748164f7fa1f7ee6a436d169",
+    "reportOverviewSha256": "1765db790a46509f99b61e3900aa963487c60b49c73e8c5332138d7945c0e1ba",
+    "reportRootsSha256": "167ae343fb94c461662cf36736e25398b173338085dc35033a80d9ac09ad8e85",
+    "reportFingerprint": "f5007c4edbacbc66e56290b6c7a5c8ab735e5c932e8b0b1ba1cd29a6ab9df467"
+  },
+  "source": {
+    "responseConditionedShadowSha256": "cc6708ff7e97e7f56f2d98d25fddbdf4e0ff9c887212529d4c0ac8dc73107286",
+    "responseConditionedReportSha256": "85e9dc6df2fc5674d0bf45b10cf3f4a01880634f21aed150370a9a92bd9ce372",
+    "policyIntervalShadowSha256": "fdfae29e92e5efd7b794eed9855c77084af9d65d0902505b0e1f3920c69703fd",
+    "productionDiagnosticBotSha256": "74e33917dd9eca76beaa6aa46752c81e049545a06f54c6a31f5c7fbdc075f835",
+    "arenaSha256": "133f828fd498334ebc9cb91e28bc110ee514ddacf971b2e61cf644d4c387d410",
+    "responseConditionedShadowTestSha256": "17b57ca150378b8a5bb133fc188c6aa7e6db297caa21ace5e626d284c6eb9a9e",
+    "responseConditionedReportTestSha256": "3b9139982c6688a6b5a07b9205a18cac3b7e0e006a7edb46cdd1c15b750dfb98"
+  },
+  "decision": {
+    "retain": [
+      "FULL and NO_ATTACK cells on the same enemy-response columns",
+      "observable nominal policy snapshot as diagnostic data",
+      "offline historical action join as a label",
+      "strict structural attack progress as a Shadow certificate",
+      "production fail-closed behavior"
+    ],
+    "reject": [
+      "historical realized next action as runtime information",
+      "one-step response-conditioned scalar value as an action certificate",
+      "the current near-uniform nominal opponent policy as an owner",
+      "generic route progress as verified attack progress",
+      "tuning ATTACK scalar weights from these four directional roots"
+    ],
+    "next": "BP138 extends the shared continuation beyond one enemy response to the next attack event or committed deadline. It records terminal/nonloss, shot creation, hit/kill, counter-exposure and escape viability separately; historical actions remain offline labels only."
+  }
+}

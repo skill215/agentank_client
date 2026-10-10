@@ -1,0 +1,91 @@
+{
+  "seq": 10,
+  "previous": "a0626a82e933ccdcbf2eefa3179b05bbadcad182f7685042694976c7dedda479",
+  "record": {
+    "version": 1,
+    "type": "register",
+    "id": "OPT-D-0006",
+    "at": "2026-10-08T04:05:43.433Z",
+    "process": "OPT-P-002",
+    "category": "algorithm",
+    "registration": "prospective",
+    "parent": "OPT-D-0005",
+    "title": "导航动作完全平分时按争星路线步数选方向",
+    "hypothesis": "移除默认行号偏好，在风险与评分完全相同的移动动作间选择更短静态路线，可以改善争星而不覆盖现有风险优先级。",
+    "scope": "mode3/no own effects/movement actions only; preserve all neutralBetter priorities and risk fields; diagnostic implementation",
+    "baseline": "285f9863227d6af3638bed74e008f0260fd25440034d95eec5e3f8cac44d9120",
+    "falsifier": "Total candidate score minus frozen baseline>=1; candidate deaths<=baseline deaths; all health checks pass fails; do not change thresholds or try a second candidate.",
+    "nextStep": "8场本地筛选；通过才生成16张新地图32局配对。",
+    "alternatives": [
+      {
+        "name": "提高争星权重或降低风险门槛",
+        "benefit": "影响更多动作",
+        "risk": "混入多机制并可能损害避险",
+        "reason": "不采用"
+      },
+      {
+        "name": "只替换完全平分时的行号选择",
+        "benefit": "改动小，直接对应追踪发现",
+        "risk": "静态路线忽略未来对抗，收益可能很小",
+        "reason": "唯一候选"
+      }
+    ],
+    "criteria": [
+      {
+        "id": "integrity",
+        "metric": "health and preserved priorities",
+        "rule": "all tests and game integrity checks pass",
+        "unit": "game/test",
+        "kind": "hard"
+      },
+      {
+        "id": "old",
+        "metric": "8-game total paired score/death",
+        "rule": "score gain>=1, death delta<=0",
+        "unit": "8 fixed games",
+        "kind": "soft"
+      },
+      {
+        "id": "fresh",
+        "metric": "16-pair fresh total score/death",
+        "rule": "score gain>=2, death delta<=0",
+        "unit": "16 fresh terrain pairs",
+        "kind": "soft"
+      },
+      {
+        "id": "runtime",
+        "metric": "production acceptance",
+        "rule": "Not assessed in this rapid local candidate experiment",
+        "unit": "target runtime",
+        "kind": "hard"
+      }
+    ],
+    "budget": {
+      "games": 40,
+      "seconds": 1500
+    },
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp417-fast-star/screen-plan.json",
+        "sha256": "8503ff557f561762bf165d5e4bccc85122900cd7319965f4f729b6639239c796"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp417-fast-star/trace-summary.json",
+        "sha256": "9a1e6e322a9bb407fbfbac71a8ad9a8a73916566f515247862813b4a3d7f0e2e"
+      },
+      {
+        "path": "tools/agentank/diagnostics/star-route-tie-candidate.js",
+        "sha256": "73a68806c4a67dc26f08158c9ae5aa1bfd4b3a2f403ed9cd88dada65027414f2"
+      },
+      {
+        "path": "tools/agentank/diagnostics/experiment-governor.js",
+        "sha256": "65affa68cff9c2b86ff81698698c6901f087cb5d6d00f217c8560de5927e3210"
+      },
+      {
+        "path": "tools/agentank/diagnostics/experiment-runner.js",
+        "sha256": "c865684e19cb34ed53744a5cc76bb96ef7dc45e3a33957a24e315145c5ea33d0"
+      }
+    ]
+  },
+  "sha256": "72eb926d1ed4cb6621b36a3c673c4eb5954eea33b77c4a4d8e47893152fc5655"
+}

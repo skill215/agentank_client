@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_CHANCE_INTERVAL_EVIDENCE_V1",
+  "stage": "BP126",
+  "status": "ACCEPT_CHANCE_EVIDENCE_REJECT_ALL_CERTIFICATE_OWNERS",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "source": {
+    "bp125Evidence": "config/engine-v3/base-policy-kernel-bp125-certificate-root-corpus-evidence.json",
+    "bp125RootsSha256": "0074321d40029e6857d301345990ffd6eba315c2ae33d1cb14bca69c21273fbb",
+    "chanceIntervalToolSha256": "811ef18800bcec12c818502f0ca72fcbf81a50035167188cb5eb4ea764875b3a",
+    "chanceIntervalTestSha256": "9143a1c61694cc772346795ef5035b7581cefe152985831a32639bb678ab58f2"
+  },
+  "quantifiers": {
+    "basePolicy": "V2_PRODUCTION_OBSERVABLE",
+    "enemyPolicy": "V3_HISTORICAL_CONTROLLER",
+    "exactControllerHistory": true,
+    "discoveryChance": ["HISTORICAL", "RANDOM0", "RANDOM1", "RANDOM2"],
+    "holdoutChance": ["RANDOM3", "RANDOM4", "RANDOM5", "RANDOM6"]
+  },
+  "denominator": {
+    "physicalRoots": 64,
+    "actionsPerRoot": 2,
+    "chanceOutcomesPerAction": 8,
+    "cells": 1024,
+    "exactCells": 1024,
+    "missingRoots": 0
+  },
+  "discovery": {
+    "pairedNoRegression": 7,
+    "terminalIntervalDominance": 20,
+    "fullVectorDominance": 10,
+    "qualifiedByBoth": 6,
+    "qualifiedHistoricalTransitions": { "V1_WIN_TO_V1_WIN": 6 }
+  },
+  "holdout": {
+    "evaluated": 6,
+    "pairedNoRegression": 0,
+    "terminalIntervalDominance": 2,
+    "fullVectorDominance": 3,
+    "qualifiedByBoth": 0,
+    "regressionReasons": {
+      "outcome": 0,
+      "newDeath": 2,
+      "lostKill": 0,
+      "comparableStar": 9
+    }
+  },
+  "allCells": {
+    "candidateBetterOutcome": 24,
+    "candidateWorseOutcome": 22,
+    "equalOutcome": 466,
+    "rootsWithAnyPositive": 20,
+    "rootsWithAnyNegative": 18,
+    "rootsWithBothSigns": 7,
+    "rootsWithNoOutcomeChange": 33
+  },
+  "artifact": {
+    "directory": "artifacts/v2-native-initiative/bp126-semantic-attack-chance-interval",
+    "manifestSha256": "13be93d809fc62ff522b6514d40c3c7c2d5cdb4a3b5544787a89841d4256cc39",
+    "overviewSha256": "814aa0649576af6ec24f635d15883026145d00dcb5f8c52d79fe99e199e41f66",
+    "rootsSha256": "349084bcda68013bfb0c2fb937676d96bb566748b07119876fc0d61a42950ec4",
+    "approximateKiB": 28
+  },
+  "decision": {
+    "retain": [
+      "exact-controller-history independent ChanceOutcome corpus",
+      "separate paired-world and aggregate interval relations",
+      "immutable Discovery and Chance holdout split"
+    ],
+    "reject": [
+      "all six Discovery-qualified scalar certificates",
+      "aggregate interval dominance without paired-world no-regression",
+      "running alternate EnemyPolicy for a candidate set with zero Chance holdout survivors",
+      "ACTIVE ownership, threshold tuning or Holdout reuse"
+    ],
+    "next": "Use the corpus to redesign the search output as an observable objective-progress interval. Local terminal scalar dominance and sampled future-star supervision are audit evidence, not an online owner."
+  }
+}

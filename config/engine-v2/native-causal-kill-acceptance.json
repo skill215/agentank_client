@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "V2_NATIVE_CAUSAL_KILL_ACCEPTANCE_V1",
+  "status": "ACCEPTED_DIRECTIONAL_CORRECTNESS",
+  "asOf": "2026-08-03",
+  "productionDefaultEnabled": true,
+  "candidateBuilt": false,
+  "officialPlatformOperationPerformed": false,
+  "certificate": [
+    "PHYSICAL_HARD_ALLOW",
+    "PAC_COMPLETE",
+    "ALL_ENEMY_FIRST_ACTIONS_PROVEN_DOOMED",
+    "ZERO_ENEMY_UNKNOWN_OR_SURVIVING_FIRST_ACTIONS",
+    "EO_NONE_OR_FIRE_SUCCESSOR_PROVEN_VIABLE",
+    "ZERO_IMMEDIATE_FATAL_MASS",
+    "ZERO_UNKNOWN_MASS",
+    "ZERO_POSSIBLE_PROJECTILE",
+    "ZERO_PROJECTED_POSSIBLE_RISK",
+    "RAW_FATAL_MASS_IS_NONZERO_FUTURE_FIRE_ONLY",
+    "ZERO_ENEMY_SHIELD_HITS",
+    "POST_FIRE_ESCAPE_EXISTS",
+    "NO_COUNTER_EXPOSURE_OR_ROBUST_REGRESSION",
+    "FINAL_PHYSICAL_HARD_RECHECK"
+  ],
+  "ownershipOrder": [
+    "FINAL_ACTION_GATE",
+    "STRICT_COMMITTED_RESCUE",
+    "STRICT_FORCED_WIN_PRESERVED",
+    "CAUSAL_KILL",
+    "PLAN_COMMIT_AND_ACTION_EMIT"
+  ],
+  "source": {
+    "productionRootSha256": "05e7ade191ca5369ea14ad3f3552db28a2ff4619bfb32f2b03f96a0892226c44",
+    "escapeObligationSha256": "e2f889c6b6760608610dcd781e163cf7606b3176297966386bfc0b9fa7cb0740",
+    "diagnosticBotSha256": "4fec2f512243b8d3d50c634df32d9867c56573436cb668ad91ffa09a476e1a9b",
+    "arenaRunnerSha256": "02a311403595943fc7cfc60ebe35a511a1ff09246a4b777647c268590799f37e"
+  },
+  "cohort": {
+    "fingerprint": "bcfc3a2de8675abefb04f531cc8c9e3c77fdd4cd600e65590ff50073321a6d70",
+    "discoveryScenarios": 16,
+    "holdoutScenarios": 48,
+    "seatSwapsPerScenario": 2,
+    "opponent": "V3_BASE_FROZEN_V1_BEHAVIOR",
+    "skills": [
+      "poison",
+      "stun"
+    ]
+  },
+  "discovery": {
+    "baseline": {
+      "wins": 6,
+      "losses": 24,
+      "draws": 2,
+      "scoreBasisPoints": 2188
+    },
+    "candidate": {
+      "wins": 7,
+      "losses": 23,
+      "draws": 2,
+      "scoreBasisPoints": 2500
+    },
+    "transitions": {
+      "LOSS_TO_WIN": 1,
+      "WIN_TO_LOSS": 0
+    },
+    "causalCandidates": 1,
+    "causalOverrides": 1,
+    "manifestFingerprint": "10d59fd87ec1760f0018439834d4a6817ef624e390d3690ec536c8977550e8af",
+    "manifestSha256": "fc3b1ae99c014a1d74248451af748b0d113f477da5b861b446412ca860147d6a"
+  },
+  "holdout": {
+    "baselineAndCandidate": {
+      "wins": 12,
+      "losses": 77,
+      "draws": 7,
+      "scoreBasisPoints": 1615
+    },
+    "causalCandidates": 0,
+    "causalOverrides": 0,
+    "alreadySelectedDirectKills": 2,
+    "sourceBlockedDirectKills": 3,
+    "manifestFingerprint": "9abc4c7a6364e26dcd9709c2d3d79b7ffea1160ba82d63a5b673e36ea89cdf41",
+    "manifestSha256": "d9ad9ffc2137e1a8e49d600a2117708fecf9baaf758ab7e4987af8810e4db06e"
+  },
+  "positiveCase": {
+    "historicalMatchUrlId": "mat_6K5rvfV5SofI3nXfG",
+    "candidateSeat": 1,
+    "firstDivergenceFrame": 103,
+    "baselineAction": "TURN_LEFT",
+    "candidateAction": "FIRE",
+    "baselineTerminal": "FRAME_LIMIT_STARS_LOSS_0_TO_1",
+    "candidateTerminal": "SINGLE_CRASH_WIN_AT_FRAME_105",
+    "enemyDoomedFirstActions": 6,
+    "enemySurvivingFirstActions": 0,
+    "enemyUnknownFirstActions": 0,
+    "committedFireSuccessor": "PROVEN_VIABLE",
+    "rawCommittedFatalMass": 0,
+    "rawPossibleProjectileFatalMass": 0,
+    "rawFutureFireFatalMass": 3998
+  },
+  "invariants": {
+    "timeoutError": 0,
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "hotAllocationAdded": 0
+  },
+  "qualification": {
+    "generalAttackStrengthClaimed": false,
+    "statisticalSignificanceClaimed": false,
+    "classification": "RARE_EXACT_CAUSAL_COMPOSITION",
+    "nextStep": "KEEP_ONE_SURVIVOR_DIRECT_KILLS_SHADOW_UNTIL_COUNTERFIRE_IS_PROVEN"
+  },
+  "fingerprint": "0fa835370eaea47fd24fad4c5c78dd9a8befc58eb941bd31fcf4e2f327ede690"
+}

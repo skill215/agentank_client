@@ -1,0 +1,85 @@
+{
+  "seq": 12,
+  "previous": "9cfce7c1bb89ed5adcc89c939b965f5c9933397977d61e36cf12faa29e83a110",
+  "record": {
+    "version": 1,
+    "type": "review",
+    "id": "OPT-D-0005",
+    "reviewId": "OPT-R-0006",
+    "at": "2026-10-08T04:07:16.883Z",
+    "stage": "process",
+    "disposition": "accept",
+    "outcome": "passed",
+    "primaryCause": "NONE",
+    "secondaryCauses": [],
+    "reason": "完成固定样本、一次诊断、唯一候选和8局筛选，失败后直接封账。16/48局，没有追加参数或候选，预算内得到明确否决结论。",
+    "nextStep": "保留快速流程；后续先验证候选确有触发再运行对局。",
+    "limitations": "接受流程执行方式，不表示算法改善；尚无长期效率对照。",
+    "experiments": [
+      "BP417_TRACE"
+    ],
+    "assessments": [
+      {
+        "criterion": "budget",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp417-fast-star/campaign-summary.json"
+      },
+      {
+        "criterion": "decision",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp417-fast-star/screen-review.json"
+      }
+    ],
+    "cost": {
+      "attemptedGames": 8,
+      "completedGames": 8,
+      "independentUnits": 0,
+      "executionSeconds": 11.13201685,
+      "analysisSeconds": null
+    },
+    "metrics": [
+      {
+        "name": "campaign_games",
+        "value": 16,
+        "unit": "attempted games, shared campaign total not additional games",
+        "source": "artifacts/native-causal-audit/bp417-fast-star/campaign-summary.json"
+      },
+      {
+        "name": "saved_planned_games",
+        "value": 32,
+        "unit": "unexecuted games",
+        "source": "artifacts/native-causal-audit/bp417-fast-star/campaign-summary.json"
+      },
+      {
+        "name": "campaign_elapsed",
+        "value": 261.685,
+        "unit": "seconds since sample freeze including waits",
+        "source": "artifacts/native-causal-audit/bp417-fast-star/campaign-summary.json"
+      }
+    ],
+    "productionAdoption": false,
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp417-fast-star/campaign-summary.json",
+        "sha256": "8d899b165d40039aaa85697b0ce200a9d1fdd5b05107598ee067d096c0baa26e"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp417-fast-star/trace-run/state.json",
+        "sha256": "4b3ff3df50ee6db4bc7cb912815d07b215aef4799b553cfd1171c8f28356643c"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp417-fast-star/trace-summary.json",
+        "sha256": "9a1e6e322a9bb407fbfbac71a8ad9a8a73916566f515247862813b4a3d7f0e2e"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp417-fast-star/screen-review.json",
+        "sha256": "d88fe429f41964c9d56614ae1965e9bf530b107fccfd9467a1881d005c3ccc06"
+      },
+      {
+        "path": "docs/implementation/optimization-decisions/bp417-fast-review.md",
+        "sha256": "6dc8f8864b1c981f00aceeaac553536c099f15c33e396399700cc8de52886229"
+      }
+    ]
+  },
+  "sha256": "ef1e647c5069d33ac4a3dd5b3e4927feaab46de0bf444ed289f292fc1bdbb565"
+}

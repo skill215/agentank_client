@@ -61,9 +61,22 @@ test("hazard planes use the active map stride and one-byte bounded exposure coun
   assert.ok(hazard.exposure instanceof Uint8Array);
   assert.equal(hazard.cellStride, built.state.cells);
   assert.equal(hazard.exposure.length,
-    (CAPACITY.MAX_HAZARD_FRAMES * RULE.PROJECTILE_STEPS + 1) * built.state.cells);
+    (Math.max(built.state.width, built.state.height,
+      RULE.BOMB_FUSE * RULE.PROJECTILE_STEPS) + 1) * built.state.cells);
   assert.equal(hazard.viableA.length, built.state.cells * 4);
   assert.ok(CAPACITY.MAX_PROJECTILES + CAPACITY.MAX_BOMBS <= 0xff);
+});
+
+test("hazard storage is bounded by physical lifetime and overlong bomb evidence fails closed", () => {
+  const built = fast.createFastPhysical(physical({ platformFrame: 1, recordIndex: 1,
+    bombs: [{ entityId: 7, ownerSeat: 1, cell: [3, 2], placedFrame: 0,
+      explodeFrame: 100 }] }));
+  assert.equal(built.hazard.maxTicks,
+    Math.max(built.state.width, built.state.height,
+      RULE.BOMB_FUSE * RULE.PROJECTILE_STEPS));
+  assert.equal(built.hazard.rebuild(0), 0);
+  assert.equal(built.hazard.complete, 0);
+  assert.equal(built.hazard.reverseViable(0), -1);
 });
 
 test("hazard rebuild clears every strided time row after a projectile disappears", () => {
@@ -99,4 +112,91 @@ test("committed SourcePlans persist across cache hits and disappear only after p
   assert.equal(built.kernel.applyFrame(), fast.FAST_STATUS.APPLIED);
   assert.equal(built.state.activeProjectileCount(), 0);
   assert.equal(built.hazard.rebuild(0), 1); assert.equal(built.hazard.planCount, 0);
+});
+
+test("reverse viability result cache is exact, optional, and invalidated by state hash", () => {
+  const spec = physical({ projectiles: [
+    { entityId: 3, ownerSeat: 1, cell: [1, 2], direction: "right" }
+  ] });
+  const uncached = fast.createFastPhysical(spec);
+  const cached = fast.createFastPhysical(spec, { reverseViabilityCacheEntries: 8 });
+  const expected = uncached.hazard.reverseViable(0);
+  assert.equal(cached.hazard.reverseCacheEntries, 8);
+  assert.equal(cached.hazard.reverseViable(0), expected);
+  assert.equal(cached.hazard.reverseCacheMissCount, 1);
+  assert.equal(cached.hazard.reverseViable(0), expected);
+  assert.equal(cached.hazard.reverseCacheHitCount, 1);
+
+  assert.equal(cached.kernel.applyFrame(), fast.FAST_STATUS.APPLIED);
+  const changed = cached.hazard.reverseViable(0);
+  assert.equal(uncached.kernel.applyFrame(), fast.FAST_STATUS.APPLIED);
+  assert.equal(changed, uncached.hazard.reverseViable(0));
+  assert.equal(cached.hazard.reverseCacheMissCount, 2);
+  assert.equal(uncached.hazard.reverseCacheEntries, 0);
+  assert.equal(uncached.hazard.reverseCacheHitCount, 0);
+});
+
+test("reverse lattice cache reuses an exact committed hazard field across tank poses", () => {
+  const spec = physical({ projectiles: [
+    { entityId: 3, ownerSeat: 1, cell: [1, 2], direction: "right" }
+  ] });
+  const built = fast.createFastPhysical(spec, { reverseLatticeCacheEntries: 4 });
+  const control = fast.createFastPhysical(spec);
+  assert.equal(built.hazard.reverseViable(0), control.hazard.reverseViable(0));
+  assert.equal(built.hazard.reverseLatticeMissCount, 1);
+  const mark = built.state.beginTransition();
+  const controlMark = control.state.beginTransition();
+  const direction = (built.state.arrays[fast.ARRAY.TANK_DIR][0] + 1) & 3;
+  assert.equal(built.state.write(fast.ARRAY.TANK_DIR, 0,
+    direction), 1);
+  assert.equal(control.state.write(fast.ARRAY.TANK_DIR, 0, direction), 1);
+  assert.equal(built.hazard.reverseViable(0), control.hazard.reverseViable(0));
+  assert.equal(built.hazard.reverseLatticeHitCount, 1);
+  built.state.undoTo(mark);
+  control.state.undoTo(controlMark);
+  assert.equal(built.state.deltaUsed, 0);
+});
+
+test("reverse lattice cache matches uncached viability across every free pose", () => {
+  const spec = physical({ projectiles: [
+    { entityId: 3, ownerSeat: 1, cell: [1, 2], direction: "right" },
+    { entityId: 4, ownerSeat: 1, cell: [5, 1], direction: "down" }
+  ], bombs: [
+    { entityId: 5, ownerSeat: 1, cell: [3, 3], placedFrame: 0, explodeFrame: 3 }
+  ] });
+  const cached = fast.createFastPhysical(spec, { reverseLatticeCacheEntries: 2 });
+  const control = fast.createFastPhysical(spec);
+  const terrain = cached.state.arrays[fast.ARRAY.TERRAIN];
+  for (let cell = 0; cell < cached.state.cells; cell += 1) {
+    if (terrain[cell] === fast.TERRAIN.WALL || terrain[cell] === fast.TERRAIN.DIRT) continue;
+    for (let direction = 0; direction < 4; direction += 1) {
+      cached.state.arrays[fast.ARRAY.TANK_CELL][0] = cell;
+      cached.state.arrays[fast.ARRAY.TANK_DIR][0] = direction;
+      control.state.arrays[fast.ARRAY.TANK_CELL][0] = cell;
+      control.state.arrays[fast.ARRAY.TANK_DIR][0] = direction;
+      cached.state.initializeHash(); control.state.initializeHash();
+      assert.equal(cached.hazard.reverseViable(0), control.hazard.reverseViable(0),
+        `pose ${cell}:${direction}`);
+    }
+  }
+  assert.ok(cached.hazard.reverseLatticeHitCount >
+    cached.hazard.reverseLatticeMissCount);
+});
+
+test("hazard plane cache ignores tank pose but invalidates on entity generation", () => {
+  const built = fast.createFastPhysical(physical({ projectiles: [
+    { entityId: 3, ownerSeat: 1, cell: [1, 2], direction: "right" }
+  ] }));
+  assert.equal(built.hazard.rebuild(0), 1);
+  const initialBuilds = built.hazard.rebuildCount;
+  built.state.arrays[fast.ARRAY.TANK_DIR][0] =
+    (built.state.arrays[fast.ARRAY.TANK_DIR][0] + 1) & 3;
+  built.state.initializeHash();
+  assert.equal(built.hazard.rebuild(0), 1);
+  assert.equal(built.hazard.rebuildCount, initialBuilds);
+  assert.ok(built.hazard.cacheHitCount > 0);
+  built.state.arrays[fast.ARRAY.PROJECTILE_GENERATION][0] += 1;
+  built.state.initializeHash();
+  assert.equal(built.hazard.rebuild(0), 1);
+  assert.equal(built.hazard.rebuildCount, initialBuilds + 1);
 });

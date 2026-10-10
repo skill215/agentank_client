@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_SEMANTIC_OBJECTIVE_EVIDENCE_V1",
+  "stage": "BP117_BP118",
+  "status": "SEMANTIC_IDENTITY_ACCEPTED_ACTIVE_OWNER_NOT_QUALIFIED",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "source": {
+    "semanticObjectiveEpochSha256": "5adc3e77838265c434f2df6d251d134f9754ec37ec7893493d3779e36dc9c17d",
+    "semanticObjectiveEpochActiveSha256": "f97bde0fb7e85cf05e0036a138e19ed314c56369c6a12c7657e1803f979a6c89",
+    "stableOptionLedgerSha256": "07975fe69f9cb9f17b46489665e6f4cab4c9ccb271d3615351f88ce7bb7904b7",
+    "optionArbiterSha256": "0c4766139a93d1173b615f6122a96c2c42a028a7e87535d00908c5cc4cf7ae17",
+    "optionIntervalSearchSha256": "7d2e89d797e1b33e43ab4afc3d945cb3b667d1d8937cbcbbd7e786ef636c0a62",
+    "diagnosticBotSha256": "2ffaebcf8774218d5cc838dcf999e92c0295eed8e9fb8ba39ec62ab8a71b0209",
+    "arenaSha256": "7c133a15f7c3680db4d99f55b041c8f336de0c8b6aecb55b6d103c4d090a2c66",
+    "testSha256": "dbe93863e1c2827f8016cd132309adce1dea0d7a4d53417d0812e630c777531c"
+  },
+  "cohort": {
+    "role": "DISCOVERY",
+    "scenarioCount": 16,
+    "candidateMatches": 32,
+    "skillMode": "STUN",
+    "cohortFingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667"
+  },
+  "bp117SemanticIdentity": {
+    "decisions": 3030,
+    "epochs": 112,
+    "epochFrames": 2955,
+    "maximumEpochFrames": 114,
+    "continuations": 1996,
+    "crossKindContinuations": 433,
+    "executionSupported": 2025,
+    "executionGaps": 930,
+    "selectedInside": 1994,
+    "selectedOutside": 31,
+    "selectedTargetAmbiguities": 0,
+    "adopted": {
+      "ATTACK": 52,
+      "STAR_CONTROL": 60,
+      "POSITION": 0
+    },
+    "strictArbiter": {
+      "currentOutside": 24,
+      "verifiedAttackYield": 20,
+      "candidateRoots": 4,
+      "candidateActions": { "FIRE": 4 },
+      "intervalComplete": 4,
+      "candidateWorse": 3,
+      "candidateDominates": 1,
+      "totalNodes": 243,
+      "maximumNodes": 63,
+      "rootRestoreFailures": 0,
+      "hotAllocationCount": 0
+    },
+    "relativeToBp116": {
+      "targetedNodesBefore": 18115,
+      "targetedNodesAfter": 243,
+      "nodeReductionBasisPoints": 9866,
+      "explanation": "POSITION is now an execution alias of ATTACK or STAR_CONTROL, never an independent objective."
+    },
+    "behaviorNeutral": true,
+    "overviewSha256": "52efc4f9c70e29110a7a7a92e1459213a456de10dab76dd24daa9f809f73134b"
+  },
+  "bp118StrictActivePoc": {
+    "decisions": 3075,
+    "certificates": 1,
+    "overrides": 1,
+    "sameAction": 0,
+    "finalReject": 0,
+    "hotAllocationCount": 0,
+    "baseline": { "wins": 2, "losses": 28, "draws": 2, "scoreBasisPoints": 938 },
+    "candidate": { "wins": 2, "losses": 27, "draws": 3, "scoreBasisPoints": 1094 },
+    "delta": {
+      "scoreBasisPoints": 156,
+      "wins": 0,
+      "losses": -1,
+      "draws": 1,
+      "stars": 0,
+      "crashes": -1,
+      "fire": 5
+    },
+    "transition": {
+      "matchId": "mat_I2Z8t6EspmMENRW5H",
+      "candidateSeat": 1,
+      "frame": 48,
+      "objective": "ATTACK",
+      "incumbent": "GO",
+      "proposal": "FIRE",
+      "incumbentValue": -50,
+      "proposalValue": 5750,
+      "searchNodes": 62,
+      "before": { "outcome": "V1_WIN", "terminal": "SINGLE_CRASH", "frame": 83 },
+      "after": { "outcome": "DRAW", "terminal": "FRAME_LIMIT_EQUAL_STARS", "frame": 128 }
+    },
+    "negativeTransitions": 0,
+    "invariants": {
+      "timeoutError": 0,
+      "avoidableHardReject": 0,
+      "riskDominatedSelection": 0,
+      "rootRestoreFailure": 0
+    },
+    "overviewSha256": "b2dcea05e4d08a9848eb72fe8e5247a48d0ae910790a574bf49ab572c6090b5e",
+    "matchesSha256": "cc1ac90447ae4e37636f9c3af2c1b1ea34f5c7aacc44447d1fd44c2441ce6aa8"
+  },
+  "decision": {
+    "retain": [
+      "semantic target signature plus target generation",
+      "POSITION as an ATTACK or STAR_CONTROL execution alias",
+      "sparse two-Option Minimax only at strict same-target conflicts",
+      "verified attack yield before strategic continuation"
+    ],
+    "reject": [
+      "Option kind or POSITION generation as objective identity",
+      "activating the single strict dominance certificate as production default",
+      "global search expansion to increase strategic proposal density"
+    ],
+    "qualification": {
+      "requiredScoreGainBasisPoints": 300,
+      "observedScoreGainBasisPoints": 156,
+      "qualified": false
+    },
+    "next": "Keep the strict owner diagnostic-only. Improve upstream semantic ATTACK target and Option generation, then use the same interval certificate without widening global Minimax."
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_BP107_BP111_TERMINAL_CHANCE_EVIDENCE_V1",
+  "productionBehaviorChanged": false,
+  "cohort": {
+    "scenarios": 16,
+    "physicalRoots": 90,
+    "candidateLabels": 454,
+    "skillMode": "ASYMMETRIC_POISON_VS_STUN",
+    "rootStride": 16
+  },
+  "linearBootstrapCrossValidation": {
+    "featureCount": 54,
+    "robustLexDeltaBasisPoints": -28,
+    "epsilon1DeltaBasisPoints": -167,
+    "v3OnlyDeltaBasisPoints": 111,
+    "accepted": false
+  },
+  "chanceLeakage": {
+    "roots": 44,
+    "historicalOracleChangedRoots": 11,
+    "candidateLabels": 220,
+    "labelsWithOutcomeVariance": 70,
+    "historicalOracleOldDeltaBasisPoints": 2188,
+    "chanceAwareSingleEnemyDeltaBasisPoints": 625
+  },
+  "enemyAndChanceQuantifiedArena": {
+    "matches": 32,
+    "current": { "wins": 4, "losses": 27, "draws": 1, "scoreBasisPoints": 1406 },
+    "candidate": { "wins": 5, "losses": 25, "draws": 2, "scoreBasisPoints": 1875 },
+    "deltaBasisPoints": 469,
+    "transitions": { "lossToWin": 2, "lossToDraw": 2, "winToLoss": 1, "drawToLoss": 1 },
+    "candidateCrashDelta": 2,
+    "candidateFireDelta": -28,
+    "acceptedAsOwner": false
+  },
+  "exactControllerHistory": {
+    "matrixCells": 880,
+    "physicalRootMatches": 880,
+    "forcedCells": 880,
+    "satisfiedCells": 880,
+    "matches": 16,
+    "current": { "wins": 3, "losses": 13, "draws": 0, "scoreBasisPoints": 1875 },
+    "candidate": { "wins": 3, "losses": 12, "draws": 1, "scoreBasisPoints": 2188 },
+    "deltaBasisPoints": 313,
+    "acceptedAsOwner": false
+  },
+  "independentChanceHoldout": {
+    "trainingChanceOutcomes": ["HISTORICAL", "RANDOM0", "RANDOM1", "RANDOM2"],
+    "holdoutChanceOutcomes": ["RANDOM3", "RANDOM4", "RANDOM5", "RANDOM6"],
+    "primitive": {
+      "deltaBasisPoints": 142,
+      "robustDeltaBasisPoints": 0,
+      "improvedRoots": 11,
+      "regressedRoots": 13,
+      "accepted": false
+    },
+    "optionKind": {
+      "deltaBasisPoints": -170,
+      "robustDeltaBasisPoints": 0,
+      "improvedRoots": 8,
+      "regressedRoots": 10,
+      "accepted": false
+    }
+  },
+  "invariants": {
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "timeoutError": 0,
+    "hotAllocationCount": 0,
+    "focusedTestsPassed": 23,
+    "focusedTestsFailed": 0
+  },
+  "source": {
+    "rootCounterfactualLabelsSha256": "052f3fcfbbc5f3ca44ea7883c3082cc9edf6fc334380433efa5637d9b90e20f6",
+    "terminalBootstrapCalibrationSha256": "2289f83666e0704134b8194fc5ee83118048640566939e4d04d49e5780d82fb8",
+    "terminalOracleInterventionSha256": "1759db0b770b0e97e97b5b9503233052be1d251c62932afeb07f226eeb23a0d1",
+    "decisionQualityArenaSha256": "f9ba2123d1fd9b0fbb9d2759e98873841252c234ec91fdecd85580c3f882a7f2"
+  },
+  "decision": "KEEP_TERMINAL_COUNTERFACTUAL_AS_OFFLINE_SUPERVISION; KEEP_SEPARATE_OWN_ENEMY_CHANCE_QUANTIFIERS_AND_EXACT_HISTORY; REJECT_LINEAR_PRIMITIVE_AND_OPTION_KIND_OWNERS; BUILD_PERSISTENT_OBJECTIVE_CHANCE_INTERVAL_NEXT"
+}

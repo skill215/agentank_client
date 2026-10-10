@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_BP17_EVIDENCE_V1",
+  "status": "ACCEPTED_NEGATIVE_OWNERSHIP",
+  "scope": "DISCOVERY64_STUN_V3_HOST",
+  "cohortFingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667",
+  "candidateMatches": 128,
+  "shadow": {
+    "wins": 69,
+    "losses": 53,
+    "draws": 6,
+    "scoreBasisPoints": 5625,
+    "fire": 667,
+    "skills": 402,
+    "starDifference": 40,
+    "candidateDeaths": 54,
+    "opponentDeaths": 56
+  },
+  "coverage": {
+    "blockedWholeRoots": 5808,
+    "forcedWinChecks": 1407,
+    "forcedWinProven": 5,
+    "forcedWinDisproven": 1379,
+    "forcedWinUnknown": 23,
+    "searchedRows": 19825,
+    "exactRows": 153,
+    "exactCandidatePairs": 2,
+    "policyExactDominance": 2,
+    "rootRestoreFailures": 0
+  },
+  "forcedWinActive": {
+    "wins": 69,
+    "losses": 53,
+    "draws": 6,
+    "scoreBasisPoints": 5625,
+    "streamDifferenceMatches": 5,
+    "transitions": { "V2_WIN_TO_V2_WIN": 5 },
+    "firstDifferenceFrames": [125, 125, 127, 126, 125],
+    "fire": 666,
+    "skills": 403,
+    "starDifference": 41,
+    "candidateDeaths": 54,
+    "opponentDeaths": 56
+  },
+  "policyExactActive": {
+    "wins": 69,
+    "losses": 53,
+    "draws": 6,
+    "scoreBasisPoints": 5625,
+    "streamDifferenceMatches": 2,
+    "transitions": { "V2_WIN_TO_V2_WIN": 2 },
+    "firstDifferenceFrames": [126, 127],
+    "fire": 668,
+    "skills": 403,
+    "starDifference": 40,
+    "candidateDeaths": 54,
+    "opponentDeaths": 56
+  },
+  "decision": {
+    "forcedWinDirectRootOwnership": "CORRECT_BUT_TERMINAL_ONLY_NEUTRAL",
+    "policyExactDirectRootOwnership": "SAFE_IN_SAMPLE_BUT_NEUTRAL",
+    "productionDefault": "OFF",
+    "nextBoundary": "MINIMAX_RESPONSE_ENVELOPE_FOR_LONG_HORIZON_PROPOSALS"
+  },
+  "sourceSha256": {
+    "productionRoot": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7",
+    "nativeBoundedPolicySearchPoc": "a5d33a2ddf79e89be1b887ff97c40787944fa619bddf4c701b5ca1c2bb5ae533",
+    "nativeCandidateForcedWinPoc": "4caed32b1e59d1fa7614169051d4b29ec095c8b8d42ba7520c670fb4a75d1e38",
+    "nativeTacticalActionOwnerPoc": "efdc6d87d08d153d826d7a2ec39afefacb74340b39fc5e6f1262d11adece2ed1",
+    "arena": "dc86418932ee384c3281aa02874d29850258a282474c902f17d8c2472b1a5d5b"
+  },
+  "artifactSha256": {
+    "shadowManifest": "3baf5fc3f7472ad3f39edfbdce1de7c118979012ede59c34b9b5db2feb76d600",
+    "forcedActiveManifest": "18b1fdbf60bb9b248880acc57460eb5b74a04cd28fce9e7511bd3cfbafec8006",
+    "policyExactActiveManifest": "87c80c1fc9ff57645eb89ce3ce891480f639baf2e5f996fdb9fb38a422d57d80",
+    "comparisonReport": "9adae91222ecb6fc7cd034a49d6720e2dbbe66c72338ce640639cd7c45babcf3"
+  }
+}

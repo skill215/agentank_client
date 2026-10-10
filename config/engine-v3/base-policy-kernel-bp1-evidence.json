@@ -1,0 +1,59 @@
+{
+  "schema": "BasePolicyKernelBp1EvidenceV1",
+  "stage": "BP1",
+  "status": "NATIVE_ACTION_DOMAIN_ABOVE_99_PERCENT_CONTEXT_PROJECTILE_BOUNDARY_PARTIAL",
+  "date": "2026-08-25",
+  "productionDefaultChanged": false,
+  "cohort": {
+    "scenarioCount": 16,
+    "physicalMatchCount": 64,
+    "oracleOwnerMatchCount": 32,
+    "skillMode": "STUN"
+  },
+  "intentEquivalence": {
+    "proposedIntent": { "agree": 1549, "compare": 1549 },
+    "committedIntent": { "agree": 1549, "compare": 1549 },
+    "intentActionMapping": { "agree": 1549, "compare": 1549 },
+    "contextEpoch": { "agree": 1544, "compare": 1549 }
+  },
+  "actionDomain": {
+    "rootNativeOwn": { "agree": 1538, "compare": 1549, "basisPoints": 9929 },
+    "rootNativeEnemy": { "agree": 1546, "compare": 1549, "basisPoints": 9981 },
+    "ply2NativeOwn": { "agree": 7364, "compare": 7400, "basisPoints": 9951 },
+    "ply2NativeEnemy": { "agree": 7394, "compare": 7400, "basisPoints": 9992 }
+  },
+  "fullNativeTacticalAction": {
+    "bp0Agree": 1127,
+    "bp1Agree": 1249,
+    "compare": 2024,
+    "bp1BasisPoints": 6171,
+    "agreementGain": 122
+  },
+  "residual": {
+    "rootOwn": { "FIRE": 4, "BOMB": 4, "STUN": 3 },
+    "rootEnemy": { "FIRE": 3 },
+    "ply2Own": { "FIRE": 19, "STUN": 17 },
+    "ply2Enemy": { "FIRE": 6 },
+    "contextEpochProjectileFactEvents": 5
+  },
+  "invariants": {
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "timeoutError": 0,
+    "declaredHotPathAllocations": 0
+  },
+  "tests": {
+    "diagnostics": { "passed": 485, "total": 485 },
+    "v3": { "passed": 60, "total": 60 },
+    "minimaxCore": { "passed": 220, "total": 220 }
+  },
+  "artifacts": {
+    "runDirectory": "/tmp/agentank-base-policy-bp1-bomb-domain",
+    "manifestSha256": "91a20b00be2555613473db112d6ef5de8fdf135e6c86507a852d0a7d155dbb5e",
+    "overviewSha256": "d21917a3e26c042799bab8ab8d2b38da3d5f18b004c9b163493b692355557a71",
+    "productionRootSha256": "c4443ddbd2a7a651d77f1582e5b68ce3715dfc87af7cf40ac7432396def39c48"
+  },
+  "decision": "FREEZE_ACTION_DOMAIN_ARCHITECTURE_AND_MOVE_TO_TRANSITION_VALUE_DIFFERENTIAL",
+  "next": "BP2_TRANSITION_AND_CELL_VALUE_EQUIVALENCE"
+}

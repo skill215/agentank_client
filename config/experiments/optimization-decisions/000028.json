@@ -1,0 +1,76 @@
+{
+  "seq": 28,
+  "previous": "c0e6f4a137188edd6baeb9ab4e25f784ff97eb5fb6354e9446fac861bf895954",
+  "record": {
+    "version": 1,
+    "type": "register",
+    "at": "2026-10-09T03:14:32.531Z",
+    "process": "OPT-P-004",
+    "registration": "prospective",
+    "scope": "Compare concrete outputs of selection methods, not claim a universal best optimization algorithm from one campaign.",
+    "baseline": "285f9863227d6af3638bed74e008f0260fd25440034d95eec5e3f8cac44d9120",
+    "falsifier": "No candidate eligible, or data integrity fails; no universal method ranking claim",
+    "nextStep": "Complete fixed48 games, report eligibility, Pareto and combination interaction; select one provisional configuration or baseline.",
+    "alternatives": [
+      {
+        "name": "依据上轮历史表现直接选最好",
+        "benefit": "快",
+        "risk": "选择偏差且组合未知",
+        "reason": "不采用"
+      },
+      {
+        "name": "新地图共同对照和因子组合",
+        "benefit": "比较泛化并识别组合交互",
+        "risk": "12张地图精度有限，不能证明方法普遍优劣",
+        "reason": "采用"
+      }
+    ],
+    "budget": {
+      "games": 12,
+      "seconds": 300
+    },
+    "id": "OPT-D-0016",
+    "category": "algorithm",
+    "parent": "OPT-D-0013",
+    "title": "M3 factorial mechanism combination: frozen reward+depth2, no retuning",
+    "hypothesis": "Frozen method-selected configuration generalizes to fresh map score/death/work tradeoffs.",
+    "criteria": [
+      {
+        "id": "integrity",
+        "metric": "health and modifier trigger",
+        "rule": "all checks pass and modifier active",
+        "unit": "game",
+        "kind": "hard"
+      },
+      {
+        "id": "eligible",
+        "metric": "score death work",
+        "rule": "Candidate total score gain>=1, death delta<=1, total transitions<=1.2*baseline, health/integrity/actual mechanism triggers pass",
+        "unit": "12-map aggregate",
+        "kind": "soft"
+      },
+      {
+        "id": "release",
+        "metric": "platform/runtime qualification",
+        "rule": "not established by this screen",
+        "unit": "platform",
+        "kind": "hard"
+      }
+    ],
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp421-method-comparison/combined-plan.json",
+        "sha256": "c7a41e5f96713ea1cec521bf4d18982fb49e2ad11ea2e4215c5a665e48ef18d7"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp421-method-comparison/campaign.json",
+        "sha256": "e82bc6045150fb7dd3f41338a7a1b6e44ec9bad6986d3192f69c70fcf966296b"
+      },
+      {
+        "path": "tools/agentank/diagnostics/factorial-method-screen.js",
+        "sha256": "2e331549170a542cd47f818c02a798699b9a2d0e36b950f7aa57a43918063268"
+      }
+    ]
+  },
+  "sha256": "178da180eb8977b0ed80e42596dae0ee777b31a015a6e2a8dcb4bbf9eaf1aae1"
+}

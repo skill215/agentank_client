@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_COMMON_CONTINUATION_EVIDENCE_V1",
+  "stages": ["BP123", "BP124"],
+  "status": "RETAIN_VERIFIER_REJECT_ACTION_OWNER",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "source": {
+    "policySearchSha256": "6eb008a263a226239fda3fd80d2405e1f36a2fdc16c27704c55d04aad8908721",
+    "policyIntervalShadowSha256": "32d813bf612b3ec40ceddb2de9beb0d2864760b2be2964898da2954eb7940a21",
+    "policyIntervalActivePocSha256": "c240fb124ed0b19fbf682a8912a48c871ed29654f988c1113fb64c70d78e3281",
+    "diagnosticBotSha256": "971713dc6d627f0f62aad9fe4ebf3e9c7b8f949211bea1e047af850b0e050550",
+    "arenaSha256": "8ef5d68d420e66d65377f6593cb5a487686ce732f18eee41a29fa7176cb9a992",
+    "policySearchTestSha256": "a0f13bbf6f5960fa648689cf55ca7822384651dfc164bff534f287f7260b5acc",
+    "shadowTestSha256": "ccee0e14d2c8fb83f4f81c867ef4c9471325a7ce7e83d48c3c677c51c689456f",
+    "activeTestSha256": "e87b088697c9b12d279b95a02555816441f1d0c3dba33ea0f10d0ceb1943e13c"
+  },
+  "cohort": {
+    "role": "DISCOVERY",
+    "scenarioCount": 16,
+    "candidateMatches": 32,
+    "physicalMatches": 64,
+    "skillMode": "STUN",
+    "cohortFingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667"
+  },
+  "contract": {
+    "root": "Candidate rows are restricted to route-proven ATTACK movement while the incumbent keeps its emitted root action.",
+    "continuation": "After the root, both branches use the same BasePolicy representative. The candidate does not assume an uncommitted ATTACK_APPROACH plan.",
+    "ownership": "Shadow records finite-depth scalar dominance; ACTIVE remains diagnostic and rechecks Physical Hard plus FinalActionGate."
+  },
+  "bp123Shadow": {
+    "decisions": 3030,
+    "semanticAttackEpochFrames": 1851,
+    "policyAttempts": 465,
+    "noPolicyDomain": 218,
+    "complete": 211,
+    "incomplete": 36,
+    "incumbentBetter": 38,
+    "equal": 109,
+    "candidateDominance": 64,
+    "dominanceByAction": {
+      "GO": 2,
+      "TURN_LEFT": 23,
+      "TURN_RIGHT": 39,
+      "FIRE": 0
+    },
+    "baselineNodes": 11041,
+    "candidateNodes": 10443,
+    "maximumNodes": 256,
+    "scoreBasisPointDelta": 0,
+    "rootRestoreFailure": 0,
+    "hotAllocationCount": 0,
+    "overviewSha256": "18ffbf3c4f1e4892ce64228190f14e006784ae8b5306962718993d9248151f00",
+    "matchesSha256": "0ab66fb052486dd6f0d7c6e5d8d9c07bd3944a282034a2799bf9d82520723998"
+  },
+  "bp124Active": {
+    "baseline": {
+      "wins": 2,
+      "losses": 28,
+      "draws": 2,
+      "scoreBasisPoints": 938
+    },
+    "candidate": {
+      "wins": 3,
+      "losses": 28,
+      "draws": 1,
+      "scoreBasisPoints": 1094
+    },
+    "certificates": 45,
+    "overrides": 45,
+    "finalRejects": 0,
+    "transition": {
+      "V1_WIN_TO_V1_WIN": 27,
+      "V2_WIN_TO_V2_WIN": 2,
+      "V1_WIN_TO_V2_WIN": 1,
+      "DRAW_TO_DRAW": 1,
+      "DRAW_TO_V1_WIN": 1
+    },
+    "scoreBasisPointDelta": 156,
+    "starDelta": -6,
+    "crashDelta": 3,
+    "fireDelta": 5,
+    "timeoutError": 0,
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "hotAllocationCount": 0,
+    "overviewSha256": "bc804092a5c059f65de7429d2acb33c6863fe70cfab6f107b7933e4d7fc49ad5",
+    "matchesSha256": "893b7cd6d48c10d26810b9afb875ba2bd3146f42bf22951ed14a62fe4f02c846"
+  },
+  "causalExamples": {
+    "positive": "mat_2PpuRfHvk51Codc5f seat 1 changes frame 50 TURN_LEFT to TURN_RIGHT on a complete common-continuation comparison and converts a frame-limit star loss into an enemy crash win.",
+    "negative": "mat_I52zYeSqz1RCC3Vqs seat 0 receives three completed local improvements but converts an equal-star draw into a two-star frame-limit loss. The candidate survives, so immediate Hard and committed safety cannot distinguish this long strategic regression."
+  },
+  "decision": {
+    "retain": [
+      "common-host continuation as the correct first-action counterfactual",
+      "semantic ATTACK root proposal generation",
+      "paired sparse Minimax as a Shadow verifier"
+    ],
+    "reject": [
+      "the 45 finite-depth scalar certificates as a production owner",
+      "threshold or margin tuning on the same fixed16 cohort",
+      "opening Holdout for a candidate below the three-percentage-point gate"
+    ],
+    "next": "Materialize the 64 BP123 certificate roots as a compact counterfactual corpus. Replay each forced root action under identical observable BasePolicy, EnemyPolicy and independent ChanceOutcome sets; preserve nonloss, kill, star and failure-type dimensions separately. Use that corpus to design an interval verifier before another ACTIVE run."
+  }
+}

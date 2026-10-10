@@ -1,0 +1,92 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP7_EVIDENCE_V1",
+  "status": "ACCEPTED_DIAGNOSTIC",
+  "createdAt": "2026-08-25",
+  "scope": "QUALIFIED_FIRE_VALUE_AUDIT",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "c4443ddbd2a7a651d77f1582e5b68ce3715dfc87af7cf40ac7432396def39c48",
+  "diagnosticSource": {
+    "nativeTacticalActionOwnerPocSha256": "ec6ea9f9dbb0ee4ef82ffda7d19396fd7e5f65ea6b408dd155c8af4edd785837",
+    "v2NativeInitiativeArenaSha256": "59a57d2a0049613a9ce000b49f7f51c4351e3040d9168489a982b8de3736f54e"
+  },
+  "cohort": {
+    "fingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667",
+    "scenarios": 16,
+    "candidateMatches": 32,
+    "physicalMatches": 64,
+    "skill": "STUN",
+    "tacticalTriggerMask": 1
+  },
+  "candidateResult": {
+    "wins": 16,
+    "losses": 14,
+    "draws": 2,
+    "scoreBasisPoints": 5313,
+    "stars": 16,
+    "crashes": 11,
+    "fire": 186,
+    "timeoutError": 0,
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0
+  },
+  "qualifiedFireFunnel": {
+    "auditedRoots": 1535,
+    "firePresent": 1241,
+    "rootDomainAllowed": 317,
+    "riskRejected": 111,
+    "riskDominated": 8,
+    "purposeComplete": 169,
+    "postFireEscape": 169,
+    "attackClosureComplete": 168,
+    "verified": 169,
+    "minimaxSelected": 73,
+    "notSelected": 96,
+    "valueLoss": 95,
+    "valueTieLoss": 1,
+    "terminalLoss": 0
+  },
+  "purpose": {
+    "directKill": 1,
+    "possibleHit": 162,
+    "intercept": 168,
+    "aimSetup": 0,
+    "enemyDoomedFirstAction": 49,
+    "unknownResponse": 0
+  },
+  "lossAttribution": {
+    "preIntentBlendedSearchValueLoss": 85,
+    "preIntentBlendedSearchValueTie": 1,
+    "preIntentBlendedSearchValueWinButFinalLoss": 10,
+    "nominalPolicyFlip": 0,
+    "intentFlip": 10,
+    "intentAdvantageAccumulatedAcrossAllLosses": 7200,
+    "otherActionCellwiseDominatesFire": 56,
+    "fireCellwiseDominatesOtherAction": 3,
+    "matrixTradeoff": 37,
+    "valueGapSum": 259540,
+    "valueGapMax": 29331,
+    "valueGapHistogram": [1, 5, 19, 18, 7, 9, 18, 19]
+  },
+  "minimaxBestActionOnQualifiedRoots": {
+    "GO": 37,
+    "TURN_LEFT": 29,
+    "TURN_RIGHT": 18,
+    "FIRE": 73,
+    "THROW_BOMB": 2,
+    "CAST_STUN": 10
+  },
+  "rootReason": {
+    "VISIBLE_NEAR": 162,
+    "VISIBLE_RAY": 7
+  },
+  "conclusion": {
+    "blindFireBonusRejected": true,
+    "riskGateIsNotThePrimaryLossOwner": true,
+    "nominalOpponentPolicyIsNotTheLossOwner": true,
+    "leafOrContinuationValueCohort": 56,
+    "adversarialMatrixTradeoffCohort": 37,
+    "intentArbitrationCohort": 10,
+    "nextTarget": "Counterfactual POC must test the 37 matrix-tradeoff roots and the 10 intent flips separately; the 56 cellwise-dominated FIRE rows require leaf/continuation evidence repair, not an ownership override."
+  }
+}

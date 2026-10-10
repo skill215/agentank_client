@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "contractId": "MINIMAX_SUPPORT_FRONTIER_V1",
+  "scenarioCount": 16,
+  "warmupBatches": 1,
+  "measuredBatches": 3,
+  "depths": [1, 2],
+  "widths": [2, 3, 4],
+  "nodeBudgets": [192, 384, 512, 1024, 2048],
+  "workUnitBudgets": [60000, 0],
+  "baseRisk": 50,
+  "requiredNodeMajor": 24,
+  "rules": {
+    "measureExactRepresentativeSupport": true,
+    "compareCacheOffColdWarm": true,
+    "preserveHp9WorkCharges": true,
+    "winRateIsNotAPerformanceGate": true,
+    "rootRestoreFailuresMaximum": 0,
+    "hotAllocationsMaximum": 0,
+    "cacheSemanticMismatchesMaximum": 0
+  }
+}

@@ -9,6 +9,9 @@ const { ACTION, HARD_STATUS } = require("../../engine-v2/src/abi/fast-codes");
 const { StageMatrix, DoubleOracleSolver } = require("../../engine-v2/src/search/matrix");
 const { ProductionRootEngine } = require("../../engine-v2/src/runtime/production-root");
 const { productionRootFixture } = require("../../tools/agentank/build/imp6-builder");
+const { benchmarkFixture } = require("../../tools/agentank/benchmark/search-frontier-benchmark");
+const { ProductionDiagnosticBot } =
+  require("../../tools/agentank/simulation/production-diagnostic-bot");
 const { FEATURE, FEATURE_OWNERSHIP } = require("../../engine-v2/src/abi/policy-codes");
 const { FeatureRegistry } = require("../../engine-v2/src/policy/feature-registry");
 const { SEARCH_CAPACITY } = require("../../engine-v2/src/generated/search-config");
@@ -102,7 +105,21 @@ test("SR3 Safety fatal support participates in ordered epsilon-contamination bef
     "a tiny nominal edge must not erase a modeled fatal-mass advantage");
 });
 
-test("SR3 Safety robust backup is monotone in risk and risk 100 can buy bounded exposure", () => {
+test("committed ChanceOutcome fatal mass uses the dynamic risk threshold without becoming Hard", () => {
+  const controller = new RiskAcceptanceController(); const o = controller.outcome;
+  o.reset(2); o.hard.fill(HARD_STATUS.ALLOW, 0, 2);
+  o.safety.fill(SAFETY_STATUS.POSSIBLE_DEATH, 0, 2);
+  o.coverage.fill(10000, 0, 2); o.earliestFatalFrame.fill(4, 0, 2);
+  o.nominalRobustLower.fill(1000, 0, 2); o.robustLower.fill(1000, 0, 2);
+  o.committedChanceFatalMass[0] = 2500;
+  o.committedChanceFatalMass[1] = 5000;
+  assert.equal(controller.gate(65, 0), 1);
+  assert.equal(o.acceptable[0], 1);
+  assert.equal(o.acceptable[1], 0);
+  assert.equal(o.hard[1], HARD_STATUS.ALLOW);
+});
+
+test("RST3 Safety robust backup is monotone while risk dominance remains structural", () => {
   let prior = -10001;
   for (let risk = 0; risk <= 100; risk += 1) {
     const controller = new RiskAcceptanceController(); const safety = new SafetyOutcomeSlab();
@@ -127,7 +144,11 @@ test("SR3 Safety robust backup is monotone in risk and risk 100 can buy bounded 
   controller.populate(2, new Uint8Array([HARD_STATUS.ALLOW, HARD_STATUS.ALLOW]), safety,
     new Int16Array([10000, 0]), null, null, 0);
   controller.gate(100, 0);
-  assert.equal(controller.select(0), 0);
+  assert.equal(controller.outcome.acceptable[0], 1,
+    "risk 100 admits bounded exposure into the candidate set");
+  assert.equal(controller.outcome.dominated[0], 1,
+    "a zero-risk alternative still strictly risk-dominates it");
+  assert.equal(controller.select(0), 1);
 });
 
 test("SR3 incomplete path masses gate actions but cannot rewrite the robust value", () => {
@@ -186,7 +207,7 @@ test("SR3 no-acceptable fallback is value-independent after the risk tuple diffe
     "value changes cannot override the conservative risk tuple in emergency fallback");
 });
 
-test("GR0 acceptable actions use maximum robustLower before expected or tactical value", () => {
+test("RST3 heuristic robustLower is diagnostic and no longer a membership floor", () => {
   const controller = new RiskAcceptanceController(); const o = controller.outcome;
   o.reset(2);
   for (let row = 0; row < 2; row += 1) {
@@ -208,9 +229,13 @@ test("GR0 acceptable actions use maximum robustLower before expected or tactical
   o.tacticalValue[1] = 10000;
   controller.gate(100, 0);
   assert.equal(controller.acceptableCount, 2);
-  assert.equal(controller.safeFloor, 500);
-  assert.equal(controller.select(0), 0,
-    "expected/tactical value cannot cross the robustLower safe floor");
+  let diagnosticFloor = -10000;
+  for (let row = 0; row < controller.outcome.count; row += 1)
+    if (controller.outcome.acceptable[row] && !controller.outcome.dominated[row])
+      diagnosticFloor = Math.max(diagnosticFloor, controller.outcome.robustLower[row]);
+  assert.equal(controller.safeFloor, diagnosticFloor);
+  assert.equal(controller.select(0), 1,
+    "risk-qualified strategic actions may cross the heuristic robustLower floor");
 });
 
 test("GR0 Information search preserves full tactical and search cells", () => {
@@ -223,7 +248,7 @@ test("GR0 Information search preserves full tactical and search cells", () => {
     safety.unknownMass[row] = 100;
   }
   const information = {
-    completedDepth: 1,
+    completedDepth: 1, supportComplete: 1, approximate: 0,
     rootScore: new Int32Array([200, -200]),
     rootCellScore: new Int32Array(SEARCH_CAPACITY.MAX_ENEMY_POLICIES * 2)
   };
@@ -259,6 +284,83 @@ test("SR3 no-acceptable fallback preserves possible projectile priority", () => 
     "known possible-projectile support outranks a higher soft value");
 });
 
+test("SR3 no-acceptable fallback uses projected unknown risk only after stronger safety dimensions", () => {
+  const tied = controllerFixture(); const o = tied.outcome; o.reset(2);
+  for (let row = 0; row < 2; row += 1) {
+    o.hard[row] = HARD_STATUS.ALLOW; o.safety[row] = SAFETY_STATUS.UNKNOWN;
+    o.coverage[row] = 0; o.unknownMass[row] = 10000;
+    o.earliestFatalFrame[row] = 1; o.escapeSlack[row] = -1;
+    o.robustLower[row] = row ? 10000 : -10000;
+    o.expectedValue[row] = o.robustLower[row];
+    o.tacticalValue[row] = o.robustLower[row];
+  }
+  o.unknownFallbackRisk[0] = 100; o.unknownFallbackRisk[1] = 9000;
+  tied.gate(0, 0);
+  assert.equal(tied.noAcceptableAction, 1);
+  assert.equal(tied.select(0), 0,
+    "pose risk breaks a coarse UNKNOWN tie before tactical value");
+
+  const stronger = controllerFixture(); const p = stronger.outcome; p.reset(2);
+  for (let row = 0; row < 2; row += 1) {
+    p.hard[row] = HARD_STATUS.ALLOW; p.safety[row] = SAFETY_STATUS.POSSIBLE_DEATH;
+    p.coverage[row] = 0; p.unknownMass[row] = 10000;
+    p.earliestFatalFrame[row] = 1; p.escapeSlack[row] = -1;
+    p.robustLower[row] = 0; p.expectedValue[row] = 0; p.tacticalValue[row] = 0;
+  }
+  p.immediateFatalMass[0] = 1;
+  p.unknownFallbackRisk[0] = 0; p.unknownFallbackRisk[1] = 10000;
+  stronger.gate(0, 0);
+  assert.equal(stronger.select(0), 1,
+    "projected risk may not override a stronger immediate-fatal dimension");
+});
+
+test("SR3 no-acceptable fallback prefers a safer projected pose before soft escape slack", () => {
+  const controller = controllerFixture(); const o = controller.outcome; o.reset(2);
+  for (let row = 0; row < 2; row += 1) {
+    o.hard[row] = HARD_STATUS.ALLOW; o.safety[row] = SAFETY_STATUS.POSSIBLE_DEATH;
+    o.immediateFatalMass[row] = 5000; o.horizonFatalMass[row] = 5000;
+    o.unknownMass[row] = 10000; o.earliestFatalFrame[row] = 1;
+    o.robustLower[row] = 0; o.expectedValue[row] = 0; o.tacticalValue[row] = 0;
+  }
+  // Row 0 appears to have more escape slack but steps closer along the same
+  // saturated enemy firing line.  Row 1 preserves the safer successor pose.
+  o.escapeSlack[0] = 1; o.unknownFallbackRisk[0] = 50003;
+  o.escapeSlack[1] = -1; o.unknownFallbackRisk[1] = 50002;
+  controller.gate(0, 0);
+  assert.equal(controller.noAcceptableAction, 1);
+  assert.equal(controller.select(0), 1);
+});
+
+test("SR3 diagnostic legacy switch reproduces slack-first emergency ownership", () => {
+  const controller = new RiskAcceptanceController({ legacyEmergencySlackFirst: true });
+  const o = controller.outcome; o.reset(2);
+  for (let row = 0; row < 2; row += 1) {
+    o.hard[row] = HARD_STATUS.ALLOW; o.safety[row] = SAFETY_STATUS.POSSIBLE_DEATH;
+    o.immediateFatalMass[row] = 5000; o.horizonFatalMass[row] = 5000;
+    o.unknownMass[row] = 10000; o.earliestFatalFrame[row] = 1;
+    o.robustLower[row] = 0; o.expectedValue[row] = 0; o.tacticalValue[row] = 0;
+  }
+  o.escapeSlack[0] = 1; o.unknownFallbackRisk[0] = 10000;
+  o.escapeSlack[1] = -1; o.unknownFallbackRisk[1] = 0;
+  controller.gate(0, 0);
+  assert.equal(controller.select(0), 0);
+});
+
+test("SR3 projected unknown fallback risk does not affect a non-empty acceptable set", () => {
+  const controller = new RiskAcceptanceController(); const o = controller.outcome; o.reset(2);
+  for (let row = 0; row < 2; row += 1) {
+    o.hard[row] = HARD_STATUS.ALLOW; o.safety[row] = SAFETY_STATUS.PROVEN_SAFE;
+    o.coverage[row] = 10000; o.escapeSlack[row] = 1;
+    o.robustLower[row] = row ? 100 : 1000;
+    o.expectedValue[row] = o.robustLower[row];
+    o.tacticalValue[row] = o.robustLower[row];
+  }
+  o.unknownFallbackRisk[0] = 10000; o.unknownFallbackRisk[1] = 0;
+  controller.gate(0, 0);
+  assert.equal(controller.acceptableCount, 2);
+  assert.equal(controller.select(0), 0);
+});
+
 test("SR3 preserves and compares earliest fatal frame as a risk dimension", () => {
   const controller = controllerFixture(); const o = controller.outcome;
   o.reset(2); for (let row = 0; row < 2; row += 1) {
@@ -273,6 +375,53 @@ test("SR3 preserves and compares earliest fatal frame as a risk dimension", () =
   assert.equal(controller.lexicographicRiskLess(1, 0), true);
   assert.equal(controller.select(1), 1);
   assert.equal(controller.strictlyDominates(1, 0), true);
+});
+
+test("SR3 soft escape slack can be excluded from Pareto ownership without changing acceptance", () => {
+  const historical = new RiskAcceptanceController();
+  const evidenceOnly = new RiskAcceptanceController({
+    softEscapeSlackDominance: false
+  });
+  for (const controller of [historical, evidenceOnly]) {
+    const o = controller.outcome; o.reset(2);
+    for (let row = 0; row < 2; row += 1) {
+      o.hard[row] = HARD_STATUS.ALLOW;
+      o.safety[row] = SAFETY_STATUS.POSSIBLE_DEATH;
+      o.coverage[row] = 10000;
+      o.earliestFatalFrame[row] = 4;
+      o.robustLower[row] = row === 0 ? -1000 : 2000;
+      o.expectedValue[row] = o.robustLower[row];
+      o.tacticalValue[row] = o.robustLower[row];
+    }
+    o.escapeSlack[0] = 1;
+    o.escapeSlack[1] = 0;
+    controller.gate(20, 0);
+    assert.equal(controller.acceptableCount, 2);
+  }
+  assert.equal(historical.strictlyDominates(0, 1), true);
+  assert.equal(Boolean(evidenceOnly.strictlyDominates(0, 1)), false);
+  assert.equal(Boolean(evidenceOnly.riskStrictlyDominates(0, 1)), false);
+  assert.equal(evidenceOnly.select(0), 1);
+});
+
+test("SR3 committed successor proof still owns Pareto dominance when soft slack does not", () => {
+  const controller = new RiskAcceptanceController({
+    softEscapeSlackDominance: false
+  });
+  const o = controller.outcome; o.reset(2);
+  for (let row = 0; row < 2; row += 1) {
+    o.hard[row] = HARD_STATUS.ALLOW;
+    o.safety[row] = SAFETY_STATUS.PROVEN_SAFE;
+    o.coverage[row] = 10000;
+    o.earliestFatalFrame[row] = 4;
+    o.escapeSlack[row] = 0;
+    o.escapeSuccessorProof[row] = row === 0 ? 1 : 0;
+    o.escapeSuccessorExposed[row] = 0;
+    o.escapeSuccessorSlack[row] = 2;
+  }
+  o.escapeSuccessorReady = 1;
+  controller.gate(20, 0);
+  assert.equal(controller.strictlyDominates(0, 1), true);
 });
 
 test("SR3 Matching Pennies and RPS use the real StageMatrix solver", () => {
@@ -291,8 +440,18 @@ test("SR3 Matching Pennies and RPS use the real StageMatrix solver", () => {
 });
 
 test("SR3 production root calls StageMatrix after the multidimensional gate", () => {
-  const fixture = productionRootFixture(); fixture.enemy.status.fireLocked = true;
-  const engine = new ProductionRootEngine(); engine.decide(fixture.me, fixture.enemy, fixture.game);
+  // This fixture has a fully supported Physical root matrix. The old generic
+  // productionRootFixture contains intentionally unsupported joint actions and
+  // therefore must not authorize StageMatrix after HP10 support hardening.
+  const fixture = benchmarkFixture(0);
+  const searchBudget = { DECISION_DEPTH: [1, 1, 1, 0],
+    NODE_BUDGET: [512, 384, 192, 0], PROOF_BUDGET: [0, 0, 0, 0],
+    MATRIX_ITERATIONS: [128, 64, 32, 0], MATRIX_BATCH: [16, 8, 8, 1] };
+  const engine = new ProductionRootEngine({ diagnosticDisableInformationSafety: true,
+    runtime: { searchBudget } });
+  engine.decide(fixture.me, fixture.enemy, fixture.game);
+  assert.equal(engine.depthSearch.completedDepth, 1);
+  assert.equal(engine.depthSearch.representativeSupportComplete, 1);
   assert.ok(engine.riskController.acceptableCount > 0);
   assert.ok(engine.stageMatrixSolveCount > 0); assert.ok(engine.riskController.stageMatrixUseCount > 0);
 });
@@ -306,9 +465,39 @@ test("SR3 emergency NONE never enters the searched risk or matrix action domain"
   assert.equal(engine.riskController.outcome.count, engine.ourCount - 1);
 });
 
+test("SR3 diagnostics mark NONE outside the Risk domain instead of reading a stale slab slot", () => {
+  const fixture = productionRootFixture(); fixture.enemy.status.fireLocked = true;
+  const bot = new ProductionDiagnosticBot({ captureAllFrames: true });
+  bot.decide(fixture);
+  const frame = bot.summary().diagnosticFrames[0];
+  assert.equal(typeof frame.ownCanAct, "boolean");
+  assert.equal(typeof frame.enemyVisible, "boolean");
+  assert.equal(frame.acceptableCount, bot.engine.riskController.acceptableCount);
+  const candidates = frame.candidates;
+  const none = candidates.find(candidate => candidate.action === "NONE");
+  assert.ok(none); assert.equal(none.riskDomain, false);
+  assert.equal(none.unknownMass, null); assert.equal(none.unknownFallbackRisk, null);
+  assert.equal(none.earliestFatalFrame, null);
+  assert.equal(none.robustLower, null); assert.equal(none.acceptable, false);
+  for (const candidate of candidates.filter(item => item.action !== "NONE"))
+    assert.equal(candidate.riskDomain, true);
+});
+
+test("SR3 production root keeps projected fallback geometry on the cold emergency branch", () => {
+  const fixture = productionRootFixture(); fixture.enemy.status.fireLocked = true;
+  const engine = new ProductionRootEngine();
+  engine.decide(fixture.me, fixture.enemy, fixture.game);
+  const outcome = engine.riskController.outcome;
+  assert.ok(engine.riskController.acceptableCount > 0);
+  for (let row = 0; row < outcome.count; row += 1)
+    assert.equal(outcome.unknownFallbackRisk[row], 0,
+      "ordinary acceptable roots do not pay fallback pose geometry work");
+});
+
 test("SR3 completed production root matrix contains no alpha-beta sentinel cells", () => {
   const fixture = productionRootFixture(); fixture.enemy.status.fireLocked = true;
-  const engine = new ProductionRootEngine(); engine.decide(fixture.me, fixture.enemy, fixture.game);
+  const engine = new ProductionRootEngine({ diagnosticInformationEvidenceSearch: true });
+  engine.decide(fixture.me, fixture.enemy, fixture.game);
   const source = engine.informationSearch.completedDepth > 0 ? engine.informationSearch :
     engine.depthSearch;
   assert.ok(source.completedDepth > 0);

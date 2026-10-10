@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_JOINT_MOVEMENT_ORACLE_EVIDENCE_V1",
+  "stage": "BP133",
+  "status": "ACCEPT_RULE_AUTHORITY_CLASSIFIED",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "contract": {
+    "fixedPairRootCount": 211,
+    "depth3CompleteRootCount": 175,
+    "depth3IncompleteRootCount": 36,
+    "jointMovementRootCount": 35,
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0,
+    "behaviorNeutral": true,
+    "missingHistoricalLabelCount": 0
+  },
+  "jointMovementRoots": {
+    "failedSide": { "baseline": 21, "candidate": 14 },
+    "searchPly": { "2": 35 },
+    "geometry": {
+      "SAME_TARGET": {
+        "roots": 26,
+        "effectMask": "0/0",
+        "historicalOutcome": {
+          "equal": 23,
+          "incumbentBetter": 2,
+          "candidateBetter": 1
+        },
+        "historicalPareto": {
+          "equal": 17,
+          "incumbentDominates": 5,
+          "mixed": 1,
+          "candidateDominates": 3
+        }
+      },
+      "STUN_AFFECTED_PARTIAL_PREPARATION": {
+        "roots": 9,
+        "effectMask": { "seat0Stun": 7, "seat1Stun": 2 },
+        "historicalOutcome": {
+          "equal": 8,
+          "candidateBetter": 1
+        },
+        "historicalPareto": {
+          "equal": 4,
+          "incumbentDominates": 1,
+          "mixed": 3,
+          "candidateDominates": 1
+        }
+      },
+      "DIRECT_SWAP": { "roots": 0 },
+      "CONFIRMED_VACATED_FOLLOW": { "roots": 0 }
+    }
+  },
+  "evidenceAuthority": {
+    "STATIC_OCCUPIED": {
+      "authority": "PLATFORM_PROBE_CONFIRMED",
+      "samples": 22,
+      "platformVerdict": "BLOCK_NO_EFFECT",
+      "productionVerdict": "BLOCK_NO_EFFECT"
+    },
+    "VACATED_FOLLOW": {
+      "authority": "PLATFORM_REPLAY_CONFIRMED",
+      "samples": 31,
+      "seat0Follows": 17,
+      "seat1Follows": 14,
+      "platformVerdict": "ALLOW_FOLLOW",
+      "productionVerdict": "ALLOW_FOLLOW"
+    },
+    "SAME_TARGET": {
+      "authority": "FINITE_VARIANT_UNRESOLVED",
+      "officialSuccessSamples": 0,
+      "pinnedSimulatorVerdict": "SEAT0_MOVES_SEAT1_BLOCKED",
+      "productionVerdict": "FAIL_CLOSED"
+    },
+    "DIRECT_SWAP": {
+      "authority": "FINITE_VARIANT_UNRESOLVED",
+      "officialSuccessSamples": 0,
+      "pinnedSimulatorVerdict": "BLOCK_BOTH",
+      "productionVerdict": "FAIL_CLOSED"
+    },
+    "STUN_AFFECTED_CONTEST": {
+      "authority": "FINITE_VARIANT_UNRESOLVED",
+      "officialSamples": 0,
+      "pinnedSimulatorVerdict": "NORMALIZE_CHANCE_THEN_RESOLVE_SEQUENTIALLY",
+      "productionVerdict": "FAIL_CLOSED"
+    }
+  },
+  "pinnedSimulator": {
+    "commit": "1ef804eb2c187138c4c8e5229fb37cd0126beddf",
+    "engineSha256": "c1f9cde0b8124eae47ff1dce4bb1c4b63ea5b18b11713f3400b598f2173df2c7",
+    "authority": "PINNED_SIMULATOR_ASSUMPTION_NOT_PLATFORM_TRUTH",
+    "warning": "The simulator resolves seat0 then seat1 against current occupancy. Official history separately proves both seat orders can follow a same-record vacated start, so simulator semantics cannot be copied wholesale into production."
+  },
+  "officialCorpus": {
+    "rawFiles": 1526,
+    "uniqueReplays": 1283,
+    "records": 83570,
+    "dualMoveFrames": 19645,
+    "unitDualMoveFrames": 19509,
+    "successfulSwap": 0,
+    "successfulSameTarget": 0,
+    "dualCrash": 0,
+    "fingerprint": "be5c8d29760f0475f33ca26eebacab583781b665b51af3e15ed334947600f332"
+  },
+  "artifacts": {
+    "shadowDirectory": "artifacts/v2-native-initiative/bp133-joint-movement-geometry-shadow-v2",
+    "shadowManifestSha256": "dd56c30139dd0ac7dc4c62e8db140266e6d8d200c04d2fe0b928f936f524566d",
+    "shadowOverviewSha256": "9b3934e9628d98aba3d612dcd57e56dccf34fd496cf4fa00a1ebb7560a72a878",
+    "shadowMatchesSha256": "637930525bd88229e9c9bbf08df1df38573910e8506baaef77ba0694852352c7",
+    "shadowBytes": 343417,
+    "reportDirectory": "artifacts/v2-native-initiative/bp133-semantic-attack-joint-movement-oracle",
+    "reportManifestSha256": "887d5a97638adbd7a4b28f25caceb6b81b7bc919721262cb96aa8769bb5dcbfa",
+    "reportOverviewSha256": "8ee5588e94e7678105a28cd772650985a26d611ec8dd80bc42b620daefc1a7ff",
+    "reportRootsSha256": "be844c817d3b34929421285465d15868aaac42ff9f3de6a5946ceb4fc2c6bde8",
+    "reportFingerprint": "72da8148c86e0626bc94d291e18afa8db9f4375f913b44b98cbb2e3b511a4d39",
+    "reportBytes": 8261
+  },
+  "source": {
+    "policySearchSha256": "f3a58311832b5228a50a8c1953751b68642d42ec0a827c2af3f776dd8978f4ca",
+    "widthShadowSha256": "7dda94260fdbd3ecb0a818c6c7e4fe3fed5d4f364918063dcaae79f8a4216443",
+    "policyIntervalShadowSha256": "64467beab8430351834d5d46e00fc4e8c8a9f367adce9dea2c40541944958c9f",
+    "oracleSha256": "1cd5033160c69c776a80cbf1630fbc8f9cdf911bad8150f07981facc8bf13d2c",
+    "reportSha256": "8190d93c2988ee8cea12f9f4d3e7ead13c5e9c9c5b9aad423c1a09df096f9777",
+    "testSha256": "e7d3118dd522d7e8b8723b4e43e473c6907c622001d4b05aa77a8af8c6fd4418",
+    "vacatedFollowEvidenceSha256": "4b9c91a1e00edba7f470f64b49b388df9e4408b364b50918300d30ee68601aed",
+    "staticOccupiedEvidenceSha256": "a224165be41b29a4690c5405ba6b0319e6f741d2c6b58db7237452c69b8bcf0b"
+  },
+  "decision": {
+    "retain": [
+      "official static occupied block",
+      "official bidirectional vacated-follow support",
+      "production fail-closed same-target, swap and stun contest",
+      "pinned simulator as one finite diagnostic rule world"
+    ],
+    "reject": [
+      "copying pinned simulator movement semantics into production",
+      "treating zero observed same-target or swap successes as proof of blocking",
+      "assigning a single heuristic value to unresolved movement worlds",
+      "raising Minimax depth, width or budget to cross a physical support boundary"
+    ],
+    "next": "BP134 evaluates the 35 roots under explicit movement-rule variants and may consume only cross-variant common intervals; it must not select one variant as platform truth."
+  }
+}

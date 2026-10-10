@@ -10,6 +10,22 @@ const { classifyAnalysisOutcome, pairCategory } = require("../analysis/analysis-
 function readJson(file) { return JSON.parse(fs.readFileSync(file, "utf8")); }
 
 function loadFixedCohort(root, baseline) {
+  const summaryRelativePath = baseline.fixedCohort.summaryRelativePath;
+  if (summaryRelativePath) {
+    const summaryFile = contained(root, summaryRelativePath);
+    const summaryBytes = fs.readFileSync(summaryFile); const summary = JSON.parse(summaryBytes);
+    invariant(summary.fingerprint === fingerprintObject(summary), "SR0_SUMMARY_FINGERPRINT_INVALID",
+      summaryRelativePath);
+    const attestation = summary.acceptanceAttestation;
+    const acceptanceFile = contained(root, attestation.relativePath);
+    const acceptanceBytes = fs.readFileSync(acceptanceFile); const acceptance = JSON.parse(acceptanceBytes);
+    invariant(sha256Bytes(acceptanceBytes) === attestation.sha256 &&
+      acceptance.fingerprint === attestation.fingerprint &&
+      acceptance.fingerprint === fingerprintObject(acceptance) &&
+      acceptance.status === attestation.status,
+    "SR0_ACCEPTANCE_ATTESTATION_INVALID", attestation.relativePath);
+    return { summary, summaryFile, summarySha256: sha256Bytes(summaryBytes), matches: null };
+  }
   const overviewFile = contained(root, baseline.fixedCohort.overviewRelativePath);
   const overviewBytes = fs.readFileSync(overviewFile); const overview = JSON.parse(overviewBytes);
   invariant(overview.fingerprint === fingerprintObject(overview), "SR0_OVERVIEW_FINGERPRINT_INVALID",
@@ -32,7 +48,21 @@ function rawPlatformFingerprint(matches) {
 }
 
 function analyzeFixedCohort(root, baseline) {
-  const loaded = loadFixedCohort(root, baseline); const before = rawPlatformFingerprint(loaded.matches);
+  const loaded = loadFixedCohort(root, baseline);
+  if (loaded.summary) {
+    const summary = loaded.summary;
+    return { schemaVersion: 1, reportKind: "SR0_ANALYSIS_COHORT",
+      cohort: { summaryRelativePath: baseline.fixedCohort.summaryRelativePath,
+        summarySha256: loaded.summarySha256, overviewRelativePath: summary.prunedSource.relativePath,
+        overviewFingerprint: summary.prunedSource.fingerprint, ...summary.cohort },
+      analysisCounts: { ...summary.analysisCounts }, seatPairs: { ...summary.seatPairs },
+      terminalCategories: { ...summary.terminalCategories },
+      rawPlatform: { beforeFingerprint: null, afterFingerprint: null, unchanged: true,
+        mutationCount: summary.verification.mutationCountAtAcceptance,
+        verificationMode: summary.verification.mode,
+        sourcePayloadRetained: summary.sourcePayloadRetained }, fingerprint: "" };
+  }
+  const before = rawPlatformFingerprint(loaded.matches);
   const counts = { V1_WIN: 0, V2_WIN: 0, DRAW: 0 }; const terminalCategories = {};
   const pairMembers = new Map();
   for (const match of loaded.matches) {

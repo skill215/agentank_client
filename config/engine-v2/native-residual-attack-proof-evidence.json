@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "V2_NATIVE_RESIDUAL_ATTACK_PROOF_EVIDENCE_V1",
+  "status": "SHADOW_ONLY_ACTIVE_REJECTED",
+  "asOf": "2026-08-03",
+  "productionDefaultEnabled": false,
+  "candidateBuilt": false,
+  "officialPlatformOperationPerformed": false,
+  "theorem": {
+    "rootAction": "FIRE",
+    "pacDoomedColumns": "accepted as already proved",
+    "pacSurvivorColumns": "AND over every enemy action and chance outcome",
+    "continuation": "exists our action then AND over every enemy action and chance outcome",
+    "unsupportedRelation": "UNKNOWN",
+    "incompleteSearch": "UNKNOWN",
+    "activeOwnershipRequiresInformationSupportComplete": true
+  },
+  "diagnosticLimits": {
+    "decisionDepth": 4,
+    "nodeBudget": 4096,
+    "runtimeWorkUnitsCharged": false,
+    "selectionChanged": false
+  },
+  "source": {
+    "productionRootSha256": "b97e5ea4ada3c2d86f5abaee7a988d4b8bbe7e1b166e260d6e1645c01d0c5a99",
+    "forcedWinSearchSha256": "4e84573a298f3f935c412407e54360a68b7f3986bd84415b8fb80606332f4b6d",
+    "diagnosticBotSha256": "f84b9435c6c6326cb51f3094e16641e2a450f65c391e173a7d8c9dcfc53aa461",
+    "arenaRunnerSha256": "35cb2a53858cf73db3baed0d6212ac613c68aee26ee23c57f76c934d31fe0c34"
+  },
+  "cohort": {
+    "fingerprint": "bcfc3a2de8675abefb04f531cc8c9e3c77fdd4cd600e65590ff50073321a6d70",
+    "discoveryScenarios": 16,
+    "holdoutScenarios": 48,
+    "seatSwapsPerScenario": 2,
+    "opponent": "V3_BASE_FROZEN_V1_BEHAVIOR"
+  },
+  "discovery": {
+    "baselineAndShadow": {
+      "wins": 7,
+      "losses": 23,
+      "draws": 2,
+      "scoreBasisPoints": 2500
+    },
+    "checks": 1,
+    "proven": 0,
+    "disproven": 1,
+    "unknown": 0,
+    "nodes": 179,
+    "manifestFingerprint": "5d2daf3781ee76046684c4c1887c342134ebdaa8e0bbd9b01ee3e52c4f34537f",
+    "manifestSha256": "0ef723d63e04ca4779c653f47f761507086bd3015639bc8f0b0778fc64cef9eb"
+  },
+  "holdout": {
+    "baselineAndShadow": {
+      "wins": 12,
+      "losses": 77,
+      "draws": 7,
+      "scoreBasisPoints": 1615
+    },
+    "checks": 8,
+    "proven": 1,
+    "provenWithCompleteInformationSupport": 0,
+    "provenWithIncompleteInformationSupport": 1,
+    "disproven": 7,
+    "unknown": 0,
+    "nodes": 1384,
+    "manifestFingerprint": "1d93aafbe954de4f2b93dda01456569b0c547ef722326e492cd10484cdb2a632",
+    "manifestSha256": "a53a4dcb1191e0246261b9d4345b99d32bda1d0f74e6bc1df1b61003cdad9583"
+  },
+  "targetedBoundary": {
+    "scenarioCount": 3,
+    "checks": 4,
+    "proven": 1,
+    "disproven": 3,
+    "unknown": 0,
+    "provenCase": {
+      "historicalMatchUrlId": "mat_2Ic9Ny0Qnn5HH34nX",
+      "candidateSeat": 1,
+      "frame": 125,
+      "informationSupportComplete": false,
+      "baselineAction": "TURN_LEFT",
+      "baselineOutcome": "V2_WIN"
+    },
+    "evidenceSource": "FILTERED_FROM_FINAL_HOLDOUT"
+  },
+  "invariants": {
+    "actionFingerprintDifference": 0,
+    "outcomeDifference": 0,
+    "timeoutError": 0,
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "hotAllocationAddedToProductionDefault": 0
+  },
+  "conclusion": {
+    "oneSurvivorMayAuthorizeFire": false,
+    "reason": "Every complete-information residual root was disproven; the only model proof had incomplete InformationState support and replaced an already-winning action.",
+    "nextStep": "Do not relax Risk for one-survivor attacks; seek independently verified attack setup or strategy proposals."
+  },
+  "fingerprint": "d4bc80f8dae1b296c26871601af7162c6b254641046dd8c454d1d51bf2fa9bf4"
+}

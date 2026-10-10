@@ -1,0 +1,192 @@
+{
+  "objectKind": "BasePolicyOwnerMigrationEvidenceV1",
+  "generatedAt": "2026-09-02T04:21:48.954Z",
+  "productionDefaultChanged": false,
+  "contract": {
+    "sourceCandidate": "BP68_INTENT_KNOWN_SOFT_RISK",
+    "migratedSlice": "FINAL_BASE_POLICY_ACTION_OWNER",
+    "injectedDependencies": [
+      "ACTION_DOMAIN",
+      "STRATEGIC_INTENT",
+      "BOUNDED_SEARCH"
+    ],
+    "selectionOrder": [
+      "PHYSICAL_HARD",
+      "RISK_ACCEPTABLE_OR_INTENT_KNOWN_SOFT",
+      "SEARCH_DOMAIN",
+      "OWNER_DOMAIN",
+      "MINIMAX_PLUS_INTENT",
+      "JOINT_RISK_TIE",
+      "STABLE_ACTION_ORDER"
+    ],
+    "noV1VmDependency": true,
+    "resultObjectReused": true
+  },
+  "syntheticEquivalence": {
+    "deterministicRoots": 4096,
+    "actionArgumentRowDifferences": 0,
+    "test": "test/minimax-core/base-policy-action-owner.test.js",
+    "testSha256": "33a2f8de6462c423f956416afef3254f0f8795497475917d119dfdff7cc0f7e3"
+  },
+  "fixed16Equivalence": {
+    "records": 64,
+    "candidateRecords": 32,
+    "differences": {
+      "missing": 0,
+      "actionStream": 0,
+      "arguments": 0,
+      "result": 0,
+      "frames": 0,
+      "counts": 0,
+      "analysisOutcome": 0,
+      "terminalCategory": 0
+    },
+    "zeroDifference": true,
+    "allActionFingerprint": {
+      "diagnostic": "f5e0f819d7ab8a395b8292d1f3532e234a28094314b0695d9232b50b183a0bc7",
+      "thin": "f5e0f819d7ab8a395b8292d1f3532e234a28094314b0695d9232b50b183a0bc7"
+    },
+    "candidateActionFingerprint": {
+      "diagnostic": "33c5b8ebf82d6eee72123ed70f6f3538641083624544ca5c6322b3c50d11b925",
+      "thin": "33c5b8ebf82d6eee72123ed70f6f3538641083624544ca5c6322b3c50d11b925"
+    },
+    "diagnosticOutcome": {
+      "wins": 22,
+      "losses": 10,
+      "draws": 0,
+      "scoreBasisPoints": 6875,
+      "stars": {
+        "candidate": 23,
+        "control": 22
+      },
+      "crashes": {
+        "candidate": 8,
+        "control": 17
+      },
+      "actions": {
+        "candidate": {
+          "turn": 1301,
+          "stun": 113,
+          "go": 1074,
+          "fire": 156,
+          "throwBomb": 34,
+          "none": 8
+        },
+        "control": {
+          "turn": 1173,
+          "go": 1261,
+          "fire": 158,
+          "stun": 79,
+          "throwBomb": 15
+        }
+      },
+      "runtime": {
+        "candidateTotalMicros": 28898790,
+        "controlTotalMicros": 16843118,
+        "candidateP95Max": 45378,
+        "controlP95Max": 25401
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 244,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 244,
+        "jointDominatedSelection": 0
+      }
+    },
+    "thinOutcome": {
+      "wins": 22,
+      "losses": 10,
+      "draws": 0,
+      "scoreBasisPoints": 6875,
+      "stars": {
+        "candidate": 23,
+        "control": 22
+      },
+      "crashes": {
+        "candidate": 8,
+        "control": 17
+      },
+      "actions": {
+        "candidate": {
+          "turn": 1301,
+          "stun": 113,
+          "go": 1074,
+          "fire": 156,
+          "throwBomb": 34,
+          "none": 8
+        },
+        "control": {
+          "turn": 1173,
+          "go": 1261,
+          "fire": 158,
+          "stun": 79,
+          "throwBomb": 15
+        }
+      },
+      "runtime": {
+        "candidateTotalMicros": 25228367,
+        "controlTotalMicros": 14898184,
+        "candidateP95Max": 37126,
+        "controlP95Max": 24090
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 244,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 244,
+        "jointDominatedSelection": 0
+      }
+    }
+  },
+  "size": {
+    "diagnosticRawBytes": 103404,
+    "thinRawBytes": 11119,
+    "rawBasisPoints": 1075,
+    "diagnosticStandaloneMinifiedBytes": 70353,
+    "thinStandaloneMinifiedBytes": 7582,
+    "minifiedBasisPoints": 1077
+  },
+  "localPerformance": {
+    "diagnosticCandidateTotalMicros": 28898790,
+    "thinCandidateTotalMicros": 25228367,
+    "totalBasisPoints": 8729,
+    "diagnosticCandidateP95Max": 45378,
+    "thinCandidateP95Max": 37126,
+    "p95BasisPoints": 8181,
+    "interpretation": "LOCAL_RELATIVE_ONLY_NOT_PLATFORM_3000MS_EVIDENCE"
+  },
+  "sources": {
+    "thin": {
+      "path": "engine-v2/src/base-policy/action-owner.js",
+      "sha256": "987102a43960fca77e8dc12ff426bcea1287f2f14454a8343bf0d76c1cd22066"
+    },
+    "diagnostic": {
+      "path": "tools/agentank/diagnostics/native-tactical-action-owner-poc.js",
+      "sha256": "b82cd08b4933644983c1714692ea40701da53aa6e49f6fce8891ce18f7358094"
+    }
+  },
+  "artifacts": {
+    "diagnostic": {
+      "path": "/tmp/agentank-bp156-owner-diagnostic",
+      "manifestSha256": "7206422bd46bc4417d235b0b1915d955b70a44d06f8888983354fb1204f894f8",
+      "overviewSha256": "534aa099e04aa8011df6b52aa2c2e74d37c0796f7a895920231002c3012d7568",
+      "matchesSha256": "3ff105c623869294e43e5d1780bd4f6ea40df0bb140885c0a900f2a60014774b"
+    },
+    "thin": {
+      "path": "/tmp/agentank-bp156-owner-thin-r4",
+      "manifestSha256": "4bc69070d4f706d712fb85e984ae90d743b32fb5dc9ffdc11ccdf43b02748950",
+      "overviewSha256": "267b1a8f1132cb023f8cfd3decb329b5be1047def25e05ddbe74c1cbf5f9edd0",
+      "matchesSha256": "e8c43a7fcddac9ccc54dacbf2e1c740779af0bdc3059e0a7ef7a4cf233958aee"
+    }
+  },
+  "verdicts": [
+    "THIN_OWNER_IS_ROOT_EQUIVALENT_ON_SYNTHETIC_AND_FIXED16",
+    "BP68_OUTCOME_IS_PRESERVED_22_10_0",
+    "OWNER_MIGRATION_REMOVES_DIAGNOSTIC_BRANCH_WEIGHT",
+    "NEXT_SLICE_IS_ACTION_DOMAIN_AND_INTENT_NOT_GLOBAL_SEARCH"
+  ],
+  "fingerprint": "223e94bc8090a576bf208c2385b6111a9337c84a40f5ca02e8069ff115dd5a2e"
+}

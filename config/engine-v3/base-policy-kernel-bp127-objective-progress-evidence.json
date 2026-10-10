@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_OBJECTIVE_PROGRESS_EVIDENCE_V1",
+  "stage": "BP127",
+  "status": "ACCEPT_EVIDENCE_REJECT_OWNER",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "source": {
+    "objectiveIntervalSha256": "7467f50c669fa6839bcd79cc343371e7c0866170b18fa7efd5ed929310621e15",
+    "policyIntervalShadowSha256": "ac4c1d5f88ca033f653d16474572132c0df900b5e200b828e8b76956eb9f45ee",
+    "objectiveReportSha256": "61e00d4d02800e12c9163e7c5cd75415d4f756862d4840d7b92c15a622846524",
+    "arenaSha256": "ef8f1ca1741075ae0726592b89671703ec83f8c81b7f59345fb67613848d3b01",
+    "objectiveIntervalTestSha256": "226396b719c7fc56b76f6d3b9a143b0a12c424196b22000a93291b3ed571ec82",
+    "objectiveReportTestSha256": "a314d61838421e3143aa90a7dbff816e3767b17902440a3ef93066c074981989"
+  },
+  "contract": {
+    "dimensions": [
+      "attack pose progress",
+      "fire deadline",
+      "muzzle coverage over current EnemyAction columns",
+      "successor response viability",
+      "post-action escape branches",
+      "counter exposure over current EnemyAction columns"
+    ],
+    "comparison": "Pareto; dimensions remain separate and are never encoded as a scalar",
+    "labelBoundary": "BP126 terminal/Chance labels are joined only after the observable relation is frozen",
+    "hotPath": "one fixed scratch vector pair plus a fixed TypedArray certificate slab",
+    "hotAllocationCount": 0
+  },
+  "shadow": {
+    "scenarioCount": 16,
+    "physicalMatches": 64,
+    "strictScalarRootCount": 64,
+    "objectiveCompleteCount": 64,
+    "candidateObjectiveDominanceCount": 59,
+    "incomparableCount": 5,
+    "incumbentDominanceCount": 0,
+    "behaviorDelta": {
+      "scoreBasisPoints": 0,
+      "wins": 0,
+      "losses": 0,
+      "draws": 0,
+      "stars": 0,
+      "crashes": 0,
+      "fire": 0
+    },
+    "rootRestoreFailureCount": 0
+  },
+  "chanceCrossValidation": {
+    "chanceCells": 512,
+    "candidateDominanceRoots": 59,
+    "candidateDominanceCells": 472,
+    "outcomeImprovementCells": 22,
+    "outcomeRegressionCells": 16,
+    "outcomeEqualCells": 434,
+    "allEightChanceNoRegressionRoots": 1,
+    "allEightChanceStrictNoRegressionRoots": 0,
+    "allEightChanceQualifiedRoots": 0,
+    "incomparable": {
+      "roots": 5,
+      "outcomeImprovementCells": 2,
+      "outcomeRegressionCells": 6,
+      "outcomeEqualCells": 32
+    }
+  },
+  "artifacts": {
+    "shadowDirectory": "artifacts/v2-native-initiative/bp127-objective-progress-shadow",
+    "shadowManifestSha256": "2d96a9fd3d4773ea97fcafd4cdc6cf4f38c79bfa801a3439dd0db47458a57318",
+    "shadowOverviewSha256": "3015aaa600c26f2ee120e0bb6b15c9e785fa22c34bf7411b942ee8735d956dab",
+    "shadowMatchesSha256": "974c95c89a9f70d625ec618297edef21ff00faa2c08fe3f3d81c828cd2996bb2",
+    "reportDirectory": "artifacts/v2-native-initiative/bp127-semantic-attack-objective-progress",
+    "reportManifestSha256": "9c2237058b5b0d1a1d6aba414319c5945125c132b236fb0ff3122ddec39861e5",
+    "reportOverviewSha256": "107c37c2faf168108ddc29793efeb249d9a30f2228c724028b58fd1ad75abe46",
+    "reportRootsSha256": "ac266f23885d966715e1cb6a1d9cc78dbc05f0e26077dbcbbb337460e57a832e",
+    "totalApproximateKiB": 236
+  },
+  "decision": {
+    "retain": [
+      "the six dimensions as separate descriptive diagnostics",
+      "the behavior-neutral root capture and offline label join",
+      "AttackPose as a candidate generator"
+    ],
+    "reject": [
+      "objective progress Pareto dominance as action ownership",
+      "further threshold tuning on the same 64 scalar-positive roots",
+      "treating target-relative progress as independent confirmation of an AttackPose candidate"
+    ],
+    "reason": "59 of 64 scalar-positive candidates also dominate the target-relative vector, but none survive all eight Chance outcomes with a strict non-regressing improvement. The relation is largely tautological because AttackPose generated those candidates as progress rows.",
+    "next": "BP128 captures every complete paired-search comparison, including scalar-positive, equal and refuted roots, then builds an exact historical confusion matrix. This tests whether the minimax evaluator has both false positives and false negatives before any further action-owner design."
+  }
+}

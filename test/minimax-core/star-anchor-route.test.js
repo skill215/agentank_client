@@ -1,0 +1,2 @@
+'use strict';const {test}=require('node:test'),assert=require('node:assert/strict');const {TIED,tied}=require('../../tools/agentank/diagnostics/star-anchor-route-candidate');
+test('anchor route tie preserves every preceding risk and score field',()=>{const o=Object.fromEntries(TIED.map(k=>[k,[0,0]]));assert.ok(tied(o,0,1));for(const k of TIED){o[k][1]=1;assert.equal(tied(o,0,1),false,k);o[k][1]=0;}o.searchEstimateEnabled=1;o.searchEstimate=[1,2];assert.equal(tied(o,0,1),false);});

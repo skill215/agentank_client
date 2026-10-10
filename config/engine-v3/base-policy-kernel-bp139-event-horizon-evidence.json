@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_EVENT_HORIZON_EVIDENCE_V1",
+  "stage": "BP139",
+  "status": "ACCEPT_STRICT_EVENT_NOT_DISCRIMINATIVE",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "contract": {
+    "fixedPairRootCount": 211,
+    "analyzedRootCount": 35,
+    "movementWorldCount": 3,
+    "eventGoalCount": 2,
+    "sideCount": 2,
+    "searchCount": 420,
+    "completeSearchCount": 390,
+    "incompleteSearchCount": 30,
+    "completeRootCount": 30,
+    "incompleteRootCount": 5,
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0,
+    "behaviorNeutral": true,
+    "actionOwnership": false
+  },
+  "quantifier": {
+    "name": "FIXED_REPLANNING_ATTACK_POLICY_AND_ALL_ENEMY_AND_ALL_CHANCE",
+    "rootAction": "Incumbent and candidate retain their distinct root primitive.",
+    "ownContinuation": "One allocation-free replanning pursuit/turn/FIRE action per later PhysicalState.",
+    "enemyContinuation": "Complete generated enemy action domain at every expanded state.",
+    "chanceContinuation": "All stun and other generated chance outcomes.",
+    "movementWorlds": [
+      "SEQUENTIAL_BLOCK",
+      "INTENT_BLOCK",
+      "COLLISION_CRASH"
+    ],
+    "positiveMeaning": "PROVEN is a sound witness for the full existential own-policy game.",
+    "negativeMeaning": "A fixed-policy refutation or strict frame-cap stop is UNKNOWN, never DISPROVEN for the full own-policy domain."
+  },
+  "eventGoals": {
+    "safeThreatFire": "A newly emitted projectile survives or dooms the target while the committed incoming settlement is not doomed or unknown.",
+    "doomedTargetFire": "A newly emitted projectile has a strict doomed-target settlement while the committed incoming settlement is safe and complete."
+  },
+  "result": {
+    "baselineCertifiedRoots": 0,
+    "candidateCertifiedRoots": 0,
+    "candidateOnlyCertifiedRoots": 0,
+    "baselineOnlyCertifiedRoots": 0,
+    "bothCertifiedRoots": 0,
+    "neitherCertifiedRoots": 35,
+    "proofStatusUnknownPerSide": 210,
+    "comparisonRelationIncomplete": 210,
+    "restrictedDisproofConvertedToUnknown": 372,
+    "interpretation": "Strict guaranteed-FIRE semantics cannot separate the two historical improvements from the two historical regressions. An adversarial enemy may refuse exposure; that refusal must be valued, not treated as a failed attack certificate."
+  },
+  "performance": {
+    "maximumDepth": 4,
+    "nodeBudgetPerSearch": 4096,
+    "maximumOwnDomain": 1,
+    "totalNodes": 266310,
+    "maximumNodes": 4096,
+    "elapsedMs": 52783,
+    "shadowArtifactBytes": 411788,
+    "reportArtifactBytes": 6658
+  },
+  "artifacts": {
+    "shadowDirectory": "artifacts/v2-native-initiative/bp139-event-horizon-shadow",
+    "shadowManifestSha256": "aceb1678e7b31799c8e57f675f99f6cb6fe4a3de5e6b3bdb5d376aca106e928f",
+    "shadowOverviewSha256": "6f1870dcd37ba1c7956961f070d0585bd7332ba90f4cd76d43837e085754d6c0",
+    "shadowMatchesSha256": "87c297f07fcb2b629e0acac346616e8c291720b1af820d7f52a2a9d9082b4a0d",
+    "reportDirectory": "artifacts/v2-native-initiative/bp139-semantic-attack-event-horizon",
+    "reportManifestSha256": "589f86adfd0a4d61fe53c1862da46eff45a13a99d0bb91ef9c52674754162b68",
+    "reportOverviewSha256": "8e788b57887f5449394b6fccc33cfb204032a68a71d2c47f749ec2f491bd2147",
+    "reportRootsSha256": "2125a47334dc4599b340d0f3998b02dc8c74270a476c2672105f5277b0beb4ce",
+    "reportFingerprint": "610780e60d57f06f871d3233f2fe89c5da3d510c1eac2450e7f056347d2c73e0"
+  },
+  "source": {
+    "eventHorizonShadowSha256": "cb117d49a16b44cd7cb57f849cd5f4d558f9b53206b9648d4ff220e0555c9a39",
+    "eventHorizonReportSha256": "40133a1e1c949e679aeea7e07a039f97129501832f0c4a4f3f0ca210f74aa577",
+    "policyIntervalShadowSha256": "606ce41c01152f3ee25298af55c6c03ff210a5d546c0e1dd6b672c857a425c42",
+    "productionDiagnosticBotSha256": "e3931eb58cff8af63785023f9f498e3a6cb8794b561f06cd19e58eb77689e0c4",
+    "arenaSha256": "04deaf452b80235d73c189a03908466ec9f055c6f3e7cd2a8a29608fa4c7621d",
+    "eventHorizonShadowTestSha256": "37633baf5306b545bc614f5c5602a6a38b371f927dc47b6cdb915f40cfb0a06f",
+    "eventHorizonReportTestSha256": "6fe1bda4310f6efe07b300cbe719e22db404ce4f7c7543a95909c5f2a15eb4ac"
+  },
+  "decision": {
+    "retain": [
+      "strict positive-only certificate semantics",
+      "complete enemy and chance quantifiers",
+      "three-world fail-closed movement comparison",
+      "fixed one-action replanning policy as a bounded diagnostic",
+      "fixed-memory zero-hot-allocation implementation"
+    ],
+    "reject": [
+      "BP139 as an action owner or veto",
+      "increasing depth to force a guaranteed FIRE certificate",
+      "treating enemy refusal to expose as attack failure",
+      "treating fixed-policy refutation as full-domain DISPROVEN",
+      "using local runtime as platform timeout evidence"
+    ],
+    "next": "BP140 uses a finite-horizon lexicographic payoff/regret interval. Enemy responses that avoid FIRE remain valid columns but pay their measurable positional, terminal, star, contact and resource opportunity cost; no scalar ATTACK bonus regains ownership."
+  }
+}

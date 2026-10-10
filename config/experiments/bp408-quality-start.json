@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "adapter": "tools/agentank/diagnostics/experiment-native-adapter.js",
+  "objective": {
+    "question": "先用可复现状态区分转移模型错误与动作排序错误，再准入候选。",
+    "metric": "新独立地图上的配对得分，另查死亡率",
+    "minimumEffect": "候选准入前冻结数值阈值；当前未准入",
+    "evaluationRule": "机制证据、独立数据及精度不足即停止，不追加种子追逐显著性",
+    "stopRule": "无活动候选、证据不足、预算用尽、安全或完整性失败即停止",
+    "independentUnit": "不同地形地图，两侧座位和随机种子不增加地图数"
+  },
+  "governor": {
+    "track": "quality",
+    "phase": "SCREENING",
+    "budget": {
+      "rounds": 100,
+      "games": 1000,
+      "seconds": 3600
+    },
+    "active": [],
+    "mechanismEvidence": false,
+    "independentDataReady": false
+  },
+  "candidates": [],
+  "inputs": [
+    {
+      "path": "artifacts/native-causal-audit/bp407-next-stage/diagnosis/summary.json",
+      "sha256": "1ca7f204f9247512e0ae387a02f98dbe5e74ebe1ba62bf0c3af67ba2384afb7f"
+    },
+    {
+      "path": "artifacts/native-causal-audit/bp407-next-stage/diagnosis/failure-state-dataset.json",
+      "sha256": "aed47464e33cc324d2e3725d0a085a0c3908898a077212d2f977d7561371017a"
+    }
+  ],
+  "batches": []
+}

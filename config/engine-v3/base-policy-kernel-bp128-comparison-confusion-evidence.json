@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_COMPARISON_CONFUSION_EVIDENCE_V1",
+  "stage": "BP128",
+  "status": "ACCEPT_EVIDENCE_REJECT_SCALAR_OWNER",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "identityRepairs": {
+    "sameFrameGateHashRequired": true,
+    "explicitSeatSkillsRequired": true,
+    "reason": "FinalActionGate is not called on every root, so an unguarded saved hash can belong to an earlier frame. Counterfactual replay also previously fell back from the source STUN/STUN skill matrix to the arena default. Both defects are diagnostic-only and are covered by focused tests."
+  },
+  "contract": {
+    "sourceComparisonCount": 211,
+    "relations": [
+      "CANDIDATE_HIGHER",
+      "EQUAL",
+      "CANDIDATE_LOWER"
+    ],
+    "quantifiers": [
+      "historical V2 controller history through the root",
+      "historical V3 enemy policy",
+      "historical chance outcome"
+    ],
+    "terminalDimensions": [
+      "runtime-independent outcome",
+      "own death",
+      "enemy kill",
+      "star differential"
+    ],
+    "hotPath": "fixed TypedArray comparison slab with capacity 32 per match",
+    "hotAllocationCount": 0
+  },
+  "exactness": {
+    "comparisonCount": 211,
+    "comparisonOverflowCount": 0,
+    "comparisonMissingCandidateCount": 0,
+    "exactIncumbentCount": 211,
+    "exactCandidateCount": 211,
+    "sourceTerminalReproductionCount": 211
+  },
+  "scalarOutcomeConfusion": {
+    "candidateHigher": {
+      "count": 64,
+      "candidateBetter": 2,
+      "candidateWorse": 2,
+      "outcomeEqual": 60,
+      "candidateTerminalParetoDominance": 13,
+      "incumbentTerminalParetoDominance": 11,
+      "terminalParetoEqual": 34,
+      "terminalParetoMixed": 6,
+      "nonlossDelta": -1,
+      "killDelta": 2,
+      "deathDelta": 0,
+      "starDiffDelta": -2
+    },
+    "equal": {
+      "count": 109,
+      "candidateBetter": 0,
+      "candidateWorse": 0,
+      "outcomeEqual": 109,
+      "nonlossDelta": 0,
+      "killDelta": 0,
+      "deathDelta": -4,
+      "starDiffDelta": -3
+    },
+    "candidateLower": {
+      "count": 38,
+      "candidateBetter": 1,
+      "candidateWorse": 5,
+      "outcomeEqual": 32,
+      "candidateTerminalParetoDominance": 3,
+      "incumbentTerminalParetoDominance": 7,
+      "terminalParetoEqual": 25,
+      "terminalParetoMixed": 3,
+      "nonlossDelta": -4,
+      "killDelta": 1,
+      "deathDelta": 3,
+      "starDiffDelta": -1
+    }
+  },
+  "objectiveCrossCheck": {
+    "candidateHigherPureProgressRoots": 14,
+    "candidateHigherPureProgressOutcomeImprovement": 1,
+    "candidateHigherPureProgressOutcomeRegression": 2,
+    "candidateHigherWithIndependentStrictDimensionRoots": 50,
+    "candidateHigherWithIndependentStrictDimensionOutcomeImprovement": 1,
+    "candidateHigherWithIndependentStrictDimensionOutcomeRegression": 0,
+    "warning": "The no-outcome-regression subset still contains incumbent terminal Pareto dominance and mixed terminal tradeoffs. It is post-hoc descriptive evidence, not an ownership certificate."
+  },
+  "artifacts": {
+    "shadowDirectory": "artifacts/v2-native-initiative/bp128-complete-comparison-shadow-v3",
+    "shadowManifestSha256": "cbdd622bc1f7a87814353b244dd9346c67ac1e3afc917a2a0667aed2b7ee07e1",
+    "shadowOverviewSha256": "fbb1d8d50d2f60f5724f3b3fe6eaf31cffc2ab02c05ebf13e5fd3a305829d34d",
+    "shadowMatchesSha256": "9b9b332721d8df5c55253d5a63b70af7d1467044d849b970cb63bf67f922ea49",
+    "corpusDirectory": "artifacts/v2-native-initiative/bp128-semantic-attack-comparison-roots-v2",
+    "corpusManifestSha256": "c0562ba630440606ebff6669662670dd2ae46e920dae3559fb4bc56a0a6103d6",
+    "corpusOverviewSha256": "9b8311e5bad1e5d0e65c853c8d9803c92c1ca9edcca85983081158a5fc6685f1",
+    "corpusRootsSha256": "bdcc126d73b8b7fd503bb72260c7438fb07a7b9455b7427a3d0c5d533a22cbf6",
+    "totalBytes": 274663
+  },
+  "source": {
+    "policyIntervalShadowSha256": "7a1784fae55d97a7f20399fafb82c474bc08a9f611fe72d8843dca19f0f34771",
+    "comparisonCorpusSha256": "f2157786be82ea18afc333b3c9ee44798430490a3b5e1c6238c5d8bedb211068",
+    "rootCounterfactualSha256": "2c3be4502d3d3afbf459a7005fdd50662d46eb00e337ecc564e527594beb3beb",
+    "arenaSha256": "d385cd6d95b7605956ed252041a8030502223fe361a72ab08bcc3c25c5fb5a74",
+    "policyIntervalTestSha256": "d1374bfcd0c8d1232f766d205f40db887a00d6699fb867b2b3c8643b5bde6a05",
+    "comparisonCorpusTestSha256": "2e596c34f860d94e351a2b546623cbbbb021b728f3fb981b30259f556278328d"
+  },
+  "decision": {
+    "retain": [
+      "complete three-way paired comparison capture",
+      "exact historical root replay with explicit skill identity",
+      "candidate-lower relation as descriptive veto evidence",
+      "objective vectors as separate explanatory dimensions"
+    ],
+    "reject": [
+      "candidate-higher finite-depth scalar as a primitive action owner",
+      "value-margin threshold tuning on the same roots",
+      "post-hoc objective subsets as production certificates"
+    ],
+    "reason": "The positive scalar is directionless on every outcome-changing root: two improvements and two regressions, with 60 of 64 roots outcome-equal. Terminal Pareto results are also almost balanced at 13 versus 11. A larger scalar margin does not separate gains from regressions.",
+    "next": "BP129 measures verdict stability under preregistered depth and node-budget ladders on the same observable root family. The purpose is to distinguish horizon/leaf instability from stable but misaligned evaluation before changing ownership or weights."
+  }
+}

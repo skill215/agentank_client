@@ -1,0 +1,83 @@
+{
+  "seq": 38,
+  "previous": "6bec077917f9151c7ef22484eebb06dca805330e76f1f5c56eebae24612957fe",
+  "record": {
+    "version": 1,
+    "type": "review",
+    "id": "OPT-D-0019",
+    "reviewId": "OPT-R-0019",
+    "at": "2026-10-09T04:20:37.795Z",
+    "stage": "process",
+    "disposition": "accept",
+    "outcome": "passed",
+    "primaryCause": "NONE",
+    "secondaryCauses": [],
+    "reason": "12 exact diagnostic reruns;2 shared-state acceptable downgrades prioritized for single-action causal intervention, no new policy adopted.",
+    "nextStep": "Register single-action causal interventions for the2 identified scenes; no further blind blend tuning.",
+    "limitations": "Outcome-stratified historical diagnosis, not fresh quality estimate. First action divergence on shared prefix is evidence of a policy effect, not proof that this single action causes a much later death. Crash-frame projectile co-occurrence is not authoritative cause attribution.",
+    "experiments": [
+      "BP423_DIAGNOSTIC"
+    ],
+    "assessments": [
+      {
+        "criterion": "integrity",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp423-regression-diagnosis/summary.json"
+      },
+      {
+        "criterion": "diagnosis",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp423-regression-diagnosis/summary.json"
+      }
+    ],
+    "cost": {
+      "attemptedGames": 12,
+      "completedGames": 12,
+      "independentUnits": 0,
+      "executionSeconds": 13.297134111999998,
+      "analysisSeconds": null
+    },
+    "metrics": [
+      {
+        "name": "exactReproductions",
+        "value": 12,
+        "unit": "games",
+        "source": "artifacts/native-causal-audit/bp423-regression-diagnosis/summary.json"
+      },
+      {
+        "name": "acceptableDowngrades",
+        "value": 2,
+        "unit": "of6 added-death pairs",
+        "source": "artifacts/native-causal-audit/bp423-regression-diagnosis/summary.json"
+      }
+    ],
+    "productionAdoption": false,
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp423-regression-diagnosis/summary.json",
+        "sha256": "519512ac26d30ef3dfc48f342bd38f02c1699173528b22e466abfe751bc0d909"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp423-regression-diagnosis/pair-diagnoses.json",
+        "sha256": "5248fc78f01ec0abd81d4acf23ce2761ed114d89ae57e62122a383e1826292ce"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp423-regression-diagnosis/next-intervention-scenes.json",
+        "sha256": "5397126b9cf710bd8cbbd454baf560eef1134a173eb308ede00254f85a84f252"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp423-regression-diagnosis/review.json",
+        "sha256": "0b0b6ea18d5865a31e6fa207333f46da1a1a56899fda16c26054582a8243e158"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp423-regression-diagnosis/run/state.json",
+        "sha256": "985fb05ef247769ef82b5fb492f3facb0fae27ea3be0f419520bea7a3ce9b5f8"
+      },
+      {
+        "path": "docs/implementation/optimization-decisions/bp423-regression-review.md",
+        "sha256": "f7cd711e3e9263cf9b7b6f911bb9e8cdab1d894fcdcd6b8491abccc5592ff373"
+      }
+    ]
+  },
+  "sha256": "daf5c42300f923b36e800e98c741e364b4b98a8c0cb483febacebeef3a8d7182"
+}

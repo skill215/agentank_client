@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_LONG_OPTION_EVENT_EVIDENCE_V1",
+  "stage": "BP26",
+  "date": "2026-08-26",
+  "productionChanged": false,
+  "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7",
+  "diagnosticSource": {
+    "longOptionEventEnvelopeSha256": "ab1733e1f19583706d3882c62ef689d55c988d89e31ed64fa4e8d0600eae8f1d"
+  },
+  "cohort": {
+    "scenarios": 16,
+    "candidateMatches": 32,
+    "skill": "stun",
+    "seatSwap": true
+  },
+  "result": {
+    "wins": 16,
+    "losses": 14,
+    "draws": 2,
+    "scoreBasisPoints": 5313,
+    "behaviorChanged": false
+  },
+  "frontier": {
+    "deferredRouteRoots": 606,
+    "routeByAction": {
+      "GO": 166,
+      "TURN_LEFT": 211,
+      "TURN_RIGHT": 229
+    },
+    "completeEvaluations": 125,
+    "fireClosed": 1,
+    "terminalClosed": 5,
+    "differentIncumbentFireClosed": 0,
+    "possibleDeath": 453,
+    "possibleAbort": 477,
+    "possibleRescue": 475,
+    "openHorizon": 470,
+    "incomplete": 87
+  },
+  "performance": {
+    "physicalNodes": 145832,
+    "physicalTransitions": 181632,
+    "stateMergeHits": 22334,
+    "memoizedStates": 46472,
+    "maximumNodesPerRoot": 1819,
+    "maximumTransitionsPerRoot": 2048,
+    "ttCapacityFailure": 0,
+    "budgetStops": 10,
+    "rootRestoreFailure": 0,
+    "hotAllocation": 0,
+    "elapsedMsLocalDiagnosticOnly": 44790
+  },
+  "artifacts": {
+    "overviewSha256": "3a01ed78f549867c6e2c04db22ee752aac5972118f3f890c36e2d9fc0f4d7a93",
+    "manifestSha256": "50a041775f56b5d461100ab63e8ba58f3517b957f417fe90d9f1d94a19129650"
+  },
+  "decision": "RETAIN_SHADOW_EVENT_FRONTIER_REJECT_STRICT_LONG_OPTION_OWNER",
+  "next": "Keep worst-case outcome masks, but add integer nominal response masses per event class and compare them with the incumbent policy. Do not turn terminal WIN without attack provenance into a FIRE certificate."
+}

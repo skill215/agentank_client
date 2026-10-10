@@ -1,0 +1,66 @@
+{
+  "objectKind": "BasePolicyKernelTtBudgetAblationV1",
+  "stage": "BP33",
+  "status": "REJECTED",
+  "mode": "SHADOW_AB",
+  "actionOwnership": false,
+  "cohort": {
+    "scenarioLimit": 16,
+    "matchesPerArm": 32,
+    "pairRoots": 606,
+    "frames": 6,
+    "nodeBudgetPerPolicy": 2048
+  },
+  "charged": {
+    "elapsedMs": 48542,
+    "candidateTotalMicros": 24501348,
+    "candidateP95MaxMicros": 34397,
+    "completePairs": 293,
+    "incompletePairs": 313,
+    "budgetStopCount": 386,
+    "expandedNodeCount": 466395,
+    "transitionCount": 535138,
+    "mergeHitCount": 74966,
+    "rootRestoreFailureCount": 0,
+    "overviewSha256": "9fd0ea2777b184f687cbe7f43d8c4e22b1daf8ac6116826cbeee073c434bcdb9"
+  },
+  "free": {
+    "elapsedMs": 50487,
+    "candidateTotalMicros": 25240165,
+    "candidateP95MaxMicros": 35331,
+    "completePairs": 293,
+    "incompletePairs": 313,
+    "budgetStopCount": 386,
+    "expandedNodeCount": 150905,
+    "transitionCount": 535138,
+    "mergeHitCount": 74966,
+    "ttBudgetBypassHitCount": 74966,
+    "rootRestoreFailureCount": 0,
+    "overviewSha256": "422700878778cf5c779e8d7e7b224a956f13620fec32d98500a3dd69835dea5a"
+  },
+  "deltaBasisPoints": {
+    "elapsedMs": 401,
+    "candidateTotalMicros": 302,
+    "candidateP95MaxMicros": 272,
+    "expandedNodeCount": -6764,
+    "transitionCount": 0,
+    "completePairs": 0,
+    "budgetStopCount": 0
+  },
+  "semanticIdentity": {
+    "winsLossesDraws": true,
+    "responseRelations": true,
+    "massVectors": true,
+    "transitions": true,
+    "completeness": true
+  },
+  "decision": {
+    "runtimeCodeRetained": false,
+    "reason": "Removing TT hits from the node counter changes only accounting. The transition cap remains binding, completeness is unchanged, and runtime regresses about 3 percent.",
+    "nextBottleneck": "Reduce or reuse exact Fast physical transitions without changing enemy/chance quantifiers."
+  },
+  "fingerprints": {
+    "restoredResponseMassPocSha256": "cb68e8a105de68d64ef09e1a9e77faf84ae4aa82821f0f774478b3fada9f3e4c",
+    "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7"
+  }
+}

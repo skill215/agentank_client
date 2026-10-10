@@ -107,6 +107,8 @@
 | DEC-0092 | ACCEPTED | 六个性能层固定为function/composite/pipeline/terminal/full-game/platform；replay为独立验证轨 | 消除Benchmark合同把replay称第六层、实施计划又把platform称第六层的冲突；历史runtime不混入Fast性能 | IMP0冲突审计 |
 | DEC-0093 | ACCEPTED | 现存根级battle-records保持只读迁移输入，新写入才按TankProfile隔离 | 旧artifact缺profile血缘，IMP0自动搬迁或默认归v1会伪造身份；IMP7动态迁移 | IMP0数据审计 |
 | DEC-0094 | ACCEPTED | 当前v2生产计时以版本化校准work counter为主；只有CapabilityProfile确认可调用且单调的墙钟才启用wall-clock模式 | 官方simulate确认单callback约1500ms watchdog且无已确认安全墙钟；v1的能力保护与硬节点上限可继承，但`Date.now()`分支是否实际启用不能靠“未超时”反推 | IMP2 runtime probe；DD8修订 |
+| DEC-0095 | SUPERSEDED | 根级StrategySelector使用离散decision vector和StrategyBand；默认`KILL_PRESSURE`，所有战略共享canonical evaluator、RiskProfile和单一Minimax | D3实测发现selector证据和动作估值仍在Risk前受active strategy污染；保留descriptor/purpose ABI，选择顺序由DEC-0096替代 | STRAT2；OI-ARCH-019 |
+| DEC-0096 | ACCEPTED | Strategy改为Risk/EO/Pareto/safe-floor后的候选portfolio：中立基础锚点始终保留，各strategy只提出合格代表，最终动作通过FinalActionGate后才提交StrategyState | Minimax降为contact-gated战术验证器；strategyId不得改变基础估值、Risk输入或matrix cell；真实差异只能来自多步候选/Plan生成 | STRAT3；OI-ARCH-019 |
 
 ## 3. 已确定方向、待详细设计冻结
 

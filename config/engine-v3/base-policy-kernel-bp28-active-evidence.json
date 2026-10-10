@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_LONG_OPTION_RESPONSE_MASS_ACTIVE_EVIDENCE_V1",
+  "stage": "BP28",
+  "date": "2026-08-26",
+  "productionChanged": false,
+  "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7",
+  "diagnosticSource": {
+    "responseMassSha256": "88b6941da7d7e2ae02c2e2a5003fa26c0afc33eb790a0c641157fb3dcc54fa44",
+    "eventEnvelopeSha256": "1339f6da3d8df8776807a8fe21b1354f9e9e6267c316dcb10f5a4d5f54b48a67",
+    "diagnosticBotSha256": "e6bfe21f55481109836f71bdbfaf5987c87ea553a4250b0eb5e23450191632a0",
+    "arenaSha256": "7871bde8523f4d04c8fe7d92d9c8b655c24ce284d2910d7e110a8587c3d8d485",
+    "runnerSha256": "3974cc57b0e1f64caa14798f6d2752f6e18b90598ab3f6080f9b8ca057019250",
+    "testSha256": "f096d1ee62ae0d14f1fb4f976ce72aa80d675e0e9160120dd5e199fc109b0315"
+  },
+  "cohort": {
+    "scenarios": 16,
+    "candidateMatches": 32,
+    "skill": "stun",
+    "seatSwap": true,
+    "maximumFrames": 6,
+    "nodeBudget": 2048,
+    "status": "KNOWN_DISCOVERY"
+  },
+  "shadowReference": {
+    "stage": "BP27",
+    "wins": 16,
+    "losses": 14,
+    "draws": 2,
+    "scoreBasisPoints": 5313
+  },
+  "activeResult": {
+    "wins": 18,
+    "losses": 14,
+    "draws": 0,
+    "scoreBasisPoints": 5625,
+    "scoreBasisPointDelta": 312,
+    "resultTransition": {
+      "V1_WIN_TO_V2_WIN": 3,
+      "DRAW_TO_V2_WIN": 1,
+      "V2_WIN_TO_V1_WIN": 2,
+      "DRAW_TO_V1_WIN": 1,
+      "V1_WIN_UNCHANGED": 11,
+      "V2_WIN_UNCHANGED": 14
+    }
+  },
+  "ownership": {
+    "pairs": 558,
+    "complete": 470,
+    "incomplete": 88,
+    "candidateDominates": 44,
+    "baseDominates": 47,
+    "tradeoff": 136,
+    "equal": 282,
+    "overrides": 44,
+    "overrideByAction": {
+      "GO": 12,
+      "TURN_LEFT": 15,
+      "TURN_RIGHT": 17
+    },
+    "candidateFinalGateChecks": 44,
+    "candidateFinalGateRejects": 0
+  },
+  "hostFinalClosure": {
+    "checks": 1403,
+    "approved": 1398,
+    "rejected": 5,
+    "restoredProductionAction": 1,
+    "unavoidableAllRejected": 4,
+    "fallbackFailure": 0
+  },
+  "invariants": {
+    "timeoutError": 0,
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "sameActionCompleteMismatch": 0,
+    "ttCapacityFailure": 0,
+    "hotAllocation": 0
+  },
+  "performance": {
+    "baseNodes": 139909,
+    "candidateNodes": 68911,
+    "baseTransitions": 171431,
+    "candidateTransitions": 83605,
+    "sharedStateMergeHits": 33838,
+    "budgetStops": 182,
+    "elapsedMsLocalDiagnosticOnly": 37602,
+    "candidateTotalMicrosLocalDiagnosticOnly": 18829591,
+    "candidateP95MaxMicrosLocalDiagnosticOnly": 30613
+  },
+  "artifacts": {
+    "overviewSha256": "871b7514e0a40372ad7a1e15941e595c349c16e6ad88e8b91627fcd946cd8788",
+    "manifestSha256": "eef104f5162b47ad43f992d197c5dff37b866a46a2b6e1611e0f921bdacacd2f"
+  },
+  "decision": "DISCOVERY_POSITIVE_PENDING_INDEPENDENT_VALIDATION",
+  "next": "Freeze this exact source and eligibility rule, then run one independent scenario slice. Do not tune on that slice and do not enable production ownership unless the paired result remains positive with all invariants closed."
+}

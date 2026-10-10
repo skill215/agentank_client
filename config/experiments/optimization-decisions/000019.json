@@ -1,0 +1,76 @@
+{
+  "seq": 19,
+  "previous": "26921d3cb3e67a4c3664441fc169e951602f63aa58468c151b9e02cf524dd322",
+  "record": {
+    "version": 1,
+    "type": "register",
+    "at": "2026-10-09T03:03:46.811Z",
+    "process": "OPT-P-003",
+    "registration": "prospective",
+    "scope": "3 independent mechanisms, common8 historical maps,32games max; no combined candidate or production changes",
+    "baseline": "285f9863227d6af3638bed74e008f0260fd25440034d95eec5e3f8cac44d9120",
+    "falsifier": "modifier does not trigger, goal fails, or evidence integrity fails",
+    "nextStep": "Run common baseline plus3 candidate lines; compare goal qualification and Pareto tradeoffs.",
+    "alternatives": [
+      {
+        "name": "每轮只盯一个指标",
+        "benefit": "简单",
+        "risk": "难以看到代价和不同方向的价值",
+        "reason": "本轮不采用"
+      },
+      {
+        "name": "固定三目标独立消融",
+        "benefit": "同一数据上比较收益、风险、工作量",
+        "risk": "历史小样本且多重比较，只能筛选",
+        "reason": "按用户要求采用"
+      }
+    ],
+    "budget": {
+      "games": 8,
+      "seconds": 300
+    },
+    "id": "OPT-D-0011",
+    "category": "algorithm",
+    "parent": "OPT-D-0009",
+    "title": "风险：最坏回应评分消融",
+    "hypothesis": "zero expectation blend, worst response only",
+    "criteria": [
+      {
+        "id": "integrity",
+        "metric": "health and modifier activation",
+        "rule": "all health checks pass; modifier actually active",
+        "unit": "game",
+        "kind": "hard"
+      },
+      {
+        "id": "goal",
+        "metric": "risk",
+        "rule": "deathDelta<=-1 and scoreGain>=-0.5",
+        "unit": "8game aggregate",
+        "kind": "soft"
+      },
+      {
+        "id": "release",
+        "metric": "independent confirmation/runtime",
+        "rule": "not established by historical screen",
+        "unit": "platform",
+        "kind": "hard"
+      }
+    ],
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp420-multi-objective/risk-plan.json",
+        "sha256": "f41d0ff2af0beca2ed62e80d168f739ffa10230c59c038d97683e0790c22a175"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp420-multi-objective/campaign.json",
+        "sha256": "d14dcc8fce41b0a92e9f4ccf4fa0abf89dd4532c408ac3ee7131eb7fd727246b"
+      },
+      {
+        "path": "tools/agentank/diagnostics/multi-objective-search-screen.js",
+        "sha256": "bf3af0d4b94b143e3bebb77765c0d331d2f8e6f191b12c032ab18e3150a003fe"
+      }
+    ]
+  },
+  "sha256": "c7a6fb4b5dae6c54a62b02522e53eb654a300b890fdfb3d384c5766b6fcda908"
+}

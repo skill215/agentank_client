@@ -1,0 +1,104 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP13_EVIDENCE_V1",
+  "status": "ACCEPTED_HOST_AND_EXACTNESS_CONTRACT",
+  "createdAt": "2026-08-26",
+  "scope": "DIAGNOSTIC_HOST_SKILL_EMISSION_AND_VALUE_EXACT_OWNERSHIP",
+  "productionBehaviorChanged": false,
+  "productionDefaultEnabled": false,
+  "productionRootSha256": "c4443ddbd2a7a651d77f1582e5b68ce3715dfc87af7cf40ac7432396def39c48",
+  "sources": {
+    "nativeBoundedPolicySearchPocSha256": "097f21905db0a0207999812d852ccb93e3091f715668a1c9a5bf335450a0063e",
+    "nativeTacticalActionOwnerPocSha256": "40bf8bd749935ac646a02e38ed10df30b5f06f51a6f0de7d6b1e7a93074bee68",
+    "nativeOwnSkillActionBridgePocSha256": "9fc714418c85313e232f71e8fa6810cf48277f10260c6d46e882f46d7ca8be57",
+    "productionDiagnosticBotSha256": "89c208514401083c93e4d8bb676e1dfe94befe1c24006e089f0129efaf77f510",
+    "nativeInitiativeArenaSha256": "5739afefb28f77ae1142c780a1c20762813df4793f8576d90e6bd6e88349a0fd",
+    "auditSourceSha256": "b03a07ecd389db98962095bf7ce5076c5fa1bb82cd7df4920ce0e23ea00ad345",
+    "toolchainSha256": "1cec95e8b27d42787759686778cc98935fa277c5d3e2bb87ddbc3bd107bcab86"
+  },
+  "cohort": {
+    "scenarios": 16,
+    "candidateMatchesPerMode": 32,
+    "skill": "STUN",
+    "repetitions": 1
+  },
+  "modeResults": {
+    "V3_ONLY": {
+      "wins": 16,
+      "losses": 14,
+      "draws": 2,
+      "scoreBasisPoints": 5313,
+      "fire": 197,
+      "skills": 111,
+      "proposals": 40,
+      "overrides": 20,
+      "hotAllocationCount": 0,
+      "matchesSha256": "fd8480381c5ae33dfc2711f34c6e6f217220f8bd16e18f313bf2397318fca5d9"
+    },
+    "BUDGET_COMPLETE_OVERRIDE": {
+      "wins": 15,
+      "losses": 15,
+      "draws": 2,
+      "scoreBasisPoints": 5000,
+      "fire": 203,
+      "skills": 113,
+      "proposals": 41,
+      "overrides": 20,
+      "budgetCompleteRoots": 44,
+      "hotAllocationCount": 0,
+      "matchesSha256": "aeca79266d717af40598eb43051b99b914af98f43be770413add5961f9bcb3d4"
+    },
+    "VALUE_EXACT_OVERRIDE": {
+      "wins": 16,
+      "losses": 14,
+      "draws": 2,
+      "scoreBasisPoints": 5313,
+      "fire": 197,
+      "skills": 111,
+      "proposals": 6,
+      "overrides": 3,
+      "budgetCompleteRoots": 43,
+      "exactRoots": 8,
+      "exactSupportBlocked": 1633,
+      "hotAllocationCount": 0,
+      "matchesSha256": "f791913a517d6d3113a672dec8193dfd2593e5b4bd5199c107c4552d43475d15"
+    }
+  },
+  "relativeToV3": {
+    "BUDGET_COMPLETE_OVERRIDE": {
+      "actionDifferent": 4,
+      "positiveTransitions": 0,
+      "negativeTransitions": 1,
+      "regression": "V2_WIN_TO_V1_WIN"
+    },
+    "VALUE_EXACT_OVERRIDE": {
+      "actionDifferent": 1,
+      "positiveTransitions": 0,
+      "negativeTransitions": 0
+    }
+  },
+  "supersededEvidence": {
+    "bp9ToBp12NativeOwnerQuantitativeResultsValid": false,
+    "reason": "Replacement CAST_STUN bypassed the diagnostic skill emitter and was coerced to TURN_RIGHT; native/hybrid fallback was V2 production rather than the full V3 controller.",
+    "qualitativeSoftOwnershipConclusionRetained": true,
+    "correctedNativeStandalone": {
+      "wins": 11,
+      "losses": 18,
+      "draws": 3,
+      "scoreBasisPoints": 3906,
+      "useAsV3TransplantBaseline": false
+    }
+  },
+  "auditArtifacts": {
+    "overviewSha256": "33048ee3c590237fd2d38bdd99b125a42f305d0dfb8015314b9a187e76ab95e9",
+    "manifestSha256": "e4367bb6b8c64ee2bd0d501b62b1474fa5aaa6973cd312f1b9df38bb90b82636"
+  },
+  "contract": {
+    "budgetCompleteImpliesValueExact": false,
+    "exactRequiresZeroDepthLeaves": true,
+    "exactRequiresZeroTopLeaves": true,
+    "exactRequiresZeroPolicyRejectLeaves": true,
+    "exactRequiresZeroNoActionLeaves": true,
+    "finiteDepthHeuristicMayOwnAction": false,
+    "nextTarget": "Increase terminal/ForcedWin or verified non-regression certificate coverage without widening heuristic value ownership."
+  }
+}

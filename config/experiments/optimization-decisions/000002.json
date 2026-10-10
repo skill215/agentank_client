@@ -1,0 +1,93 @@
+{
+  "seq": 2,
+  "previous": "0d8947c6fb5d6dbbe45edae3737328ad110ba4f0fc3c966d4dd07a73a24647ec",
+  "record": {
+    "version": 1,
+    "type": "register",
+    "at": "2026-10-08T02:37:14.074Z",
+    "process": "OPT-P-001",
+    "registration": "prospective",
+    "parent": null,
+    "id": "OPT-D-0002",
+    "category": "algorithm",
+    "title": "同等逃生证据下优先减少静态退出步数",
+    "hypothesis": "在原有优先级完全打平时，静态退出步数比 robustLower 更能避免已知炸弹中的无进展转向。",
+    "scope": "诊断候选：单炸弹、无自身效果、COMMITTED_ESCAPE、证明及风险字段全相等，仅允许动作。",
+    "baseline": "285f9863227d6af3638bed74e008f0260fd25440034d95eec5e3f8cac44d9120",
+    "falsifier": "集成候选不触发或局部收益不达预设阈值，或出现任何证据/门槛违规。独立验证不支持则不得采纳。",
+    "nextStep": "BP414 实现消融；通过后另登记数据审计与独立确认计划。",
+    "alternatives": [
+      {
+        "name": "继续参数搜索",
+        "benefit": "改动成本低",
+        "risk": "缺少机制解释，重复消耗旧数据",
+        "reason": "暂不采用"
+      },
+      {
+        "name": "直接放宽硬门槛",
+        "benefit": "扩大动作集合",
+        "risk": "当前两个动作均已获允许，证据不支持此方向",
+        "reason": "不采用"
+      },
+      {
+        "name": "受限逃生进展候选",
+        "benefit": "直接检验已证实的排序机制",
+        "risk": "静态几何不含未来弹道，泛化未知",
+        "reason": "选择用于局部消融"
+      }
+    ],
+    "criteria": [
+      {
+        "id": "integrity",
+        "metric": "replay/gate/priority checks",
+        "rule": "all controls exact and zero violations",
+        "unit": "game/pair",
+        "kind": "hard"
+      },
+      {
+        "id": "local",
+        "metric": "survival and game score",
+        "rule": "32 control signatures exact; all 32 candidate first handoffs choose GO; zero priority/gate violations; event survival gain >=0.5, exact one-sided paired sign p<=0.05 and positive both halves; mean score gain>=0.1 and positive both halves.",
+        "unit": "one reused state / 32 seed pairs",
+        "kind": "soft"
+      },
+      {
+        "id": "independent",
+        "metric": "paired score on independent terrain clusters",
+        "rule": "Before independent testing, freeze audited data and precision plan in a child decision; require positive effect with uncertainty excluding zero and no safety regression.",
+        "unit": "terrain cluster",
+        "kind": "hard"
+      },
+      {
+        "id": "runtime",
+        "metric": "target-runtime acceptance",
+        "rule": "Pass existing target runtime and release checks before adoption",
+        "unit": "target runtime",
+        "kind": "hard"
+      }
+    ],
+    "budget": {
+      "games": 64,
+      "seconds": 1200
+    },
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp414-escape-progress/plan.json",
+        "sha256": "959d3a5d12a564306e109ff68f479470e21d3790728049e7de42cb1e91678448"
+      },
+      {
+        "path": "tools/agentank/diagnostics/escape-progress-candidate.js",
+        "sha256": "fd749118addb8033984c54dadc39f66d15ab1a884bd37217ab25fc36366a1dac"
+      },
+      {
+        "path": "tools/agentank/diagnostics/escape-progress-adapter.js",
+        "sha256": "680792835c56b42d2179b5b9f0cad2065d77c7dbf6632012bac8bef957679380"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp413-handoff-go/summary.json",
+        "sha256": "118c8ab7030a87e58ead8c8e2240725df35e42c1477c0097b5ef18d35b8671a5"
+      }
+    ]
+  },
+  "sha256": "3408416b2221a2b5a944c03ee91fa578816d4f3642e7e2845c9188752858bb89"
+}

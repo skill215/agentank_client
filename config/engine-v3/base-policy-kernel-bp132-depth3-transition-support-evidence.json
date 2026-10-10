@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_DEPTH3_TRANSITION_SUPPORT_EVIDENCE_V1",
+  "stage": "BP132",
+  "status": "ACCEPT_CAUSES_CLASSIFIED",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "contract": {
+    "fixedPairRootCount": 211,
+    "depth": 3,
+    "representativeWidth": 4,
+    "nodeBudget": 4096,
+    "completeRootCount": 175,
+    "incompleteRootCount": 36,
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0,
+    "behaviorNeutral": true,
+    "unclassifiedCount": 0
+  },
+  "failedBranches": {
+    "count": 36,
+    "baseline": 22,
+    "candidate": 14,
+    "searchPly": { "2": 36 }
+  },
+  "causes": {
+    "JOINT_RELOCATION_OCCUPIED_AFTER_EARLIER_MOVE": {
+      "roots": 35,
+      "fastStatus": "UNSUPPORTED_RULE",
+      "fastReason": "JOINT_TANK_RELOCATION",
+      "relocationDetail": "OCCUPIED_AFTER_EARLIER_MOVE",
+      "actionPair": "GO/GO",
+      "outerFastFailureTotal": 35,
+      "hardInternalFastFailureTotal": 0,
+      "historicalOutcome": {
+        "equal": 31,
+        "incumbentBetter": 2,
+        "candidateBetter": 2
+      },
+      "interpretation": "FastKernel intentionally fails closed because official joint relocation order and collision semantics are not yet proven by an oracle. Search depth, width and budget cannot cross this physical support boundary."
+    },
+    "HARD_NARROW_PROOF_INCOMPLETE": {
+      "roots": 1,
+      "actionPair": "GO/FIRE",
+      "hardIncompleteTotal": 1,
+      "hazardComplete": true,
+      "reverseViable": -1,
+      "narrowProofComplete": false,
+      "horizonTick": 2,
+      "specialEscape": false,
+      "historicalOutcome": { "equal": 1 },
+      "interpretation": "A hostile projectile reaches dirt. Hazard geometry is built, but post-dirt support is intentionally incomplete, so Hard correctly returns conservative UNKNOWN rather than a false death proof."
+    }
+  },
+  "artifacts": {
+    "shadowDirectory": "artifacts/v2-native-initiative/bp132-depth3-transition-detail-shadow-v2",
+    "shadowManifestSha256": "9043b04fe112258742f72c8f10d7795292cf1cd87046ed36079a9c31063a3339",
+    "shadowOverviewSha256": "99d090ab6dbbfbd628a9fd6f8d8e31b9218007518a9e04e49f74c8bdb96eb3a2",
+    "shadowMatchesSha256": "023dbceafc7949ab541a8c6ab1c422b17774743a4f7d18c2838110c41ebad31b",
+    "shadowBytes": 338917,
+    "reportDirectory": "artifacts/v2-native-initiative/bp132-semantic-attack-depth3-transition-support",
+    "reportManifestSha256": "60e6da14f84f4b5e1aa8f4e8e313f01a33c86025ba87df08e40822140d7c7404",
+    "reportOverviewSha256": "ad91f00c2d87c496faab9616e9c350438233cc846b6c60c20e114d4bf48c69fa",
+    "reportRootsSha256": "86b745bc0ad1026891ba295e517a5d50efeaab6b8484a6d5f7208c9694992213",
+    "reportFingerprint": "96c29a9652724e2785865a0753374ba1f12ef339a363b839f9fc080f806f7465",
+    "reportBytes": 5491
+  },
+  "source": {
+    "policySearchSha256": "791916d69d6ee703fbc68b635cce33400b7678050df9d90fe259aa9c882583c8",
+    "widthShadowSha256": "21abec2753874fcb420b620f92d17db9da472585eb5a287cc3e88dc4e6396194",
+    "policyIntervalShadowSha256": "64467beab8430351834d5d46e00fc4e8c8a9f367adce9dea2c40541944958c9f",
+    "transitionReportSha256": "41448cdc78cde29cd3255f6300ffb1e7c57fd00545b643611e834e16f37ea21a",
+    "policySearchTestSha256": "96a5fd16f6e177e844fcba561f5b32262a2723a7f1937d230220306c4f9f233d",
+    "transitionReportTestSha256": "8646dde839c84f26c3829bc846dad01a193b5da8bfc637c8362b1d60e68b8006"
+  },
+  "decision": {
+    "retain": [
+      "diagnostic-only Fast and Hard transition attribution",
+      "fail-closed joint relocation support",
+      "conservative dirt-impact Hard UNKNOWN"
+    ],
+    "reject": [
+      "increasing Minimax depth for these 36 roots",
+      "increasing representative width beyond 3",
+      "increasing node budget",
+      "assigning a heuristic loss to unsupported joint relocation as if it were an exact world"
+    ],
+    "next": "BP133 builds an official-simulator joint-movement oracle for GO/GO order, same-target, following, occupied-after-earlier-move and direct-swap cases. Only oracle-backed physical semantics may replace the 35 fail-closed exits."
+  }
+}

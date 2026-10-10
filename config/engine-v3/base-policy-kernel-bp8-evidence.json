@@ -1,0 +1,98 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP8_EVIDENCE_V1",
+  "status": "REJECTED_BEHAVIOR_OWNERS",
+  "createdAt": "2026-08-25",
+  "scope": "QUALIFIED_FIRE_COUNTERFACTUAL_OWNERSHIP",
+  "productionBehaviorChanged": false,
+  "defaultMode": "off",
+  "productionRootSha256": "c4443ddbd2a7a651d77f1582e5b68ce3715dfc87af7cf40ac7432396def39c48",
+  "diagnosticSource": {
+    "nativeTacticalActionOwnerPocSha256": "8983645e747454d3579135560bf3f9a84fc72e658f96e68ae6a31dac9c2f8048",
+    "v2NativeInitiativeArenaSha256": "12f8b89e8f5810e07f6e48c86e221dc9a47aea7ea47d948e00eb86aa3c335256"
+  },
+  "cohort": {
+    "fingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667",
+    "scenarios": 16,
+    "candidateMatchesPerMode": 32,
+    "skill": "STUN",
+    "tacticalTriggerMask": 1
+  },
+  "baseline": {
+    "wins": 16,
+    "losses": 14,
+    "draws": 2,
+    "scoreBasisPoints": 5313,
+    "stars": 16,
+    "crashes": 11,
+    "projectiles": 186,
+    "projectileKills": 14,
+    "counterCrashWithin4": 6,
+    "killsPer10000Projectiles": 753
+  },
+  "intentOwner": {
+    "mode": "intent-active",
+    "qualifiedChecks": 181,
+    "proposals": 10,
+    "overrides": 10,
+    "wins": 13,
+    "losses": 15,
+    "draws": 4,
+    "scoreBasisPoints": 4688,
+    "scoreDeltaBasisPoints": -625,
+    "stars": 15,
+    "crashes": 12,
+    "projectiles": 186,
+    "projectileKills": 11,
+    "counterCrashWithin4": 7,
+    "killsPer10000Projectiles": 591,
+    "transitions": {
+      "V1_WIN_TO_V1_WIN": 13,
+      "V2_WIN_TO_V2_WIN": 13,
+      "V2_WIN_TO_DRAW": 1,
+      "V2_WIN_TO_V1_WIN": 2,
+      "DRAW_TO_DRAW": 2,
+      "V1_WIN_TO_DRAW": 1
+    },
+    "verdict": "REJECTED"
+  },
+  "responseTradeoffOwner": {
+    "mode": "response-active",
+    "qualifiedChecks": 145,
+    "proposals": 30,
+    "overrides": 30,
+    "wins": 8,
+    "losses": 23,
+    "draws": 1,
+    "scoreBasisPoints": 2656,
+    "scoreDeltaBasisPoints": -2657,
+    "stars": 16,
+    "crashes": 19,
+    "projectiles": 186,
+    "projectileKills": 8,
+    "counterCrashWithin4": 13,
+    "killsPer10000Projectiles": 430,
+    "transitions": {
+      "V1_WIN_TO_V2_WIN": 2,
+      "V1_WIN_TO_V1_WIN": 12,
+      "V2_WIN_TO_V1_WIN": 10,
+      "V2_WIN_TO_V2_WIN": 6,
+      "DRAW_TO_V1_WIN": 1,
+      "DRAW_TO_DRAW": 1
+    },
+    "verdict": "REJECTED"
+  },
+  "invariants": {
+    "timeoutError": 0,
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0
+  },
+  "conclusion": {
+    "globalFireBonusRejected": true,
+    "intentContinuityBypassRejected": true,
+    "blendedAdversarialBackupBypassRejected": true,
+    "additionalFireCountObserved": false,
+    "explanation": "Both modes changed when FIRE occurred without increasing the total projectile count. They reduced future kill conversion and increased counter-crash exposure, proving that postFireEscape plus possibleHit/intercept is not a sufficient ownership certificate.",
+    "nextTarget": "Keep BP5 stun-only as the diagnostic baseline. Audit V1-vs-native transition and leaf-component fidelity on the 56 cellwise-dominated qualified FIRE roots before changing any owner."
+  }
+}

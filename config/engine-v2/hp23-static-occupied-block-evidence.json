@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "HP23_STATIC_OCCUPIED_BLOCK_EVIDENCE_V1",
+  "status": "ACCEPTED_CORRECTNESS_COVERAGE_NEUTRAL_GAMEPLAY_PERFORMANCE_COST",
+  "productionDefaultChanged": true,
+  "physicsChanged": true,
+  "searchBudgetChanged": false,
+  "scope": {
+    "implemented": "GO_INTO_OCCUPIED_CELL_WHEN_OPPOSING_ACTION_CANNOT_RELOCATE_IS_NO_EFFECT_BLOCK",
+    "stillUnsupported": [
+      "GO_GO_SAME_TARGET",
+      "GO_GO_SWAP",
+      "GO_INTO_CELL_VACATED_BY_TELEPORT",
+      "GO_INTO_CELL_VACATED_BY_BOOST_COMPOUND"
+    ],
+    "legacyDiagnosticProfile": "STATIONARY_OCCUPIED_BLOCK_OFF"
+  },
+  "officialEvidence": {
+    "probeId": "P2-MOVE-CONTEST",
+    "outcome": "CONCLUSIVE",
+    "inferredVariant": "STATIC_OCCUPIED_BLOCK",
+    "firstFrame": 12,
+    "observedCount": 22,
+    "responseSha256": "84109c830887e81ad5967a3252653c76fa2266c3765be486165d1f4d2a19ae90",
+    "rawEvidenceChanged": false,
+    "analyzerCorrection": "SPEECH_MARKER_ASSOCIATED_WITH_THE_SAME_RECORD_INSTEAD_OF_FRAME_PLUS_ONE"
+  },
+  "causalArena": {
+    "discovery": {
+      "role": "DISCOVERY",
+      "scenarios": 16,
+      "matchesPerProfile": 32,
+      "reportFingerprint": "512615865adf6acfbc507d3e0c44ad5108cf09c64e7ebb4267b5be4debbdb40f",
+      "reportSha256": "453dc75782aadd1b6e6251f8882f53a6fff266e6848d5855e28312858bad5d10",
+      "current": {
+        "wins": 3,
+        "losses": 28,
+        "draws": 1,
+        "scoreBasisPoints": 1094,
+        "starDelta": -42,
+        "physicalNodes": 26912,
+        "workUnits": 4471793,
+        "valueSupportDepth": [0, 18, 52, 3, 1, 0, 0, 0],
+        "p2Attempts": 56,
+        "p2ExactCompleted": 49,
+        "p2CompletedNonExact": 3,
+        "p2SupportAborted": 4,
+        "unsupportedCells": 14,
+        "unsupportedActionPairs": { "GO/GO": 14 }
+      },
+      "legacyOff": {
+        "wins": 3,
+        "losses": 28,
+        "draws": 1,
+        "scoreBasisPoints": 1094,
+        "starDelta": -42,
+        "physicalNodes": 26241,
+        "workUnits": 4411383,
+        "valueSupportDepth": [0, 14, 52, 3, 1, 0, 0, 0],
+        "p2Attempts": 56,
+        "p2ExactCompleted": 49,
+        "p2CompletedNonExact": 3,
+        "p2SupportAborted": 4,
+        "unsupportedCells": 29
+      },
+      "semanticDifferences": {
+        "actionStream": 4,
+        "frame": 2,
+        "reason": 2,
+        "stars": 0,
+        "positiveOutcomes": 0,
+        "negativeOutcomes": 0
+      }
+    },
+    "tacticalHoldout": {
+      "role": "TACTICAL_HOLDOUT",
+      "scenarios": 32,
+      "matchesPerProfile": 64,
+      "reportFingerprint": "5449b8871a9922db40263329b82bdecf4f2335c5a3d52c9c50d4b82324d55460",
+      "reportSha256": "fa44cd9a892ea6cbe24aeb5d6a121f2ba23a4d16d10bc26c8e7d948fb9782c2b",
+      "current": {
+        "wins": 10,
+        "losses": 49,
+        "draws": 5,
+        "scoreBasisPoints": 1953,
+        "starDelta": -74,
+        "fireActions": 354,
+        "physicalNodes": 65850,
+        "workUnits": 9309026,
+        "valueSupportDepth": [0, 28, 123, 0, 3, 0, 1, 0],
+        "p2Attempts": 152,
+        "p2ExactCompleted": 122,
+        "p2CompletedNonExact": 14,
+        "p2SupportAborted": 16,
+        "unsupportedCells": 72,
+        "unsupportedActionPairs": { "GO/GO": 72 }
+      },
+      "legacyOff": {
+        "wins": 10,
+        "losses": 49,
+        "draws": 5,
+        "scoreBasisPoints": 1953,
+        "starDelta": -75,
+        "fireActions": 340,
+        "physicalNodes": 59409,
+        "workUnits": 9080070,
+        "valueSupportDepth": [0, 28, 116, 0, 3, 0, 1, 0],
+        "p2Attempts": 140,
+        "p2ExactCompleted": 116,
+        "p2CompletedNonExact": 7,
+        "p2SupportAborted": 17,
+        "unsupportedCells": 87
+      },
+      "semanticDifferences": {
+        "actionStream": 6,
+        "frame": 1,
+        "reason": 1,
+        "stars": 1,
+        "positiveOutcomes": 0,
+        "negativeOutcomes": 0
+      }
+    },
+    "combinedCurrentVersusLegacyOff": {
+      "matchesPerProfile": 96,
+      "outcomeDifferences": 0,
+      "starDeltaImprovement": 1,
+      "fireActionDelta": 16,
+      "completeValueOwnerFrameDelta": 11,
+      "p2ExactCompletedDelta": 6,
+      "p2CompletedNonExactDelta": 7,
+      "unsupportedCellDelta": -30,
+      "currentRemainingUnsupportedCells": 86,
+      "currentRemainingUnsupportedPairs": { "GO/GO": 86 },
+      "physicalNodeDelta": 7112,
+      "physicalNodeDeltaBasisPoints": 830,
+      "workUnitDelta": 289366,
+      "workUnitDeltaBasisPoints": 215
+    }
+  },
+  "calibration": {
+    "status": "PASS",
+    "profileCount": 24,
+    "callsPerProfile": 80,
+    "reportFingerprint": "01a8c89ad80b992f9897de74288d56569398e97cc47bfc0a7146e4b57f31ebdb",
+    "reportSha256": "f9c023b1ac9ae71ee9bf40c75055b9d890404551037608f32032923976751b0b",
+    "comparisonFingerprint": "5ce1eeaaadc00dc249a275c1ca832da8d4d6eaf5188cbddad9d9d9f0e4c6124a",
+    "comparisonSha256": "b4989632d360b3c34981a1a94bd2428967211a5801e5f37698641413665ef3ec",
+    "baselineFingerprint": "4e1d68832369429de3b7ebc9b7d93e779b9cfb5fddf8dd7ea16d943288f9166c",
+    "baseline": "config/engine-v2/minimax-depth-baselines/after-hp23.json",
+    "sourceFingerprint": "af166127620ca9b1452a35ba1ae1439edc46ace6393bc35ebdc7072b19bdafe9",
+    "physicalP2": {
+      "requestedCompletionBefore": 5625,
+      "requestedCompletionAfter": 5625,
+      "coldP95NodesBefore": 489,
+      "coldP95NodesAfter": 489,
+      "coldMeanNodesBefore": 241,
+      "coldMeanNodesAfter": 257,
+      "coldP95MicrosBefore": 1231,
+      "coldP95MicrosAfter": 1631,
+      "warmP95MicrosBefore": 634,
+      "warmP95MicrosAfter": 928
+    },
+    "informationHighBudget": {
+      "finding": "LEGAL_STATIONARY_OCCUPANCY_BRANCHES_CONSUME_BUDGET_AND_REDUCE_REQUESTED_DEPTH_COMPLETION",
+      "requestedCompletionDeltaBasisPointsRange": [-1250, -625]
+    },
+    "invariants": {
+      "rootRestoreFailures": 0,
+      "rootTransitionReplayFailures": 0,
+      "rootRestoreMismatches": 0,
+      "hotAllocations": 0,
+      "warmColdSemanticMismatches": 0
+    }
+  },
+  "tests": {
+    "minimaxCore": { "passed": 158, "failed": 0 },
+    "diagnostics": { "passed": 108, "failed": 0 },
+    "gr0": { "passed": 292, "failed": 0 },
+    "imp2": { "passed": 53, "failed": 0 },
+    "imp3": { "passed": 28, "failed": 0 },
+    "imp5": { "passed": 14, "failed": 0 }
+  },
+  "decision": {
+    "classification": "POSITIVE_RULE_CORRECTNESS_AND_MINIMAX_COVERAGE_NEUTRAL_GAMEPLAY_WITH_MEASURED_PERFORMANCE_COST",
+    "productionDefault": "ENABLED",
+    "reason": "The immutable official replay proves the stationary occupied-cell block. The implementation removes all observed stationary unsupported pairs while preserving unresolved moving contests as unsupported. It creates no outcome regression and adds exact/complete value ownership, but evaluating the newly legal branches consumes more nodes and work.",
+    "next": "OPTIMIZE_THE_NOW_SUPPORTED_STATIONARY_BRANCH_WITHOUT_CHANGING_ITS_SEMANTICS_THEN_RECALIBRATE"
+  }
+}

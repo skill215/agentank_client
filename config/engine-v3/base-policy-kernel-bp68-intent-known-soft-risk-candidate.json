@@ -1,0 +1,97 @@
+{
+  "objectKind": "BASE_POLICY_INTENT_KNOWN_SOFT_RISK_CANDIDATE_V1",
+  "status": "VALIDATED_POSITIVE_NOT_QUALIFIED",
+  "productionDefaultChanged": false,
+  "architecture": {
+    "hardAndCommittedRemainMandatory": true,
+    "ordinaryRiskFrontier": "joint",
+    "softBand": "intent-known",
+    "softBandRequires": [
+      "RISK_ACCEPTABLE_FALSE",
+      "IMMEDIATE_FATAL_MASS_ZERO",
+      "UNKNOWN_MASS_ZERO",
+      "RISK_NOT_DOMINATED",
+      "CURRENT_STRATEGIC_INTENT_MEMBER"
+    ],
+    "selectionAfterAdmission": "FINITE_DEPTH_MINIMAX_PLUS_INTENT_WITH_JOINT_RISK_TIE",
+    "tacticalContactMask": 1,
+    "leafClamp": "total-25000"
+  },
+  "fixed16": {
+    "previous": { "wins": 12, "losses": 14, "draws": 6,
+      "scoreBasisPoints": 4688, "starDifference": -19,
+      "crashDifference": 5 },
+    "candidate": { "wins": 22, "losses": 10, "draws": 0,
+      "scoreBasisPoints": 6875, "starDifference": 1,
+      "crashDifference": 9 },
+    "paired": { "lossToWin": 9, "drawToWin": 6, "winToLoss": 5,
+      "scoreBasisPointDelta": 2187, "projectileKillDelta": 7 },
+    "overviewSha256": "e00304426d4bb8733fa7974a20d963164663b9c16edadd322c478434e35c8e2d"
+  },
+  "discovery64": {
+    "previous": { "wins": 32, "losses": 82, "draws": 14,
+      "scoreBasisPoints": 3047, "starDifference": -105,
+      "crashDifference": -11 },
+    "candidate": { "wins": 67, "losses": 47, "draws": 14,
+      "scoreBasisPoints": 5781, "starDifference": -13,
+      "crashDifference": 24, "fireCount": 891 },
+    "scoreBasisPointDelta": 2734,
+    "softRiskCandidates": 7293,
+    "softRiskIntentAllowed": 1295,
+    "avoidableHardReject": 0,
+    "jointDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "timeoutError": 0,
+    "overviewSha256": "0b57a1c55e24cb4ae0741e70efab015fd9b2d173957eb35e332e6d9029477825"
+  },
+  "independentValidation": {
+    "role": "STRATEGY_HOLDOUT",
+    "scenarios": 96,
+    "matchesPerMode": 192,
+    "modes": ["off", "intent-known"],
+    "parametersFrozen": true,
+    "resultRead": true,
+    "acceptance": {
+      "candidateScoreBasisPointsAtLeast": 5000,
+      "pairedScoreBasisPointDeltaAtLeast": 300,
+      "oneSidedScenarioRandomizationPLessThan": 0.05,
+      "lossToWinStrictlyGreaterThanWinToLoss": true,
+      "starDifferenceNotWorse": true,
+      "crashDifferenceNotWorse": true,
+      "allHardInvariantsZero": true
+    },
+    "result": {
+      "off": { "wins": 50, "losses": 128, "draws": 14,
+        "scoreBasisPoints": 2969, "starDifference": -144,
+        "crashDifference": -38, "fireCount": 1048 },
+      "intentKnown": { "wins": 79, "losses": 98, "draws": 15,
+        "scoreBasisPoints": 4505, "starDifference": -4,
+        "crashDifference": -15, "fireCount": 1149 },
+      "paired": { "lossToWin": 48, "winToLoss": 23,
+        "drawToWin": 7, "winToDraw": 3, "lossToDraw": 10,
+        "drawToLoss": 5, "scoreBasisPointDelta": 1536,
+        "projectileKillDelta": 12, "positiveScenarios": 44,
+        "negativeScenarios": 18, "tieScenarios": 34,
+        "oneSidedScenarioRandomizationP": 0.00044392429430010474 },
+      "invariants": { "avoidableHardReject": 0,
+        "jointDominatedSelection": 0, "rootRestoreFailure": 0,
+        "timeoutError": 0 },
+      "decision": "KEEP_AS_ARCHITECTURAL_BASE_NOT_PRODUCTION_DEFAULT",
+      "failedAcceptance": ["candidateScoreBasisPointsAtLeast:5000"]
+    }
+  },
+  "sha256": {
+    "productionRoot": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7",
+    "tacticalOwner": "b82cd08b4933644983c1714692ea40701da53aa6e49f6fce8891ce18f7358094",
+    "arena": "66bdc64e1ae66c81e4653a5685714703119e5ece94d542a1ad780860b81c798e",
+    "boundedSearch": "457b3b045ca825339b90027c34227419cb9437c0fc985fad76ef7ef83d31e4b0",
+    "leafEvaluator": "865129bc275e75ee9d8f54d878c4df7f6795a9a8b9f7a299ca20f8c13fd2d398",
+    "intent": "63a89238ac483f4993634db97cf1e8f89d90e1ab89c02681bd5b9024cf2006ef",
+    "differential": "42febcc95acf5970d4227e1511e307dbc8257941601acba65e9cb7cf0a85ac22",
+    "bp3Script": "57e2604ea490c8e93cd60f9d498d6e21e9752af8437ea5db065a5dca8ca22400",
+    "bp5Script": "0b70c4f4e1b98491e048073a406c57d777086546c2879417b1224ceb52fa3c9a",
+    "cohortManifest": "e7d4bb87ae56b2f2faccfb35c4e4f56898749f141a069b38b8d051ffb696a89c",
+    "holdoutOffOverview": "ea82a6faebaed93b223c4575a9302f2cdbdf60ad7741ccb2690968f4f82785cf",
+    "holdoutIntentKnownOverview": "47a8593ff7fdab44f3ca968d72dd9169ab5405405081c4bea5cd424b1a4b77df"
+  }
+}

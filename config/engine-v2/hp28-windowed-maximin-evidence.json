@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "HP28_WINDOWED_MAXIMIN_EVIDENCE_V1",
+  "status": "ACCEPTED_PRODUCTION_DEFAULT",
+  "productionSearchSemanticsChanged": false,
+  "productionRuntimeProfileChanged": false,
+  "productionDefault": {
+    "windowedBounds": true,
+    "scope": "SELECTIVE_PHYSICAL_CONTINUATION_DEPTH_AT_LEAST_3",
+    "ordinaryDepthOneAndTwoExactOwnerUnchanged": true,
+    "multiOutcomeChanceUsesExactFallback": true,
+    "boundWrittenToStageMatrixAsExact": false,
+    "boundWrittenToPhysicalTT": false
+  },
+  "recursiveOracle": {
+    "fixed16": {
+      "depth": 3,
+      "exactNodes": 24843,
+      "windowNodes": 17433,
+      "nodeReductionBasisPoints": 2982,
+      "valueMismatches": 0,
+      "actionMismatches": 0,
+      "rootRestoreFailures": 0,
+      "reportFingerprint": "c9b45901d0ee60c5120e98a9a49226f5bd1616df513b994db6f7e434d50ef8ab",
+      "reportSha256": "bbce9fe7fcaa9ca862ec662294c81858d3a5d9d10e2e58dde0d060722e7c08f6"
+    },
+    "fixed64ByRisk": [
+      {
+        "risk": 0,
+        "exactNodes": 98266,
+        "windowNodes": 65455,
+        "nodeReductionBasisPoints": 3338,
+        "reportFingerprint": "f53c331bebb615abcc2c3b52af9bd8fa5de96d7245fe208304ca488aef4722f4",
+        "reportSha256": "200cf63d8c92d88b733e35c5ee2e1b4609aad6441aece69f77b13a60ef593724"
+      },
+      {
+        "risk": 50,
+        "exactNodes": 99020,
+        "windowNodes": 65106,
+        "nodeReductionBasisPoints": 3424,
+        "reportFingerprint": "8b90891ecd251d9a88831f995deccc9be8f2b0c90b0a276bc72e97e637d1fdb0",
+        "reportSha256": "dd5b28a8da93b8ef4190c6fe6bbc02052397c796cee85ed856fd69f9560fca18"
+      },
+      {
+        "risk": 100,
+        "exactNodes": 97753,
+        "windowNodes": 61083,
+        "nodeReductionBasisPoints": 3751,
+        "reportFingerprint": "6ae5097919b7e6b6eaf1652ea04aaf7505578fa14dfed12bdf582ef42397aa6e",
+        "reportSha256": "910d55e3ba4ca77dde88f3ad8d5148ac8bc4deed6ed5dc1d956a5a3f99b96c4d"
+      }
+    ],
+    "aggregateInvariants": {
+      "valueMismatches": 0,
+      "actionMismatches": 0,
+      "rootRestoreFailures": 0
+    }
+  },
+  "fixedStackCostCensus": {
+    "scenarios": 16,
+    "depth": 3,
+    "nodeBudget": 512,
+    "before": {
+      "coldNodes": 6499,
+      "coldWorkUnits": 93077,
+      "coldCompletedSelectiveProofs": 2,
+      "warmNodes": 4096,
+      "warmWorkUnits": 42319,
+      "warmCompletedSelectiveProofs": 8,
+      "reportFingerprint": "c7483dfcfe6d422bb113ca3c46e4fadacae75400ae8c656ed0f88d84bc86c168",
+      "reportSha256": "8f9ab88bdbfe3ac73ae688fbfef73d2453e4fdc3559ae4edaa51aea8d8566d0f"
+    },
+    "after": {
+      "coldNodes": 6297,
+      "coldWorkUnits": 92950,
+      "coldCompletedSelectiveProofs": 6,
+      "warmNodes": 3851,
+      "warmWorkUnits": 39065,
+      "warmCompletedSelectiveProofs": 9,
+      "reportFingerprint": "a4f6f6d8d750d0b6a37a425c346e4f0f5cc205f3b797e876026e5833c18d57b6",
+      "reportSha256": "4e7268d9b5a2d5742b8af93b7fe5bcbd8da7131c0bdddf63ca401326d274cef2"
+    },
+    "semanticMismatches": 0,
+    "rootRestoreFailures": 0
+  },
+  "fiveBatchCalibration": {
+    "profiles": 24,
+    "callsPerProfile": 80,
+    "nodeBudget": 512,
+    "sourceFingerprint": "56e7b50ab282a0ca0e51104594a3a8d7dbdcb6ce78c5f61a7c03bb4325a73278",
+    "harnessFingerprint": "8cf6e3941231399d062d470ac0e6072952f7ec0c3d51b1cceac589235a021eef",
+    "baselineFingerprint": "2c545979ecd671852881217a4641166c1fd7a4f3ab15526163322f820e11f970",
+    "candidateFingerprint": "f65182911d002892cd70ae614c0f59cabdde934c8f2d5948d7ce8890ac1cedb3",
+    "comparisonFingerprint": "25ac744ba32e2a48536032ed2b8261a86382732b1be25d311b8c41fc0c9b9cc2",
+    "p3": {
+      "selectiveProofsBefore": 10,
+      "selectiveProofsAfter": 30,
+      "coldMeanNodesBefore": 406,
+      "coldMeanNodesAfter": 393,
+      "warmMeanNodesBefore": 256,
+      "warmMeanNodesAfter": 240,
+      "coldP95MicrosBefore": 1695,
+      "coldP95MicrosAfter": 1743,
+      "warmP95MicrosBefore": 1068,
+      "warmP95MicrosAfter": 1048
+    },
+    "ordinaryP1P2DepthOrValueSupportMismatches": 0,
+    "invariants": {
+      "rootRestoreFailures": 0,
+      "rootTransitionReplayFailures": 0,
+      "rootRestoreMismatches": 0,
+      "hotAllocations": 0,
+      "warmColdSemanticMismatches": 0
+    },
+    "frozenBaseline": "config/engine-v2/minimax-depth-baselines/after-hp28.json",
+    "frozenBaselineFingerprint": "f7ed10faddbcc30b50650c758badfe56315616b72b53d59a11570f338a56bb6d",
+    "frozenBaselineSha256": "4dfc1395f4aa994a02ea3b7e3d5d380cd4b9c54bceea4e392d120b3507f2d96d",
+    "baselineStatus": "CURRENT"
+  },
+  "build": {
+    "sourceBytes": 631179,
+    "minifiedBytes": 609201,
+    "productionRootTypedArrayBytes": 889188,
+    "hotAllocations": 0,
+    "sourceMinifiedSemanticMismatches": 0,
+    "remainingReleaseBlocker": "PLATFORM_SCRIPT_BYTE_LIMIT_EXCEEDED"
+  },
+  "tests": {
+    "minimaxCore": 163,
+    "diagnostics": 121,
+    "gr0": 297,
+    "imp2": 53,
+    "imp3": 28,
+    "imp5": 14,
+    "imp6": 16,
+    "total": 692,
+    "failed": 0
+  },
+  "decision": {
+    "classification": "WINDOWED_MAXIMIN_ACCEPTED_FOR_SELECTIVE_PHYSICAL_DEPTH",
+    "gameplayQualificationPerformed": false,
+    "reason": "DEPTH_AND_PROOF_COMPLETION_ARE_PERFORMANCE_DIMENSIONS_AND_ARE_NOT_WIN_RATE_TUNING",
+    "next": "PROFILE_PRODUCTION_RUNTIME_BUDGET_DISTRIBUTION_WITH_HP28_AND_IDENTIFY_THE_NEXT_DOMINANT_INCOMPLETE_P3_ROOT_CLASS"
+  }
+}

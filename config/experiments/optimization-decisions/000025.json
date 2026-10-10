@@ -1,0 +1,69 @@
+{
+  "seq": 25,
+  "previous": "9a6a1ad92f276fbea29088c51a1bcdf9664eb38aab843fe09947faeed9469a26",
+  "record": {
+    "version": 1,
+    "type": "register",
+    "at": "2026-10-09T03:14:32.531Z",
+    "process": "OPT-P-004",
+    "registration": "prospective",
+    "scope": "Compare concrete outputs of selection methods, not claim a universal best optimization algorithm from one campaign.",
+    "baseline": "285f9863227d6af3638bed74e008f0260fd25440034d95eec5e3f8cac44d9120",
+    "falsifier": "No candidate eligible, or data integrity fails; no universal method ranking claim",
+    "nextStep": "Complete fixed48 games, report eligibility, Pareto and combination interaction; select one provisional configuration or baseline.",
+    "alternatives": [
+      {
+        "name": "依据上轮历史表现直接选最好",
+        "benefit": "快",
+        "risk": "选择偏差且组合未知",
+        "reason": "不采用"
+      },
+      {
+        "name": "新地图共同对照和因子组合",
+        "benefit": "比较泛化并识别组合交互",
+        "risk": "12张地图精度有限，不能证明方法普遍优劣",
+        "reason": "采用"
+      }
+    ],
+    "budget": {
+      "games": 12,
+      "seconds": 300
+    },
+    "id": "OPT-D-0013",
+    "category": "process",
+    "parent": "OPT-D-0009",
+    "title": "新地图比较三种选优方法及组合交互",
+    "hypothesis": "共同新数据检验不同方法选出的策略，能比历史排序更可靠地选下一步。",
+    "criteria": [
+      {
+        "id": "integrity",
+        "metric": "paired fresh maps and all arm data",
+        "rule": "all48 complete, hashes and events valid",
+        "unit": "game",
+        "kind": "hard"
+      },
+      {
+        "id": "selection",
+        "metric": "predefined eligibility/ranking",
+        "rule": "rank by frozen rule, retain all unfavorable results, distinguish method from candidate evidence",
+        "unit": "comparison",
+        "kind": "hard"
+      }
+    ],
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp421-method-comparison/campaign.json",
+        "sha256": "e82bc6045150fb7dd3f41338a7a1b6e44ec9bad6986d3192f69c70fcf966296b"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp421-method-comparison/provenance.json",
+        "sha256": "dc3f109ab37195b88e3351a38d65c044a2153285f80eddcadbe5f0115686dea2"
+      },
+      {
+        "path": "tools/agentank/diagnostics/factorial-method-screen.js",
+        "sha256": "2e331549170a542cd47f818c02a798699b9a2d0e36b950f7aa57a43918063268"
+      }
+    ]
+  },
+  "sha256": "1dd75d4389ae5b76d3eee8738c4fa9d0070b07fba2af7bab5ae6ac1ef743f968"
+}

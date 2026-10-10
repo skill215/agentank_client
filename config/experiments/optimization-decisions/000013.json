@@ -1,0 +1,87 @@
+{
+  "seq": 13,
+  "previous": "ef1e647c5069d33ac4a3dd5b3e4927feaab46de0bf444ed289f292fc1bdbb565",
+  "record": {
+    "version": 1,
+    "type": "register",
+    "id": "OPT-D-0007",
+    "at": "2026-10-08T05:09:57.180Z",
+    "process": "OPT-P-002",
+    "category": "algorithm",
+    "registration": "prospective",
+    "parent": "OPT-D-0006",
+    "title": "将争星路线平分规则前移至导航基准动作选择",
+    "hypothesis": "上一轮晚期比较器不改变动作；在候选集形成时解除行号偏好可能真正改变方向并改善争星。",
+    "scope": "one candidate; same8 old games; first game must trigger; <=40games <=1800sec; local only",
+    "baseline": "285f9863227d6af3638bed74e008f0260fd25440034d95eec5e3f8cac44d9120",
+    "falsifier": "Preflight no actual trigger, or old/fresh fixed score and death thresholds fail",
+    "nextStep": "先1局触发预检，成功才跑余7局；旧场景通过才做16新地图配对。",
+    "alternatives": [
+      {
+        "name": "继续调整晚期比较器",
+        "benefit": "已有实现",
+        "risk": "候选集提前过滤可能使它不可达",
+        "reason": "不采用"
+      },
+      {
+        "name": "前移至baseBetter基准选择",
+        "benefit": "直接影响候选集，仍保持原评分和风险打平要求",
+        "risk": "更多轨迹变化不保证胜率",
+        "reason": "唯一候选"
+      }
+    ],
+    "criteria": [
+      {
+        "id": "trigger",
+        "metric": "actual first action/signature",
+        "rule": "Frame0 action must differ, full signature differ, comparator changes>0, all health checks pass",
+        "unit": "game",
+        "kind": "hard"
+      },
+      {
+        "id": "old",
+        "metric": "8game score/death delta",
+        "rule": "score>=1 death<=0",
+        "unit": "paired historical game",
+        "kind": "soft"
+      },
+      {
+        "id": "fresh",
+        "metric": "16new pairs score/death delta",
+        "rule": "score>=2 death<=0",
+        "unit": "new generated terrain pair",
+        "kind": "soft"
+      },
+      {
+        "id": "release",
+        "metric": "target platform acceptance",
+        "rule": "outside rapid local screen; not authorized by local pass",
+        "unit": "platform",
+        "kind": "hard"
+      }
+    ],
+    "budget": {
+      "games": 40,
+      "seconds": 1800
+    },
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp418-fast-anchor/campaign.json",
+        "sha256": "47a9dd9f6cc062ef19c90cd7d7cd44ed8dff4d655b8d81ac292b551d8ba57170"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp418-fast-anchor/preflight-plan.json",
+        "sha256": "cf74b7e12363b0768e99a74dfbc408049351db4e21d6bf859505b9e8e82bbb10"
+      },
+      {
+        "path": "tools/agentank/diagnostics/star-anchor-route-candidate.js",
+        "sha256": "ce4ca3a8e2bdc4725b326ed293acb5231188a1458a73b067dda9074288a12bf8"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp417-fast-star/screen-summary.json",
+        "sha256": "202953260df898b4d3649cfe5bc03d71959b9ea616a68498e506a08a71991288"
+      }
+    ]
+  },
+  "sha256": "e8d743f937344bedbe1b128e4e7bab8d4d44c64eca3852b5d3729014e3d5fd70"
+}

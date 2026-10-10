@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "HP18_GEOMETRY_PROPOSAL_EVIDENCE_V1",
+  "status": "REJECTED",
+  "sourceFingerprint": "4058bbb8d2357d58469230842ac38fe07ca8b44801edb60eed0a01da6f025cb5",
+  "schedule": {
+    "triggerMask": 97,
+    "triggerValue": 1,
+    "cooldownFrames": 4,
+    "maximumRows": 3,
+    "depth": 1
+  },
+  "ownership": {
+    "proposalClass": "EXACT_GEOMETRY_VALUE",
+    "below": ["STRICT_FORCED_WIN", "COMMITTED_RESCUE"],
+    "above": ["VERIFIED_ATTACK"],
+    "finalActionGateRequired": true,
+    "productionDefaultEnabled": false
+  },
+  "discovery": {
+    "role": "DISCOVERY",
+    "scenarios": 16,
+    "matchesPerProfile": 32,
+    "reportFingerprint": "ad7ea36de9c6ba022829e22b3bce1034cc345439c5da6b0252e45821297d565c",
+    "reportSha256": "464dbf6c5beb4ad14dd9bd0c89b209f5310b4d0a5ba028a30d12f8fc819c2687",
+    "shadow": {
+      "wins": 3,
+      "losses": 28,
+      "draws": 1,
+      "scoreBasisPoints": 1094,
+      "starDelta": -42,
+      "candidateCrashes": 14,
+      "controlCrashes": 5,
+      "workUnits": 4535387,
+      "proposals": 50,
+      "selected": 0
+    },
+    "active": {
+      "wins": 5,
+      "losses": 26,
+      "draws": 1,
+      "scoreBasisPoints": 1719,
+      "starDelta": -48,
+      "candidateCrashes": 9,
+      "controlCrashes": 6,
+      "workUnits": 4329234,
+      "proposals": 53,
+      "selected": 53
+    },
+    "activeVsShadow": {
+      "positive": 5,
+      "negative": 2,
+      "same": 25
+    }
+  },
+  "holdout": {
+    "role": "TACTICAL_HOLDOUT",
+    "scenarios": 32,
+    "matchesPerProfile": 64,
+    "reportFingerprint": "fc814729b6f5d2561a58c6ff52ace182f5510bbb0b507dbc4da27a31d17492ed",
+    "reportSha256": "019e66ba5f64727f83cf201e208fdcd6831639773c61b6d13cef2ba690829c45",
+    "shadow": {
+      "wins": 10,
+      "losses": 49,
+      "draws": 5,
+      "scoreBasisPoints": 1953,
+      "starDelta": -75,
+      "candidateCrashes": 16,
+      "controlCrashes": 8,
+      "workUnits": 9412263,
+      "proposals": 97,
+      "selected": 0
+    },
+    "active": {
+      "wins": 6,
+      "losses": 56,
+      "draws": 2,
+      "scoreBasisPoints": 1094,
+      "starDelta": -80,
+      "candidateCrashes": 29,
+      "controlCrashes": 8,
+      "workUnits": 8333126,
+      "proposals": 86,
+      "selected": 86
+    },
+    "activeVsShadow": {
+      "positive": 2,
+      "negative": 9,
+      "same": 53
+    }
+  },
+  "invariants": {
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "hotAllocation": 0
+  },
+  "decision": {
+    "reason": "A one-ply geometry separation is valid evidence but not sufficient action ownership; independent holdout lost 859 score basis points and added 13 candidate-only crashes.",
+    "retain": "SELECTIVE_GEOMETRY_SPARSE_C4_SHADOW",
+    "reject": "SELECTIVE_GEOMETRY_ACTIVE_C4"
+  }
+}

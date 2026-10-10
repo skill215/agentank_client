@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_BP147_BP148_ATTACK_CERTIFICATE_EVIDENCE_V1",
+  "status": "ACCEPT_DIAGNOSTIC_EVIDENCE",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "bp147FeatureCensus": {
+    "artifactFingerprint": "134b845d7f7839cf93d54790d91120ee9760e4cba2e9ddbed2ba8000d653e80a",
+    "rootCount": 476,
+    "exactRootCount": 476,
+    "replayMismatchCount": 0,
+    "safeThreatCertificates": 48,
+    "doomedTargetCertificates": 30,
+    "manifestSha256": "7d0fd6c99aa24766e8f7d5b4301f9a7aac315a264b2ff244c7a03b82ca74fef8",
+    "overviewSha256": "a76fabbabc189fd74ca7cdb6857f09fa3364d24ac6e4511975049d4ce7b8926f",
+    "rootsSha256": "c158536e6befe786c4f376509556c59ec5262e604b62cbd5d2a30c6fc75ea488"
+  },
+  "bp147Scheduler": {
+    "artifactFingerprint": "fc7bbae5e830ce3d3e46e321e7b3e50bc7e6f4a334ec34f4823494d851c17795",
+    "expression": "ControlModeRouter.context.clearLine && selectedAction !== FIRE",
+    "discovery": {
+      "roots": 240,
+      "actionableCertificates": 11,
+      "scheduled": 49,
+      "falseNegative": 0,
+      "rootReductionPermille": 795,
+      "nodeReductionPermille": 962
+    },
+    "holdout": {
+      "roots": 236,
+      "actionableCertificates": 11,
+      "scheduled": 51,
+      "falseNegative": 0,
+      "rootReductionPermille": 783,
+      "nodeReductionPermille": 936
+    },
+    "all": {
+      "roots": 476,
+      "actionableCertificates": 22,
+      "doomedActionableCertificates": 9,
+      "scheduled": 100,
+      "falseNegative": 0,
+      "allProofNodes": 35721,
+      "scheduledProofNodes": 1692,
+      "nodeReductionPermille": 952
+    },
+    "manifestSha256": "270e3383707647fc8583a6962155faa5cd740af9f288093b65e4e6880740d200",
+    "overviewSha256": "301f43204180a9ab6f03b457867e39429d32e635e193dd5f5f00afa147a165bd",
+    "scheduledRootsSha256": "1750e7c59a399a62752ee49b4fb4456dc13f12465c38442adfdfa29b09b5b62f"
+  },
+  "bp148ActivePoc": {
+    "artifactFingerprint": "7d301ee4f1a049812ab156ca86aeed314c22795eed15e0e6d549ef8c66eda32a",
+    "roots": 22,
+    "arms": 44,
+    "positive": 6,
+    "negative": 0,
+    "equal": 16,
+    "controlPoints": 27,
+    "activePoints": 38,
+    "pointDelta": 11,
+    "transitions": {
+      "V2_WIN_TO_V2_WIN": 13,
+      "V1_WIN_TO_V2_WIN": 5,
+      "V1_WIN_TO_DRAW": 1,
+      "DRAW_TO_DRAW": 1,
+      "V1_WIN_TO_V1_WIN": 2
+    },
+    "hardFailureCount": 0,
+    "restoreFailureCount": 0,
+    "manifestSha256": "904f769f698d25bb1b2cff3c0b8eedd0bf2908d867abeadcff36371c0f6c2e90",
+    "overviewSha256": "8fa92fd476990bad5e15781a5530033f984c54a04dd4cf924ba4774ea6fc7a9e",
+    "rootsSha256": "fa49037609fd95848bee52cc7475ebfbb14ada6a131f774e3e3d190b0eb62bde"
+  },
+  "sourceHashes": {
+    "featureCensusTool": "8d893c6b94acb4fc34b2e9e7453842b4c4f0e8d52215a50804a9cc8adc8a112e",
+    "schedulerTool": "a4e9ea2273e76a8056f582e1f5cdbc73334cf7b694ae6cce57606deb953293c5",
+    "activePocTool": "88b953e280bbcc0ac97a87c2acdaaaabad1ac7c12407f2003436fc5f3fcff256",
+    "featureCensusTest": "147dc5772f2c475d4a228d7248d3328ace9fc179e0b8922ca3ee80c396c5d4bd",
+    "schedulerTest": "7b8199840e64a4b3a6228c2f3d7044a912f54c19a95f060b7251c738fd4ba987",
+    "activePocTest": "a1967c7ed2c2209a5ecd5718260e5d23fc2df435c8d89b1994226f24df31d18e"
+  },
+  "decision": "ACCEPT_SCHEDULER_AND_CAUSAL_DIRECTION_FOR_BP149_PERFORMANCE_REARCHITECTURE_ONLY",
+  "productionApproval": false,
+  "nextStage": "BP149_PREALLOCATED_SINGLE_GOAL_THREE_WORLD_PROOF_ARENA"
+}

@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "HP24_NO_EFFECT_GO_ALIAS_REJECTION_EVIDENCE_V1",
+  "status": "REJECTED_NEGLIGIBLE_WORK_SAVING_NO_DEPTH_GAIN_UNSTABLE_OR_NEGATIVE_WALL_CLOCK",
+  "productionDefaultChanged": false,
+  "runtimeImplementationRetained": false,
+  "searchSemanticsChanged": false,
+  "scope": {
+    "experiment": "REUSE_AN_ALREADY_CACHED_ENEMY_NONE_SUCCESSOR_WHEN_ENEMY_GO_IS_PROVEN_NO_EFFECT",
+    "precondition": "THE_CANONICAL_NONE_SUCCESSOR_ALREADY_EXISTS_IN_THE_SAME_ROOT_TRANSITION_SLAB",
+    "intent": "COPY_THE_CACHED_DELTA_AND_HARD_METADATA_INSTEAD_OF_BUILDING_AN_IDENTICAL_GO_SUCCESSOR",
+    "rejectedSourceFingerprint": "a758e2c802583ca3380ead07887209ff22cb12428540b90f878e6e7169392efb",
+    "restoredProductionSourceFingerprint": "af166127620ca9b1452a35ba1ae1439edc46ace6393bc35ebdc7072b19bdafe9"
+  },
+  "exactnessCensus": {
+    "cohort": "FIXED_16_CALIBRATION_ROOTS",
+    "candidateJointChanceSuccessors": 144,
+    "predicateMatches": 63,
+    "exactStateAndHardMatches": 63,
+    "falsePositiveAliases": 0,
+    "equalSuccessorsMissedByPredicate": 0,
+    "finding": "THE_ALIAS_PREDICATE_IS_EXACT_FOR_THE_MEASURED_ROOTS_BUT_THE_REUSE_OPPORTUNITY_IS_TOO_SPARSE"
+  },
+  "calibration": {
+    "profileCount": 24,
+    "callsPerProfile": 80,
+    "aliasHits": {
+      "total": 1665,
+      "physicalOnly": true,
+      "byProfile": {
+        "P1": 315,
+        "P2": 90,
+        "P3": 315,
+        "P4": 315,
+        "P5": 315,
+        "P6": 315
+      }
+    },
+    "semanticResult": {
+      "requestedCompletionDifferences": 0,
+      "nodeDifferences": 0,
+      "completedDepthDifferences": 0,
+      "valueSupportDepthDifferences": 0,
+      "invariantFailures": 0
+    },
+    "offThenOn": {
+      "off": {
+        "fingerprint": "d0c4bc21be175b209b02adeb84f55810a2378d92fabf10f7dc524c2f30291b41",
+        "sha256": "a4b1bde87e58fff8747e8aea2c16078934ebde79abf5c9056d479772c58f8d9e"
+      },
+      "on": {
+        "fingerprint": "943ca69aa8eded28e9c83bd672dbbee81a609d0185a1e7ae63df9cd0466627fe",
+        "sha256": "62e7db3626df2e830ee29c65087ce1404ec660ffc8c7f47512d0eb8040e1b8b1"
+      },
+      "comparison": {
+        "fingerprint": "5ee32b6c17f3d3c638b9b8853e351a9c51928c6d08adaa7940bbb2ce9ad361bb",
+        "sha256": "4b60d09313544ce28cbd4c259e2a979af93f786b3155763c794f28eced1812be",
+        "coldFasterProfiles": 22,
+        "coldSlowerProfiles": 2,
+        "warmFasterProfiles": 21,
+        "warmSlowerProfiles": 3
+      }
+    },
+    "onThenOff": {
+      "on": {
+        "fingerprint": "a75d2b69979dd63fe61fb04ca30150b5d3d356caa9e413e5832fe83ef88d38c9",
+        "sha256": "b0a6551287af81906735765c403f8ac68914cab6f04ebe495aac5872f54fdc35"
+      },
+      "off": {
+        "fingerprint": "f0669a7130dd4f34180652d7bc044f724b8afda3cefd8b3ced1f1c54965d569c",
+        "sha256": "8382f7b376b40820e2dc00e4631e4cb757bec8f00021b58f2b86d4709b076ee0"
+      },
+      "comparison": {
+        "fingerprint": "90e0c2ab73bd6fb9777367ea352d9b0646ed480ca20a3bc69d1dbe1a5b664bcf",
+        "sha256": "47e05bd40b441c343c6c951531ee2f25866a36e753396fab9d64c601bb56e4c3",
+        "coldFasterProfiles": 6,
+        "coldSlowerProfiles": 16,
+        "coldEqualProfiles": 2,
+        "warmFasterProfiles": 11,
+        "warmSlowerProfiles": 13,
+        "physicalP1ToP6ColdMicrosDelta": [4, 30, 0, 37, 26, 30],
+        "physicalP1ToP6WarmMicrosDelta": [5, 16, 44, 47, 41, 42]
+      }
+    },
+    "interpretation": "THE_FIRST_ORDER_SHOWED_APPARENT_SPEEDUPS_BUT_THE_REVERSED_ORDER_REMOVED_THEM; PHYSICAL_PROFILES_WERE_FLAT_OR_SLOWER_WITH_THE_ALIAS"
+  },
+  "causalArena": {
+    "role": "DISCOVERY",
+    "scenarios": 16,
+    "matchesPerProfile": 32,
+    "reportFingerprint": "cdeac2c23d1fe7e77d834673d7701a9a47d2599c50d713d5c7cff525699727d8",
+    "reportSha256": "a0d3756baa1608fced04a4c208f97d85081819134e88be55139497f52eba19bf",
+    "aliasOn": {
+      "wins": 3,
+      "losses": 28,
+      "draws": 1,
+      "scoreBasisPoints": 1094,
+      "starDelta": -42,
+      "fireActions": 150,
+      "searchNodes": 26912,
+      "completedDepth": [0, 19, 53, 2, 4, 0, 0, 0],
+      "physicalValueSupportDepth": [0, 18, 52, 3, 1, 0, 0, 0],
+      "aliasHits": 19,
+      "builds": 21511,
+      "replays": 7550,
+      "hardReplays": 6582,
+      "hardFills": 21507,
+      "workUnits": 4471736,
+      "totalRuntimeMicros": 1274446,
+      "p95RuntimeMicrosMax": 5228
+    },
+    "aliasOff": {
+      "wins": 3,
+      "losses": 28,
+      "draws": 1,
+      "scoreBasisPoints": 1094,
+      "starDelta": -42,
+      "fireActions": 150,
+      "searchNodes": 26912,
+      "completedDepth": [0, 19, 53, 2, 4, 0, 0, 0],
+      "physicalValueSupportDepth": [0, 18, 52, 3, 1, 0, 0, 0],
+      "aliasHits": 0,
+      "builds": 21530,
+      "replays": 7531,
+      "hardReplays": 6563,
+      "hardFills": 21526,
+      "workUnits": 4471793,
+      "totalRuntimeMicros": 1140222,
+      "p95RuntimeMicrosMax": 1911
+    },
+    "delta": {
+      "outcomeDifferences": 0,
+      "actionStreamDifferences": 0,
+      "frameDifferences": 0,
+      "starDifferences": 0,
+      "searchNodeDelta": 0,
+      "completedDepthDifferences": 0,
+      "valueSupportDepthDifferences": 0,
+      "buildsAvoided": 19,
+      "hardFillsAvoided": 19,
+      "additionalReplays": 19,
+      "workUnitsSaved": 57,
+      "workUnitsSavedBasisPoints": 0,
+      "workUnitsSavedPartsPerMillion": 13,
+      "runtimeMicrosDelta": 134224
+    },
+    "invariants": {
+      "rootTransitionReplayFailures": 0,
+      "hotAllocations": 0
+    }
+  },
+  "restoration": {
+    "runtimeSymbolsRemaining": 0,
+    "hp23CalibrationStatus": "CURRENT",
+    "hp23Baseline": "config/engine-v2/minimax-depth-baselines/after-hp23.json",
+    "productionSourceFingerprint": "af166127620ca9b1452a35ba1ae1439edc46ace6393bc35ebdc7072b19bdafe9"
+  },
+  "decision": {
+    "classification": "NEGATIVE_RUNTIME_OPTIMIZATION_DESPITE_EXACT_LOCAL_ALIAS",
+    "productionDefault": "ABSENT_REVERTED",
+    "reason": "The reuse-only alias was semantically exact, but it avoided only 19 builds in 32 matches, saved 57 deterministic work units out of 4,471,793, changed no node or depth result, and had no order-stable wall-clock benefit. Keeping an extra hot-path predicate and branch is unjustified.",
+    "next": "MEASURE_COST_BY_SEARCH_LEVEL_AND_OPERATION_CLASS_BEFORE_SELECTING_THE_NEXT_OPTIMIZATION"
+  }
+}

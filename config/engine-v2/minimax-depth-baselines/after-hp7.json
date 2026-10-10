@@ -1,0 +1,2762 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "MINIMAX_DEPTH_CALIBRATION_BASELINE_V1",
+  "name": "after-hp7",
+  "frozenAt": "2026-08-04T06:17:05.477Z",
+  "reportFingerprint": "bfe255250979858bf1d1f80be157604ab99d39ad67add0972e1179041a4e3b3b",
+  "source": {
+    "files": {
+      "engine-v2/src/search/production-depth-search.js": "bb1fdec65f2864a493e5c620cb8a8d48aa637ce3783f25dbdf8be74709be9e66",
+      "engine-v2/src/search/production-information-search.js": "380b8b3b7625bb7fd2529ce1d0ef9f5a6dd99beca86aadf56ef27f585aed2316",
+      "engine-v2/src/search/root-transition-slab.js": "008f699a18d0fcc160f7a9aad71004eca9d3f1263f9fd8bc40a36973043ccae1",
+      "engine-v2/src/search/contender-frontier.js": "24e9782fa7483ed156eb29490d7ef601663321b2dc0f0b35e25b8cc0a28724bf",
+      "engine-v2/src/search/value-search.js": "73d4d79793ee25cbc60606ddeb60c60ffb76cfb7b6c3d64784ecf53800767a6c",
+      "engine-v2/src/search/engine.js": "0ce826ebb2bd5a9018d3eb21fef8f039a6ccb2727fb8f2cd9dfcd3a0a4b4f8f7",
+      "engine-v2/src/runtime/production-root.js": "bf4f6c8e8b7f247986839d302e78778b57e4cf100fe93bf1df603e99bf70a5e9",
+      "engine-v2/src/runtime/controller.js": "57c1770debff2b31d10dfd581b47b3e8dc8cd91e64c82f5700148d15aa801244",
+      "engine-v2/src/fast/kernel.js": "11441891d288dfe44a925014ebde6c01a5cb04837c2f4f2842cc33c704c43304",
+      "engine-v2/src/fast/hard-gate.js": "c2c1c0b58e6cba4545fb083d554fad3d861da78ee957434f6f032ed93fc73963",
+      "engine-v2/src/fast/hazard.js": "730c749a4525098b0e1ac17030b07b79913bace2285e0d2ddd10742b99f3328f",
+      "engine-v2/src/generated/search-config.js": "8a0e102a31a767f751a4d06019fadce6940f55e3370a819b80880214de9c626c",
+      "engine-v2/src/generated/runtime-config.js": "e14fb633e407ea74a2d34ee12123a6d488233a4c5efc8f97e1f8d5d28fdbfd10"
+    },
+    "fingerprint": "b9500cfa43360b9a6caf6f1391431545e43ea98d573df2a1807ffcc24a11e4ba"
+  },
+  "contractFingerprint": "d3674f7ece4dc6738eeda614ce3ad92090e8ab8add3410babdfb7f27e58a75cb",
+  "node": "v24.16.0",
+  "report": {
+    "schemaVersion": 1,
+    "objectKind": "MINIMAX_DEPTH_CALIBRATION_V1",
+    "status": "PASS",
+    "createdAt": "2026-08-04T06:14:41.095Z",
+    "node": "v24.16.0",
+    "environment": {
+      "node": "v24.16.0",
+      "platform": "linux",
+      "arch": "x64",
+      "cpu": "AMD Ryzen 7 6800H with Radeon Graphics"
+    },
+    "harness": {
+      "files": {
+        "tools/agentank/diagnostics/minimax-depth-calibration.js": "62810c886ef4a7da7d838c2838c21c965a63c67896d7cbf9d7cad3866a7a6466",
+        "tools/agentank/benchmark/search-frontier-benchmark.js": "06a17ea0996e1c93afeb5d695b780be42fa499a80b7ebd2e7c615fef995f4382"
+      },
+      "fingerprint": "2110c678042971c40397c43b23599c8281f577c9e4d80546d168f870c89178be"
+    },
+    "scenarioSet": {
+      "count": 16,
+      "scenarios": [
+        {
+          "index": 0,
+          "scenarioClass": "V0",
+          "rootHashLo": 3140215789,
+          "rootHashHi": 1678485795,
+          "ourActions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            11
+          ],
+          "ourArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "enemyActions": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            8
+          ],
+          "enemyArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "worldCells": [
+            19,
+            12,
+            18,
+            26
+          ]
+        },
+        {
+          "index": 1,
+          "scenarioClass": "V1",
+          "rootHashLo": 2561546851,
+          "rootHashHi": 3806821021,
+          "ourActions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            11
+          ],
+          "ourArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "enemyActions": [
+            0,
+            1,
+            2,
+            3,
+            5,
+            8
+          ],
+          "enemyArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "worldCells": [
+            30,
+            23,
+            29,
+            31
+          ]
+        },
+        {
+          "index": 2,
+          "scenarioClass": "V2",
+          "rootHashLo": 3692498352,
+          "rootHashHi": 2846315741,
+          "ourActions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            11
+          ],
+          "ourArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "enemyActions": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            8
+          ],
+          "enemyArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "worldCells": [
+            37,
+            38,
+            23,
+            29
+          ]
+        },
+        {
+          "index": 3,
+          "scenarioClass": "V3",
+          "rootHashLo": 3747148439,
+          "rootHashHi": 2642558071,
+          "ourActions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            11
+          ],
+          "ourArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "enemyActions": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            8
+          ],
+          "enemyArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "worldCells": [
+            16,
+            15,
+            17,
+            23
+          ]
+        },
+        {
+          "index": 4,
+          "scenarioClass": "V0",
+          "rootHashLo": 3021986362,
+          "rootHashHi": 3679630706,
+          "ourActions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            11
+          ],
+          "ourArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "enemyActions": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            8
+          ],
+          "enemyArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "worldCells": [
+            37,
+            30,
+            36,
+            38
+          ]
+        },
+        {
+          "index": 5,
+          "scenarioClass": "V1",
+          "rootHashLo": 2537781830,
+          "rootHashHi": 3793370672,
+          "ourActions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            11
+          ],
+          "ourArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "enemyActions": [
+            0,
+            1,
+            2,
+            3,
+            5,
+            8
+          ],
+          "enemyArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "worldCells": [
+            9,
+            10,
+            11,
+            15
+          ]
+        },
+        {
+          "index": 6,
+          "scenarioClass": "V2",
+          "rootHashLo": 3757030294,
+          "rootHashHi": 3210573307,
+          "ourActions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            11
+          ],
+          "ourArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "enemyActions": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            8
+          ],
+          "enemyArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "worldCells": [
+            40,
+            33,
+            39,
+            26
+          ]
+        },
+        {
+          "index": 7,
+          "scenarioClass": "V3",
+          "rootHashLo": 3506809396,
+          "rootHashHi": 2694304905,
+          "ourActions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            11
+          ],
+          "ourArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "enemyActions": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            8
+          ],
+          "enemyArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "worldCells": [
+            10,
+            9,
+            11,
+            17
+          ]
+        },
+        {
+          "index": 8,
+          "scenarioClass": "V0",
+          "rootHashLo": 3059793337,
+          "rootHashHi": 1542466320,
+          "ourActions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            11
+          ],
+          "ourArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "enemyActions": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            8
+          ],
+          "enemyArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "worldCells": [
+            39,
+            40,
+            25,
+            31
+          ]
+        },
+        {
+          "index": 9,
+          "scenarioClass": "V1",
+          "rootHashLo": 2595163808,
+          "rootHashHi": 3642329101,
+          "ourActions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            11
+          ],
+          "ourArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "enemyActions": [
+            0,
+            1,
+            2,
+            3,
+            5,
+            8
+          ],
+          "enemyArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "worldCells": [
+            26,
+            19,
+            25,
+            24
+          ]
+        },
+        {
+          "index": 10,
+          "scenarioClass": "V2",
+          "rootHashLo": 3757586182,
+          "rootHashHi": 3939205003,
+          "ourActions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            11
+          ],
+          "ourArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "enemyActions": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            8
+          ],
+          "enemyArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "worldCells": [
+            24,
+            17,
+            23,
+            31
+          ]
+        },
+        {
+          "index": 11,
+          "scenarioClass": "V3",
+          "rootHashLo": 4194294614,
+          "rootHashHi": 909404258,
+          "ourActions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            11
+          ],
+          "ourArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "enemyActions": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            8
+          ],
+          "enemyArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "worldCells": [
+            8,
+            15,
+            10,
+            16
+          ]
+        },
+        {
+          "index": 12,
+          "scenarioClass": "V0",
+          "rootHashLo": 2427653412,
+          "rootHashHi": 1940071299,
+          "ourActions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            11
+          ],
+          "ourArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "enemyActions": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            8
+          ],
+          "enemyArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "worldCells": [
+            16,
+            9,
+            15,
+            17
+          ]
+        },
+        {
+          "index": 13,
+          "scenarioClass": "V1",
+          "rootHashLo": 2485898158,
+          "rootHashHi": 2114883122,
+          "ourActions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            11
+          ],
+          "ourArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "enemyActions": [
+            0,
+            1,
+            2,
+            3,
+            5,
+            8
+          ],
+          "enemyArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "worldCells": [
+            36,
+            29,
+            37,
+            22
+          ]
+        },
+        {
+          "index": 14,
+          "scenarioClass": "V2",
+          "rootHashLo": 4114849686,
+          "rootHashHi": 2654240258,
+          "ourActions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            11
+          ],
+          "ourArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "enemyActions": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            8
+          ],
+          "enemyArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "worldCells": [
+            33,
+            26,
+            19,
+            25
+          ]
+        },
+        {
+          "index": 15,
+          "scenarioClass": "V3",
+          "rootHashLo": 4177011146,
+          "rootHashHi": 2477000280,
+          "ourActions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            11
+          ],
+          "ourArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "enemyActions": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            8
+          ],
+          "enemyArguments": [
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535,
+            65535
+          ],
+          "worldCells": [
+            38,
+            31,
+            37,
+            39
+          ]
+        }
+      ],
+      "fingerprint": "d5d426bda5aafc8c10e92b63ca306eef839e8b3546c4d77095d67506a834a277"
+    },
+    "contract": {
+      "schemaVersion": 1,
+      "contractId": "MINIMAX_DEPTH_CALIBRATION_V1",
+      "scenarioCount": 16,
+      "warmupBatches": 1,
+      "measuredBatches": 5,
+      "nodeBudget": 512,
+      "baseRisk": 50,
+      "physicalDepths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "informationWorldCounts": [
+        1,
+        2,
+        4
+      ],
+      "physicalContinuationDepths": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "requiredNodeMajor": 24,
+      "rules": {
+        "publishCompletedIterationsOnly": true,
+        "separateInformationAndPhysicalDepth": true,
+        "measureColdAndWarmCache": true,
+        "winRateIsNotAPerformanceGate": true,
+        "rootRestoreFailuresMaximum": 0,
+        "hotAllocationsMaximum": 0,
+        "warmColdSemanticMismatchesMaximum": 0
+      }
+    },
+    "contractFingerprint": "d3674f7ece4dc6738eeda614ce3ad92090e8ab8add3410babdfb7f27e58a75cb",
+    "features": {
+      "rootTransitionSlab": 1,
+      "selectiveContinuation": 1
+    },
+    "canonicalContractFingerprint": "d3674f7ece4dc6738eeda614ce3ad92090e8ab8add3410babdfb7f27e58a75cb",
+    "source": {
+      "files": {
+        "engine-v2/src/search/production-depth-search.js": "bb1fdec65f2864a493e5c620cb8a8d48aa637ce3783f25dbdf8be74709be9e66",
+        "engine-v2/src/search/production-information-search.js": "380b8b3b7625bb7fd2529ce1d0ef9f5a6dd99beca86aadf56ef27f585aed2316",
+        "engine-v2/src/search/root-transition-slab.js": "008f699a18d0fcc160f7a9aad71004eca9d3f1263f9fd8bc40a36973043ccae1",
+        "engine-v2/src/search/contender-frontier.js": "24e9782fa7483ed156eb29490d7ef601663321b2dc0f0b35e25b8cc0a28724bf",
+        "engine-v2/src/search/value-search.js": "73d4d79793ee25cbc60606ddeb60c60ffb76cfb7b6c3d64784ecf53800767a6c",
+        "engine-v2/src/search/engine.js": "0ce826ebb2bd5a9018d3eb21fef8f039a6ccb2727fb8f2cd9dfcd3a0a4b4f8f7",
+        "engine-v2/src/runtime/production-root.js": "bf4f6c8e8b7f247986839d302e78778b57e4cf100fe93bf1df603e99bf70a5e9",
+        "engine-v2/src/runtime/controller.js": "57c1770debff2b31d10dfd581b47b3e8dc8cd91e64c82f5700148d15aa801244",
+        "engine-v2/src/fast/kernel.js": "11441891d288dfe44a925014ebde6c01a5cb04837c2f4f2842cc33c704c43304",
+        "engine-v2/src/fast/hard-gate.js": "c2c1c0b58e6cba4545fb083d554fad3d861da78ee957434f6f032ed93fc73963",
+        "engine-v2/src/fast/hazard.js": "730c749a4525098b0e1ac17030b07b79913bace2285e0d2ddd10742b99f3328f",
+        "engine-v2/src/generated/search-config.js": "8a0e102a31a767f751a4d06019fadce6940f55e3370a819b80880214de9c626c",
+        "engine-v2/src/generated/runtime-config.js": "e14fb633e407ea74a2d34ee12123a6d488233a4c5efc8f97e1f8d5d28fdbfd10"
+      },
+      "fingerprint": "b9500cfa43360b9a6caf6f1391431545e43ea98d573df2a1807ffcc24a11e4ba"
+    },
+    "profileCount": 24,
+    "measuredCallsPerProfile": 80,
+    "invariantTotals": {
+      "rootRestoreFailures": 0,
+      "rootTransitionReplayFailures": 0,
+      "rootRestoreMismatches": 0,
+      "hotAllocations": 0,
+      "warmColdSemanticMismatches": 0
+    },
+    "summaries": {
+      "P1": {
+        "profile": {
+          "id": "P1",
+          "kind": "PHYSICAL",
+          "requestedDepth": 1,
+          "requestedInformationRootDepth": 0,
+          "requestedPhysicalContinuationDepth": 1,
+          "worldCount": 0
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 10000,
+        "supportCompletePer10000": 10000,
+        "completedDepthHistogram": {
+          "1": 80
+        },
+        "informationRootDepthHistogram": {
+          "0": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 80
+        },
+        "warmCompletedDepthHistogram": {
+          "1": 80
+        },
+        "warmInformationRootDepthHistogram": {
+          "0": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 80
+        },
+        "cacheDepthGainHistogram": {
+          "0": 80
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "1": 80
+        },
+        "cold": {
+          "p50Micros": 324,
+          "p95Micros": 654,
+          "p99Micros": 962,
+          "p50Nodes": 153,
+          "p95Nodes": 342
+        },
+        "warm": {
+          "p50Micros": 151,
+          "p95Micros": 342,
+          "p99Micros": 514,
+          "p50Nodes": 153,
+          "p95Nodes": 342
+        },
+        "rootTransitionHits": {
+          "p50": 84,
+          "p95": 180
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "P2": {
+        "profile": {
+          "id": "P2",
+          "kind": "PHYSICAL",
+          "requestedDepth": 2,
+          "requestedInformationRootDepth": 0,
+          "requestedPhysicalContinuationDepth": 2,
+          "worldCount": 0
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 7500,
+        "supportCompletePer10000": 2500,
+        "completedDepthHistogram": {
+          "1": 20,
+          "2": 60
+        },
+        "informationRootDepthHistogram": {
+          "0": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 20,
+          "2": 60
+        },
+        "warmCompletedDepthHistogram": {
+          "1": 15,
+          "2": 65
+        },
+        "warmInformationRootDepthHistogram": {
+          "0": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 65
+        },
+        "cacheDepthGainHistogram": {
+          "0": 75,
+          "1": 5
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "2": 80
+        },
+        "cold": {
+          "p50Micros": 474,
+          "p95Micros": 1083,
+          "p99Micros": 1810,
+          "p50Nodes": 181,
+          "p95Nodes": 512
+        },
+        "warm": {
+          "p50Micros": 237,
+          "p95Micros": 929,
+          "p99Micros": 1782,
+          "p50Nodes": 117,
+          "p95Nodes": 512
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 70
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "P3": {
+        "profile": {
+          "id": "P3",
+          "kind": "PHYSICAL",
+          "requestedDepth": 3,
+          "requestedInformationRootDepth": 0,
+          "requestedPhysicalContinuationDepth": 3,
+          "worldCount": 0
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 0,
+        "supportCompletePer10000": 2500,
+        "completedDepthHistogram": {
+          "1": 20,
+          "2": 60
+        },
+        "informationRootDepthHistogram": {
+          "0": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 20,
+          "2": 60
+        },
+        "warmCompletedDepthHistogram": {
+          "1": 15,
+          "2": 65
+        },
+        "warmInformationRootDepthHistogram": {
+          "0": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 65
+        },
+        "cacheDepthGainHistogram": {
+          "0": 75,
+          "1": 5
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 40,
+          "3": 40
+        },
+        "attemptedDepthHistogram": {
+          "2": 20,
+          "3": 60
+        },
+        "cold": {
+          "p50Micros": 782,
+          "p95Micros": 1594,
+          "p99Micros": 1943,
+          "p50Nodes": 418,
+          "p95Nodes": 512
+        },
+        "warm": {
+          "p50Micros": 413,
+          "p95Micros": 1045,
+          "p99Micros": 1322,
+          "p50Nodes": 243,
+          "p95Nodes": 512
+        },
+        "rootTransitionHits": {
+          "p50": 16,
+          "p95": 70
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "P4": {
+        "profile": {
+          "id": "P4",
+          "kind": "PHYSICAL",
+          "requestedDepth": 4,
+          "requestedInformationRootDepth": 0,
+          "requestedPhysicalContinuationDepth": 4,
+          "worldCount": 0
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 0,
+        "supportCompletePer10000": 2500,
+        "completedDepthHistogram": {
+          "1": 20,
+          "2": 60
+        },
+        "informationRootDepthHistogram": {
+          "0": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 20,
+          "2": 60
+        },
+        "warmCompletedDepthHistogram": {
+          "1": 15,
+          "2": 65
+        },
+        "warmInformationRootDepthHistogram": {
+          "0": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 65
+        },
+        "cacheDepthGainHistogram": {
+          "0": 75,
+          "1": 5
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 40,
+          "3": 40
+        },
+        "attemptedDepthHistogram": {
+          "2": 20,
+          "3": 20,
+          "4": 40
+        },
+        "cold": {
+          "p50Micros": 892,
+          "p95Micros": 1513,
+          "p99Micros": 1965,
+          "p50Nodes": 512,
+          "p95Nodes": 512
+        },
+        "warm": {
+          "p50Micros": 639,
+          "p95Micros": 1148,
+          "p99Micros": 1987,
+          "p50Nodes": 512,
+          "p95Nodes": 512
+        },
+        "rootTransitionHits": {
+          "p50": 19,
+          "p95": 70
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "P5": {
+        "profile": {
+          "id": "P5",
+          "kind": "PHYSICAL",
+          "requestedDepth": 5,
+          "requestedInformationRootDepth": 0,
+          "requestedPhysicalContinuationDepth": 5,
+          "worldCount": 0
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 0,
+        "supportCompletePer10000": 2500,
+        "completedDepthHistogram": {
+          "1": 20,
+          "2": 60
+        },
+        "informationRootDepthHistogram": {
+          "0": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 20,
+          "2": 60
+        },
+        "warmCompletedDepthHistogram": {
+          "1": 15,
+          "2": 65
+        },
+        "warmInformationRootDepthHistogram": {
+          "0": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 65
+        },
+        "cacheDepthGainHistogram": {
+          "0": 75,
+          "1": 5
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 40,
+          "3": 40
+        },
+        "attemptedDepthHistogram": {
+          "2": 20,
+          "3": 20,
+          "4": 40
+        },
+        "cold": {
+          "p50Micros": 869,
+          "p95Micros": 1560,
+          "p99Micros": 2131,
+          "p50Nodes": 512,
+          "p95Nodes": 512
+        },
+        "warm": {
+          "p50Micros": 633,
+          "p95Micros": 1153,
+          "p99Micros": 2244,
+          "p50Nodes": 512,
+          "p95Nodes": 512
+        },
+        "rootTransitionHits": {
+          "p50": 19,
+          "p95": 70
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "P6": {
+        "profile": {
+          "id": "P6",
+          "kind": "PHYSICAL",
+          "requestedDepth": 6,
+          "requestedInformationRootDepth": 0,
+          "requestedPhysicalContinuationDepth": 6,
+          "worldCount": 0
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 0,
+        "supportCompletePer10000": 2500,
+        "completedDepthHistogram": {
+          "1": 20,
+          "2": 60
+        },
+        "informationRootDepthHistogram": {
+          "0": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 20,
+          "2": 60
+        },
+        "warmCompletedDepthHistogram": {
+          "1": 15,
+          "2": 65
+        },
+        "warmInformationRootDepthHistogram": {
+          "0": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 65
+        },
+        "cacheDepthGainHistogram": {
+          "0": 75,
+          "1": 5
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 40,
+          "3": 40
+        },
+        "attemptedDepthHistogram": {
+          "2": 20,
+          "3": 20,
+          "4": 40
+        },
+        "cold": {
+          "p50Micros": 868,
+          "p95Micros": 1688,
+          "p99Micros": 2059,
+          "p50Nodes": 512,
+          "p95Nodes": 512
+        },
+        "warm": {
+          "p50Micros": 629,
+          "p95Micros": 1311,
+          "p99Micros": 1467,
+          "p50Nodes": 512,
+          "p95Nodes": 512
+        },
+        "rootTransitionHits": {
+          "p50": 19,
+          "p95": 70
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W1-P0": {
+        "profile": {
+          "id": "I1W1-P0",
+          "kind": "INFORMATION",
+          "requestedDepth": 1,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 0,
+          "worldCount": 1
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 10000,
+        "supportCompletePer10000": 10000,
+        "completedDepthHistogram": {
+          "1": 80
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "0": 80
+        },
+        "warmCompletedDepthHistogram": {
+          "1": 80
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "0": 80
+        },
+        "cacheDepthGainHistogram": {
+          "0": 80
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "1": 80
+        },
+        "cold": {
+          "p50Micros": 336,
+          "p95Micros": 725,
+          "p99Micros": 893,
+          "p50Nodes": 51,
+          "p95Nodes": 114
+        },
+        "warm": {
+          "p50Micros": 243,
+          "p95Micros": 550,
+          "p99Micros": 774,
+          "p50Nodes": 51,
+          "p95Nodes": 114
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W1-P1": {
+        "profile": {
+          "id": "I1W1-P1",
+          "kind": "INFORMATION",
+          "requestedDepth": 2,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 1,
+          "worldCount": 1
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 9375,
+        "supportCompletePer10000": 0,
+        "completedDepthHistogram": {
+          "1": 5,
+          "2": 75
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "0": 5,
+          "1": 75
+        },
+        "warmCompletedDepthHistogram": {
+          "1": 5,
+          "2": 75
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "0": 5,
+          "1": 75
+        },
+        "cacheDepthGainHistogram": {
+          "0": 80
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "2": 80
+        },
+        "cold": {
+          "p50Micros": 359,
+          "p95Micros": 923,
+          "p99Micros": 1214,
+          "p50Nodes": 120,
+          "p95Nodes": 197
+        },
+        "warm": {
+          "p50Micros": 297,
+          "p95Micros": 584,
+          "p99Micros": 1027,
+          "p50Nodes": 120,
+          "p95Nodes": 197
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W1-P2": {
+        "profile": {
+          "id": "I1W1-P2",
+          "kind": "INFORMATION",
+          "requestedDepth": 3,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 2,
+          "worldCount": 1
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 7500,
+        "supportCompletePer10000": 0,
+        "completedDepthHistogram": {
+          "2": 20,
+          "3": 60
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 20,
+          "2": 60
+        },
+        "warmCompletedDepthHistogram": {
+          "2": 15,
+          "3": 65
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 65
+        },
+        "cacheDepthGainHistogram": {
+          "0": 75,
+          "1": 5
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "3": 80
+        },
+        "cold": {
+          "p50Micros": 511,
+          "p95Micros": 1196,
+          "p99Micros": 1861,
+          "p50Nodes": 229,
+          "p95Nodes": 288
+        },
+        "warm": {
+          "p50Micros": 432,
+          "p95Micros": 916,
+          "p99Micros": 1643,
+          "p50Nodes": 229,
+          "p95Nodes": 288
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W1-P3": {
+        "profile": {
+          "id": "I1W1-P3",
+          "kind": "INFORMATION",
+          "requestedDepth": 4,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 3,
+          "worldCount": 1
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 1250,
+        "supportCompletePer10000": 0,
+        "completedDepthHistogram": {
+          "2": 15,
+          "3": 55,
+          "4": 10
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 55,
+          "3": 10
+        },
+        "warmCompletedDepthHistogram": {
+          "2": 10,
+          "3": 60,
+          "4": 10
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 10,
+          "2": 60,
+          "3": 10
+        },
+        "cacheDepthGainHistogram": {
+          "0": 75,
+          "1": 5
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "4": 80
+        },
+        "cold": {
+          "p50Micros": 598,
+          "p95Micros": 1332,
+          "p99Micros": 2965,
+          "p50Nodes": 282,
+          "p95Nodes": 334
+        },
+        "warm": {
+          "p50Micros": 526,
+          "p95Micros": 1165,
+          "p99Micros": 2320,
+          "p50Nodes": 282,
+          "p95Nodes": 334
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W1-P4": {
+        "profile": {
+          "id": "I1W1-P4",
+          "kind": "INFORMATION",
+          "requestedDepth": 5,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 4,
+          "worldCount": 1
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 1250,
+        "supportCompletePer10000": 0,
+        "completedDepthHistogram": {
+          "2": 15,
+          "3": 55,
+          "5": 10
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 55,
+          "4": 10
+        },
+        "warmCompletedDepthHistogram": {
+          "2": 10,
+          "3": 60,
+          "5": 10
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 10,
+          "2": 60,
+          "4": 10
+        },
+        "cacheDepthGainHistogram": {
+          "0": 75,
+          "1": 5
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "5": 80
+        },
+        "cold": {
+          "p50Micros": 616,
+          "p95Micros": 1343,
+          "p99Micros": 1833,
+          "p50Nodes": 282,
+          "p95Nodes": 334
+        },
+        "warm": {
+          "p50Micros": 514,
+          "p95Micros": 1056,
+          "p99Micros": 1572,
+          "p50Nodes": 282,
+          "p95Nodes": 334
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W1-P5": {
+        "profile": {
+          "id": "I1W1-P5",
+          "kind": "INFORMATION",
+          "requestedDepth": 6,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 5,
+          "worldCount": 1
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 1250,
+        "supportCompletePer10000": 0,
+        "completedDepthHistogram": {
+          "2": 15,
+          "3": 55,
+          "6": 10
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 55,
+          "5": 10
+        },
+        "warmCompletedDepthHistogram": {
+          "2": 10,
+          "3": 60,
+          "6": 10
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 10,
+          "2": 60,
+          "5": 10
+        },
+        "cacheDepthGainHistogram": {
+          "0": 75,
+          "1": 5
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "6": 80
+        },
+        "cold": {
+          "p50Micros": 623,
+          "p95Micros": 1397,
+          "p99Micros": 2012,
+          "p50Nodes": 282,
+          "p95Nodes": 339
+        },
+        "warm": {
+          "p50Micros": 520,
+          "p95Micros": 1156,
+          "p99Micros": 1792,
+          "p50Nodes": 282,
+          "p95Nodes": 339
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W2-P0": {
+        "profile": {
+          "id": "I1W2-P0",
+          "kind": "INFORMATION",
+          "requestedDepth": 1,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 0,
+          "worldCount": 2
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 10000,
+        "supportCompletePer10000": 10000,
+        "completedDepthHistogram": {
+          "1": 80
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "0": 80
+        },
+        "warmCompletedDepthHistogram": {
+          "1": 80
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "0": 80
+        },
+        "cacheDepthGainHistogram": {
+          "0": 80
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "1": 80
+        },
+        "cold": {
+          "p50Micros": 635,
+          "p95Micros": 1400,
+          "p99Micros": 1929,
+          "p50Nodes": 96,
+          "p95Nodes": 204
+        },
+        "warm": {
+          "p50Micros": 503,
+          "p95Micros": 1078,
+          "p99Micros": 1536,
+          "p50Nodes": 96,
+          "p95Nodes": 204
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W2-P1": {
+        "profile": {
+          "id": "I1W2-P1",
+          "kind": "INFORMATION",
+          "requestedDepth": 2,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 1,
+          "worldCount": 2
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 9375,
+        "supportCompletePer10000": 0,
+        "completedDepthHistogram": {
+          "1": 5,
+          "2": 75
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "0": 5,
+          "1": 75
+        },
+        "warmCompletedDepthHistogram": {
+          "1": 5,
+          "2": 75
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "0": 5,
+          "1": 75
+        },
+        "cacheDepthGainHistogram": {
+          "0": 80
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "2": 80
+        },
+        "cold": {
+          "p50Micros": 512,
+          "p95Micros": 1291,
+          "p99Micros": 2336,
+          "p50Nodes": 156,
+          "p95Nodes": 264
+        },
+        "warm": {
+          "p50Micros": 423,
+          "p95Micros": 1060,
+          "p99Micros": 1872,
+          "p50Nodes": 156,
+          "p95Nodes": 264
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W2-P2": {
+        "profile": {
+          "id": "I1W2-P2",
+          "kind": "INFORMATION",
+          "requestedDepth": 3,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 2,
+          "worldCount": 2
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 8125,
+        "supportCompletePer10000": 0,
+        "completedDepthHistogram": {
+          "2": 15,
+          "3": 65
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 65
+        },
+        "warmCompletedDepthHistogram": {
+          "2": 15,
+          "3": 65
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 65
+        },
+        "cacheDepthGainHistogram": {
+          "0": 80
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "3": 80
+        },
+        "cold": {
+          "p50Micros": 646,
+          "p95Micros": 1624,
+          "p99Micros": 2975,
+          "p50Nodes": 255,
+          "p95Nodes": 354
+        },
+        "warm": {
+          "p50Micros": 571,
+          "p95Micros": 1310,
+          "p99Micros": 2522,
+          "p50Nodes": 252,
+          "p95Nodes": 354
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W2-P3": {
+        "profile": {
+          "id": "I1W2-P3",
+          "kind": "INFORMATION",
+          "requestedDepth": 4,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 3,
+          "worldCount": 2
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 1875,
+        "supportCompletePer10000": 0,
+        "completedDepthHistogram": {
+          "2": 15,
+          "3": 50,
+          "4": 15
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 50,
+          "3": 15
+        },
+        "warmCompletedDepthHistogram": {
+          "2": 15,
+          "3": 50,
+          "4": 15
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 50,
+          "3": 15
+        },
+        "cacheDepthGainHistogram": {
+          "0": 80
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "4": 80
+        },
+        "cold": {
+          "p50Micros": 710,
+          "p95Micros": 1400,
+          "p99Micros": 1903,
+          "p50Nodes": 313,
+          "p95Nodes": 402
+        },
+        "warm": {
+          "p50Micros": 645,
+          "p95Micros": 1115,
+          "p99Micros": 1571,
+          "p50Nodes": 313,
+          "p95Nodes": 402
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W2-P4": {
+        "profile": {
+          "id": "I1W2-P4",
+          "kind": "INFORMATION",
+          "requestedDepth": 5,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 4,
+          "worldCount": 2
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 1250,
+        "supportCompletePer10000": 0,
+        "completedDepthHistogram": {
+          "2": 15,
+          "3": 50,
+          "4": 5,
+          "5": 10
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 50,
+          "3": 5,
+          "4": 10
+        },
+        "warmCompletedDepthHistogram": {
+          "2": 15,
+          "3": 50,
+          "4": 5,
+          "5": 10
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 50,
+          "3": 5,
+          "4": 10
+        },
+        "cacheDepthGainHistogram": {
+          "0": 80
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "5": 80
+        },
+        "cold": {
+          "p50Micros": 735,
+          "p95Micros": 1337,
+          "p99Micros": 2032,
+          "p50Nodes": 312,
+          "p95Nodes": 402
+        },
+        "warm": {
+          "p50Micros": 628,
+          "p95Micros": 1116,
+          "p99Micros": 1795,
+          "p50Nodes": 312,
+          "p95Nodes": 402
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W2-P5": {
+        "profile": {
+          "id": "I1W2-P5",
+          "kind": "INFORMATION",
+          "requestedDepth": 6,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 5,
+          "worldCount": 2
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 1250,
+        "supportCompletePer10000": 0,
+        "completedDepthHistogram": {
+          "2": 15,
+          "3": 50,
+          "4": 5,
+          "6": 10
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 50,
+          "3": 5,
+          "5": 10
+        },
+        "warmCompletedDepthHistogram": {
+          "2": 15,
+          "3": 50,
+          "4": 5,
+          "6": 10
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 50,
+          "3": 5,
+          "5": 10
+        },
+        "cacheDepthGainHistogram": {
+          "0": 80
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "6": 80
+        },
+        "cold": {
+          "p50Micros": 709,
+          "p95Micros": 1319,
+          "p99Micros": 2352,
+          "p50Nodes": 313,
+          "p95Nodes": 402
+        },
+        "warm": {
+          "p50Micros": 649,
+          "p95Micros": 1211,
+          "p99Micros": 2099,
+          "p50Nodes": 313,
+          "p95Nodes": 402
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W4-P0": {
+        "profile": {
+          "id": "I1W4-P0",
+          "kind": "INFORMATION",
+          "requestedDepth": 1,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 0,
+          "worldCount": 4
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 10000,
+        "supportCompletePer10000": 7500,
+        "completedDepthHistogram": {
+          "1": 80
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "0": 80
+        },
+        "warmCompletedDepthHistogram": {
+          "1": 80
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "0": 80
+        },
+        "cacheDepthGainHistogram": {
+          "0": 80
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "1": 80
+        },
+        "cold": {
+          "p50Micros": 1079,
+          "p95Micros": 1769,
+          "p99Micros": 3085,
+          "p50Nodes": 180,
+          "p95Nodes": 204
+        },
+        "warm": {
+          "p50Micros": 922,
+          "p95Micros": 1475,
+          "p99Micros": 2569,
+          "p50Nodes": 180,
+          "p95Nodes": 204
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W4-P1": {
+        "profile": {
+          "id": "I1W4-P1",
+          "kind": "INFORMATION",
+          "requestedDepth": 2,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 1,
+          "worldCount": 4
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 9375,
+        "supportCompletePer10000": 0,
+        "completedDepthHistogram": {
+          "1": 5,
+          "2": 75
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "0": 5,
+          "1": 75
+        },
+        "warmCompletedDepthHistogram": {
+          "1": 5,
+          "2": 75
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "0": 5,
+          "1": 75
+        },
+        "cacheDepthGainHistogram": {
+          "0": 80
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "2": 80
+        },
+        "cold": {
+          "p50Micros": 485,
+          "p95Micros": 1090,
+          "p99Micros": 1533,
+          "p50Nodes": 156,
+          "p95Nodes": 264
+        },
+        "warm": {
+          "p50Micros": 406,
+          "p95Micros": 925,
+          "p99Micros": 1155,
+          "p50Nodes": 156,
+          "p95Nodes": 264
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W4-P2": {
+        "profile": {
+          "id": "I1W4-P2",
+          "kind": "INFORMATION",
+          "requestedDepth": 3,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 2,
+          "worldCount": 4
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 8125,
+        "supportCompletePer10000": 0,
+        "completedDepthHistogram": {
+          "2": 15,
+          "3": 65
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 65
+        },
+        "warmCompletedDepthHistogram": {
+          "2": 15,
+          "3": 65
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 65
+        },
+        "cacheDepthGainHistogram": {
+          "0": 80
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "3": 80
+        },
+        "cold": {
+          "p50Micros": 626,
+          "p95Micros": 1099,
+          "p99Micros": 1392,
+          "p50Nodes": 255,
+          "p95Nodes": 354
+        },
+        "warm": {
+          "p50Micros": 530,
+          "p95Micros": 1015,
+          "p99Micros": 1583,
+          "p50Nodes": 252,
+          "p95Nodes": 354
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W4-P3": {
+        "profile": {
+          "id": "I1W4-P3",
+          "kind": "INFORMATION",
+          "requestedDepth": 4,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 3,
+          "worldCount": 4
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 1875,
+        "supportCompletePer10000": 0,
+        "completedDepthHistogram": {
+          "2": 15,
+          "3": 50,
+          "4": 15
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 50,
+          "3": 15
+        },
+        "warmCompletedDepthHistogram": {
+          "2": 15,
+          "3": 50,
+          "4": 15
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 50,
+          "3": 15
+        },
+        "cacheDepthGainHistogram": {
+          "0": 80
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "4": 80
+        },
+        "cold": {
+          "p50Micros": 699,
+          "p95Micros": 1467,
+          "p99Micros": 2113,
+          "p50Nodes": 313,
+          "p95Nodes": 402
+        },
+        "warm": {
+          "p50Micros": 623,
+          "p95Micros": 1179,
+          "p99Micros": 1483,
+          "p50Nodes": 313,
+          "p95Nodes": 402
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W4-P4": {
+        "profile": {
+          "id": "I1W4-P4",
+          "kind": "INFORMATION",
+          "requestedDepth": 5,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 4,
+          "worldCount": 4
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 1250,
+        "supportCompletePer10000": 0,
+        "completedDepthHistogram": {
+          "2": 15,
+          "3": 50,
+          "4": 5,
+          "5": 10
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 50,
+          "3": 5,
+          "4": 10
+        },
+        "warmCompletedDepthHistogram": {
+          "2": 15,
+          "3": 50,
+          "4": 5,
+          "5": 10
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 50,
+          "3": 5,
+          "4": 10
+        },
+        "cacheDepthGainHistogram": {
+          "0": 80
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "5": 80
+        },
+        "cold": {
+          "p50Micros": 696,
+          "p95Micros": 1328,
+          "p99Micros": 1787,
+          "p50Nodes": 312,
+          "p95Nodes": 402
+        },
+        "warm": {
+          "p50Micros": 644,
+          "p95Micros": 1304,
+          "p99Micros": 1516,
+          "p50Nodes": 312,
+          "p95Nodes": 402
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      },
+      "I1W4-P5": {
+        "profile": {
+          "id": "I1W4-P5",
+          "kind": "INFORMATION",
+          "requestedDepth": 6,
+          "requestedInformationRootDepth": 1,
+          "requestedPhysicalContinuationDepth": 5,
+          "worldCount": 4
+        },
+        "calls": 80,
+        "requestedCompletionPer10000": 1250,
+        "supportCompletePer10000": 0,
+        "completedDepthHistogram": {
+          "2": 15,
+          "3": 50,
+          "4": 5,
+          "6": 10
+        },
+        "informationRootDepthHistogram": {
+          "1": 80
+        },
+        "physicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 50,
+          "3": 5,
+          "5": 10
+        },
+        "warmCompletedDepthHistogram": {
+          "2": 15,
+          "3": 50,
+          "4": 5,
+          "6": 10
+        },
+        "warmInformationRootDepthHistogram": {
+          "1": 80
+        },
+        "warmPhysicalContinuationDepthHistogram": {
+          "1": 15,
+          "2": 50,
+          "3": 5,
+          "5": 10
+        },
+        "cacheDepthGainHistogram": {
+          "0": 80
+        },
+        "selectiveCompletedDepthHistogram": {
+          "0": 80
+        },
+        "attemptedDepthHistogram": {
+          "6": 80
+        },
+        "cold": {
+          "p50Micros": 693,
+          "p95Micros": 1474,
+          "p99Micros": 1634,
+          "p50Nodes": 313,
+          "p95Nodes": 402
+        },
+        "warm": {
+          "p50Micros": 653,
+          "p95Micros": 1244,
+          "p99Micros": 1481,
+          "p50Nodes": 313,
+          "p95Nodes": 402
+        },
+        "rootTransitionHits": {
+          "p50": 0,
+          "p95": 0
+        },
+        "rootActions": {
+          "p50": 6,
+          "p95": 6
+        },
+        "enemyActions": {
+          "p50": 7,
+          "p95": 7
+        },
+        "invariants": {
+          "rootRestoreFailures": 0,
+          "rootTransitionReplayFailures": 0,
+          "rootRestoreMismatches": 0,
+          "hotAllocations": 0,
+          "warmColdSemanticMismatches": 0
+        }
+      }
+    },
+    "fingerprint": "bfe255250979858bf1d1f80be157604ab99d39ad67add0972e1179041a4e3b3b"
+  },
+  "fingerprint": "311015a3f99ffc6fc5dbd9bdebbf5adb013ac70e89ce84f9e3f07536400c419d"
+}

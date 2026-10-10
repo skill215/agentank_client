@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_ATTACK_OPTION_COVERAGE_EVIDENCE_V1",
+  "stage": "BP119",
+  "status": "UPSTREAM_ATTACK_EXECUTION_GENERATION_GAP",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "source": {
+    "coverageShadowSha256": "214324340dc612c10a2bdae23a88fffd5e26a6dd87a3fe34ce225d1d02b62059",
+    "diagnosticBotSha256": "0ff6c3065a4e0c70687fe909fffaa9c03c16e8b63938f17f15e61072d778c845",
+    "arenaSha256": "0096f495025253a5da7590d6f1692951fec57bb8f820267fbf99bb3f46e78586",
+    "testSha256": "b609fdb0010ebddc637d9117fc42fa643a2e1287e9620ac9b861e4338342286f"
+  },
+  "cohort": {
+    "role": "DISCOVERY",
+    "scenarioCount": 16,
+    "candidateMatches": 32,
+    "skillMode": "STUN",
+    "cohortFingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667"
+  },
+  "coverage": {
+    "decisions": 3030,
+    "enemyVisible": 2674,
+    "enemyHidden": 356,
+    "funnel": {
+      "NO_COMBAT_EVIDENCE": 2585,
+      "SOFT_ONLY_EVIDENCE": 36,
+      "INCOMPLETE_PURPOSE_OR_ESCAPE": 0,
+      "PORTFOLIO_SUPPORT_GAP": 1,
+      "HARD_FILTERED": 8,
+      "RISK_FILTERED": 114,
+      "DOMINATED": 32,
+      "STRICT": 254
+    },
+    "rootCounts": {
+      "broadCombatEvidence": 445,
+      "generatorEvidence": 409,
+      "purposeComplete": 409,
+      "portfolioAttack": 408,
+      "portfolioComplete": 408,
+      "hardAllowed": 400,
+      "riskAcceptable": 286,
+      "strictAttack": 254
+    },
+    "strictRows": {
+      "total": 264,
+      "byAction": { "GO": 13, "TURN_LEFT": 13, "TURN_RIGHT": 13, "FIRE": 225 },
+      "onlyFireRoots": 215,
+      "movementRoots": 39,
+      "resourceRoots": 0,
+      "starConflictRoots": 2,
+      "selectedInside": 155,
+      "selectedOutside": 99
+    },
+    "semanticAttackEpoch": {
+      "activeFrames": 1851,
+      "strictExecutionSupport": 134,
+      "executionGaps": 1717,
+      "supportBasisPoints": 724,
+      "strictAttackWithoutAttackEpoch": 120
+    },
+    "hotAllocationCount": 0
+  },
+  "diagnosticCorrection": {
+    "issue": "The first census included the trailing ACTION.NONE Hard/Safety sentinel as a strategic row.",
+    "fix": "Use the same production selectionCount boundary and exclude the trailing NONE sentinel.",
+    "result": "The apparent 63-root portfolio gap collapsed to one root; no ProductionRoot defect was inferred."
+  },
+  "behaviorNeutral": {
+    "scoreBasisPointDelta": 0,
+    "starDelta": 0,
+    "crashDelta": 0,
+    "fireDelta": 0,
+    "timeoutError": 0,
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "overviewSha256": "68831a661254e03a21b23b95fb7d4d610ae369af69f9653cc2df44bb82731884"
+  },
+  "decision": {
+    "retain": [
+      "semantic ATTACK target identity",
+      "strict existing Option ownership",
+      "Hard and multidimensional Risk filters"
+    ],
+    "reject": [
+      "treating Risk as the primary cause of attack scarcity",
+      "treating OptionPortfolio as the primary loss point",
+      "counting the trailing NONE sentinel as a strategic primitive"
+    ],
+    "next": "Generate route-proven ATTACK_APPROACH candidates only while a semantic ATTACK epoch lacks strict execution, then require complete two-Option Minimax dominance before any ownership experiment."
+  }
+}

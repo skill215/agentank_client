@@ -2,7 +2,7 @@
 
 const { RUNTIME_CONFIG, SEARCH_BUDGET, BUILD_CONFIG } = require("../generated/runtime-config");
 const { RUNTIME_MODE, RUNTIME_BUDGET_MODE, CLOCK_HEALTH, WORK_KIND,
-  EMERGENCY_REASON } = require("../abi/cache-runtime-codes");
+  WORK_ACCOUNT, EMERGENCY_REASON } = require("../abi/cache-runtime-codes");
 const { HARD_STATUS, ACTION, NONE_CELL } = require("../abi/fast-codes");
 
 class EmergencyReserve {
@@ -28,6 +28,8 @@ class RuntimeController {
     this.clockHealth = CLOCK_HEALTH.UNAVAILABLE; this.runtimeMode = RUNTIME_MODE.NORMAL;
     this.fallbackLatched = 0; this.emergencyReason = EMERGENCY_REASON.NONE;
     this.accumulatedWorkUnits = 0; this.currentCallbackWorkUnits = 0;
+    this.accumulatedMandatoryWorkUnits = 0; this.accumulatedOptionalWorkUnits = 0;
+    this.currentCallbackMandatoryWorkUnits = 0; this.currentCallbackOptionalWorkUnits = 0;
     this.accountedWorkUnits = 0; this.fallbackEnterAt = 0; this.emergencyEnterAt = 0;
     this.matchRuntimeGeneration = 0; this.lastPlatformFrame = 0xffff;
     this.matchFingerprintLo = 0; this.matchFingerprintHi = 0; this.callbackCount = 0;
@@ -38,6 +40,8 @@ class RuntimeController {
   resetMatch(frame, fingerprintLo, fingerprintHi) {
     this.matchRuntimeGeneration += 1; this.accumulatedWorkUnits = 0;
     this.currentCallbackWorkUnits = 0; this.accountedWorkUnits = 0;
+    this.accumulatedMandatoryWorkUnits = 0; this.accumulatedOptionalWorkUnits = 0;
+    this.currentCallbackMandatoryWorkUnits = 0; this.currentCallbackOptionalWorkUnits = 0;
     this.runtimeMode = RUNTIME_MODE.NORMAL; this.fallbackLatched = 0;
     this.emergencyReason = EMERGENCY_REASON.NONE; this.fallbackEnterAt = 0;
     this.emergencyEnterAt = 0; this.lastPlatformFrame = frame; this.matchFingerprintLo = fingerprintLo >>> 0;
@@ -50,6 +54,7 @@ class RuntimeController {
       (frame === 0 && this.lastPlatformFrame !== 0xffff && this.lastPlatformFrame > frame && fingerprintChanged);
     if (reset) this.resetMatch(frame, fingerprintLo, fingerprintHi);
     this.currentCallbackWorkUnits = 0; this.accountedWorkUnits = this.accumulatedWorkUnits;
+    this.currentCallbackMandatoryWorkUnits = 0; this.currentCallbackOptionalWorkUnits = 0;
     this.lastPlatformFrame = frame; this.callbackCount += 1; this.emergency.resetRoot();
     if (!this.calibrationValid) this.enterEmergency(EMERGENCY_REASON.CLOCK_UNTRUSTED);
     return this.evaluateMode();
@@ -92,15 +97,39 @@ class RuntimeController {
       return this.enterMode(RUNTIME_MODE.DEGRADED);
     return this.runtimeMode;
   }
-  chargeUnits(units, kind = WORK_KIND.UNKNOWN) {
-    if (!Number.isSafeInteger(units) || units < 0 || kind < 0 || kind >= WORK_KIND.COUNT) {
+  defaultAccount(kind) {
+    return kind === WORK_KIND.ROOT || kind === WORK_KIND.HARD ||
+      kind === WORK_KIND.EMITTER || kind === WORK_KIND.UNKNOWN ?
+      WORK_ACCOUNT.MANDATORY : WORK_ACCOUNT.OPTIONAL;
+  }
+  chargeUnits(units, kind = WORK_KIND.UNKNOWN, account = this.defaultAccount(kind)) {
+    if (!Number.isSafeInteger(units) || units < 0 || kind < 0 || kind >= WORK_KIND.COUNT ||
+        account < 0 || account >= WORK_ACCOUNT.COUNT) {
       this.unknownChargeCount += 1; return this.enterEmergency(EMERGENCY_REASON.UNKNOWN_WORK); }
-    this.currentCallbackWorkUnits += units; this.batchCount += 1; return this.evaluateMode();
+    this.currentCallbackWorkUnits += units;
+    if (account === WORK_ACCOUNT.MANDATORY) this.currentCallbackMandatoryWorkUnits += units;
+    else this.currentCallbackOptionalWorkUnits += units;
+    this.batchCount += 1; return this.evaluateMode();
   }
   charge(kind, count = 1) {
     if (kind < 0 || kind >= WORK_KIND.COUNT || !Number.isSafeInteger(count) || count < 0) {
       this.unknownChargeCount += 1; return this.enterEmergency(EMERGENCY_REASON.UNKNOWN_WORK); }
     return this.chargeUnits(this.runtimeConfig.WORK_CHARGES[kind] * count, kind);
+  }
+  chargeMandatory(kind, count = 1) {
+    if (kind < 0 || kind >= WORK_KIND.COUNT || !Number.isSafeInteger(count) || count < 0) {
+      this.unknownChargeCount += 1; return this.enterEmergency(EMERGENCY_REASON.UNKNOWN_WORK); }
+    return this.chargeUnits(this.runtimeConfig.WORK_CHARGES[kind] * count,
+      kind, WORK_ACCOUNT.MANDATORY);
+  }
+  chargeOptional(kind, count = 1) {
+    if (kind < 0 || kind >= WORK_KIND.COUNT || !Number.isSafeInteger(count) || count < 0) {
+      this.unknownChargeCount += 1; return this.enterEmergency(EMERGENCY_REASON.UNKNOWN_WORK); }
+    return this.chargeUnits(this.runtimeConfig.WORK_CHARGES[kind] * count,
+      kind, WORK_ACCOUNT.OPTIONAL);
+  }
+  chargeOptionalUnits(units, kind = WORK_KIND.VALUE_NODE) {
+    return this.chargeUnits(units, kind, WORK_ACCOUNT.OPTIONAL);
   }
   canStartBatch(kind, count = 1) {
     if (kind < 0 || kind >= WORK_KIND.COUNT || !Number.isSafeInteger(count) || count < 0) {
@@ -120,7 +149,10 @@ class RuntimeController {
   }
   finishCallback() {
     this.accumulatedWorkUnits += this.currentCallbackWorkUnits;
+    this.accumulatedMandatoryWorkUnits += this.currentCallbackMandatoryWorkUnits;
+    this.accumulatedOptionalWorkUnits += this.currentCallbackOptionalWorkUnits;
     this.currentCallbackWorkUnits = 0; this.accountedWorkUnits = this.accumulatedWorkUnits;
+    this.currentCallbackMandatoryWorkUnits = 0; this.currentCallbackOptionalWorkUnits = 0;
     this.evaluateMode(); return this.runtimeMode;
   }
   budgetProfileId() { return this.runtimeMode; }

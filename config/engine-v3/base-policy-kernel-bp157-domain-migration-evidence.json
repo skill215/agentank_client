@@ -1,0 +1,109 @@
+{
+  "objectKind": "BasePolicyDomainMigrationEvidenceV1",
+  "generatedAt": "2026-09-02T04:30:20.480Z",
+  "productionDefaultChanged": false,
+  "contract": {
+    "ownerMode": "QUALIFIED_RESOURCE",
+    "deepSearchInterfaces": [
+      "qualifiedFire",
+      "qualifiedFireForSeat"
+    ],
+    "qualifiedResources": [
+      "BOMB",
+      "SHIELD",
+      "FREEZE",
+      "STUN",
+      "OVERLOAD",
+      "CLOAK",
+      "POISON",
+      "TELEPORT",
+      "BOOST"
+    ],
+    "possibleHitRemainsSoft": true,
+    "hotAllocationCount": 0
+  },
+  "stateEquivalence": {
+    "deterministicStates": 2048,
+    "comparedInterfaces": [
+      "qualifiedFireForSeat(0)",
+      "qualifiedFireForSeat(1)",
+      "allows(all primitive/resource actions)"
+    ],
+    "differences": 0,
+    "test": "test/minimax-core/base-policy-action-domain.test.js",
+    "testSha256": "82c39ffe4ab41243184e45a429cdac9526a2e5f1544fa1d71ef2488cce11ddae"
+  },
+  "fixed16Equivalence": {
+    "records": 64,
+    "differences": {
+      "missing": 0,
+      "actionStream": 0,
+      "arguments": 0,
+      "result": 0,
+      "frames": 0,
+      "counts": 0,
+      "analysisOutcome": 0,
+      "terminalCategory": 0
+    },
+    "zeroDifference": true,
+    "candidateFingerprint": {
+      "legacyDomain": "33c5b8ebf82d6eee72123ed70f6f3538641083624544ca5c6322b3c50d11b925",
+      "thinDomain": "33c5b8ebf82d6eee72123ed70f6f3538641083624544ca5c6322b3c50d11b925"
+    },
+    "outcome": {
+      "wins": 22,
+      "losses": 10,
+      "draws": 0,
+      "scoreBasisPoints": 6875
+    }
+  },
+  "size": {
+    "diagnosticContainerRawBytes": 114600,
+    "thinRawBytes": 16496,
+    "rawBasisPoints": 1439,
+    "diagnosticContainerMinifiedBytes": 65196,
+    "thinStandaloneMinifiedBytes": 8800,
+    "minifiedBasisPoints": 1349,
+    "note": "diagnostic container also contains leaf intent pose and history experiments"
+  },
+  "localPerformance": {
+    "previousCandidateTotalMicros": 25228367,
+    "thinCandidateTotalMicros": 22660150,
+    "totalBasisPoints": 8982,
+    "previousCandidateP95Max": 37126,
+    "thinCandidateP95Max": 28222,
+    "p95BasisPoints": 7601,
+    "interpretation": "LOCAL_RELATIVE_ONLY_NOT_PLATFORM_3000MS_EVIDENCE"
+  },
+  "sources": {
+    "thin": {
+      "path": "engine-v2/src/base-policy/action-domain.js",
+      "sha256": "eb862e62ada16b1c62905fd913da952851622b73a29c443e53ab16b3dc30f13d"
+    },
+    "diagnostic": {
+      "path": "tools/agentank/diagnostics/native-tactical-domain-evaluator-poc.js",
+      "sha256": "547f5fd352f38c6d08e00e1faa2455f7108f2f17214584159a78c63a5c4ec7c0"
+    }
+  },
+  "artifacts": {
+    "previous": {
+      "path": "/tmp/agentank-bp156-owner-thin-r4",
+      "manifestSha256": "4bc69070d4f706d712fb85e984ae90d743b32fb5dc9ffdc11ccdf43b02748950",
+      "overviewSha256": "267b1a8f1132cb023f8cfd3decb329b5be1047def25e05ddbe74c1cbf5f9edd0",
+      "matchesSha256": "e8c43a7fcddac9ccc54dacbf2e1c740779af0bdc3059e0a7ef7a4cf233958aee"
+    },
+    "thin": {
+      "path": "/tmp/agentank-bp157-owner-domain-thin-r2",
+      "manifestSha256": "16a05b520bcf9e98861cc6c482e81fc2e6641f09790fb26613fde0145d222ab6",
+      "overviewSha256": "803d9209e28976a5bd6a3a65e944a9f7d5699f7e590193156e1fc983254aa70a",
+      "matchesSha256": "9356de29bdc6354bfcb2381f277b614c8025caad1a49bb32c2b2d1efbdaa562a"
+    }
+  },
+  "verdicts": [
+    "RESOURCE_DOMAIN_AND_DEEP_FIRE_INTERFACE_ARE_EXPLICIT",
+    "THIN_DOMAIN_IS_STATE_AND_FIXED16_EQUIVALENT",
+    "BP68_OUTCOME_REMAINS_22_10_0",
+    "NEXT_SLICE_IS_STRATEGIC_INTENT"
+  ],
+  "fingerprint": "5b08ad7d3f0eacf8dd27dc01ce8b03a9a670f548c5d0b2eeccf59dccda0de8f8"
+}

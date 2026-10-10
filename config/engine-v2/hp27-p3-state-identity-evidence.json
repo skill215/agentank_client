@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "HP27_P3_STATE_IDENTITY_EVIDENCE_V1",
+  "status": "ACCEPTED_DIAGNOSTIC_ARCHITECTURE_TARGET_IDENTIFIED",
+  "productionSearchSemanticsChanged": false,
+  "productionRuntimeProfileChanged": false,
+  "scenarios": 16,
+  "targetDepth": 3,
+  "nodeBudget": 512,
+  "physicalTTEntries": 32,
+  "reportFingerprint": "e31ece6ddde86963a463ac7a09e85357fd0a5907286a5e13d54900c44c3ee816",
+  "reportSha256": "542bbc2b73e563f19b9a3556cfd958f8166205ce29d628ba8cd849ab011ffa4e",
+  "diagnosticSha256": "688b6b722d4023acb4c2d6658264737dc646f7423a6eeb155b317c2ff41b9bca",
+  "stateIdentity": {
+    "directProbes": 1027,
+    "uniqueExactIdentities": 879,
+    "repeatedExactProbes": 148,
+    "repeatedExactHits": 124,
+    "repeatedExactMisses": 24,
+    "uniquePhysicalStates": 775,
+    "crossDepthFirstProbes": 104,
+    "exactUniqueBasisPoints": 8558,
+    "evictedRepeatMissBasisPoints": 233,
+    "finding": "COLD_P3_IS_DOMINATED_BY_UNIQUE_STATE_DEPTH_WIDTH_IDENTITIES_NOT_TT_COLLISIONS"
+  },
+  "orderingUpperBound": {
+    "completedFrames": 891,
+    "bestRowAlreadyFirst": 755,
+    "bestRowFirstBasisPoints": 8473,
+    "prunedRows": 1028,
+    "perfectEnemyOrderAdditionalCellSavings": 7,
+    "finding": "STATIC_ROW_COLUMN_REORDERING_HAS_NEGLIGIBLE_REMAINING_HEADROOM"
+  },
+  "chanceSuccessorEquivalence": {
+    "groups": 4043,
+    "multiOutcomeGroups": 848,
+    "outcomeCodes": 5207,
+    "uniqueSuccessors": 5185,
+    "aliasedGroups": 14,
+    "aliasedOutcomes": 22,
+    "aliasBasisPoints": 42,
+    "finding": "CHANCE_OUTCOME_ALIASING_CANNOT_DELIVER_THE_REQUIRED_SIX_TO_FIFTEEN_PERCENT_NODE_REDUCTION"
+  },
+  "fastHardReconciliation": {
+    "nodes": 6499,
+    "fastBuilds": 5833,
+    "rootSlabReplays": 666,
+    "hardClassifications": 5822,
+    "rootSlabHardReplays": 665,
+    "unaccountedAsHardFacts": 12,
+    "finding": "THE_APPARENT_677_NODE_FAST_FAILURE_SURFACE_WAS_A_COUNTER_ACCOUNTING_ARTIFACT"
+  },
+  "invariants": {
+    "semanticMismatches": 0,
+    "nodeMismatches": 0,
+    "chanceOutcomeInconsistencies": 0,
+    "rootRestoreFailures": 0
+  },
+  "tests": {
+    "focusedHp25ToHp27AndMinimax": { "passed": 36, "failed": 0 }
+  },
+  "decision": {
+    "classification": "DEEP_CHILD_EXACT_VALUE_OWNERSHIP_IS_THE_SCALING_BOTTLENECK",
+    "rejectedDirections": [
+      "PHYSICAL_TT_CAPACITY",
+      "STATIC_ROW_OR_COLUMN_ORDERING",
+      "PREAPPLY_FAST_FAILURE_PRUNING",
+      "CHANCE_SUCCESSOR_ALIASING"
+    ],
+    "next": "BUILD_AND_ORACLE_TEST_A_BOUND_RETURNING_WINDOWED_MAXIMIN_POC_THAT_PROPAGATES_PARENT_ALPHA_BETA_TO_RECURSIVE_CHILDREN"
+  }
+}

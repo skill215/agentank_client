@@ -1,0 +1,121 @@
+{
+  "seq": 16,
+  "previous": "699f1725e4023a0450dfd5d11c513d45d85e1e40aec06ae89f3a3efe94b324cf",
+  "record": {
+    "version": 1,
+    "type": "review",
+    "id": "OPT-D-0008",
+    "reviewId": "OPT-R-0008",
+    "at": "2026-10-08T07:36:28.084Z",
+    "stage": "local",
+    "disposition": "reject",
+    "outcome": "failed",
+    "primaryCause": "REGRESSION",
+    "secondaryCauses": [
+      "EXECUTION"
+    ],
+    "reason": "语法修复后有效完成8局，全部行为改变但总得分4降至2.5、死亡0增至4；按预设标准否决。另一次执行失败不计作算法败局。",
+    "nextStep": "结束本轮，保留基线，不微调此候选距离阈值。",
+    "limitations": "定向历史小样本消融，含导航早退对应的历史/意图行为；不能单独归因为搜索计算量。新地图和生产运行验收未运行。",
+    "experiments": [
+      "BP419"
+    ],
+    "assessments": [
+      {
+        "criterion": "trigger",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp419-quiet-search/preflight-summary.json"
+      },
+      {
+        "criterion": "old",
+        "status": "fail",
+        "evidencePath": "artifacts/native-causal-audit/bp419-quiet-search/screen-summary.json"
+      },
+      {
+        "criterion": "fresh",
+        "status": "unknown",
+        "evidencePath": "artifacts/native-causal-audit/bp419-quiet-search/campaign-summary.json"
+      },
+      {
+        "criterion": "release",
+        "status": "unknown",
+        "evidencePath": "artifacts/native-causal-audit/bp419-quiet-search/campaign-summary.json"
+      }
+    ],
+    "cost": {
+      "attemptedGames": 9,
+      "completedGames": 8,
+      "independentUnits": 0,
+      "executionSeconds": 6.7402462179999985,
+      "analysisSeconds": null
+    },
+    "metrics": [
+      {
+        "name": "score_delta",
+        "value": -1.5,
+        "unit": "total over8 valid games",
+        "source": "artifacts/native-causal-audit/bp419-quiet-search/screen-summary.json"
+      },
+      {
+        "name": "death_delta",
+        "value": 4,
+        "unit": "deaths over8 valid games",
+        "source": "artifacts/native-causal-audit/bp419-quiet-search/screen-summary.json"
+      },
+      {
+        "name": "execution_failures",
+        "value": 1,
+        "unit": "charged attempts, not algorithm losses",
+        "source": "artifacts/native-causal-audit/bp419-quiet-search/preflight-run/state.json"
+      }
+    ],
+    "productionAdoption": false,
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp419-quiet-search/screen-summary.json",
+        "sha256": "36c9193e7c7e3e08d9dddce3b6cdcab5ad0e1af1eb92eedafbf52bcf159a9152"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp419-quiet-search/screen-review.json",
+        "sha256": "24dc83041a95acec88e8e99a6f5687f0661a4e078dde5221635a3e1ed4e29bd5"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp419-quiet-search/campaign-summary.json",
+        "sha256": "96d349863c1361d431395916c4bd0e27d25d3a1c11a917ee572bfbb6d33611fe"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp419-quiet-search/core-tests.txt",
+        "sha256": "8d3a8fc95cedd0bc15bf3d6892183fbd29e1eb7fb8784fb60d072f5d30541ef0"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp419-quiet-search/execution-correction.json",
+        "sha256": "036df1264b39f2071c394ed567b1de5af2d5a4cd957275e9b9993203807de282"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp419-quiet-search/corrected-preflight-plan.json",
+        "sha256": "a9397e07296e229fb034750796b419ceeed197a4e41282d32a49f8f4e6c5d7f4"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp419-quiet-search/preflight-run/state.json",
+        "sha256": "fb7e7f1e0430fcfb7b95628c663a16c15322b30c022b7a2004b1df4cc9bf3e8d"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp419-quiet-search/corrected-preflight-run/state.json",
+        "sha256": "40636b2eb48ee3e372047d944d699d343878ad7c2b3219efb5bb499a88d640aa"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp419-quiet-search/screen-run/state.json",
+        "sha256": "62d08e6160ab7d56d08d2eb61b6f0ae0c54c552a78af4a24fc980f9dba070122"
+      },
+      {
+        "path": "tools/agentank/diagnostics/quiet-search-ablation-v2.js",
+        "sha256": "11718a50b43051178f7613fb88a5a2611626bfc3d63d453a815cd4cb8de9703f"
+      },
+      {
+        "path": "docs/implementation/optimization-decisions/bp419-fast-review.md",
+        "sha256": "cb3f90ab7af725077da0bd678f60cf2aff98947bf0af08f854a3bd71c2ae32c0"
+      }
+    ]
+  },
+  "sha256": "ce46dfff0713f8dda44fe710536c5adac344f7b18327b14ab98dd77d57a18689"
+}

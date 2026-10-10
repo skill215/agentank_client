@@ -1,0 +1,280 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "JOINT_VACATED_FOLLOW_EVIDENCE_V1",
+  "status": "COMMON_PLATFORM_PATH_ACCEPTED_OPTION_AND_SCALAR_PRIORS_REJECTED",
+  "productionDefaultChanged": true,
+  "scope": {
+    "accepted": "PLAIN_GO_FOLLOWS_OPPONENT_VACATED_START_IN_SAME_RECORD",
+    "stillUnsupported": [
+      "GO_GO_SAME_TARGET",
+      "GO_GO_SWAP",
+      "BOOST_COMPOUND_CONTEST",
+      "TELEPORT_CONTEST",
+      "STUN_POISON_FREEZE_CONTEST"
+    ]
+  },
+  "officialHistoricalEvidence": {
+    "dynamicCorpus": true,
+    "rawFiles": 1526,
+    "uniqueReplays": 1283,
+    "recordCount": 83570,
+    "dualMoveFrames": 19645,
+    "allUnitDualMoveFrames": 19509,
+    "followsVacatedStart": 31,
+    "seat0Follows": 17,
+    "seat1Follows": 14,
+    "successfulSwap": 0,
+    "successfulSameTarget": 0,
+    "dualCrash": 0,
+    "corpusFingerprint": "be5c8d29760f0475f33ca26eebacab583781b665b51af3e15ed334947600f332",
+    "reportSha256": "37fcc4b6c30cc96d83a581a5f6493d535680c5b3dab52dec7fb8c70d1ccf2aec",
+    "scannerSha256": "1a19b88784fcdf21b3b4770a3c2e2cf436f4509559384b99cc0cd4c82b4391d8"
+  },
+  "focusedSearch": {
+    "scenarioFingerprint": "382bfe55ead3a1d0f33becab45bc4cb3589f67accd3c91b0f34c45e7611d8d25",
+    "before": {
+      "eligibleP2Refinements": 5,
+      "completed": 0,
+      "jointRelocationAborts": 5
+    },
+    "afterCommonPath": {
+      "eligibleP2Refinements": 7,
+      "completed": 0,
+      "jointRelocationAborts": 7,
+      "directSwap": 2,
+      "occupiedAfterEarlierMove": 5
+    },
+    "interpretation": "The five earlier vacated-follow blockers are closed; deeper same-target and swap branches become visible."
+  },
+  "ruleVariantPoc": {
+    "mode": "V3R2_PHYSICAL_VARIANT_P2_ACTIVE",
+    "variants": ["SEQUENTIAL_BLOCK", "INTENT_BLOCK", "COLLISION_CRASH"],
+    "ownershipContract": "CELLWISE_NON_WORSE_IN_EVERY_VARIANT_AND_STRICTLY_GREATER_CROSS_VARIANT_WORST",
+    "fixed16": {
+      "matches": 32,
+      "challengerWins": 16,
+      "controlWins": 16,
+      "draws": 0,
+      "pairedSplit": 16,
+      "variantAttempts": 7,
+      "variantComplete": 7,
+      "variantIncomplete": 0,
+      "variantNodes": 1854,
+      "variantSelections": 0,
+      "manifestSha256": "fa3db7145aca9766b362bc45fab11b6bf36bbeb84118ec6c24ff7106896b8e02",
+      "overviewSha256": "2fe0568fb50e7f9001f9535be52e0706eccf1d490655040184bf97c578f2fc4a"
+    },
+    "decision": "KEEP_DIAGNOSTIC_ONLY_DO_NOT_ENABLE_IN_PRODUCTION"
+  },
+  "longHorizonCounterfactual": {
+    "analysisOwnershipBug": {
+      "cause": "IMPLEMENTATION_ID_ROLE_MAPPING_COLLAPSED_WHEN_CANDIDATE_AND_BASELINE_IDS_MATCHED",
+      "fix": "MAP_RUNTIME_INDEPENDENT_OUTCOME_BY_CANDIDATE_SEAT",
+      "invalidatedReport": "/tmp/v3-hard-self-discovery16",
+      "arenaToolSha256": "e385dff5289972e5f3b2179975235b189c60b56ed061ce60dfdb832226a38380"
+    },
+    "fixed16": {
+      "matches": 32,
+      "baselineWins": 16,
+      "baselineLosses": 16,
+      "candidateWins": 16,
+      "candidateLosses": 16,
+      "winToWin": 16,
+      "lossToLoss": 16,
+      "outcomeConversions": 0,
+      "changedActionMatches": 4,
+      "terminalQualityImproved": 2,
+      "terminalQualityRegressed": 0,
+      "baselineManifestSha256": "06fc4884904e02b3de9328d72b4907d2a7370603d25ebe965befcc76ccd6c224",
+      "baselineOverviewSha256": "d17f6292cab6dc48599f714a28b44c07f27707417c03672ed0a1ce914a3d27cd",
+      "counterfactualReportSha256": "4c85ef092952a9cb6e5305e76e82cd7dd7d7f752c5bbd2a3955609c0f3c064de"
+    },
+    "tool": {
+      "path": "tools/agentank/diagnostics/v3-component-counterfactual.js",
+      "sha256": "d6215a426d9d85c273fcb67e8d50ce7383b918b12a19ec8416e05c4536833c9c"
+    },
+    "discovery64RecoveryAblation": {
+      "exactP2Baseline": {
+        "wins": 59, "losses": 63, "draws": 6,
+        "scorePercent": "48.44", "pairedPValue": "0.706520"
+      },
+      "unverifiedRecovery": {
+        "wins": 59, "losses": 64, "draws": 5,
+        "scorePercent": "48.05", "lossToWin": 1, "winToLoss": 1,
+        "drawToLoss": 1, "selections": 11
+      },
+      "identityBound": {
+        "wins": 58, "losses": 64, "draws": 6,
+        "scorePercent": "47.66", "decision": "REJECTED"
+      },
+      "p1Strict": {
+        "wins": 58, "losses": 64, "draws": 6,
+        "attempts": 5, "complete": 5, "dominance": 2,
+        "selected": 1, "decision": "REJECTED"
+      },
+      "p2Strict": {
+        "wins": 59, "losses": 63, "draws": 6,
+        "attempts": 6, "complete": 3, "incomplete": 3,
+        "dominance": 0, "selected": 0, "decision": "NEUTRAL_NO_OWNER"
+      },
+      "p3Strict": {
+        "wins": 59, "losses": 63, "draws": 6,
+        "attempts": 6, "complete": 0, "incomplete": 6,
+        "selected": 0, "decision": "NEUTRAL_TOO_EXPENSIVE"
+      },
+      "p2Noninferior": {
+        "wins": 59, "losses": 63, "draws": 6,
+        "attempts": 6, "complete": 3, "incomplete": 3,
+        "noninferior": 1, "selected": 1,
+        "changedActionMatches": 1, "terminalQualityRegressed": 1,
+        "decision": "REJECTED_PARTIAL_OPTION"
+      },
+      "artifactSha256": {
+        "unverifiedManifest": "280605aed0426760325110837f23af03d0df2c935529563ee6859dc294be9e70",
+        "unverifiedOverview": "8566889fc75036384e800c24a7e8057c19733da3fb8caf6e5d046cf7d1317213",
+        "identityManifest": "1d663aa0f826d9646db12b0c09a964e27744d2c0b7f0a6b3573b466b700417af",
+        "identityOverview": "bcb369f7c01f19ac85d7eaed8504ce0276a511f5b1fa441fdc08e7b252452f38",
+        "p1Manifest": "1b7ab1bdbaa3f0c6cfef8838e399f137ee0d0342c01d17868ad76e0079732834",
+        "p1Overview": "a9f526a9a9a01df284844a529d2615f2d94b1f8f2011d6d024e88a93454075e9",
+        "p2Manifest": "b4bf26710eba8623835540453d090138a04e7e4d1c993f28b82443491d8f5581",
+        "p2Overview": "e0fbd9a36a051c59dade52467d829abe56b62dc8dbb93e43b56ac7230abf75b9",
+        "p3Manifest": "d9bb59a8d6e6149cdd40f6d9573ade869b930bedc78c312fc3a228614dbddb66",
+        "p3Overview": "c1fcf02b36481bb9ecf1cb33d17af9e67fb1fcd455b3054e6497ac5b957458ab",
+        "p2NoninferiorManifest": "fdd335228790f591205c3d7208776e8aec9309cb87b6ae5acb6f854b7c6e772a",
+        "p2NoninferiorOverview": "e768ab9efae0c9a6db5b8717987f4695321c48f3570b313ab407648438ab689f",
+        "p2NoninferiorCounterfactual": "1f4f6ae8dee50f8038fbb08589e7069bfb9a94f594804f3075cf8dba3e7768e2"
+      },
+      "rootCause": "PER_FRAME_REVALIDATION_CAN_ABORT_AFTER_ENTERING_A_NON_V1_STATE_AND_CREATE_AN_UNVERIFIED_MIXED_TRAJECTORY",
+      "decision": "REQUIRE_OBSERVATION_CONDITIONED_OPTION_POLICY_CERTIFICATE_BEFORE_PLAN_START"
+    },
+    "decision": "P2_LOCAL_VALUE_OWNS_ONLY_THE_CURRENT_ACTION_UNTIL_A_COMPLETE_OPTION_POLICY_EXISTS"
+  },
+  "optionPolicyAndValueAblation": {
+    "optionPolicyCertificate": {
+      "semantics": "OBSERVATION_CONDITIONED_EXACT_P2_CONTINGENT_POLICY_DIAGNOSTIC_ONLY",
+      "fixed16Shadow": {
+        "matches": 32,
+        "wins": 16,
+        "losses": 16,
+        "draws": 0,
+        "attempts": 4,
+        "complete": 3,
+        "incomplete": 1,
+        "hiddenSuccessors": 1,
+        "manifestSha256": "ed9df4c160097fc3f226671fe24538867cc752fbd0f842b3e7ce4348b723a09c"
+      },
+      "fixed16ActiveObservableKey": {
+        "matches": 32,
+        "wins": 15,
+        "losses": 17,
+        "draws": 0,
+        "armed": 3,
+        "selected": 2,
+        "mismatched": 1,
+        "winToLoss": 1,
+        "terminalQualityImproved": 1,
+        "terminalQualityRegressed": 1,
+        "manifestSha256": "a278efa67860f26a1cbb2359069b17b8c7f74f90294aee7f4a02812720eefd11",
+        "matchesSha256": "ac76b7c92816cfc16306f138804d5c5da74c298b2bee1d35c3dd721fab7bd29d"
+      },
+      "identityFinding": "FULL_FASTSTATE_HASH_IS_NOT_PLATFORM_OBSERVATION_IDENTITY",
+      "decision": "REJECTED_COMPLETE_FINITE_HORIZON_STILL_ENDS_AT_HEURISTIC_LEAVES"
+    },
+    "v1PolicyLeaf": {
+      "fixed16": {
+        "matches": 32,
+        "wins": 16,
+        "losses": 16,
+        "draws": 0,
+        "changedActionMatchesVersusExactP2": 5,
+        "changedActionFramesVersusExactP2": 217,
+        "terminalQualityImproved": 0,
+        "terminalQualityRegressed": 2,
+        "fire": 157,
+        "manifestSha256": "d6ce6d210ae7dc850f7f3d2fd4a77925e6656bdc1768b860a6b0994715d9139b",
+        "matchesSha256": "c0ad24695f866bc95bbb90af32dbe96e86951b121ce01d314bc74ab4106c7837",
+        "counterfactualSha256": "54fce68cdc691fb1da931a46bf512267c974102769b8535a83d7744381bd4e13"
+      },
+      "withOptionCertificate": {
+        "wins": 16,
+        "losses": 16,
+        "draws": 0,
+        "armed": 3,
+        "selected": 1,
+        "completed": 1,
+        "changedFramesVersusLeafOnly": 0,
+        "manifestSha256": "cc8446f90d5811d7115b00633aa21f40c2ba32c7e55280e8a5db8bbcf422f62b",
+        "matchesSha256": "7c73e29ffa1d0812d1489d743bced1c769663cdd29cca57dc62dd2465701bf2e",
+        "counterfactualSha256": "27c75ee913183c33bb30f558f90d099aaffdf6714051623dddbfa123139b435d"
+      },
+      "decision": "REJECTED_AS_TERMINAL_SCALAR"
+    },
+    "v1RootActionPrior": {
+      "semantics": "ROOT_TRAVERSAL_ORDER_ONLY_NO_VALUE_OR_OWNERSHIP_CHANGE",
+      "persistentFixed16": {
+        "matches": 32,
+        "wins": 16,
+        "losses": 16,
+        "draws": 0,
+        "prepared": 1232,
+        "promoted": 111,
+        "missing": 38,
+        "ambiguous": 0,
+        "changedActionMatchesVersusExactP2": 0,
+        "changedActionFramesVersusExactP2": 0,
+        "exactP2RefinementNodes": 147,
+        "priorRefinementNodes": 283,
+        "manifestSha256": "9f523405e66b1206a00054264cf0995f03a814c3a7357e1aa0874f7f2397a9cf",
+        "matchesSha256": "3d163e1b1cf3ee52df86fac97f1583062320ed4f49cc56f487a5fa02c652dbff",
+        "counterfactualSha256": "aca9d976c1d6867de6dbd793169189ea428d429ccc1d070ec2d1f2b3ca4c5055"
+      },
+      "seedOnlyFixed16": {
+        "matches": 32,
+        "wins": 16,
+        "losses": 16,
+        "draws": 0,
+        "prepared": 1232,
+        "promoted": 111,
+        "changedActionMatchesVersusExactP2": 0,
+        "changedActionFramesVersusExactP2": 0,
+        "exactP2RefinementNodes": 147,
+        "seedRefinementNodes": 147,
+        "manifestSha256": "e58d1089e631458f3c1b9e722d36472fd6415b57b0f7e2464c9f7c71b8c554dd",
+        "matchesSha256": "145765f72966b8b5890883083ef44e6bb1c7a4b34d49e0e036e8ca64d04550d1",
+        "counterfactualSha256": "9a3acfe93c82e92e60e27a15a28ddcfc348203fd8e30e57607b177a881104525"
+      },
+      "decision": "REJECTED_PERSISTENT_IS_PERFORMANCE_NEGATIVE_SEED_ONLY_IS_NEUTRAL"
+    },
+    "architecturalConclusion": "BUILD_STAGE_EQUIVALENT_BASE_POLICY_KERNEL_THEN_USE_MINIMAX_AS_STRICT_REFUTER"
+  },
+  "searchCoverage": {
+    "fixed16ExactRoots": 15,
+    "fixed16UnresolvedRoots": 1,
+    "depthOneOwnersBefore": 7,
+    "depthOneOwnersAfter": 7,
+    "depthTwoOwnersBefore": 8,
+    "depthTwoOwnersAfter": 8,
+    "fixedP3OracleCompletedBefore": 27,
+    "fixedP3OracleCompletedAfter": 27,
+    "rootRestoreFailures": 0
+  },
+  "source": {
+    "fastKernelSha256": "cbe05205c8c97313d15e544ac8cc1a3cd4e2670b749908e1c7d061a468155f5f",
+    "referenceSchedulerSha256": "a3e0a274b801ba317e544c437df4832dc671c113464a9eb4b38bdca729338578",
+    "recoveryProposalVerifierSha256": "93db1d6b3b25e535256b427d8e155ba90b166133090e4f377fa720690df723d6",
+    "v3BridgeSha256": "c43ccd9d1b530f9ceef4004e55997bec8f370e3cd41378868fe8bd22bdbcf1ad",
+    "strategicNavigationAdapterSha256": "b59e308b4e36bf8f9d1a8861712cabbd66b4957f47e2d513f7ff65cad269846c",
+    "optionPolicyCertificateSha256": "171d7b57d28a757cdaa3ee9352c56b3a5d6cd3f439a387706934ebfccddab25c",
+    "v2TacticalCoreAdapterSha256": "fe4dcd178cac3086199581f55467ae428972c414ea71dff596205322b5c58fe6",
+    "productionDepthSearchSha256": "398cdd9cb065a4d934405a8bc681073dd8153b86886f26b7b289a1bdc8c6c036",
+    "v3ComponentArenaSha256": "69cc942f508320885892922b3bec373375aa2b1ed09cd1400f76b9d4dbee1c4d"
+  },
+  "tests": {
+    "minimaxCore": { "passed": 220, "failed": 0 },
+    "imp2": { "passed": 53, "failed": 0 },
+    "imp3": { "passed": 28, "failed": 0 },
+    "diagnostics": { "passed": 480, "failed": 0 },
+    "v3": { "passed": 60, "failed": 0 }
+  },
+  "next": "STRUCTURED_BASE_POLICY_KERNEL_STAGE_EQUIVALENCE"
+}

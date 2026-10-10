@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "INFORMATION_OPTION_ATTACK_SETUP_CLOSURE_EVIDENCE_V1",
+  "status": "SEMANTIC_CONTRACT_ACCEPTED_BEHAVIOR_NEUTRAL_PRODUCTION_DISABLED",
+  "cohort": {
+    "role": "DISCOVERY",
+    "scenarios": 16,
+    "matchesPerImplementation": 32,
+    "fingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667"
+  },
+  "legacyOwnership": {
+    "baseline": { "wins": 4, "losses": 27, "draws": 1, "scoreBasisPoints": 1406 },
+    "candidate": { "wins": 2, "losses": 29, "draws": 1, "scoreBasisPoints": 781 },
+    "strictOverrides": 34,
+    "directKillOverrides": 1,
+    "attackSetupOverrides": 33,
+    "goToFireOverrides": 27,
+    "candidateCrashDelta": 3,
+    "candidateFireDelta": 18,
+    "overviewSha256": "d3077a43d6b358dcf71e9c27ec576ae6d3c4908a54f414aae5883997cd12e13a"
+  },
+  "compactCorpus": {
+    "records": 34,
+    "attackSetupRecords": 33,
+    "otherRecords": 1,
+    "gzipSha256": "ee5b271a80effb3b119339b114935cc8fbc16692a07fe264325079055bf318d7",
+    "verifiedCertified": 0,
+    "verifiedRejected": 28,
+    "verifiedIncomplete": 5,
+    "reasonCounts": {
+      "UNCONSTRAINED_COLUMN": 33,
+      "NO_HIT_PROGRESS": 30,
+      "NONLOSS_REGRESSION": 30,
+      "PAC_INCOMPLETE": 5,
+      "RISK_REGRESSION": 3
+    },
+    "verificationSha256": "be440f0d2bdb55caaa65830b485c9140040e77e99e31c3c04be8e546dbe909be"
+  },
+  "strictClosureActive": {
+    "baseline": { "wins": 4, "losses": 27, "draws": 1, "scoreBasisPoints": 1406 },
+    "candidate": { "wins": 4, "losses": 27, "draws": 1, "scoreBasisPoints": 1406 },
+    "attackSetupEvaluations": 40,
+    "attackSetupCertified": 0,
+    "attackSetupRejected": 37,
+    "attackSetupIncomplete": 3,
+    "directKillOverrides": 1,
+    "attackSetupOverrides": 0,
+    "candidateCrashDelta": 0,
+    "candidateFireDelta": 5,
+    "invariantFailures": 0,
+    "hotAllocationCount": 0,
+    "overviewSha256": "a3f34419057c5b2470503554f8cb42453793e772021f206a08fa003c20c6887e"
+  },
+  "twoStagePhysicalShadow": {
+    "baseline": { "wins": 4, "losses": 27, "draws": 1, "scoreBasisPoints": 1406 },
+    "candidate": { "wins": 4, "losses": 27, "draws": 1, "scoreBasisPoints": 1406 },
+    "movementCandidates": 738,
+    "certified": 7,
+    "rejected": 657,
+    "incomplete": 74,
+    "exactInformationCertificates": 1,
+    "fullRangeInformationCertificates": 6,
+    "nodes": 1409,
+    "maximumNodes": 56,
+    "reasonCounts": {
+      "ROOT_TERMINAL": 9,
+      "NO_SECOND_FIRE": 150,
+      "SECOND_SUPPORT": 1,
+      "PAC_INCOMPLETE": 73,
+      "UNCONSTRAINED_RESPONSE": 435,
+      "NO_HIT_PROGRESS": 422,
+      "SECOND_HARD": 44,
+      "BUDGET": 0,
+      "ROOT_RESTORE": 0
+    },
+    "behaviorDelta": 0,
+    "hotAllocationCount": 0,
+    "overviewSha256": "7c5feaccc2fea7f9195d2e36ee3e6eaca47a4b49b1e03904617b752a6c3408d7",
+    "diagnosticSamplesSha256": "b909ed16c7d3339a8a1ec5cd0c620547456a81fb644e89d07e79ccb707e87b1b"
+  },
+  "twoStageExactIntervalActive": {
+    "baseline": { "wins": 4, "losses": 27, "draws": 1, "scoreBasisPoints": 1406 },
+    "candidate": { "wins": 4, "losses": 27, "draws": 1, "scoreBasisPoints": 1406 },
+    "directKillProposals": 1,
+    "attackSetupProposals": 0,
+    "attackSetupOverrides": 0,
+    "actionDelta": 0,
+    "invariantFailures": 0,
+    "overviewSha256": "cce260fb10db0426675c4478802f1fa3c5987ea3bffe3a88d4cb6e8d58daf6b1",
+    "diagnosticSamplesSha256": "4754fd5fc2a8179a93319714ad963feb8a26348bdf979d122b1cb1b97b5a8d14"
+  },
+  "possibleProjectileInformationShadow": {
+    "baseline": { "wins": 4, "losses": 27, "draws": 1, "scoreBasisPoints": 1406 },
+    "candidate": { "wins": 4, "losses": 27, "draws": 1, "scoreBasisPoints": 1406 },
+    "physicalCertificates": 7,
+    "possibleWorldEvaluations": 6,
+    "robustCertificates": 2,
+    "rejected": 4,
+    "incomplete": 0,
+    "cadenceRephasedWorlds": 4,
+    "presentWorldNodes": 17,
+    "maximumPresentWorldNodes": 7,
+    "actionableExactCertificates": 0,
+    "behaviorDelta": 0,
+    "invariantFailures": 0,
+    "rootRestoreFailures": 0,
+    "hotAllocationCount": 0,
+    "simulatorDeviation": "pinned simulator uses absolute even-frame poison cadence; certificate-local phase reconstruction follows observed canActThisFrame and is fully undone",
+    "overviewSha256": "4edad00719c6b0d34bd98481988da4d876acb446272afa62a098c52d2daf6e2f",
+    "diagnosticSamplesSha256": "c9ddb15af3125bfa31d8efc9cb70eb352ff2d88577a0c4abb65cd8f49eb89001"
+  },
+  "twoStageSource": {
+    "productionRootSha256": "fc8c9d5b0273e3eaffa9899a217521b4bf0526f486e98ba70be96dd21d5f0a58",
+    "optionInformationIntervalSearchSha256": "725ac23e1ee0e6d9e59ff3026e1e4581193bbdffa94f9e8ea1493f0080f02dd2",
+    "attackSetupClosureSha256": "11b2c16433e842f3c491d0c255e4b206806e9e97c1bfaed6cbe67e0596b5a96b",
+    "twoStageAttackSetupSha256": "b5ed3fd40c161e27361fc3a6f4f8ba760fe50769c83bca27f3e07cb95265e832",
+    "arenaSha256": "b8d52c7e9742abdf08f7e06ada36caaca8add09204b98ea3d2bfe26d727912a8",
+    "diagnosticBotSha256": "d3588f85c264c0af856d2e0af5996fb5d542b36913c7f182667b9bffc8a38c1c"
+  },
+  "source": {
+    "productionRootSha256": "6101661795e1f4e0d06ffe415dae4816810a30b64e2233f746c02be4b938d4ca",
+    "optionAwareDepthSearchSha256": "7a5eea0ff3bd5a9c2004f841f1c6f79e968d532b52175d76fffdd990e299f768",
+    "optionInformationIntervalSearchSha256": "eeeb15c1145fcfedfffe1f08b163ef243726ae0b2a4e2fa0e7f8889fd8c770dd",
+    "attackSetupClosureSha256": "70735fff6d89f78f9fdcc207249642299e54976650df0d772a5c6d0adcb7c6ce",
+    "possibleProjectileAttackSetupSha256": "8804d4a5ed137341a8c57b53b90d1ca0914fa72a1e8d5d4a92f315b212887f8f",
+    "arenaSha256": "a1bb98e0bb7c6073c29a1bbff0c9e9b803486b5bb1d0abf0faa7c2a79f7df77d",
+    "diagnosticBotSha256": "77cd973089ca0333d3d6f45908c7ae0e89b504a56ef977262f7f3024a4c4e4f7"
+  },
+  "productionDefaultEnabled": false,
+  "officialPlatformWritePerformed": false
+}

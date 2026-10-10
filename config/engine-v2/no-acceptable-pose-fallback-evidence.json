@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "NO_ACCEPTABLE_POSE_FALLBACK_EVIDENCE_V1",
+  "status": "INDEPENDENT_DIRECTIONAL_VALIDATION_ACCEPTED_NOT_STATISTICALLY_SIGNIFICANT",
+  "contract": {
+    "scope": "acceptableCount === 0 only",
+    "selectionOrder": [
+      "immediateFatalMass",
+      "horizonFatalMass",
+      "unknownMass",
+      "earliestFatalFrame",
+      "fallbackPoseRisk",
+      "escapeSlack",
+      "robustLower",
+      "stableRow"
+    ],
+    "fallbackPoseRisk": {
+      "storage": "existing Uint16 unknownFallbackRisk slot",
+      "formula": "possibleRisk * 5 + visibleClearLineContactClass",
+      "contactClass": {
+        "distanceAtMost1": 4,
+        "distance2": 3,
+        "distance3": 2,
+        "distance4To5": 1,
+        "otherwise": 0
+      },
+      "maximum": 50004
+    },
+    "normalAcceptableSetChanged": false,
+    "hardOrRiskThresholdChanged": false,
+    "newTypedArrays": 0,
+    "normalRootAdditionalGeometry": 0
+  },
+  "causalRoot": {
+    "matchId": "mat_KlF8S4gI3ryC6gSoB",
+    "candidateSeat": 0,
+    "frame": 58,
+    "state": {
+      "ownPosition": [9, 7],
+      "ownDirection": "down",
+      "enemyPosition": [9, 10],
+      "enemyDirection": "up"
+    },
+    "equalRiskPrefix": {
+      "immediateFatalMass": 5000,
+      "horizonFatalMass": 5000,
+      "unknownMass": 1,
+      "earliestFatalFrame": 1
+    },
+    "before": {
+      "selectedAction": "GO",
+      "escapeSlack": 1,
+      "fallbackPoseRisk": 10000,
+      "outcome": "V1_WIN",
+      "terminalReason": "crashed",
+      "terminalFrame": 60
+    },
+    "after": {
+      "selectedAction": "TURN_LEFT",
+      "escapeSlack": -1,
+      "goFallbackPoseRisk": 50003,
+      "turnFallbackPoseRisk": 50002,
+      "outcome": "V2_WIN",
+      "terminalReason": "crashed",
+      "terminalFrame": 85
+    },
+    "exactReplayAlternatives": {
+      "GO": "V1_WIN crash frame 60",
+      "TURN_LEFT": "V2_WIN enemy crash frame 85",
+      "TURN_RIGHT": "V1_WIN frame limit, stars 0:2",
+      "THROW_BOMB": "V1_WIN crash frame 60"
+    }
+  },
+  "fixed16": {
+    "role": "DISCOVERY",
+    "scenarios": 16,
+    "matchesPerImplementation": 32,
+    "cohortFingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667",
+    "before": {
+      "wins": 4,
+      "losses": 27,
+      "draws": 1,
+      "scoreBasisPoints": 1406,
+      "fire": 167
+    },
+    "after": {
+      "wins": 5,
+      "losses": 26,
+      "draws": 1,
+      "scoreBasisPoints": 1719,
+      "fire": 169
+    },
+    "transitions": {
+      "V1_WIN_TO_V2_WIN": 1,
+      "V2_WIN_TO_V1_WIN": 0,
+      "V1_WIN_TO_V1_WIN": 26,
+      "V2_WIN_TO_V2_WIN": 4,
+      "DRAW_TO_DRAW": 1
+    },
+    "actionChangedMatches": 2,
+    "resultNeutralActionChangedMatches": 1,
+    "invariants": {
+      "timeoutError": 0,
+      "avoidableHardReject": 0,
+      "riskDominatedSelection": 0,
+      "rootRestoreFailure": 0
+    },
+    "beforeOverviewSha256": "4edad00719c6b0d34bd98481988da4d876acb446272afa62a098c52d2daf6e2f",
+    "beforeMatchesSha256": "10c554d8fba09d2c0b25e63b027e5498799e1f7d06ce9a4aeec09078b35da571",
+    "afterOverviewSha256": "4cd0d948ed951195df1eaf010c6925fd9294e55e817adcc20bcd5bcde0d05270",
+    "afterMatchesSha256": "e09a9e626498df0f3ceefdc5d24f57c4013aa28a08432ad3507aa694f08f479e"
+  },
+  "sameSourceFixed16AB": {
+    "legacy": { "wins": 3, "losses": 28, "draws": 1, "scoreBasisPoints": 1094 },
+    "pose": { "wins": 4, "losses": 27, "draws": 1, "scoreBasisPoints": 1406 },
+    "winDelta": 1,
+    "lossDelta": -1,
+    "fireDelta": 2,
+    "ownCrashDelta": -1,
+    "overviewSha256": "f90698ceede916e69e80d1aa85c5bcfcf8b018dd0ee2ca1c921795a75459aa40",
+    "matchesSha256": "1d9159773e23c9caf841dd3cf576b858af1c1b14956f0b45c140f48857271701"
+  },
+  "tacticalHoldout": {
+    "role": "TACTICAL_HOLDOUT",
+    "scenarios": 96,
+    "matchesPerImplementation": 192,
+    "readOnceWithoutRetuning": true,
+    "legacy": {
+      "wins": 22,
+      "losses": 162,
+      "draws": 8,
+      "scoreBasisPoints": 1354,
+      "fire": 993,
+      "ownCrashes": 65,
+      "decisionCount": 20033,
+      "noAcceptableRoots": 1935,
+      "localRuntimeMicros": 6221919,
+      "maximumMatchP95Micros": 3625
+    },
+    "pose": {
+      "wins": 23,
+      "losses": 161,
+      "draws": 8,
+      "scoreBasisPoints": 1406,
+      "fire": 991,
+      "ownCrashes": 64,
+      "decisionCount": 19953,
+      "noAcceptableRoots": 1922,
+      "localRuntimeMicros": 6120196,
+      "maximumMatchP95Micros": 3076
+    },
+    "transitions": {
+      "V1_WIN_TO_V2_WIN": 1,
+      "V2_WIN_TO_V1_WIN": 0,
+      "V1_WIN_TO_V1_WIN": 161,
+      "V2_WIN_TO_V2_WIN": 22,
+      "DRAW_TO_DRAW": 8
+    },
+    "actionChangedMatches": 8,
+    "differentDecisionBytes": 172,
+    "scoreBasisPointDelta": 52,
+    "fireDelta": -2,
+    "ownCrashDelta": -1,
+    "statisticalInterpretation": {
+      "discordantTerminalPairs": 1,
+      "twoSidedExactSignP": 1,
+      "oneSidedExactSignP": 0.5,
+      "significantAt005": false
+    },
+    "invariants": {
+      "timeoutError": 0,
+      "avoidableHardReject": 0,
+      "riskDominatedSelection": 0,
+      "rootRestoreFailure": 0
+    },
+    "overviewSha256": "c346bbe6d127f6b28c239622c13a0be7179311e411e01656da9cec595acbb50c",
+    "matchesSha256": "60d43d590c55a8562cf7ad3d4e39c1571beb3bf5cb8354197dd586c8db20e0d1"
+  },
+  "independentPositiveRoot": {
+    "matchId": "mat_Bhg8Kbt7YnS6goIih",
+    "candidateSeat": 0,
+    "frame": 20,
+    "equalRiskPrefix": {
+      "immediateFatalMass": 0,
+      "horizonFatalMass": 4809,
+      "unknownMass": 0,
+      "earliestFatalFrame": 3
+    },
+    "legacy": {
+      "selectedAction": "THROW_BOMB",
+      "selectedEscapeSlack": 0,
+      "outcome": "V1_WIN",
+      "terminalReason": "frameLimit",
+      "terminalFrame": 128
+    },
+    "pose": {
+      "selectedAction": "GO",
+      "goEscapeSlack": -1,
+      "goFallbackPoseRisk": 0,
+      "stationaryFallbackPoseRisk": 21252,
+      "outcome": "V2_WIN",
+      "terminalReason": "crashed",
+      "terminalFrame": 31
+    },
+    "overviewSha256": "449c33ac3b9f357bbbbfb39256218145722c9afdf914370862dc6065ef777ca9",
+    "matchesSha256": "691046e9f05f69a113dedcc4e2add6f8acc29bcea48494ec4a33887dc27d73c8"
+  },
+  "tests": {
+    "sr3": { "passed": 29, "failed": 0 },
+    "minimaxCore": { "passed": 212, "failed": 0 },
+    "gr0": { "passed": 357, "failed": 0 },
+    "imp5": { "passed": 14, "failed": 0 }
+  },
+  "source": {
+    "productionRootSha256": "deec4848d8595969682ba3033f44a37c3edaa4cc1ec8cc1f3b65b703f753fb79",
+    "riskAcceptanceControllerSha256": "04a7233b41ed9c03a15e5b9c405fbb5e537a444c94bff3fa148686db220f53b4",
+    "riskAcceptanceTestSha256": "58471a9b5a56428ac1abd160189e035872d1d3d6bd37f391aca0e5cf55785b08",
+    "arenaSha256": "9c3a8f316e0dc723547c7ba234b7bbf493a84c554daf5db619688f935d0e4edc"
+  },
+  "broaderIndependentQualificationPerformed": true,
+  "fullDynamicQualificationPerformed": false,
+  "officialPlatformWritePerformed": false
+}

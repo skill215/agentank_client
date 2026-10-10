@@ -1,0 +1,107 @@
+{
+  "seq": 14,
+  "previous": "e8d743f937344bedbe1b128e4e7bab8d4d44c64eca3852b5d3729014e3d5fd70",
+  "record": {
+    "version": 1,
+    "type": "review",
+    "id": "OPT-D-0007",
+    "reviewId": "OPT-R-0007",
+    "at": "2026-10-08T05:11:37.740Z",
+    "stage": "local",
+    "disposition": "reject",
+    "outcome": "failed",
+    "primaryCause": "REGRESSION",
+    "secondaryCauses": [],
+    "reason": "实际触发预检通过，但固定8局总得分4降至2、死亡0增至3；按原阈值否决，跳过新地图阶段。",
+    "nextStep": "结束本轮，保留基线；不继续围绕本候选微调。",
+    "limitations": "定向历史小样本筛选，无法估计总体效应；静态路线较短并不构成未来安全或胜率保证；具体退步机制未分析。",
+    "experiments": [
+      "BP418"
+    ],
+    "assessments": [
+      {
+        "criterion": "trigger",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp418-fast-anchor/preflight-summary.json"
+      },
+      {
+        "criterion": "old",
+        "status": "fail",
+        "evidencePath": "artifacts/native-causal-audit/bp418-fast-anchor/screen-summary.json"
+      },
+      {
+        "criterion": "fresh",
+        "status": "unknown",
+        "evidencePath": "artifacts/native-causal-audit/bp418-fast-anchor/campaign-summary.json"
+      },
+      {
+        "criterion": "release",
+        "status": "unknown",
+        "evidencePath": "artifacts/native-causal-audit/bp418-fast-anchor/campaign-summary.json"
+      }
+    ],
+    "cost": {
+      "attemptedGames": 8,
+      "completedGames": 8,
+      "independentUnits": 0,
+      "executionSeconds": 6.560843568,
+      "analysisSeconds": null
+    },
+    "metrics": [
+      {
+        "name": "total_score_delta",
+        "value": -2,
+        "unit": "score over8 historical games",
+        "source": "artifacts/native-causal-audit/bp418-fast-anchor/screen-summary.json"
+      },
+      {
+        "name": "death_delta",
+        "value": 3,
+        "unit": "deaths over8 games",
+        "source": "artifacts/native-causal-audit/bp418-fast-anchor/screen-summary.json"
+      },
+      {
+        "name": "wall_time_since_registration",
+        "value": 100.573,
+        "unit": "seconds",
+        "source": "artifacts/native-causal-audit/bp418-fast-anchor/campaign-summary.json"
+      }
+    ],
+    "productionAdoption": false,
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp418-fast-anchor/preflight-summary.json",
+        "sha256": "c3d16e413398731bdb4677bde4c8bcc2e89179149366fc8f0c1a02d7e55f50ce"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp418-fast-anchor/screen-summary.json",
+        "sha256": "5f699257960a5c6b6f287df6826c82877a7f002d14c694c0197b7bad905c7e05"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp418-fast-anchor/screen-review.json",
+        "sha256": "72447eab49459345b872f2c4a60af930ad0e31dacce03d36196c5d2f1c59a42e"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp418-fast-anchor/preflight-run/state.json",
+        "sha256": "2c4757b318edcec1ad39235ccc2b3bb25b616584881d9f9d604abfe0168a8857"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp418-fast-anchor/screen-run/state.json",
+        "sha256": "d441a9491bf8b6c39d51ee5f77e2ee60af00f6be8d27083d176ea64d1b772bec"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp418-fast-anchor/core-tests.txt",
+        "sha256": "002ce34c4fac8b65cdcb1c32a1b3931f2024d32cd093c5d9954113bb0c0584d1"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp418-fast-anchor/campaign-summary.json",
+        "sha256": "126fcde14f0a110432624fe08e5474ea2c93672bd6fa94122cc864eaa03a7b64"
+      },
+      {
+        "path": "docs/implementation/optimization-decisions/bp418-fast-review.md",
+        "sha256": "3e757c0c349928c4ed08ed98a0490987fe1b998bef6e9679a6c5dd92529489a1"
+      }
+    ]
+  },
+  "sha256": "b4c3efb0a64aaa434266a2786ceb483a12e2763bbf165c5a98ab7b5090d7770c"
+}

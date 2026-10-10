@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "COMMON_POLICY_OPTION_INTERVAL_EVIDENCE_V1",
+  "status": "HORIZON_SIGNAL_RETAINED_ACTION_OWNERSHIP_REJECTED",
+  "productionChanged": false,
+  "cohort": {
+    "manifest": "config/engine-v2/objective-option-cohort.json",
+    "fingerprint": "c992c61113c8913c47699b6b084c06f8c7ff37b90520a5282806554999b717db",
+    "sha256": "671f741f10454d8a0abf05a671735ae687b0e6c77e362c6f1e577dd96269393c",
+    "discoveryScenarios": 32,
+    "matchesPerImplementation": 64,
+    "holdoutScenarios": 64,
+    "holdoutRead": false,
+    "excludedPriorScenarios": 896,
+    "eligibleRollingScenarios": 347
+  },
+  "postRiskPhysicalShadow": {
+    "attempts": 6974,
+    "triggered": 138,
+    "completed": 121,
+    "incomplete": 17,
+    "optionWinnerChanged": 42,
+    "riskParetoConflicts": 32,
+    "nodes": 17875,
+    "maximumNodes": 720,
+    "actionAndOutcomeDelta": 0,
+    "interpretation": "post-search epsilon contamination does not turn a nominal Physical continuation into a sound Information owner; target kind, target identity, escape slack and horizon provenance remain separate contracts",
+    "overviewSha256": "67dac416e0329ddf9cad88dfb3f65aeac36744da6fa68569a214c4d2e660359d"
+  },
+  "commonPolicyInterval": {
+    "quantifiers": [
+      "enumerate possible-projectile absent and present worlds",
+      "enumerate complete enemy action and ChanceOutcome support at both plies",
+      "partition successors by platform-visible observation",
+      "force one continuation action inside each observation group",
+      "retain per-world fused value only as an upper bound"
+    ],
+    "failClosedDiscovery": {
+      "completed": 248,
+      "incomplete": 40,
+      "nodes": 334842,
+      "branches": 9900,
+      "observationGroups": 3152,
+      "horizonSeparations": 114,
+      "terminalOwnership": 0,
+      "proposals": 0,
+      "rootRestoreFailures": 0,
+      "hotAllocationCount": 0,
+      "baseline": { "wins": 9, "losses": 52, "draws": 3, "scoreBasisPoints": 1641 },
+      "candidate": { "wins": 9, "losses": 52, "draws": 3, "scoreBasisPoints": 1641 },
+      "overviewSha256": "4c03484e84d285949dd27a444724d582b0f5c32595d8342979fae1a7d225686c"
+    },
+    "rejectedOwnershipCounterexample": {
+      "historicalLabel": "finite-horizon strict dominance",
+      "correctLabel": "finite-horizon horizon separation",
+      "proposals": 103,
+      "baseline": { "wins": 9, "losses": 52, "draws": 3, "scoreBasisPoints": 1641,
+        "candidateCrashes": 19, "candidateFire": 327 },
+      "candidate": { "wins": 8, "losses": 56, "draws": 0, "scoreBasisPoints": 1250,
+        "candidateCrashes": 28, "candidateFire": 290 },
+      "delta": { "scoreBasisPoints": -391, "crashes": 9, "fire": -37 },
+      "pairedTransitions": {
+        "V1_WIN_TO_V2_WIN": 3,
+        "DRAW_TO_V2_WIN": 1,
+        "V2_WIN_TO_V1_WIN": 5,
+        "DRAW_TO_V1_WIN": 2
+      },
+      "riskDominatedSelections": 53,
+      "overviewSha256": "874966418781c2578fcfeb039b9c7030705725e9c19e646c8552b65fdd848bc1",
+      "interpretation": "a common two-ply policy can rank local horizon utility, but heuristic leaves are not lower or upper bounds on terminal game value"
+    }
+  },
+  "performance": {
+    "failClosedCandidateTotalMicros": 9889397,
+    "baselineCandidateTotalMicros": 4336422,
+    "totalRatioBasisPoints": 22806,
+    "failClosedP95Micros": 11942,
+    "baselineP95Micros": 6730,
+    "p95RatioBasisPoints": 17744,
+    "decision": "offline_or_sparse_only"
+  },
+  "decision": {
+    "activateProduction": false,
+    "readIndependentHoldout": false,
+    "keepFailClosedDiagnostic": true,
+    "rejectFiniteHorizonActionOwnership": true,
+    "nextArchitecture": [
+      "use finite-horizon common-policy intervals only for ranking, pruning and sparse certificate scheduling",
+      "grant action ownership only to terminal-complete or strict committed certificates",
+      "do not name a heuristic horizon interval a game-value lower or upper bound",
+      "move next work to strategic objective generation and verified attack proposals rather than weakening Risk"
+    ]
+  },
+  "source": {
+    "productionRootSha256": "deec4848d8595969682ba3033f44a37c3edaa4cc1ec8cc1f3b65b703f753fb79",
+    "riskAcceptanceControllerSha256": "04a7233b41ed9c03a15e5b9c405fbb5e537a444c94bff3fa148686db220f53b4",
+    "actionContinuationEnvelopeSha256": "d2a17b9e739b18147fb37823a89cd7201f723cabe22526b411d40d171c4b06bc",
+    "commonPolicyOptionIntervalSha256": "c52e9e1cebef10fcc2eea6e9d098ca24ec7158b6948098470ffc9558f2b989dd",
+    "diagnosticBotSha256": "84ee1f0842112bbd6c31d78e93e3cd1b89d204e5eb74c53295f568d19f10b3c3",
+    "arenaSha256": "8febb506eb67fbe9dcaf9784f29e4253f9f2f4b8b067a448bead6c74f797398d"
+  },
+  "fullArenaPerformed": false,
+  "officialPlatformWritePerformed": false
+}

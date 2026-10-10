@@ -1,0 +1,85 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP3_EVIDENCE_V1",
+  "status": "ACCEPTED_DIAGNOSTIC_NOT_PRODUCTION",
+  "productionRootSha256": "c4443ddbd2a7a651d77f1582e5b68ce3715dfc87af7cf40ac7432396def39c48",
+  "boundedPolicySearchSha256": "cd01e804922b51bf534ac0bc2cb58bbe1e06cdef50ede332cddb5c7170bc64ef",
+  "fixedScenarios": 16,
+  "physicalMatches": 32,
+  "policyLocalContract": {
+    "rootOwnSet": { "agreed": 1265, "compared": 1304 },
+    "rootEnemySet": { "agreed": 1299, "compared": 1304 },
+    "actionAgreement": { "agreed": 1627, "compared": 1925 },
+    "strictPairOrdering": { "agreed": 99, "compared": 110 },
+    "strictBestAction": { "agreed": 33, "compared": 38 },
+    "ownChanceMode": "v1-deterministic",
+    "hotAllocationCount": 0
+  },
+  "shadowPerformance": {
+    "before": {
+      "nodes": 321620,
+      "chanceOutcomes": 343574,
+      "budgetLeaves": 126513,
+      "candidateP95Micros": 20132
+    },
+    "after": {
+      "nodes": 299270,
+      "chanceOutcomes": 319896,
+      "budgetLeaves": 104624,
+      "candidateP95Micros": 17877
+    }
+  },
+  "activePoc": {
+    "baseline": {
+      "wins": 2,
+      "losses": 28,
+      "draws": 2,
+      "scoreBasisPoints": 938,
+      "fire": 151
+    },
+    "earlyPolicyLocal": {
+      "wins": 14,
+      "losses": 16,
+      "draws": 2,
+      "scoreBasisPoints": 4688,
+      "fire": 172,
+      "candidateTotalMicros": 15415540,
+      "candidateP95Micros": 17231,
+      "actionCount": 2708
+    },
+    "candidate": {
+      "wins": 15,
+      "losses": 16,
+      "draws": 1,
+      "scoreBasisPoints": 4844,
+      "fire": 231,
+      "candidateTotalMicros": 16501998,
+      "candidateP95Micros": 17941,
+      "actionCount": 2907
+    },
+    "scoreBasisPointDeltaFromBaseline": 3906,
+    "invariants": {
+      "timeoutError": 0,
+      "avoidableHardReject": 0,
+      "riskDominatedSelection": 0,
+      "rootRestoreFailure": 0
+    }
+  },
+  "remainingSearchGap": {
+    "nativeNodes": 266617,
+    "oracleNodes": 227894,
+    "nativeBudgetLeaves": 91888,
+    "oracleBudgetLeaves": 49138,
+    "next": "BP4_TACTICAL_INVOCATION_AND_BUDGET_LEDGER"
+  },
+  "tests": {
+    "diagnostics": { "passed": 488, "failed": 0 },
+    "minimaxCore": { "passed": 220, "failed": 0 },
+    "v3": { "passed": 60, "failed": 0 }
+  },
+  "artifacts": {
+    "shadowManifestSha256": "939fffe41eb6b2461e6a614351ea7e1785ab601a5e34197652282bc0a2a87ee5",
+    "shadowOverviewSha256": "6f26a05943f774d4c292cc40c8942b721dd8b0624b9757c215ec9eb92b6af969",
+    "activeManifestSha256": "16e5d6dc5cea8268d9adb187d6ab0ce695d3405de6c722fd1078222498aaca2f",
+    "activeOverviewSha256": "04339764848834223d196af3017a4d5859a4142edfb80b1ec6d2e25814e07c68"
+  }
+}

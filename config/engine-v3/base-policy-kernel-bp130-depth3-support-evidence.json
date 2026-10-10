@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_DEPTH3_SUPPORT_EVIDENCE_V1",
+  "stage": "BP130",
+  "status": "ACCEPT_WIDTH_ROOT_CAUSE",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "contract": {
+    "fixedPairRootCount": 211,
+    "depth3CompleteCount": 30,
+    "depth3IncompleteCount": 181,
+    "reasonSource": "ProductionDepthSearch iterationTruncatedCount and lastNonExactAbortReason",
+    "telemetry": "diagnostic-only fixed TypedArray fields",
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0,
+    "behaviorNeutral": true
+  },
+  "rootCause": {
+    "reasonMask": {
+      "value": 208,
+      "dimensions": [
+        "WIDTH",
+        "TRAVERSAL",
+        "REPRESENTATIVE_DEPTH"
+      ],
+      "count": 181
+    },
+    "nonExactAbortReason": {
+      "WIDTH": 181,
+      "FAST": 0,
+      "HARD": 0
+    },
+    "failedBranch": {
+      "incumbent": 176,
+      "candidate": 5,
+      "unclassified": 0
+    },
+    "truncatedRepresentatives": {
+      "incumbentOne": 123,
+      "incumbentTwo": 53,
+      "candidateOne": 5
+    },
+    "budgetInterrupted": 0,
+    "incompleteTransition": 0,
+    "incompleteNodeTotal": 11244,
+    "incompleteMaximumCombinedNodes": 470
+  },
+  "interpretation": {
+    "depth2ExactOwner": "All incomplete attempts retain an exact depth-2 representative owner.",
+    "depth3Failure": "The initial depth-3 pass uses representative expansion width 2. Once a deeper node generates more representatives, exact-owner early abort stops the non-exact attempt before candidate comparison.",
+    "correctionToBp129": "BP129 correctly rejected node-budget scaling, but BP130 narrows its broad support/closure diagnosis to representative-width truncation. Fast/Hard support and leaf evaluation are not the observed incomplete cause."
+  },
+  "artifacts": {
+    "shadowDirectory": "artifacts/v2-native-initiative/bp130-depth3-support-census-shadow-v2",
+    "shadowManifestSha256": "102efec3edffd667ac5d3ac09e3453823d974c11275f28af91ba49b8d5a44070",
+    "shadowOverviewSha256": "1c2b7e1923df2e7204ab4516070ca1607e3b63d9d0f8145509ce088497b639b3",
+    "shadowMatchesSha256": "d28d5b61459627f221e39ab21dd938fae785b6bef7b349519ceff71efbc8f768",
+    "reportDirectory": "artifacts/v2-native-initiative/bp130-semantic-attack-depth3-support",
+    "reportManifestSha256": "0be967351287509e93945734eaa1f8bac45f40188ce77172b7fa5fd94fa6a42d",
+    "reportOverviewSha256": "0dff8a38dafae343acd5626cc426ff7ee3fc271385b7d7f57f6dd121e1cd23e7",
+    "reportRootsSha256": "d291c449e135e87051e6de5203df4441d7d5f0a690c6b963f22cf5e19b12cb74",
+    "reportFingerprint": "640cd489decaad17a176d1eafe0d8ee52e4a32e42c90b98c690b00f3a1e5d63a",
+    "reportBytes": 9738
+  },
+  "source": {
+    "policySearchSha256": "c6b93bf41df79cdd2ba18f4a651e71d577092dd1cb2ab51cac998dd5498b27d4",
+    "depthStabilityShadowSha256": "9031c3234297258cae1e37deff4ae7c848e7a6c68f3e556d989a4a027d90bd06",
+    "policyIntervalShadowSha256": "3185b7620a69929bcd935e3e7cb24866edab2d077b0f591f0e926b3e699b55d5",
+    "supportReportSha256": "a878414796953f270a0ab39df08ac0a61fda1c57f678447dbcdfd8bc25dbcada",
+    "policySearchTestSha256": "f779bf69022d7c64e82937fad027197e31994ec15b0298a02ad742a6abb13761",
+    "depthStabilityTestSha256": "8b57e41f0bccc64bec02267d1a8231ff1fc36ad45755edb8e4a33ef09541373e",
+    "policyIntervalTestSha256": "1b39c84b1060b03b2bad113e2d09d75c9410156a81581d0184529585381de556",
+    "supportReportTestSha256": "ce358864a24c1e5ea5c8759537d59638c6b25e9f9ec2ffa31ccec153d8d53217"
+  },
+  "decision": {
+    "retain": [
+      "built-in non-exact abort reason telemetry",
+      "branch-specific fixed-pair failure classification",
+      "fail-closed exact depth-2 owner while depth-3 is non-exact"
+    ],
+    "reject": [
+      "increasing node budget before width calibration",
+      "changing leaf or Hard semantics to cure these 181 roots",
+      "publishing incomplete depth-3 point values"
+    ],
+    "next": "BP131 runs a diagnostic depth-3 representative-width ladder W2/W3/W4 on the same fixed pairs. It measures completeness, relation stability, nodes, and historical direction before any production change."
+  }
+}

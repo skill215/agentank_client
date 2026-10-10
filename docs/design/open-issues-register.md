@@ -19,7 +19,7 @@
 | OI-R0-001 | CLOSED | `onIdle`、command queue、action slot、`go(n)` 与复合动作的精确调度 | Guide + replay；[action-scheduler-contract.md](action-scheduler-contract.md) 分离 program/queue/executed action，并定义 boost 复合执行 | DD2 只冻结整数 ABI；语义已关闭 |
 | OI-R0-002 | CLOSED | seat/initiative 与双方 action 的顺序/同时性 | 9,642 个双 seat action frame 全为 seat0→seat1；freeze 提供即时后手效应证据 | 主 phase 唯一；joint strategy 节点仍按 simultaneous 信息结构求解 |
 | OI-R0-003 | CLOSED | bullet 创建帧、每帧两 substep、逐 substep 碰撞和事件顺序 | 3,103 条 `0,1` 轨迹；1,078 个创建同帧先 create 再 move | 基本 projectile phase 已关闭；共享资源争用归 OI-R0-009 |
-| OI-R0-004 | VARIANT_DEFINED | 同时移动、同格、交换位置、迎面碰撞和阻挡 | 主 seat action 顺序已知；占格、swap 和 crash 仍缺定向平台证据 | DD1 定义 `SEQUENTIAL_BLOCK`、`INTENT_BLOCK`、`COLLISION_CRASH` 三个有限 variant；DD4 校准 |
+| OI-R0-004 | PARTIALLY_CLOSED | 同时移动、同格、交换位置、迎面碰撞和阻挡 | 静态占位阻挡已由P2探针闭合；动态历史池另有31个普通GO进入对方同record腾空位置的成功样本；未发现成功swap/同终点样本 | Fast闭合静态阻挡与普通GO腾空跟随；swap、同目标、boost/teleport/effect复合仍使用 `SEQUENTIAL_BLOCK`、`INTENT_BLOCK`、`COLLISION_CRASH` 有限variant并禁止strict假精确 |
 | OI-R0-005 | CLOSED | effect expiry、bomb、双方 action、bullet、terrain、star、observation、terminal 的 FrameTimeline | 平台 replay 冻结 expiry→star spawn→poll→seat0→seat1→star collect→projectile→bomb→terminal；外部模拟器 bomb-before-action 被否定 | [frame-timeline-contract.md](frame-timeline-contract.md) 为规范；边缘冲突拆到独立 issue |
 | OI-R0-006 | VARIANT_DEFINED | bomb 的创建、引信 deadline、爆炸批处理和同帧 damage/map 顺序 | 38 个 placed→exploded 样本均相隔 10 record frames；爆炸在动作和 projectile 后，且移动可进出 blast | 主时序关闭；多 bomb 同 phase 的 hit/map 批处理保留有限 variant，DD4 校准 |
 | OI-R0-007 | VARIANT_DEFINED | star 收集、重生、同帧双方到达和终局先后 | 345 次收集均在 action 后、projectile 前；228 个 respawn 样本均相隔 10 record frames | 主时序关闭；同格争夺和生成位置/chance 保留有限 variant，未来星不进 Hard/Proof |
@@ -95,6 +95,7 @@
 | OI-ARCH-016 | DECIDED | 历史分析器把未观察技能当none、把缺失runtime当0，会污染skill与terminal统计 | DD4/DD9/DD10 | analyzer迁移skill/terminal provenance，旧schema显式标legacy，跨版本golden report通过 |
 | OI-ARCH-017 | DECIDED | build gate、服务器simulate、发布、挑战和下载没有单一事务状态机 | DD8–DD10 | agentank-ops函数边界、RunManifest schema、锁、原子artifact和两级发布门执行通过 |
 | OI-ARCH-018 | DECIDED | 多tank共享构建工具和全局历史语料时可能交叉污染Candidate、Snapshot、Forward与rollback证据 | DD9/DD10 | profile/tank/skill/branch血缘、单profile发布快照和跨profile拒绝测试通过后CLOSED |
+| OI-ARCH-019 | DECIDED | STRAT2仍在Risk前让active strategy污染基础动作价值，浅Minimax又无法承担长期星路/128帧战略；强制STAR与动态策略出现灾难性差异 | DEC-0096的STRAT3 RST1已实现中立估值、post-Risk prepare、候选portfolio和post-selection commit；32场景由约6.25%恢复到28.51%，硬不变量为0，但各策略A/B动作仍相同 | RST2恢复committed-membership/soft-value，RST3加入可区分的多步Plan候选；独立验证达到约50%后才跑全量，最终仍需击毁+10%、总得分>60%、性能和204800-byte门 |
 
 ## 8. DD1 退出结论
 

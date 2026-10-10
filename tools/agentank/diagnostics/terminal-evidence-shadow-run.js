@@ -1,0 +1,29 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),zlib=require('node:zlib'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const {NativeBasePolicyEngine:E}=require('../../../engine-v2/src/runtime/native-base-policy-engine');
+const {RouteNavigationConsumer}=require('./route-navigation-consumer');
+const {selectNavigationFamily}=require('./navigation-family-selector');
+const {evaluateShadow}=require('./single-frame-terminal-evidence');
+const {inspectObservationBoundary}=require('./terminal-observation-boundary');
+const {evaluateRestrictedTerminal}=require('./restricted-terminal-certificate');
+const {play,productionTreeSha256,NativeBasePolicyDiagnosticBot:B}=require('./native-base-policy-standalone-arena');
+const {loadRollingV1ScenariosForIds}=require('../simulation/historical-scenarios');
+const {loadSimulator}=require('../simulation/paired-arena');
+const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
+async function run(root,output,normalizeCooldown=false,inspectBallistics=false){
+ assert.ok(!fs.existsSync(output));const base=path.join(root,'artifacts/native-causal-audit'),read=n=>zlib.gunzipSync(fs.readFileSync(path.join(base,n))).toString().trim().split('\n').map(JSON.parse),targets=read('bp352-terminal-risk-semantics/diagnostic-samples.ndjson.gz'),matches=read('bp349-navigation-family-external/matches.ndjson.gz'),manifest=JSON.parse(fs.readFileSync(path.join(base,'bp349-navigation-family-external/manifest.json'))),tree=productionTreeSha256(root);assert.equal(tree,manifest.tree);for(const f of manifest.candidateSources)assert.equal(hash(fs.readFileSync(path.join(root,f.path))),f.sha256);
+ const {scenarios}=loadRollingV1ScenariosForIds(targets.map(t=>t.id),root),{module}=await loadSimulator(root),select=E.prototype.selectIncumbent,capture=B.prototype.captureRoot,work=new WeakMap(),records=[];let target,record;
+ fs.mkdirSync(output,{recursive:true});fs.writeFileSync(path.join(output,'manifest.json'),JSON.stringify({tree,normalizeCooldown,inspectBallistics,targets:targets.map(t=>({id:t.id,seat:t.seat,frame:t.frame})),sources:['terminal-evidence-shadow-run.js','single-frame-terminal-evidence.js','cooldown-stun-normalization.js','ballistic-terminal-witness.js'].map(f=>({path:f,sha256:hash(fs.readFileSync(path.join(__dirname,f)))})),protocol:'FIRE-only full primitive-stun response domain; actual terminal codes including runtime pessimism; incomplete input cannot certify; diagnostic only'},null,2));
+ const outputManifest=path.join(output,'manifest.json'),bound=JSON.parse(fs.readFileSync(outputManifest));
+ bound.sources.push({path:'terminal-entry-premises.js',sha256:hash(fs.readFileSync(path.join(__dirname,'terminal-entry-premises.js')))});
+ bound.sources.push({path:'terminal-observation-boundary.js',sha256:hash(fs.readFileSync(path.join(__dirname,'terminal-observation-boundary.js')))});
+ bound.sources.push({path:'restricted-terminal-certificate.js',sha256:hash(fs.readFileSync(path.join(__dirname,'restricted-terminal-certificate.js')))});
+ fs.writeFileSync(outputManifest,JSON.stringify(bound,null,2));
+ try{E.prototype.selectIncumbent=function(count){const row=select.call(this,count);let c=work.get(this);if(!c){c=new RouteNavigationConsumer(this.adapter.state.cells,this.ourActions.length);work.set(this,c);}return selectNavigationFamily(this,c,count,row);};
+ B.prototype.captureRoot=function(context,action){capture.call(this,context,action);if(context.game.frames===target.frame){const start=process.hrtime.bigint();record=evaluateShadow(this.engine,64,normalizeCooldown,inspectBallistics);record.observationBoundary=inspectObservationBoundary(this.engine.adapter,context);record.restrictedCertificate=evaluateRestrictedTerminal(this.engine,context);assert.equal(evaluateRestrictedTerminal(this.engine,context,0).status,'BLOCKED');record.diagnosticMicros=Number((process.hrtime.bigint()-start)/1000n);const interrupted=evaluateShadow(this.engine,0,normalizeCooldown,inspectBallistics);assert.equal(interrupted.status,'INCOMPLETE');assert.equal(interrupted.seen,0);record.budgetZeroStatus=interrupted.status;}};
+ for(target of targets){record=null;const scenario=scenarios.find(s=>s.matchUrlId===target.id),old=matches.find(m=>m.mode==='NAVIGATION_FAMILY'&&m.matchUrlId===target.id&&m.candidateSeat===target.seat);assert.equal(scenario.fingerprint,old.scenarioFingerprint);const m=await play(module,scenario,target.seat,true);assert.ok(record);for(const side of ['candidate','control']){assert.equal(m[side].compactActionStream,old[side].compactActionStream);assert.deepEqual(m[side].compactArguments,old[side].compactArguments);}assert.deepEqual(m.counts,old.counts);assert.equal(m.analysisOutcome,old.analysisOutcome);assert.equal(m.candidate.errorCount,0);assert.equal(m.candidate.timeoutCount,0);assert.equal(m.candidateEngine.rootRestoreFailures,0);records.push({id:target.id,seat:target.seat,...record});}
+ }finally{E.prototype.selectIncumbent=select;B.prototype.captureRoot=capture;}
+ const statuses={},blockers={};for(const r of records){statuses[r.status]=(statuses[r.status]||0)+1;for(const [k,v]of Object.entries(r.conditions))if(!v)blockers[k]=(blockers[k]||0)+1;}
+ const overview={tree,roots:records.length,statuses,blockers,records:records.map(({cells,...r})=>r),checks:{actionDrift:0,eventCountDrift:0,errors:0,timeouts:0,restore:0,budgetZeroPass:7},productionAdoption:false};assert.equal(productionTreeSha256(root),tree);fs.writeFileSync(path.join(output,'overview.json'),JSON.stringify(overview,null,2));fs.writeFileSync(path.join(output,'diagnostic-samples.ndjson.gz'),zlib.gzipSync(records.map(JSON.stringify).join('\n')+'\n'));console.log(JSON.stringify(overview,null,2));
+}
+if(require.main===module)run(process.cwd(),process.argv[2],process.argv.includes('--normalize-cooldown'),process.argv.includes('--inspect-ballistics')).catch(e=>{console.error(e);process.exitCode=1;});

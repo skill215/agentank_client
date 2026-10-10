@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "HP17_SELECTIVE_GEOMETRY_SCHEDULE_V1",
+  "status": "SHADOW_ONLY",
+  "profile": "SELECTIVE_GEOMETRY_SPARSE_C4",
+  "candidateRows": 3,
+  "trigger": {
+    "mask": 97,
+    "value": 1,
+    "conditions": [
+      "candidateWidth=3",
+      "bestChallengerExpectedValue<selectedExpectedValue"
+    ],
+    "cooldownFrames": 4
+  },
+  "fixed16": {
+    "matches": 32,
+    "currentWorkUnits": 4383247,
+    "candidateWorkUnits": 4535387,
+    "candidateInformationNodes": 3612,
+    "candidateCompletedSearches": 178,
+    "strictImprovementOpportunities": 50,
+    "hp16OpportunityReference": 96,
+    "physicalNodesCurrent": 24366,
+    "physicalNodesCandidate": 23754,
+    "completeValueOwnersCurrent": 70,
+    "completeValueOwnersCandidate": 70,
+    "actionStreamDifferences": 0,
+    "outcomeDifferences": 0,
+    "avoidableHardRejects": 0,
+    "riskDominatedSelections": 0,
+    "rootRestoreFailures": 0,
+    "hotAllocations": 0
+  },
+  "productionDefaultEnabled": false,
+  "nextGate": "ACTIVE_PROPOSAL_CAUSAL_AB"
+}

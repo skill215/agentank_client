@@ -108,6 +108,7 @@
 |---|---|
 | [evaluation-contract.md](evaluation-contract.md) | feature registry、cost/dependency、raw/weight与Evaluator A/B |
 | [strategy-selector-contract.md](strategy-selector-contract.md) | primary/modifier、阶段、profile选择和hysteresis |
+| [v2-strategy-layer-contract.md](v2-strategy-layer-contract.md) | **ACCEPTED / D0–D3 IMPLEMENTED**：单一Minimax、离散StrategyBand、击杀优先默认、统一outcome evaluator；`OI-ARCH-019`等待D4战斗/性能/体积资格 |
 | [opponent-model-contract.md](opponent-model-contract.md) | opportunity/choice、fast/slow、risk preference与nominal action policy |
 | [skill-state-machine-contract.md](skill-state-machine-contract.md) | 八技能generated descriptor、own specialization与enemy lookup |
 | [plan-contract.md](plan-contract.md) | PlanSketch/PersistentPlan、Shot/Bomb/Skill、dirty/cache/Hard revalidation |
@@ -265,6 +266,11 @@
 6. hidden threat进入soft risk/信息控制，不生成committed Hard；
 7. PlanSketch避免高频攻击候选复制数据，PersistentPlan/SourcePlan owner分离；
 8. DD8 READY，可按已知访问模式冻结cache、runtime/fallback和build。
+
+DD7 的 STRAT2 选择顺序已由 `DEC-0096` 修订。当前 strategy/search 权威接口、
+所有权和迁移门见 [v2-strategy-search-rearchitecture.md](v2-strategy-search-rearchitecture.md)。
+其核心变化是 strategy 只消费 Risk/EO/Pareto/safe-floor 后的证据，最终 action 通过
+FinalActionGate 后才提交跨root strategy state。
 
 ## 9.6 DD8 完成摘要
 

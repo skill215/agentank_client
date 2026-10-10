@@ -1,0 +1,69 @@
+{
+  "seq": 37,
+  "previous": "23a00d0d7e2c95ae2b28e73d7715f5375dbfb18869b0d86f5bfbafe26b81bd0a",
+  "record": {
+    "version": 1,
+    "type": "register",
+    "at": "2026-10-09T04:19:25.265Z",
+    "process": "OPT-P-005",
+    "registration": "prospective",
+    "scope": "Read-only audit all24 pairs and exact diagnostic reruns of every pair with increased candidate death; no new candidate or fresh quality claim",
+    "baseline": "285f9863227d6af3638bed74e008f0260fd25440034d95eec5e3f8cac44d9120",
+    "falsifier": "Trace drift or no shared-state evidence prevents a causal recommendation",
+    "nextStep": "Complete12 diagnostic reruns; audit all24 pairs; select evidence-backed next experiment or stop",
+    "alternatives": [
+      {
+        "name": "继续单一对手",
+        "benefit": "便宜",
+        "risk": "泛化未知",
+        "reason": "不采用"
+      },
+      {
+        "name": "三技能共同地图对照",
+        "benefit": "快速发现配置退步",
+        "risk": "仍为同一策略且小样本",
+        "reason": "采用"
+      }
+    ],
+    "budget": {
+      "games": 12,
+      "seconds": 300
+    },
+    "id": "OPT-D-0019",
+    "category": "process",
+    "parent": "OPT-D-0018",
+    "title": "新增死亡全量配对诊断与首次分歧追踪",
+    "hypothesis": "Exact replay and common-prefix comparison can distinguish early policy shifts from immediate risk failures without further blind tuning.",
+    "criteria": [
+      {
+        "id": "integrity",
+        "metric": "exact replay signatures",
+        "rule": "12/12 match, all source hashes valid",
+        "unit": "game",
+        "kind": "hard"
+      },
+      {
+        "id": "diagnosis",
+        "metric": "full cohort and causal scope",
+        "rule": "all6 added-death pairs traced, all24 outcome pairs retained, no unsupported causal claim",
+        "unit": "pair",
+        "kind": "hard"
+      }
+    ],
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp423-regression-diagnosis/campaign.json",
+        "sha256": "d21faeb103440c03fd14eba2dc161f9c893332de6cf97320a800a0560f09f327"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp423-regression-diagnosis/plan.json",
+        "sha256": "f3988e1f660acff0fdc9a39bf661cc4c8b1fad803e4c657ed045f0de7f28ce98"
+      },
+      {
+        "path": "tools/agentank/diagnostics/blend-regression-trace.js",
+        "sha256": "e0105141340099364117166064386987d4495333b91aa379f66db60a09d3040d"
+      }
+    ]
+  },
+  "sha256": "6bec077917f9151c7ef22484eebb06dca805330e76f1f5c56eebae24612957fe"
+}

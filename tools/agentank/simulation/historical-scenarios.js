@@ -149,6 +149,34 @@ function loadRollingV1Scenarios(workspaceRoot = defaultWorkspaceRoot()) {
   return fs.existsSync(indexFile) ? loadIndexedV1Scenarios(root) : loadFrozenV1Scenarios(root);
 }
 
+function loadRollingV1ScenariosForIds(matchUrlIds, workspaceRoot = defaultWorkspaceRoot()) {
+  const root = path.resolve(workspaceRoot); const indexFile = contained(root, "battle-records",
+    "index", "match-index.json");
+  invariant(fs.existsSync(indexFile), "ROLLING_V1_SELECTIVE_INDEX_MISSING", indexFile);
+  const indexBytes = fs.readFileSync(indexFile); const index = JSON.parse(indexBytes);
+  invariant(Array.isArray(index.entries), "ROLLING_V1_INDEX_ENTRIES_MISSING", indexFile);
+  const byId = new Map(index.entries.map(entry => [entry.matchId, entry]));
+  const scenarios = matchUrlIds.map(matchUrlId => {
+    const entry = byId.get(matchUrlId);
+    invariant(entry?.complete && typeof entry.preferredPath === "string",
+      "ROLLING_V1_SELECTIVE_ENTRY_MISSING", matchUrlId);
+    const rawFile = contained(root, "battle-records", entry.preferredPath, "raw.json");
+    const raw = JSON.parse(fs.readFileSync(rawFile, "utf8"));
+    const challenger = raw.participants?.challenger; const defender = raw.participants?.defender;
+    invariant(challenger?.tankId === SUBJECT_TANK_ID || defender?.tankId === SUBJECT_TANK_ID,
+      "ROLLING_V1_SELECTIVE_SUBJECT_MISSING", matchUrlId);
+    invariant((raw.match?.urlId || entry.matchId) === matchUrlId,
+      "ROLLING_V1_SELECTIVE_ID_MISMATCH", matchUrlId);
+    return scenarioFromMatch({ urlId: matchUrlId, mapHash: raw.match?.mapHash,
+      replayData: raw.replayData, challengerTankId: challenger?.tankId,
+      defenderTankId: defender?.tankId });
+  });
+  return { scenarios, sourceIndex: {
+    relativePath: path.relative(root, indexFile).replaceAll("\\", "/"),
+    sha256: sha256Bytes(indexBytes), requestedMatches: matchUrlIds.length
+  } };
+}
+
 function createHistoricalStarProvider(stars) {
   let index = 1; let calls = 0; let provided = 0; let earlyWaits = 0;
   return {
@@ -166,4 +194,4 @@ function createHistoricalStarProvider(stars) {
 
 module.exports = { starTimeline, scenarioFromMatch, hydrateMatch, scenariosForIds,
   loadFrozenV1Scenarios, loadIndexedV1Scenarios, loadRollingV1Scenarios,
-  createHistoricalStarProvider };
+  loadRollingV1ScenariosForIds, createHistoricalStarProvider };

@@ -1,0 +1,76 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP4_EVIDENCE_V1",
+  "status": "REJECTED_ACTIVE_DIAGNOSTIC_ONLY",
+  "productionRootSha256": "c4443ddbd2a7a651d77f1582e5b68ce3715dfc87af7cf40ac7432396def39c48",
+  "cohort": {
+    "scenarios": 16,
+    "candidateMatches": 32,
+    "skill": "stun",
+    "fingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667"
+  },
+  "sources": {
+    "boundedPolicySearchSha256": "ba99163b9ee40821d87de378708a7907fa9aee5eedcae90a3fef9fa442d185e2",
+    "tacticalOwnerSha256": "670272c7253406ee9d3b1ab3b89a032a07a9b29395c4ae7d4d1ee003dc34b6c3",
+    "arenaSha256": "42e0099c3f95c1581720422e5850364f3250bce4c2631e99349d113f074d84df",
+    "toolSha256": "e237ed3e24f56cda392469886db77b17736e2dc05b71c3be48f1e8256e0e7ac9"
+  },
+  "control": {
+    "overviewSha256": "e491fc7c51e109a539b26e66f9600c1467b6f4eed60b9a8c39a8df132762d142",
+    "wins": 15,
+    "losses": 16,
+    "draws": 1,
+    "scoreBasisPoints": 4844,
+    "fire": 231,
+    "searchPrepareCount": 1448,
+    "searchNodes": 266617,
+    "budgetLeaves": 91888,
+    "oracleOnlyInvocationByNativeResult": [0, 214, 1, 406, 0, 0]
+  },
+  "committedViableActive": {
+    "overviewSha256": "eca741072d45faba52b4f97674a4a67433227c2211539cbcbd66718b8eba0768",
+    "wins": 12,
+    "losses": 20,
+    "draws": 0,
+    "scoreBasisPoints": 3750,
+    "fire": 212,
+    "searchPrepareCount": 1780,
+    "searchNodes": 326581,
+    "budgetLeaves": 111545,
+    "committedRoots": 383,
+    "completeCommittedRoots": 368,
+    "incompleteCommittedRoots": 15,
+    "selectionViolations": 0,
+    "oracleOnlyInvocationByNativeResult": [0, 212, 1, 0, 0, 14]
+  },
+  "pairedTransition": {
+    "v1WinToV2Win": 6,
+    "v2WinToV1Win": 9,
+    "drawToV1Win": 1,
+    "unchangedV2Win": 6,
+    "unchangedV1Win": 10
+  },
+  "combinedStagePrefixAndCommitted": {
+    "overviewSha256": "c72ea8238b075ab73f452e2cb79d0623a13550d40f6b4a7481e8dcbd1e44ff75",
+    "wins": 10,
+    "losses": 19,
+    "draws": 3,
+    "scoreBasisPoints": 3594
+  },
+  "invariants": {
+    "timeoutError": 0,
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "hotAllocationCount": 0
+  },
+  "tests": {
+    "diagnostics": 492,
+    "minimaxCore": 220,
+    "v3": 60
+  },
+  "decision": {
+    "productionDefault": "off",
+    "acceptedBaseline": "BP3",
+    "reason": "ReverseViability first-action membership proves only immediate survivability. It does not certify that bounded Minimax may replace the existing committed continuation. ACTIVE produced six positive flips but ten negative flips and lost 1094 basis points."
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "schema": "BasePolicyKernelBp0EvidenceV1",
+  "stage": "BP0",
+  "status": "INTENT_AND_ACTION_MAPPING_EQUIVALENT_CONTEXT_TRANSITION_PARTIAL",
+  "date": "2026-08-25",
+  "productionDefaultChanged": false,
+  "cohort": {
+    "scenarioCount": 16,
+    "physicalMatchCount": 64,
+    "oracleOwnerMatchCount": 32,
+    "skillMode": "STUN"
+  },
+  "equivalence": {
+    "proposedIntent": { "agree": 1549, "compare": 1549 },
+    "committedIntent": { "agree": 1549, "compare": 1549 },
+    "intentActionMapping": { "agree": 1549, "compare": 1549 },
+    "contextEpoch": { "agree": 1544, "compare": 1549 },
+    "fullNativeTacticalAction": { "agree": 1127, "compare": 2024, "basisPoints": 5568 }
+  },
+  "invariants": {
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "timeoutError": 0,
+    "hotPathAllocations": 0
+  },
+  "tests": {
+    "diagnostics": { "passed": 482, "total": 482 },
+    "v3": { "passed": 60, "total": 60 },
+    "minimaxCore": { "passed": 220, "total": 220 }
+  },
+  "artifacts": {
+    "runDirectory": "/tmp/agentank-base-policy-bp0-fixed16-root-rebased",
+    "manifestSha256": "183181b1690c3cfa50ed215c2826b6e4ae09fe4ee86b65678367b75956b63e45",
+    "overviewSha256": "7ce78056af0eb43957a945c2327d0e5997036f726c94f7ff7035a08b3d6c3160"
+  },
+  "decision": "FREEZE_INTENT_HEURISTICS_AND_CLOSE_CONTEXT_THEN_ACTION_DOMAIN",
+  "next": "BP1_CONTEXT_TRANSITION_AND_TACTICAL_ACTION_DOMAIN_EQUIVALENCE"
+}

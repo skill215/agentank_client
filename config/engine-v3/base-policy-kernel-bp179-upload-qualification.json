@@ -1,0 +1,83 @@
+{
+  "objectKind": "BasePolicyKernelEvidenceV1",
+  "stage": "BP179",
+  "status": "QUALIFIED_WORKING_BASELINE",
+  "generatedAt": "2026-09-03T00:00:00+08:00",
+  "productionDefaultChanged": false,
+  "officialPlatformOperationPerformed": false,
+  "entry": "engine-v2/src/runtime/native-base-policy-production-entry.js",
+  "build": {
+    "sourceBytes": 557251,
+    "sourceSha256": "4a1e261e81fd5e08149428346f1812b050a886b08d8b25f8c527cdbc0b98ff99",
+    "minifiedBytes": 180466,
+    "minifiedSha256": "3b96f0bfd5abc3d6b65be4159aa646858c31eb8c2a17831699e3011912d46503",
+    "platformLimitBytes": 204800,
+    "headroomBytes": 24334,
+    "withinPlatformLimit": true,
+    "deterministicAcrossTwoBuilds": true,
+    "fixtureCallbacks": 32,
+    "fixtureEquivalent": true
+  },
+  "arena": {
+    "role": "DISCOVERY",
+    "scenarios": 64,
+    "seatsPerScenario": 2,
+    "matchesPerExecutionShape": 128,
+    "executionShapes": 3,
+    "totalPhysicalRuns": 384,
+    "runtimeIndependentResult": {
+      "wins": 71,
+      "losses": 45,
+      "draws": 12,
+      "scoreBasisPoints": 6015,
+      "crashWins": 51,
+      "crashLosses": 31,
+      "starDifference": -11
+    },
+    "fixed16": {
+      "matches": 32,
+      "wins": 20,
+      "losses": 9,
+      "draws": 3,
+      "scoreBasisPoints": 6718,
+      "crashWins": 14,
+      "crashLosses": 5
+    },
+    "semanticFingerprint": "c9e3caacde42f7a3f5fd287775bca5c8847092a5c15b2e8e5618e5181622d0d8",
+    "directVsBundledSourceDifferences": 0,
+    "bundledSourceVsMinifiedDifferences": 0,
+    "comparedFields": [
+      "ACTION_STREAM",
+      "ACTION_ARGUMENTS",
+      "TERMINAL_REASON",
+      "FRAME_COUNT",
+      "STARS_AND_CRASHES",
+      "ANALYSIS_OUTCOME",
+      "TERMINAL_CATEGORY"
+    ],
+    "ignoredLocalRuntimeWinnerMetadataDifferences": {
+      "directVsBundledSource": 10,
+      "bundledSourceVsMinified": 1,
+      "reason": "All were frameLimit with equal stars and identical action/physical traces; analysis outcome is DRAW by contract."
+    }
+  },
+  "invariants": {
+    "timeouts": 0,
+    "errors": 0,
+    "rootRestoreFailures": 0,
+    "hotAllocations": 0
+  },
+  "tests": {
+    "suite": "test/minimax-core/*.test.js",
+    "passed": 265,
+    "failed": 0
+  },
+  "qualificationReportFingerprint": "528221afff27fa9cf62a2183542f5732310e31a2086d97014981c9611de74081",
+  "decision": {
+    "workingBaseline": "NATIVE_BASE_POLICY_THIN_ROOT",
+    "legacyProductionRootRole": "REGRESSION_REFERENCE_ONLY",
+    "uploadCandidateFrozen": false,
+    "officialSimulationAuthorized": false,
+    "publishAuthorized": false
+  }
+}

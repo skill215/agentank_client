@@ -1,0 +1,19 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP31_SHARED_ROOT_REJECTION_V1",
+  "status": "REJECTED_FOR_COMPLEXITY",
+  "scenarios": 8,
+  "matches": 16,
+  "semanticIdentity": true,
+  "sharedPairs": 126,
+  "sharedRootApplies": 539,
+  "logicalTransitions": 231347,
+  "savedBasisPoints": 23,
+  "off": { "elapsedMs": 21793, "candidateMicros": 10949921, "p95Micros": 34054 },
+  "on": { "elapsedMs": 22206, "candidateMicros": 10931819, "p95Micros": 32217 },
+  "deltaBasisPoints": { "elapsed": 190, "candidateMicros": -17, "p95": -539 },
+  "reason": "Only 0.23% of logical transitions are shared; total candidate time improves 0.17% while wall time regresses. The implementation complexity is not justified.",
+  "artifacts": {
+    "off": "/tmp/agentank-bp31-shared-off",
+    "on": "/tmp/agentank-bp31-shared-on-fix"
+  }
+}

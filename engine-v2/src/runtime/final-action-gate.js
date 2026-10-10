@@ -8,7 +8,8 @@ const { HARD_STATUS, NONE_CELL } = require("../abi/fast-codes");
 // Hard status is computed before scoring and the selected action is checked
 // once more against the unchanged root immediately before emission.
 class FinalActionGate {
-  constructor() {
+  constructor(rootTransitions = null) {
+    this.rootTransitions = rootTransitions;
     this.status = new Uint8Array(SEARCH_CAPACITY.MAX_OUR_ACTIONS);
     this.chanceSupportCount = new Uint8Array(SEARCH_CAPACITY.MAX_OUR_ACTIONS);
     this.chanceFatalSupportCount = new Uint8Array(SEARCH_CAPACITY.MAX_OUR_ACTIONS);
@@ -22,6 +23,20 @@ class FinalActionGate {
     this.lastPreferred = -1; this.lastSelected = -1; this.hotAllocationCount = 0;
   }
 
+  evaluateRow(bundle, actions, arguments_, index, chanceCells = null,
+      chanceDirections = null, chanceOffset = 0) {
+    const argument = arguments_[index] === undefined ? NONE_CELL : arguments_[index];
+    const slab = this.rootTransitions;
+    if (slab && slab.currentRoot(bundle.state) && index < slab.ourCount &&
+        slab.ourActions[index] === actions[index] && slab.ourArguments[index] === argument) {
+      const cached = slab.evaluateAllOwnChance(bundle, index, chanceCells,
+        chanceDirections, chanceOffset);
+      if (cached >= 0) return cached;
+    }
+    return bundle.hard.evaluateAllOwnChance(actions[index], argument,
+      undefined, undefined, undefined, chanceCells, chanceDirections, chanceOffset);
+  }
+
   evaluate(bundle, actions, arguments_, count) {
     this.allowCount = 0; this.checkedCount = 0; this.lastSelected = -1;
     if (!bundle || !bundle.hard || count < 1 || count > actions.length ||
@@ -29,8 +44,8 @@ class FinalActionGate {
     this.chanceCell.fill(NONE_CELL); this.chanceDirection.fill(0xff);
     for (let index = 0; index < count; index += 1) {
       const chanceOffset = index * SEARCH_CAPACITY.MAX_CHANCE_OUTCOMES;
-      const hard = bundle.hard.evaluateAllOwnChance(actions[index], arguments_[index],
-        undefined, undefined, undefined, this.chanceCell, this.chanceDirection, chanceOffset);
+      const hard = this.evaluateRow(bundle, actions, arguments_, index,
+        this.chanceCell, this.chanceDirection, chanceOffset);
       this.status[index] = hard; this.checkedCount += 1;
       this.chanceSupportCount[index] = bundle.hard.lastChanceSupportCount;
       this.chanceFatalSupportCount[index] = bundle.hard.lastChanceFatalSupportCount;
@@ -44,8 +59,7 @@ class FinalActionGate {
     if (!bundle || !bundle.hard || index < 0 || index >= count ||
         this.status[index] !== HARD_STATUS.ALLOW) return 0;
     this.finalCheckCount += 1;
-    return bundle.hard.evaluateAllOwnChance(actions[index],
-      arguments_[index] === undefined ? NONE_CELL : arguments_[index]) === HARD_STATUS.ALLOW;
+    return this.evaluateRow(bundle, actions, arguments_, index) === HARD_STATUS.ALLOW;
   }
 
   // order contains candidate indexes in descending preference. The preferred

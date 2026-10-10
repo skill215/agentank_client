@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "DECISION_QUALITY_BASELINE_V1",
+  "productionBehaviorChanged": false,
+  "engine": {
+    "relativeDirectory": "engine-v2/src",
+    "fileCount": 100,
+    "fingerprint": "c8e8cb405dcad531a1ded25e973c7e1f6338601199673492497d601e87a1a884"
+  },
+  "v1Sha256": "8da68843a292c6a6230a32baf60392916f9fb85aaa5d9a94feac7085ddc9e82e",
+  "cohortSha256": "e7d4bb87ae56b2f2faccfb35c4e4f56898749f141a069b38b8d051ffb696a89c",
+  "criticalFiles": [
+    {
+      "path": "engine-v2/src/runtime/production-root.js",
+      "sha256": "8bb1c42e0cf972d9081f255b799b7b281a697ff28d3734ca935ccb984e1fced3"
+    },
+    {
+      "path": "engine-v2/src/search/production-depth-search.js",
+      "sha256": "fee6c607fca3535dbf7b8b1e6aa72d021def9694a6e91cb2c3df94da11d52e8f"
+    }
+  ],
+  "fingerprint": "6e8c6888cf0e42efbc3a0e57ac2e16c6487783815391d936688b8edc24d43e80"
+}

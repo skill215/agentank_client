@@ -1,6 +1,6 @@
 "use strict";
 
-const { CAPACITY } = require("../generated/fast-config");
+const { CAPACITY, RULE } = require("../generated/fast-config");
 const { ACTION, TERRAIN, NONE_CELL, NONE_FRAME } = require("../abi/fast-codes");
 const { ARRAY, SCALAR } = require("../state/fast-state");
 
@@ -24,12 +24,21 @@ const MOVE_ACTIONS = [ACTION.GO, ACTION.TURN_LEFT, ACTION.TURN_RIGHT];
 // same HOLD/turn/GO parity rules as HazardKernel.reverseViable. It never
 // upgrades possible/hidden threats to Hard facts.
 class DeadlineKernel {
-  constructor() {
+  constructor(options = {}) {
     const cells = CAPACITY.MAX_CELLS;
     this.viableA = new Uint8Array(cells * 4);
     this.viableB = new Uint8Array(cells * 4);
     this.viableTick1 = new Uint8Array(cells * 4);
     this.viableTick2 = new Uint8Array(cells * 4);
+    this.chanceSurvivalMass = options.chanceSurvivalMass ? 1 : 0;
+    this.survivalA = this.chanceSurvivalMass ? new Uint16Array(cells * 4) : null;
+    this.survivalB = this.chanceSurvivalMass ? new Uint16Array(cells * 4) : null;
+    this.survivalTick1 = this.chanceSurvivalMass ? new Uint16Array(cells * 4) : null;
+    // -2 means not queried in this solve, -1 means no committed hit.  The
+    // timeline is filled lazily because a root normally projects only a few
+    // distinct cells; scanning every map cell would defeat the shared-lattice
+    // saving on large arenas.
+    this.earliestLethalTick = new Int16Array(cells);
     this.actionEscape = new Uint8Array(ACTION.CAST_BOOST + 1);
     this.deadlineTick = 0;
     this.earliestArrival = 255;
@@ -42,6 +51,14 @@ class DeadlineKernel {
     this.solveCount = 0;
     this.hotAllocationCount = 0;
     this.lastCoverageComplete = 0;
+    this.sharedThreatLattice = options.sharedThreatLattice !== false ? 1 : 0;
+    this.chanceCompleteStun = options.chanceCompleteStun ? 1 : 0;
+    this.transitionSupportComplete = 1;
+    this.chancePrivateBuildCount = 0;
+    this.sharedLayerHitCount = 0; this.sharedLayerBuildCount = 0;
+    this.privateReverseBuildCount = 0; this.privateReverseBuildNodeCount = 0;
+    this.timelineBuildCount = 0; this.timelineNodeCount = 0;
+    this.lastSuccessorCell = NONE_CELL; this.lastSuccessorDirection = 0;
   }
 
   reset() {
@@ -49,7 +66,21 @@ class DeadlineKernel {
     this.rootViable = 0; this.proofStatus = DEADLINE_PROOF.INCOMPLETE;
     this.firstActionCodeCount = 0; this.moveEscapeCount = 0; this.holdEscapeCount = 0;
     this.lastCoverageComplete = 0;
+    this.transitionSupportComplete = 1;
     this.actionEscape.fill(0);
+  }
+
+  activeUntil(a, arrayId, frame) {
+    const until = a[arrayId][0];
+    return until !== NONE_FRAME && until > frame ? 1 : 0;
+  }
+
+  stunnedAtTick(state, tick) {
+    if (!this.chanceCompleteStun) return 0;
+    const a = state.arrays; const rootFrame = a[ARRAY.SCALAR][SCALAR.FRAME];
+    const actionFrame = rootFrame + Math.floor(tick /
+      Math.max(1, RULE.PROJECTILE_STEPS));
+    return this.activeUntil(a, ARRAY.TANK_STUN_UNTIL, actionFrame);
   }
 
   walkable(state, cell) {
@@ -65,51 +96,138 @@ class DeadlineKernel {
   successor(hazard, state, cell, direction, action) {
     if (action === ACTION.GO) {
       const forward = this.target(hazard, cell, direction);
-      if (!this.walkable(state, forward)) return null;
-      return { cell: forward, direction };
+      if (!this.walkable(state, forward)) return 0;
+      this.lastSuccessorCell = forward; this.lastSuccessorDirection = direction; return 1;
     }
-    if (action === ACTION.TURN_LEFT)
-      return { cell, direction: (direction + 3) & 3 };
-    if (action === ACTION.TURN_RIGHT)
-      return { cell, direction: (direction + 1) & 3 };
-    return { cell, direction };
+    this.lastSuccessorCell = cell;
+    if (action === ACTION.TURN_LEFT) this.lastSuccessorDirection = (direction + 3) & 3;
+    else if (action === ACTION.TURN_RIGHT) this.lastSuccessorDirection = (direction + 1) & 3;
+    else this.lastSuccessorDirection = direction;
+    return 1;
   }
 
-  buildReverse(hazard) {
+  buildReverse(hazard, perspectiveSeat = 0) {
     const state = hazard.state; const a = state.arrays; const cells = state.cells;
     let next = this.viableA; let current = this.viableB; next.fill(0); current.fill(0);
+    let survivalNext = this.survivalA; let survivalCurrent = this.survivalB;
+    if (survivalNext) { survivalNext.fill(0); survivalCurrent.fill(0);
+      this.survivalTick1.fill(0); }
     this.viableTick1.fill(0);
     this.viableTick2.fill(0);
+    const rootFrame = a[ARRAY.SCALAR][SCALAR.FRAME];
+    const chanceSensitive = this.chanceCompleteStun &&
+      this.activeUntil(a, ARRAY.TANK_STUN_UNTIL, rootFrame);
+    if (!chanceSensitive && !this.chanceSurvivalMass &&
+        typeof hazard.loadReverseLatticeLayers === "function") {
+      if (hazard.loadReverseLatticeLayers(perspectiveSeat,
+          next, this.viableTick1, this.viableTick2)) {
+        this.sharedLayerHitCount += 1; return next;
+      }
+      // A cold EO root used to rebuild the same reverse DP privately. Ask the
+      // canonical HazardKernel to materialize it once so later Hard/Safety
+      // consumers can reuse the exact same committed lattice.
+      if (this.sharedThreatLattice && hazard.reverseLatticeEntries &&
+          typeof hazard.reverseViable === "function") {
+        const before = hazard.reverseLatticeBuildCount || 0;
+        hazard.reverseViable(perspectiveSeat);
+        if (hazard.loadReverseLatticeLayers(perspectiveSeat,
+            next, this.viableTick1, this.viableTick2)) {
+          if ((hazard.reverseLatticeBuildCount || 0) > before)
+            this.sharedLayerBuildCount += 1;
+          else this.sharedLayerHitCount += 1;
+          return next;
+        }
+      }
+    }
+    if (chanceSensitive) this.chancePrivateBuildCount += 1;
+    this.privateReverseBuildCount += 1;
+    this.privateReverseBuildNodeCount += (hazard.horizonTick + 1) * cells * 4;
     for (let cell = 0; cell < cells; cell += 1) if (this.walkable(state, cell) &&
         !hazard.isLethal(hazard.horizonTick, cell))
-      for (let direction = 0; direction < 4; direction += 1) next[cell * 4 + direction] = 1;
-    if (hazard.horizonTick === 1) this.viableTick1.set(next.subarray(0, cells * 4));
-    if (hazard.horizonTick === 2) this.viableTick2.set(next.subarray(0, cells * 4));
+      for (let direction = 0; direction < 4; direction += 1) {
+        const pose = cell * 4 + direction; next[pose] = 1;
+        if (survivalNext) survivalNext[pose] = 10000;
+      }
+    const poses = cells * 4;
+    if (hazard.horizonTick === 1)
+      for (let pose = 0; pose < poses; pose += 1) {
+        this.viableTick1[pose] = next[pose];
+        if (survivalNext) this.survivalTick1[pose] = survivalNext[pose];
+      }
+    if (hazard.horizonTick === 2)
+      for (let pose = 0; pose < poses; pose += 1) this.viableTick2[pose] = next[pose];
     if (hazard.horizonTick < 1) {
-      this.viableTick1.set(next.subarray(0, cells * 4));
-      this.viableTick2.set(next.subarray(0, cells * 4));
+      for (let pose = 0; pose < poses; pose += 1) {
+        this.viableTick1[pose] = next[pose]; this.viableTick2[pose] = next[pose];
+        if (survivalNext) this.survivalTick1[pose] = survivalNext[pose];
+      }
     }
     for (let tick = hazard.horizonTick - 1; tick >= 0; tick -= 1) {
       current.fill(0);
+      if (survivalCurrent) survivalCurrent.fill(0);
       for (let cell = 0; cell < cells; cell += 1) if (this.walkable(state, cell) &&
           !hazard.isLethal(tick, cell)) {
         for (let direction = 0; direction < 4; direction += 1) {
-          let viable = next[cell * 4 + direction];
+          const pose = cell * 4 + direction;
+          let viable = next[pose]; let survival = survivalNext ? survivalNext[pose] : 0;
           if ((tick & 1) === 0) {
-            viable = viable || next[cell * 4 + ((direction + 1) & 3)] ||
-              next[cell * 4 + ((direction + 3) & 3)];
-            const forward = this.target(hazard, cell, direction);
-            if (!viable && forward !== NONE_CELL && this.walkable(state, forward) &&
-                !hazard.isLethal(tick + 1, forward) && next[forward * 4 + direction]) viable = 1;
+            const leftPose = cell * 4 + ((direction + 3) & 3);
+            const rightPose = cell * 4 + ((direction + 1) & 3);
+            const left = next[leftPose]; const right = next[rightPose];
+            let forward = this.target(hazard, cell, direction);
+            if (forward === NONE_CELL || !this.walkable(state, forward)) forward = cell;
+            const forwardPose = forward * 4 + direction;
+            const forwardViable = !hazard.isLethal(tick + 1, forward) && next[forwardPose];
+            if (this.stunnedAtTick(state, tick)) {
+              let backward = this.target(hazard, cell, (direction + 2) & 3);
+              if (backward === NONE_CELL || !this.walkable(state, backward)) backward = cell;
+              const backwardPose = backward * 4 + direction;
+              const backwardViable = !hazard.isLethal(tick + 1, backward) && next[backwardPose];
+              // The next callback reveals the actual branch, but the command
+              // selected now is a strict witness only if every stun outcome
+              // reaches the future viable set.
+              viable = viable || (left && right) ||
+                (forwardViable && backwardViable);
+              if (survivalNext) {
+                const turnMass = Math.floor((survivalNext[leftPose] +
+                  survivalNext[rightPose]) / 2);
+                const goMass = Math.floor((survivalNext[forwardPose] +
+                  survivalNext[backwardPose]) / 2);
+                if (turnMass > survival) survival = turnMass;
+                if (goMass > survival) survival = goMass;
+              }
+            } else {
+              viable = viable || left || right || forwardViable;
+              if (survivalNext) {
+                if (survivalNext[leftPose] > survival) survival = survivalNext[leftPose];
+                if (survivalNext[rightPose] > survival) survival = survivalNext[rightPose];
+                if (survivalNext[forwardPose] > survival) survival = survivalNext[forwardPose];
+              }
+            }
           }
           if (viable) current[cell * 4 + direction] = 1;
+          if (survivalCurrent) survivalCurrent[pose] = survival;
         }
       }
-      if (tick === 1) this.viableTick1.set(current.subarray(0, cells * 4));
-      if (tick === 2) this.viableTick2.set(current.subarray(0, cells * 4));
+      if (tick === 1)
+        for (let pose = 0; pose < poses; pose += 1) {
+          this.viableTick1[pose] = current[pose];
+          if (survivalCurrent) this.survivalTick1[pose] = survivalCurrent[pose];
+        }
+      if (tick === 2)
+        for (let pose = 0; pose < poses; pose += 1) this.viableTick2[pose] = current[pose];
       const swap = next; next = current; current = swap;
+      if (survivalNext) {
+        const survivalSwap = survivalNext; survivalNext = survivalCurrent;
+        survivalCurrent = survivalSwap;
+      }
     }
     return next;
+  }
+
+  resetEarliestLethal(hazard) {
+    this.earliestLethalTick.fill(-2, 0, hazard.state.cells);
+    this.timelineBuildCount += 1;
   }
 
   poseViable(layer, cell, direction) {
@@ -141,9 +259,16 @@ class DeadlineKernel {
 
   earliestHitTick(hazard, cell) {
     if (cell === NONE_CELL || hazard.horizonTick < 1) return NONE_FRAME;
-    for (let tick = 1; tick <= hazard.horizonTick; tick += 1)
-      if (hazard.isLethal(tick, cell)) return tick;
-    return NONE_FRAME;
+    let tick = this.earliestLethalTick[cell];
+    if (tick !== -2) return tick < 0 ? NONE_FRAME : tick;
+    let nodes = 0; tick = -1;
+    for (let candidate = 1; candidate <= hazard.horizonTick; candidate += 1) {
+      nodes += 1;
+      if (hazard.isLethal(candidate, cell)) { tick = candidate; break; }
+    }
+    this.timelineNodeCount += nodes;
+    this.earliestLethalTick[cell] = tick;
+    return tick < 0 ? NONE_FRAME : tick;
   }
 
   // True when a committed bomb footprint still covers the cell, or a hostile
@@ -160,17 +285,18 @@ class DeadlineKernel {
   }
 
   coverageComplete(hazard) {
-    return hazard && hazard.complete && hazard.narrowProofComplete ? 1 : 0;
+    return hazard && hazard.complete && hazard.narrowProofComplete &&
+      this.transitionSupportComplete ? 1 : 0;
   }
 
   countViableNextActions(hazard, state, cell, direction) {
     let count = 0;
     const tick2Lethal = hazard.horizonTick >= 2;
     for (let index = 0; index < MOVE_ACTIONS.length; index += 1) {
-      const next = this.successor(hazard, state, cell, direction, MOVE_ACTIONS[index]);
-      if (!next) continue;
-      if (tick2Lethal && hazard.isLethal(2, next.cell)) continue;
-      if (!this.poseViable(this.viableTick2, next.cell, next.direction)) continue;
+      if (!this.successor(hazard, state, cell, direction, MOVE_ACTIONS[index])) continue;
+      const nextCell = this.lastSuccessorCell; const nextDirection = this.lastSuccessorDirection;
+      if (tick2Lethal && hazard.isLethal(2, nextCell)) continue;
+      if (!this.poseViable(this.viableTick2, nextCell, nextDirection)) continue;
       count += 1;
     }
     return count;
@@ -240,7 +366,8 @@ class DeadlineKernel {
     let filled = 0;
     for (let row = 0; row < count; row += 1) {
       const next = this.successor(hazard, state, rootCell, rootDirection, actions[row]);
-      const quality = next ? this.evaluateSuccessor(bundle, next.cell, next.direction) :
+      const quality = next ? this.evaluateSuccessor(bundle,
+        this.lastSuccessorCell, this.lastSuccessorDirection) :
         this.evaluateSuccessor(bundle, NONE_CELL, 0);
       if (proof) proof[row] = quality.proofStatus;
       if (exposed) exposed[row] = quality.stillExposedAtDeadline;
@@ -252,10 +379,125 @@ class DeadlineKernel {
     return filled;
   }
 
+  // Hot EO path: fill the fixed per-row slab directly. Unlike
+  // evaluateSuccessor(), this creates no temporary result object and it uses
+  // the once-per-root lazy lethal timeline rather than rescanning the same
+  // projected cell for every action row.
+  evaluateProjectedSuccessors(bundle, projectedCell, projectedDirection, count, out) {
+    if (!bundle || !bundle.hazard || !out || count < 1) return 0;
+    const hazard = bundle.hazard; const state = hazard.state;
+    const proof = out.proofStatus; const exposed = out.stillExposedAtDeadline;
+    const slack = out.slack; const branches = out.viableNextActionCount;
+    const coverage = out.coverageComplete; const survivalMass = out.survivalMass;
+    const complete = this.coverageComplete(hazard);
+    for (let row = 0; row < count; row += 1) {
+      const cell = projectedCell[row]; const direction = projectedDirection[row];
+      let rowProof = SUCCESSOR_PROOF.PROVEN_DEAD; let rowExposed = 0;
+      let rowSlack = -128; let rowBranches = 0;
+      if (this.walkable(state, cell)) {
+        const lethal = hazard.horizonTick >= 1 && hazard.isLethal(1, cell);
+        if (lethal) rowExposed = 1;
+        else {
+          const viable = this.poseViable(this.viableTick1, cell, direction);
+          if (viable) rowProof = complete ? SUCCESSOR_PROOF.PROVEN_VIABLE :
+            SUCCESSOR_PROOF.UNKNOWN;
+          else if (!complete) rowProof = SUCCESSOR_PROOF.UNKNOWN;
+          rowExposed = this.stillExposedAtDeadline(bundle, cell);
+          if (viable || rowProof === SUCCESSOR_PROOF.UNKNOWN)
+            rowSlack = Math.max(-128, Math.min(127, this.deadlineTick - 1));
+          if (rowProof !== SUCCESSOR_PROOF.PROVEN_DEAD)
+            rowBranches = this.countViableNextActions(hazard, state, cell, direction);
+        }
+      }
+      proof[row] = rowProof; exposed[row] = rowExposed; slack[row] = rowSlack;
+      branches[row] = rowBranches; coverage[row] = complete;
+      if (survivalMass) survivalMass[row] = this.survivalTick1 ?
+        this.survivalTick1[cell * 4 + direction] : 0;
+    }
+    this.lastCoverageComplete = complete; return count;
+  }
+
+  // FinalActionGate has already enumerated NORMAL/REVERSED outcomes without
+  // allocating. Fold those concrete poses into the existing EO row slabs.
+  // Mixed dead/live support is UNKNOWN: it cannot restore a Risk-rejected row
+  // and it is not a universal death certificate either.
+  mergeChanceSuccessors(bundle, count, chanceSupportCount,
+      chanceFatalSupportCount, chanceIncompleteSupportCount,
+      chanceCell, chanceDirection, chanceStride, out) {
+    if (!this.chanceCompleteStun || !bundle || !bundle.hazard || !out ||
+        !chanceSupportCount || !chanceCell || !chanceDirection) return 0;
+    const hazard = bundle.hazard; const state = hazard.state;
+    const complete = this.coverageComplete(hazard);
+    for (let row = 0; row < count; row += 1) {
+      const support = chanceSupportCount[row] | 0;
+      const fatal = chanceFatalSupportCount ? chanceFatalSupportCount[row] | 0 : 0;
+      const incomplete = chanceIncompleteSupportCount ?
+        chanceIncompleteSupportCount[row] | 0 : 0;
+      if (support < 1 || incomplete > 0) {
+        out.proofStatus[row] = SUCCESSOR_PROOF.UNKNOWN;
+        out.coverageComplete[row] = 0;
+        continue;
+      }
+      let allViable = 1; let allDead = 1; let anyExposed = 0;
+      let minimumSlack = 127; let minimumBranches = 255; let survivalTotal = 0;
+      for (let chance = 0; chance < support; chance += 1) {
+        const at = row * chanceStride + chance;
+        const cell = chanceCell[at]; const direction = chanceDirection[at];
+        let proof = SUCCESSOR_PROOF.PROVEN_DEAD; let exposed = 0;
+        let slack = -128; let branches = 0;
+        if (this.walkable(state, cell)) {
+          const lethal = hazard.horizonTick >= 1 && hazard.isLethal(1, cell);
+          if (lethal) exposed = 1;
+          else {
+            const viable = this.poseViable(this.viableTick1, cell, direction);
+            if (viable) proof = complete ? SUCCESSOR_PROOF.PROVEN_VIABLE :
+              SUCCESSOR_PROOF.UNKNOWN;
+            else if (!complete) proof = SUCCESSOR_PROOF.UNKNOWN;
+            exposed = this.stillExposedAtDeadline(bundle, cell);
+            if (viable || proof === SUCCESSOR_PROOF.UNKNOWN)
+              slack = Math.max(-128, Math.min(127, this.deadlineTick - 1));
+            if (proof !== SUCCESSOR_PROOF.PROVEN_DEAD)
+              branches = this.countViableNextActions(hazard, state, cell, direction);
+          }
+        }
+        if (proof !== SUCCESSOR_PROOF.PROVEN_VIABLE) allViable = 0;
+        if (proof !== SUCCESSOR_PROOF.PROVEN_DEAD) allDead = 0;
+        if (exposed) anyExposed = 1;
+        if (slack < minimumSlack) minimumSlack = slack;
+        if (branches < minimumBranches) minimumBranches = branches;
+        // A branch that is already dead at the projected tick contributes no
+        // future survival mass. Counting its terminal lattice value would
+        // make total survival exceed (1 - immediate fatal support).
+        if (out.survivalMass && this.survivalTick1 && cell !== NONE_CELL &&
+            proof !== SUCCESSOR_PROOF.PROVEN_DEAD)
+          survivalTotal += this.survivalTick1[cell * 4 + direction];
+      }
+      out.proofStatus[row] = fatal === support && allDead ?
+        SUCCESSOR_PROOF.PROVEN_DEAD : fatal === 0 && allViable ?
+          SUCCESSOR_PROOF.PROVEN_VIABLE : SUCCESSOR_PROOF.UNKNOWN;
+      out.stillExposedAtDeadline[row] = anyExposed;
+      out.slack[row] = minimumSlack;
+      out.viableNextActionCount[row] = minimumBranches === 255 ? 0 : minimumBranches;
+      out.coverageComplete[row] = complete;
+      if (out.survivalMass) out.survivalMass[row] = this.survivalTick1 ?
+        Math.floor(survivalTotal / support) : 0;
+    }
+    return count;
+  }
+
   solve(bundle, perspectiveSeat = 0) {
     this.reset(); this.solveCount += 1;
     if (!bundle || !bundle.hazard) return this;
     const hazard = bundle.hazard; const state = hazard.state;
+    if (this.chanceCompleteStun) {
+      const a = state.arrays; const frame = a[ARRAY.SCALAR][SCALAR.FRAME];
+      // This closure does not yet model future held/compound schedules. Never
+      // certify a deterministic path through boost/freeze/poison.
+      if (this.activeUntil(a, ARRAY.TANK_BOOST_UNTIL, frame) ||
+          this.activeUntil(a, ARRAY.TANK_FROZEN_UNTIL, frame) ||
+          this.activeUntil(a, ARRAY.TANK_POISON_UNTIL, frame))
+        this.transitionSupportComplete = 0;
+    }
     if (!hazard.rebuild(perspectiveSeat)) {
       this.proofStatus = DEADLINE_PROOF.INCOMPLETE; return this;
     }
@@ -264,7 +506,8 @@ class DeadlineKernel {
     const a = state.arrays;
     const rootCell = a[ARRAY.TANK_CELL][perspectiveSeat];
     const rootDirection = a[ARRAY.TANK_DIR][perspectiveSeat];
-    const tick0 = this.buildReverse(hazard);
+    const tick0 = this.buildReverse(hazard, perspectiveSeat);
+    this.resetEarliestLethal(hazard);
     this.rootViable = this.poseViable(tick0, rootCell, rootDirection);
 
     const candidates = [
@@ -273,10 +516,10 @@ class DeadlineKernel {
     ];
     for (let index = 0; index < candidates.length; index += 1) {
       const action = candidates[index];
-      const next = this.successor(hazard, state, rootCell, rootDirection, action);
-      if (!next) continue;
-      if (hazard.horizonTick >= 1 && hazard.isLethal(1, next.cell)) continue;
-      if (!this.poseViable(this.viableTick1, next.cell, next.direction)) continue;
+      if (!this.successor(hazard, state, rootCell, rootDirection, action)) continue;
+      const nextCell = this.lastSuccessorCell; const nextDirection = this.lastSuccessorDirection;
+      if (hazard.horizonTick >= 1 && hazard.isLethal(1, nextCell)) continue;
+      if (!this.poseViable(this.viableTick1, nextCell, nextDirection)) continue;
       this.markAction(action);
       if (action === ACTION.GO || action === ACTION.TURN_LEFT || action === ACTION.TURN_RIGHT)
         this.moveEscapeCount += 1;
@@ -306,7 +549,8 @@ class DeadlineKernel {
     this.deadlineTick = deadline;
     this.slack = this.earliestArrival === 255 ? -128 :
       Math.max(-128, Math.min(127, deadline - this.earliestArrival));
-    if (!hazard.complete || !hazard.narrowProofComplete)
+    if (!hazard.complete || !hazard.narrowProofComplete ||
+        !this.transitionSupportComplete)
       this.proofStatus = DEADLINE_PROOF.INCOMPLETE;
     else if (this.rootViable || this.firstActionCodeCount > 0)
       this.proofStatus = DEADLINE_PROOF.ESCAPE_EXISTS;

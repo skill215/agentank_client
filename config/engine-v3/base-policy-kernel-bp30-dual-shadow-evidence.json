@@ -1,0 +1,38 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP30_DUAL_SHADOW_EVIDENCE_V1",
+  "status": "SHADOW_ONLY",
+  "scenarios": 16,
+  "matches": 32,
+  "rootChecks": 2557,
+  "pairedEvaluations": 606,
+  "completePairs": 293,
+  "incompletePairs": 313,
+  "completeBasisPoints": 4835,
+  "differentRootActions": 322,
+  "relations": {
+    "equal": 8,
+    "attackPoseDominates": 28,
+    "basePolicyDominates": 49,
+    "tradeoff": 209
+  },
+  "massDelta": {
+    "fireEmission": 685732,
+    "terminalBenefit": 296954,
+    "failure": 121688,
+    "unresolved": -740490
+  },
+  "work": {
+    "baseNodes": 300532,
+    "attackPoseNodes": 165863,
+    "baseTransitions": 329652,
+    "attackPoseTransitions": 205486,
+    "budgetStops": 386,
+    "ttMergeHits": 74966,
+    "ttCapacityFailures": 0,
+    "rootRestoreFailures": 0,
+    "hotAllocations": 0
+  },
+  "ownershipEnabled": false,
+  "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7",
+  "artifact": "/tmp/agentank-base-policy-bp30-dual-shadow"
+}

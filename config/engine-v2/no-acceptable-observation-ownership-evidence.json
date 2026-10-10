@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "NO_ACCEPTABLE_OBSERVATION_OWNERSHIP_EVIDENCE_V1",
+  "status": "DIAGNOSED_GLOBAL_ALTERNATIVES_REJECTED",
+  "productionChanged": false,
+  "noAcceptableCensus": {
+    "role": "TACTICAL_HOLDOUT",
+    "scenarios": 96,
+    "matches": 192,
+    "decisions": 19953,
+    "roots": 1922,
+    "rootBasisPoints": 963,
+    "primary": {
+      "ALL_HARD_REJECTED": 124,
+      "POSSIBLE_PROJECTILE_FATAL": 2,
+      "FUTURE_FIRE_FATAL": 37,
+      "FATAL_MIXED_OR_UNATTRIBUTED": 2,
+      "UNKNOWN_UNAVOIDABLE": 1707,
+      "MULTI_DIMENSION_UNAVOIDABLE": 48,
+      "CROSS_ACTION_TRADEOFF": 2
+    },
+    "completeSafeWitnessRoots": 0,
+    "committedFreeAlternativeRoots": 1798,
+    "incompleteSupportRoots": 1716,
+    "unknownMinimum10000Roots": 1707,
+    "observationIncompleteOnlyRoots": 1644,
+    "baseSafetyUnknownRoots": 65,
+    "unknownWithPossibleProjectileRoots": 1700,
+    "behaviorNeutralAgainstPoseHoldout": true,
+    "overviewSha256": "622fd4fee4572b4d048b44127f16c0473cdb09f70e0ca957f1317bf72396550d",
+    "matchesSha256": "f740a1703b6b56b69794efa07e5c272e39c526a4b4125c7c64ad78fdabf2af3b"
+  },
+  "rootCause": {
+    "supportRule": "possibleProjectiles.count() > 0 makes observation support incomplete",
+    "auditScope": "only rows already classified PROVEN_SAFE",
+    "unknownRewrite": "every non-WINDOW_SAFE audited row receives unknownMass=10000 and coverage=0",
+    "asymmetry": "POSSIBLE_DEATH rows skip the audit while otherwise safe rows are saturated",
+    "interpretation": "current wins can depend on the audit asymmetry; it is not a safety theorem"
+  },
+  "rejectedAlternatives": {
+    "incompleteObservationFrontierBypass": {
+      "fixed16Before": { "wins": 4, "losses": 27, "draws": 1, "scoreBasisPoints": 1406 },
+      "fixed16After": { "wins": 2, "losses": 29, "draws": 1, "scoreBasisPoints": 781 },
+      "starDelta": -6,
+      "ownCrashDelta": 5,
+      "fireDelta": -16,
+      "overviewSha256": "1fc85636e49a70ffcf1158af26458edbfd222f0461e9cefbce6b9240d4f1f6af"
+    },
+    "incompleteObservationPlusProjectedPosePriority": {
+      "fixed16": { "wins": 3, "losses": 28, "draws": 1, "scoreBasisPoints": 1094 },
+      "relativeToBypassScoreBasisPointDelta": 313,
+      "relativeToCurrentWinDelta": -1,
+      "relativeToCurrentScoreBasisPointDelta": -312,
+      "productionPocRemoved": true
+    },
+    "incompleteObservationPlusInformationEvidence": {
+      "fixed16Before": { "wins": 2, "losses": 29, "draws": 1, "scoreBasisPoints": 781 },
+      "fixed16After": { "wins": 2, "losses": 28, "draws": 2, "scoreBasisPoints": 938 },
+      "winDelta": 0,
+      "lossDelta": -1,
+      "drawDelta": 1,
+      "starDelta": 5,
+      "fireDelta": 38,
+      "localRuntimeMicrosBefore": 1769974,
+      "localRuntimeMicrosAfter": 3250086,
+      "completedDepthZeroFramesBefore": 3019,
+      "completedDepthZeroFramesAfter": 1760,
+      "overviewSha256": "9b65e758576cf2b7ca9f68c471ad17efbf6f83ebd4ee1175ddfb70bdebd9ede9"
+    }
+  },
+  "firstDivergenceCorpus": {
+    "contract": "pair by scenario fingerprint and seat; bind the first unequal emitted command to both root candidate vectors and the eventual runtime-independent outcome transition",
+    "focusedGuard": {
+      "pairs": 4,
+      "divergent": 4,
+      "observationIncompleteDepthZero": 4,
+      "actionTransitions": { "GO_TO_TURN_LEFT": 3, "TURN_LEFT_TO_GO": 1 },
+      "outcomeTransitions": { "V2_WIN_TO_V1_WIN": 2, "V1_WIN_TO_V1_WIN": 2 },
+      "overviewSha256": "a43a751a61983439d45aa3b195cf9e3c32f76c4a1a4944bd794b9c10751bb1b6",
+      "rootsSha256": "095ff837ad187857910346ac7313928be9d60d69aa118e25b106041807a287b5"
+    },
+    "informationEvidenceFixed16": {
+      "pairs": 32,
+      "identical": 3,
+      "divergent": 29,
+      "positiveOutcomeTransitions": 3,
+      "negativeOutcomeTransitions": 2,
+      "neutralOutcomeTransitions": 24,
+      "turnLeftToTurnRightRoots": 22,
+      "overviewSha256": "1583ba4ef835b4bad7480bc2eac7f650a271b63d5d6c6d47f3f8071bbd5b3487",
+      "rootsSha256": "5b55c1634108ffe288fe8d48e42fef83a1a40b1f3c72dbb645ac96dd5c379abd"
+    }
+  },
+  "decision": {
+    "keepProductionObservationSemantics": true,
+    "activateSupportBypass": false,
+    "activateProjectedPosePoc": false,
+    "activateGlobalInformationEvidence": false,
+    "nextExperiment": "bounded ActionContinuationEnvelope only for observation-incomplete roots without complete value support",
+    "ownershipRule": "the envelope may prove strict interval dominance; incomplete evidence may rank only inside a qualified proposal and cannot own Hard, Proof, or the whole root"
+  },
+  "tests": {
+    "focused": { "passed": 43, "failed": 0 },
+    "minimaxCore": { "passed": 212, "failed": 0 },
+    "gr0": { "passed": 357, "failed": 0 },
+    "imp5": { "passed": 14, "failed": 0 },
+    "divergenceCorpus": { "passed": 4, "failed": 0 }
+  },
+  "source": {
+    "productionRootSha256": "deec4848d8595969682ba3033f44a37c3edaa4cc1ec8cc1f3b65b703f753fb79",
+    "riskAcceptanceControllerSha256": "04a7233b41ed9c03a15e5b9c405fbb5e537a444c94bff3fa148686db220f53b4",
+    "noAcceptableCensusSha256": "447348e91f07598ab2aa5cf24a971e0c2695965b5de718a9808467c2581f9f1a",
+    "firstDivergenceCorpusSha256": "f39cba0d4a99f0abc50264c1a18f204f73784b7b1eb34693a1ecb1c5906129e4",
+    "softStackRuntimeSha256": "af8b29b365153d87c11e26d7e7d8949ed269b1b403855b8b47dbb0315f0c9095",
+    "diagnosticBotSha256": "049dbd6667e4c0e3355c94db55c5b6fa6f76ff558508c82765014d5df542f8c7",
+    "arenaSha256": "57c2c96d53f2e88e2e45a4a21e4cf5e559f0bb6ac28c19d36ff092f5eeea1564"
+  },
+  "fullArenaPerformed": false,
+  "officialPlatformWritePerformed": false
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_BP14_EVIDENCE_V1",
+  "status": "ACCEPTED_DIAGNOSTIC",
+  "scope": "FIXED16_STUN_V3_HOST",
+  "cohortFingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667",
+  "matches": 32,
+  "outcome": {
+    "wins": 16,
+    "losses": 14,
+    "draws": 2,
+    "scoreBasisPoints": 5313
+  },
+  "exactness": {
+    "roots": 1641,
+    "exactRoots": 8,
+    "blockedRoots": 1633,
+    "exactBasisPoints": 49,
+    "budgetBlockedRoots": 1592,
+    "depthBlockedRoots": 1619,
+    "budgetAndDepthBlockedRoots": 1585,
+    "budgetCompleteHeuristicRoots": 35,
+    "depthOnlyHeuristicRoots": 34
+  },
+  "decision": {
+    "wholeRootExactOwnership": "TOO_SPARSE",
+    "finiteDepthHeuristicOwnership": "REJECTED",
+    "nextBoundary": "CANDIDATE_LEVEL_CERTIFICATE"
+  },
+  "sourceSha256": {
+    "productionRoot": "c4443ddbd2a7a651d77f1582e5b68ce3715dfc87af7cf40ac7432396def39c48",
+    "nativeBoundedPolicySearchPoc": "956dd6ea0d8db75ab9dbe2de5b3b275f5d2a0b8389cbc9ea48e6b8c58f7e26d7",
+    "nativeTacticalActionOwnerPoc": "40bf8bd749935ac646a02e38ed10df30b5f06f51a6f0de7d6b1e7a93074bee68"
+  },
+  "artifactSha256": {
+    "runManifest": "bc02a93a8def9aff11b1108b56c2fbb4c5231ba5db8286dffcf0131e53198433",
+    "censusManifest": "a06bc1537d2f4038e05f1851bfae675e376d3428eb955cc4a2bd3a32e547e8bf",
+    "censusOverview": "95cac8aa4db8be7881ecc35127464042157bdb7cce4e238f31530f7408612007"
+  }
+}

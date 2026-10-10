@@ -1,0 +1,89 @@
+{
+  "objectKind": "BASE_POLICY_COMPONENT_CLAMP_CANDIDATE_V1",
+  "status": "REJECTED_FOR_DEFAULT_WEAK_POSITIVE",
+  "productionDefaultChanged": false,
+  "candidate": {
+    "tacticalContactMask": 1,
+    "riskFrontier": "joint",
+    "intentValue": "bonus",
+    "leafClamp": "component",
+    "leafClampLimit": 25000,
+    "cohortRole": "DISCOVERY",
+    "scenarios": 64,
+    "matches": 128
+  },
+  "discovery": {
+    "wins": 35,
+    "losses": 77,
+    "draws": 16,
+    "scoreBasisPoints": 3359,
+    "previousTotalClampWins": 32,
+    "previousTotalClampLosses": 82,
+    "previousTotalClampDraws": 14,
+    "previousTotalClampScoreBasisPoints": 3047,
+    "scoreBasisPointDelta": 312,
+    "starDifference": -107,
+    "previousStarDifference": -105,
+    "crashDifference": -9,
+    "previousCrashDifference": -11,
+    "jointDominatedSelection": 0,
+    "avoidableHardReject": 0,
+    "rootRestoreFailure": 0,
+    "timeoutError": 0
+  },
+  "independentValidation": {
+    "role": "COMBAT_HOLDOUT",
+    "scenarios": 128,
+    "matchesPerMode": 256,
+    "modes": ["total", "component"],
+    "parametersFrozen": true,
+    "resultRead": true,
+    "totalClamp": {
+      "wins": 60,
+      "losses": 163,
+      "draws": 33,
+      "scoreBasisPoints": 2988,
+      "starDifference": -189,
+      "crashDifference": -36,
+      "fireCount": 1509,
+      "killCount": 42
+    },
+    "componentClamp": {
+      "wins": 65,
+      "losses": 164,
+      "draws": 27,
+      "scoreBasisPoints": 3066,
+      "starDifference": -190,
+      "crashDifference": -31,
+      "fireCount": 1488,
+      "killCount": 47
+    },
+    "paired": {
+      "scoreBasisPointDelta": 78,
+      "starDifferenceDelta": -1,
+      "killCountDelta": 5,
+      "changedActionStreamCount": 54,
+      "positiveScenarioCount": 10,
+      "negativeScenarioCount": 10,
+      "tieScenarioCount": 108,
+      "oneSidedRandomizationP": 0.588098526,
+      "twoSidedRandomizationP": 1
+    },
+    "decision": "REJECT_DEFAULT_KEEP_DIAGNOSTIC",
+    "reason": "Independent score gain was only 0.78 percentage points and was not significant; the +5 kill signal is retained for later combat-value decomposition."
+  },
+  "sha256": {
+    "productionRoot": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7",
+    "leafEvaluator": "865129bc275e75ee9d8f54d878c4df7f6795a9a8b9f7a299ca20f8c13fd2d398",
+    "tacticalOwner": "e1451855754f6a550ca24a0983fdf87d22b7944416504a1721ee0a036dbf1d1f",
+    "differential": "42febcc95acf5970d4227e1511e307dbc8257941601acba65e9cb7cf0a85ac22",
+    "boundedSearch": "457b3b045ca825339b90027c34227419cb9437c0fc985fad76ef7ef83d31e4b0",
+    "arena": "6deb1ec6ff30f773480e437165cb317246b01fa63e4921ff78336925b0cbc190",
+    "bp3Script": "57e2604ea490c8e93cd60f9d498d6e21e9752af8437ea5db065a5dca8ca22400",
+    "bp5Script": "0b70c4f4e1b98491e048073a406c57d777086546c2879417b1224ceb52fa3c9a",
+    "cohortManifest": "e7d4bb87ae56b2f2faccfb35c4e4f56898749f141a069b38b8d051ffb696a89c",
+    "discoveryOverview": "712727a8fea1d7f1615376c1d0d0157354398334b856f63527d7ec4339da467f",
+    "holdoutTotalOverview": "6090f8bc8d7bb88cf8621dae61329c3890dc5089ef1fc8a6a69fb266ee56e05f",
+    "holdoutComponentOverview": "7cdf2300d9494e6c1428d0fa0e04ae6e86ccdaad5c699d843ce2b974070e8e82"
+  }
+}

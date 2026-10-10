@@ -1,0 +1,390 @@
+{
+  "objectKind": "BasePolicyThinStackPerformanceEvidenceV1",
+  "generatedAt": "2026-09-02T06:44:07.992Z",
+  "productionDefaultChanged": false,
+  "contract": {
+    "profile": "BP68_EXACT_NATIVE_ALWAYS",
+    "oracleAudit": "OFF",
+    "searchImplementation": "THIN_REACHABLE_CLOSURE",
+    "leafImplementation": "THIN_REACHABLE_CLOSURE",
+    "pathImplementation": "THIN_REACHABLE_CLOSURE",
+    "starFieldCacheEntries": 2,
+    "exactTerrainIdentity": "ROOT_SNAPSHOT_PLUS_BRANCH_TERRAIN_DELTA_SET",
+    "localTimeInterpretation": "MATCHED_INPUT_RELATIVE_EVIDENCE_NOT_PLATFORM_3000MS"
+  },
+  "tests": {
+    "minimaxCore": {
+      "passed": 243,
+      "failed": 0
+    },
+    "hotAllocationCount": 0
+  },
+  "fixed16": {
+    "referenceFingerprint": {
+      "records": 32,
+      "sha256": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "referenceOutcome": {
+      "wins": 21,
+      "losses": 11,
+      "draws": 0,
+      "scoreBasisPoints": 6563,
+      "stars": {
+        "candidate": 21,
+        "control": 21
+      },
+      "crashes": {
+        "candidate": 8,
+        "control": 17
+      }
+    },
+    "comparisons": {
+      "thinInitial": {
+        "semantic": {
+          "missing": 0,
+          "actionStream": 0,
+          "arguments": 0,
+          "result": 0,
+          "frames": 0,
+          "counts": 0,
+          "analysisOutcome": 0,
+          "terminalCategory": 0
+        },
+        "fingerprint": {
+          "records": 32,
+          "sha256": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+        },
+        "outcome": {
+          "wins": 21,
+          "losses": 11,
+          "draws": 0,
+          "scoreBasisPoints": 6563,
+          "stars": {
+            "candidate": 21,
+            "control": 21
+          },
+          "crashes": {
+            "candidate": 8,
+            "control": 17
+          }
+        },
+        "runtime": {
+          "candidateTotalMicros": 5870000,
+          "controlTotalMicros": 13343239,
+          "candidateP95Max": 11110,
+          "controlP95Max": 28736,
+          "totalVsControlBasisPoints": 4399,
+          "p95VsControlBasisPoints": 3866
+        },
+        "cache": {
+          "builds": 0,
+          "hits": 0,
+          "misses": 0,
+          "lookups": 0,
+          "terrainCellCompares": 0,
+          "rootCompares": 0,
+          "rootRebinds": 0
+        }
+      },
+      "noOpPruned": {
+        "semantic": {
+          "missing": 0,
+          "actionStream": 0,
+          "arguments": 0,
+          "result": 0,
+          "frames": 0,
+          "counts": 0,
+          "analysisOutcome": 0,
+          "terminalCategory": 0
+        },
+        "fingerprint": {
+          "records": 32,
+          "sha256": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+        },
+        "outcome": {
+          "wins": 21,
+          "losses": 11,
+          "draws": 0,
+          "scoreBasisPoints": 6563,
+          "stars": {
+            "candidate": 21,
+            "control": 21
+          },
+          "crashes": {
+            "candidate": 8,
+            "control": 17
+          }
+        },
+        "runtime": {
+          "candidateTotalMicros": 5877645,
+          "controlTotalMicros": 13204781,
+          "candidateP95Max": 14365,
+          "controlP95Max": 22539,
+          "totalVsControlBasisPoints": 4451,
+          "p95VsControlBasisPoints": 6373
+        },
+        "cache": {
+          "builds": 0,
+          "hits": 0,
+          "misses": 0,
+          "lookups": 0,
+          "terrainCellCompares": 0,
+          "rootCompares": 0,
+          "rootRebinds": 0
+        }
+      },
+      "deltaCache": {
+        "semantic": {
+          "missing": 0,
+          "actionStream": 0,
+          "arguments": 0,
+          "result": 0,
+          "frames": 0,
+          "counts": 0,
+          "analysisOutcome": 0,
+          "terminalCategory": 0
+        },
+        "fingerprint": {
+          "records": 32,
+          "sha256": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+        },
+        "outcome": {
+          "wins": 21,
+          "losses": 11,
+          "draws": 0,
+          "scoreBasisPoints": 6563,
+          "stars": {
+            "candidate": 21,
+            "control": 21
+          },
+          "crashes": {
+            "candidate": 8,
+            "control": 17
+          }
+        },
+        "runtime": {
+          "candidateTotalMicros": 6572166,
+          "controlTotalMicros": 15547271,
+          "candidateP95Max": 9716,
+          "controlP95Max": 27954,
+          "totalVsControlBasisPoints": 4227,
+          "p95VsControlBasisPoints": 3475
+        },
+        "cache": {
+          "builds": 77,
+          "hits": 133824,
+          "misses": 77,
+          "lookups": 133824,
+          "terrainCellCompares": 2769,
+          "rootCompares": 4112,
+          "rootRebinds": 10
+        }
+      },
+      "geometryTable": {
+        "semantic": {
+          "missing": 0,
+          "actionStream": 0,
+          "arguments": 0,
+          "result": 0,
+          "frames": 0,
+          "counts": 0,
+          "analysisOutcome": 0,
+          "terminalCategory": 0
+        },
+        "fingerprint": {
+          "records": 32,
+          "sha256": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+        },
+        "outcome": {
+          "wins": 21,
+          "losses": 11,
+          "draws": 0,
+          "scoreBasisPoints": 6563,
+          "stars": {
+            "candidate": 21,
+            "control": 21
+          },
+          "crashes": {
+            "candidate": 8,
+            "control": 17
+          }
+        },
+        "runtime": {
+          "candidateTotalMicros": 5056686,
+          "controlTotalMicros": 11700107,
+          "candidateP95Max": 8185,
+          "controlP95Max": 17676,
+          "totalVsControlBasisPoints": 4321,
+          "p95VsControlBasisPoints": 4630
+        },
+        "cache": {
+          "builds": 77,
+          "hits": 133824,
+          "misses": 77,
+          "lookups": 133824,
+          "terrainCellCompares": 2769,
+          "rootCompares": 4112,
+          "rootRebinds": 10
+        }
+      }
+    }
+  },
+  "discovery64": {
+    "semantic": {
+      "missing": 0,
+      "actionStream": 0,
+      "arguments": 0,
+      "result": 0,
+      "frames": 0,
+      "counts": 0,
+      "analysisOutcome": 0,
+      "terminalCategory": 0
+    },
+    "referenceFingerprint": {
+      "records": 128,
+      "sha256": "d6db15f8815dc9243ef758778bbeb558b6492f801e73e2fc36e4bd35f1162555"
+    },
+    "thinFingerprint": {
+      "records": 128,
+      "sha256": "d6db15f8815dc9243ef758778bbeb558b6492f801e73e2fc36e4bd35f1162555"
+    },
+    "referenceOutcome": {
+      "wins": 67,
+      "losses": 48,
+      "draws": 13,
+      "scoreBasisPoints": 5742,
+      "stars": {
+        "candidate": 93,
+        "control": 101
+      },
+      "crashes": {
+        "candidate": 35,
+        "control": 52
+      }
+    },
+    "thinOutcome": {
+      "wins": 67,
+      "losses": 48,
+      "draws": 13,
+      "scoreBasisPoints": 5742,
+      "stars": {
+        "candidate": 93,
+        "control": 101
+      },
+      "crashes": {
+        "candidate": 35,
+        "control": 52
+      }
+    },
+    "referenceRuntime": {
+      "candidateTotalMicros": 28311019,
+      "controlTotalMicros": 49294161,
+      "candidateP95Max": 10550,
+      "controlP95Max": 25728,
+      "totalVsControlBasisPoints": 5743,
+      "p95VsControlBasisPoints": 4100
+    },
+    "thinRuntime": {
+      "candidateTotalMicros": 23923383,
+      "controlTotalMicros": 61522696,
+      "candidateP95Max": 10330,
+      "controlP95Max": 27019,
+      "totalVsControlBasisPoints": 3888,
+      "p95VsControlBasisPoints": 3823
+    },
+    "thinCache": {
+      "builds": 434,
+      "hits": 695015,
+      "misses": 434,
+      "lookups": 701283,
+      "terrainCellCompares": 10028,
+      "rootCompares": 18374,
+      "rootRebinds": 47
+    }
+  },
+  "size": {
+    "search": {
+      "path": "engine-v2/src/base-policy/policy-search.js",
+      "bytes": 82009,
+      "sha256": "e3d397a9013a3bbc869f74e4eccc798f82267325e22b381833733a0738715ee2",
+      "standaloneMinifiedBytes": 50131
+    },
+    "leaf": {
+      "path": "engine-v2/src/base-policy/policy-leaf.js",
+      "bytes": 29361,
+      "sha256": "0de384fe458a4e5f4db7c91a90a47bf9670fd77ee759e4dd914fe81d623fbc0e",
+      "standaloneMinifiedBytes": 17126
+    },
+    "path": {
+      "path": "engine-v2/src/base-policy/path-utility.js",
+      "bytes": 16007,
+      "sha256": "7bf2e51c2895efc182f87bb6620a319e1b24c4fb8ff5437404274948ca4fd38e",
+      "standaloneMinifiedBytes": 8977
+    },
+    "totalSourceBytes": 127377,
+    "totalStandaloneMinifiedBytes": 76234,
+    "fixedTypedArrayBytes": {
+      "search": 4747,
+      "leaf": 44176,
+      "path": 16,
+      "total": 48939
+    },
+    "productionRoot": {
+      "path": "engine-v2/src/runtime/production-root.js",
+      "sha256": "73e08f1471a450967e26e931c639c88bf88d986870cb5b07a72e456ec2a8b551"
+    }
+  },
+  "artifacts": {
+    "fixedReference": {
+      "path": "/tmp/agentank-bp163-star-cache2-fixed16",
+      "manifestSha256": "8eaeb08a6fcdad1dec2d2411919ee29ad4808d07d3e14870cc31492c689945b3",
+      "overviewSha256": "21ff1c2ab4365f28b85849d6491e7de123b8c8364829a623409504c7b3c19c88",
+      "matchesSha256": "657d4d670d5b0eefad89aa0ef7e556cb332b5d459e2bf5911990094748510a93"
+    },
+    "thinInitial": {
+      "path": "/tmp/agentank-bp165-thin-full-fixed16",
+      "manifestSha256": "965b9e99b47006f9f263ff02bc9caa28f6ac42d4d927690bd0e36c16ea296787",
+      "overviewSha256": "4ef79fa9e4e26391f2a1caf447c91e7dfce2be26fec6b9e503128d8ce0ec6248",
+      "matchesSha256": "5a777bae64dbec4bc9cada1ef7577ec87848bfcebcb23e2ee3800bf1ffccd719"
+    },
+    "noOpPruned": {
+      "path": "/tmp/agentank-bp166-thin-noop-pruned-fixed16",
+      "manifestSha256": "d8906b836a1f2af7931a644f318c0a4b3927262903f88db03a4ff7f37d327242",
+      "overviewSha256": "02016c1f09cc586ade975d48d223e89b25c58e837d41045445e32c232f83b07c",
+      "matchesSha256": "ae8f193380c06759e70f086afff843608e440b1a4f3cd5d99eb06efb6b4baaa6"
+    },
+    "deltaCache": {
+      "path": "/tmp/agentank-bp169-root-topology-rebind-fixed16",
+      "manifestSha256": "8eaceb045608211bb8f892bf4ff4e2d0af30a6ab805bfd9fd4c1fa2b6cff7bb3",
+      "overviewSha256": "24bf2ff1dd5215cbdbd9273f24b1f5fee4aee5a75c153aadc586e6602952f0f4",
+      "matchesSha256": "6892d67c0aea639d4e4bcc4f701027edb1b5ce84d365cbae953daf20aba77903"
+    },
+    "geometryTable": {
+      "path": "/tmp/agentank-bp170-leaf-geometry-table-fixed16",
+      "manifestSha256": "d267d165a35b77b0dae340434e09fb4e2b6ab3acdb5c44ec0a55329a8485791d",
+      "overviewSha256": "4a31c80802bedffb77247783e8b39007742200a48d69383e3fbf3edfb0f8f1e9",
+      "matchesSha256": "5a91dcf6ce511d1578da6c8feeba99f7878522c4758363a98c0b26966589817a"
+    },
+    "discoveryReference": {
+      "path": "/tmp/agentank-bp160-native-no-oracle-discovery64",
+      "manifestSha256": "6de19cb60793a438aa101cc30dcdc122bf6d593dfc87deddac273731d5a60618",
+      "overviewSha256": "e1bd27cbf0d9d4309371e20654a2fd44d5468783dcbe841c4d32a64592b5caf2",
+      "matchesSha256": "3d9949953ded3853eec82b9f1118a1bf8c61113ce75b3b7b8526180933684d48"
+    },
+    "discoveryThin": {
+      "path": "/tmp/agentank-bp170-thin-stack-discovery64",
+      "manifestSha256": "459583071641407d6e5b350874bdd8bf73098afc32abddf40b47e608c8379a63",
+      "overviewSha256": "5a965b9575c05e8bdfbbeeacfae392381dc911938eb3cf5a5830c381cc4c2d5a",
+      "matchesSha256": "b6d19c8a3c13c4a9b02fd8ab845a87c042a1906012d844f347513b0d52c17c83"
+    }
+  },
+  "verdicts": [
+    "THIN_SEARCH_LEAF_PATH_PRESERVE_FIXED16_AND_DISCOVERY64_ACTIONS",
+    "DISCOVERY64_REMAINS_67_48_13_AND_5742_BASIS_POINTS",
+    "TWO_ENTRY_STAR_FIELD_CACHE_REBUILDS_434_OF_695449_REQUESTS",
+    "ROOT_DELTA_TERRAIN_IDENTITY_REPLACES_PER_LEAF_WHOLE_MAP_COMPARE",
+    "DISCOVERY64_LOCAL_CANDIDATE_TOTAL_DECREASES_15_PERCENT",
+    "PRODUCTION_DEFAULT_REMAINS_UNCHANGED"
+  ],
+  "fingerprint": "f4ec24f71027340e6b5e8fde292a3319faf67715143c5edc65f69bf50bf835b1"
+}

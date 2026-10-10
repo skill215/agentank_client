@@ -61,7 +61,52 @@ function prepareSeatSlot(state, seat, chanceCodes, context) {
   return { slotStatus: "SLOT_PREPARED", commands };
 }
 
-function moveTank(state, seat, mode, boosted, context, sink, phase) {
+function seatMayRelocate(state, seat) {
+  const tank = state.tanks[seat]; const frame = state.platformFrame;
+  if (tank.crashed || activeUntil(tank, "frozenUntilFrame", frame) ||
+      !tank.canActThisFrame || !poisonAllowsAction(tank, frame) || tank.queue.length === 0)
+    return false;
+  const first = normalizeCommand(tank.queue[0], frame);
+  if (first.eligibleAtFrame > frame) return false;
+  if (first.command === "GO" || first.command === "CAST_TELEPORT") return true;
+  if (!activeUntil(tank, "boostUntilFrame", frame) ||
+      (first.command !== "TURN_LEFT" && first.command !== "TURN_RIGHT") ||
+      tank.queue.length < 2) return false;
+  const second = normalizeCommand(tank.queue[1], frame);
+  return second.eligibleAtFrame <= frame &&
+    (second.command === "GO" || second.command === "CAST_TELEPORT");
+}
+
+function confirmedPlainGoDestination(state, seat) {
+  const tank = state.tanks[seat]; const frame = state.platformFrame;
+  if (tank.crashed || activeUntil(tank, "frozenUntilFrame", frame) ||
+      activeUntil(tank, "stunUntilFrame", frame) || activeUntil(tank, "poisonUntilFrame", frame) ||
+      activeUntil(tank, "boostUntilFrame", frame) || !tank.canActThisFrame || tank.queue.length === 0)
+    return null;
+  const command = normalizeCommand(tank.queue[0], frame);
+  if (command.eligibleAtFrame > frame || command.command !== "GO") return null;
+  const delta = DELTAS[tank.direction]; const target = [tank.cell[0] + delta[0], tank.cell[1] + delta[1]];
+  if (target[0] < 0 || target[0] >= state.map.width ||
+      target[1] < 0 || target[1] >= state.map.height) return null;
+  const tile = state.map.terrainColumnMajor[target[0]][target[1]];
+  return tile === "x" || tile === "m" ? null : target;
+}
+
+function buildRelocationSupport(state) {
+  const startCells = state.tanks.map(tank => [...tank.cell]);
+  const destination = [confirmedPlainGoDestination(state, 0),
+    confirmedPlainGoDestination(state, 1)];
+  const same = (left, right) => left && right && left[0] === right[0] && left[1] === right[1];
+  const bothPlain = Boolean(destination[0] && destination[1]);
+  const confirmedVacating = [bothPlain, bothPlain];
+  if (same(destination[0], startCells[1]) && same(destination[1], startCells[0])) {
+    confirmedVacating[0] = false; confirmedVacating[1] = false;
+  }
+  return { mayRelocate: [seatMayRelocate(state, 0), seatMayRelocate(state, 1)],
+    confirmedVacating, startCells };
+}
+
+function moveTank(state, seat, mode, boosted, context, sink, phase, relocationSupport) {
   const tank = state.tanks[seat]; const direction = mode === "REVERSE" ? opposite(tank.direction) : tank.direction;
   const delta = DELTAS[direction]; const steps = boosted ? 2 : 1; const before = [...tank.cell];
   let moved = 0;
@@ -73,6 +118,12 @@ function moveTank(state, seat, mode, boosted, context, sink, phase) {
     const occupied = state.tanks.find(other => other.seat !== seat && !other.crashed &&
       other.cell[0] === target[0] && other.cell[1] === target[1]);
     if (occupied) {
+      if (!relocationSupport?.mayRelocate?.[occupied.seat]) break;
+      const occupiedStart = relocationSupport.startCells[occupied.seat];
+      if (relocationSupport.confirmedVacating[occupied.seat] &&
+          occupiedStart[0] === target[0] && occupiedStart[1] === target[1]) {
+        tank.cell = target; moved += 1; continue;
+      }
       const variant = requireVariant(context, "MOVE_CONTEST_V1", "R0-MOVE-AND-CONTEST");
       if (variant === "COLLISION_CRASH") { tank.crashed = true; occupied.crashed = true;
         sink.emit(phase, "TANK_CRASHED", { actorSeat: seat, targetSeat: occupied.seat,
@@ -106,7 +157,7 @@ function throwBomb(state, seat, context, sink, phase) {
   return { executionStatus: "EXECUTED_EFFECT", reasonCode: "BOMB_PLACED" };
 }
 
-function executeCommand(state, seat, command, context, sink, chanceCodes) {
+function executeCommand(state, seat, command, context, sink, chanceCodes, relocationSupport) {
   const tank = state.tanks[seat]; const phase = seat === 0 ?
     context.phaseOrdinalById.SEAT_0_ACTION : context.phaseOrdinalById.SEAT_1_ACTION; let result;
   if (command.command === "TURN_LEFT" || command.command === "TURN_RIGHT") {
@@ -118,7 +169,8 @@ function executeCommand(state, seat, command, context, sink, chanceCodes) {
     result = { executionStatus: command.freeTurn ? "EXECUTED_TRANSFORMED" : "EXECUTED_EFFECT",
       reasonCode: command.freeTurn ? "BOOST_FREE_TURN" : "TURN" };
   } else if (command.command === "GO") result = moveTank(state, seat, command.movementMode ?? "FORWARD",
-    activeUntil(tank, "boostUntilFrame", state.platformFrame), context, sink, phase);
+    activeUntil(tank, "boostUntilFrame", state.platformFrame), context, sink, phase,
+    relocationSupport);
   else if (command.command === "FIRE") result = fire(state, seat, context, sink);
   else if (command.command === "THROW_BOMB") result = throwBomb(state, seat, context, sink, phase);
   else if (CAST_TO_SKILL[command.command]) result = castSkill(state, seat, command, context, sink, chanceCodes);
@@ -130,22 +182,24 @@ function executeCommand(state, seat, command, context, sink, chanceCodes) {
   return result;
 }
 
-function applySeatSlot(state, seat, context, sink, chanceCodes) {
+function applySeatSlot(state, seat, context, sink, chanceCodes, relocationSupport) {
   const prepared = prepareSeatSlot(state, seat, chanceCodes, context);
   if (prepared.slotStatus !== "SLOT_PREPARED") return prepared;
   const results = [];
   for (const command of prepared.commands) results.push(executeCommand(state, seat, command,
-    context, sink, chanceCodes));
+    context, sink, chanceCodes, relocationSupport));
   state.tanks[seat].queue.splice(0, prepared.commands.length);
   return { slotStatus: "SLOT_EXECUTED", commands: prepared.commands, results };
 }
 
 function applyOrderedSeatSlots(state, context, sink, chanceCodes = {}) {
-  const slots = [applySeatSlot(state, 0, context, sink, chanceCodes)];
+  const relocationSupport = buildRelocationSupport(state);
+  const slots = [applySeatSlot(state, 0, context, sink, chanceCodes, relocationSupport)];
   if (slots[0].slotStatus === "SLOT_NEEDS_CHANCE") return slots;
-  slots.push(applySeatSlot(state, 1, context, sink, chanceCodes));
+  slots.push(applySeatSlot(state, 1, context, sink, chanceCodes, relocationSupport));
   return slots;
 }
 
 module.exports = { normalizeCommand, prepareSeatSlot, moveTank, throwBomb, executeCommand,
-  applySeatSlot, applyOrderedSeatSlots };
+  applySeatSlot, applyOrderedSeatSlots, seatMayRelocate, confirmedPlainGoDestination,
+  buildRelocationSupport };

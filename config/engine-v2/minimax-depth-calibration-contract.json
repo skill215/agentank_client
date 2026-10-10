@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "contractId": "MINIMAX_DEPTH_CALIBRATION_V1",
+  "scenarioCount": 16,
+  "warmupBatches": 1,
+  "measuredBatches": 5,
+  "nodeBudget": 512,
+  "baseRisk": 50,
+  "physicalDepths": [1, 2, 3, 4, 5, 6],
+  "informationWorldCounts": [1, 2, 4],
+  "physicalContinuationDepths": [0, 1, 2, 3, 4, 5],
+  "requiredNodeMajor": 24,
+  "rules": {
+    "publishCompletedIterationsOnly": true,
+    "separateInformationAndPhysicalDepth": true,
+    "measureColdAndWarmCache": true,
+    "winRateIsNotAPerformanceGate": true,
+    "rootRestoreFailuresMaximum": 0,
+    "hotAllocationsMaximum": 0,
+    "warmColdSemanticMismatchesMaximum": 0
+  }
+}

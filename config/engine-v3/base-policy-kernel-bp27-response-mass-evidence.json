@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_LONG_OPTION_RESPONSE_MASS_EVIDENCE_V1",
+  "stage": "BP27",
+  "date": "2026-08-26",
+  "productionChanged": false,
+  "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7",
+  "diagnosticSource": {
+    "responseMassSha256": "f945247a5388fac3b7c0b9117a7943d912f24685af754ecb00e20d8cc1f0e5e1",
+    "arenaSha256": "27e9d027a01cef5e63a9b00a4236e3490b59a72a1f1979f1350864fa8893476b",
+    "runnerSha256": "45a959b293719adfd3b0aab3fec1be5a6e3b2843a543b978a475ba2a5784586b",
+    "testSha256": "754f1b179567276ac7fbf4d95a7a79a79efbe5df545bb475bb63d0a5c50d7990"
+  },
+  "cohort": {
+    "scenarios": 16,
+    "candidateMatches": 32,
+    "skill": "stun",
+    "seatSwap": true,
+    "maximumFrames": 6,
+    "nodeBudget": 2048
+  },
+  "result": {
+    "wins": 16,
+    "losses": 14,
+    "draws": 2,
+    "scoreBasisPoints": 5313,
+    "behaviorChanged": false
+  },
+  "comparison": {
+    "pairs": 606,
+    "complete": 506,
+    "incomplete": 100,
+    "sameRootAction": 284,
+    "differentRootAction": 322,
+    "sameActionCompleteMismatch": 0,
+    "sameActionPartialBudgetDrift": 2,
+    "equal": 295,
+    "candidateDominates": 36,
+    "baseDominates": 32,
+    "tradeoff": 181,
+    "candidateWouldOverride": 36
+  },
+  "massDimensions": [
+    "FIRE",
+    "DEATH",
+    "ABORT",
+    "RESCUE",
+    "OPEN",
+    "INCOMPLETE",
+    "WIN",
+    "POLICY_LOSS",
+    "SUCCESS",
+    "FAILURE",
+    "UNRESOLVED"
+  ],
+  "massScale": 10000,
+  "baseMassTotal": [
+    2249712,
+    209024,
+    1941394,
+    383814,
+    1105603,
+    69856,
+    1047246,
+    52233,
+    2368702,
+    261259,
+    3500588
+  ],
+  "candidateMassTotal": [
+    2498598,
+    211600,
+    1657291,
+    350056,
+    1162743,
+    67545,
+    1190149,
+    62943,
+    2631674,
+    274544,
+    3237534
+  ],
+  "candidateMinusBaseMassTotal": [
+    248886,
+    2576,
+    -284103,
+    -33758,
+    57140,
+    -2311,
+    142903,
+    10710,
+    262972,
+    13285,
+    -263054
+  ],
+  "performance": {
+    "baseNodes": 155286,
+    "candidateNodes": 79252,
+    "baseTransitions": 190450,
+    "candidateTransitions": 97194,
+    "sharedStateMergeHits": 39497,
+    "ttCapacityFailure": 0,
+    "budgetStops": 149,
+    "fastIncomplete": 115,
+    "hardIncomplete": 85,
+    "rootRestoreFailure": 0,
+    "hotAllocation": 0,
+    "elapsedMsLocalDiagnosticOnly": 37948
+  },
+  "artifacts": {
+    "overviewSha256": "52618c56bf502af9c8174cd7f082f4524ea5c64d746819ba7585cd8350357255",
+    "manifestSha256": "182b68d333418bb25e1c3b6c5ad45128cea681e2789fb9c8e70b0985213a0bfe"
+  },
+  "decision": "RETAIN_SHADOW_PAIRED_MASS_REJECT_GLOBAL_OWNER",
+  "next": "Causally test only complete, different-action candidate-dominance roots. Preserve the original Hard/Risk gates and do not promote tradeoff, incomplete, possible-hit, or aggregate-mass evidence into ownership."
+}

@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_DEPTH_STABILITY_EVIDENCE_V1",
+  "stage": "BP129",
+  "status": "ACCEPT_EVIDENCE_REJECT_BUDGET_DEPTH_OWNER",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "contract": {
+    "fixedPairRootCount": 211,
+    "incumbentAndCandidateIdentityConstantAcrossLanes": true,
+    "lanes": [
+      { "name": "D1_B2048", "depth": 1, "nodeBudget": 2048 },
+      { "name": "D2_B256", "depth": 2, "nodeBudget": 256 },
+      { "name": "D2_B2048", "depth": 2, "nodeBudget": 2048 },
+      { "name": "D3_B2048", "depth": 3, "nodeBudget": 2048 }
+    ],
+    "transpositionIsolation": "Each lane starts a fresh cache generation.",
+    "historicalTerminalLabels": "BP128 exact historical incumbent/candidate branches",
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0
+  },
+  "laneResults": {
+    "D1_B2048": {
+      "complete": 211,
+      "incomplete": 0,
+      "candidateHigher": 31,
+      "equal": 110,
+      "candidateLower": 70,
+      "combinedNodes": 8820,
+      "maximumCombinedNodes": 72
+    },
+    "D2_B256": {
+      "complete": 211,
+      "incomplete": 0,
+      "candidateHigher": 64,
+      "equal": 109,
+      "candidateLower": 38,
+      "combinedNodes": 20907,
+      "maximumCombinedNodes": 512
+    },
+    "D2_B2048": {
+      "complete": 211,
+      "incomplete": 0,
+      "candidateHigher": 64,
+      "equal": 109,
+      "candidateLower": 38,
+      "combinedNodes": 21311,
+      "maximumCombinedNodes": 672
+    },
+    "D3_B2048": {
+      "complete": 30,
+      "incomplete": 181,
+      "candidateHigher": 18,
+      "equal": 6,
+      "candidateLower": 6,
+      "completeCombinedNodes": 13228,
+      "incompleteCombinedNodes": 11244,
+      "completeBudgetHitCount": 1,
+      "incompleteBudgetHitCount": 0,
+      "incompleteMaximumCombinedNodes": 470
+    }
+  },
+  "stability": {
+    "depthOneToTwo": {
+      "comparable": 211,
+      "same": 170,
+      "changed": 41
+    },
+    "depthTwoBudget256To2048": {
+      "comparable": 211,
+      "same": 211,
+      "changed": 0
+    },
+    "depthTwoToThree": {
+      "comparable": 30,
+      "same": 22,
+      "changed": 8,
+      "depthThreeIncomplete": 181
+    }
+  },
+  "historicalDirection": {
+    "D2CandidateHigher": {
+      "count": 64,
+      "candidateBetter": 2,
+      "candidateWorse": 2,
+      "outcomeEqual": 60
+    },
+    "D3CandidateHigherCompleteSubset": {
+      "count": 18,
+      "candidateBetter": 0,
+      "candidateWorse": 1,
+      "outcomeEqual": 17
+    }
+  },
+  "artifacts": {
+    "shadowDirectory": "artifacts/v2-native-initiative/bp129-depth-stability-shadow-v3",
+    "shadowManifestSha256": "20de928c4d1c6818a1d86cc3c12fa5d596e9a4c6f224bd319b8ac34ec21dc356",
+    "shadowOverviewSha256": "60a8b41da7ddaaef87fcd9025142d707ad4ea4847fde017eca5c6b7e9c91faa4",
+    "shadowMatchesSha256": "b6eec58d7bba44d597c5e95e17b0d90a20a3ee215c8b9e77838f233724610dc0",
+    "reportDirectory": "artifacts/v2-native-initiative/bp129-semantic-attack-depth-stability",
+    "reportManifestSha256": "c66cf9095b6b769d7964a44cb74d844853119895bed78ddb99cba4c2fd07a856",
+    "reportOverviewSha256": "11bff5b6b4b41ef7ec8c1ff5838236a772a48c686ff63125ee2eecbefc450f15",
+    "reportRootsSha256": "f6925770a446a2e4ab97b3767d3db11cb5c102bfdfd1d8dee75a7d06176a819e",
+    "reportFingerprint": "da83fa8703d25127d503e9233938f22b5e560357b1628f58caee4f9831715861",
+    "reportBytes": 21933
+  },
+  "source": {
+    "policySearchSha256": "e76ece0a9a180f01d2ac4f88b237c180c67164d51a6409b8f5cb0f027fbb582d",
+    "depthStabilityShadowSha256": "31c1fee1f9b77c5cb9234045b6c8cc8dd61a4b5d9787d940f48506c4d0eaf557",
+    "policyIntervalShadowSha256": "15da5d6722d2622aa1de66fd434b8646c541abf13222e9ad2454c2e7099b1425",
+    "depthStabilityReportSha256": "2c644d76b32a245e523647c8bbe6a200550d008a8e4f9a8ee3b9cb3b6549361c",
+    "depthStabilityReportTestSha256": "acdfccae16cb56ec83490f41c5cf6a06c6e634b1f5f8ad17a206d5a634ee4888",
+    "depthStabilityShadowTestSha256": "862cc299077effc8d8c463ba657ef2955a97133c384909717550476261b533e5"
+  },
+  "decision": {
+    "retain": [
+      "fixed-pair depth and budget calibration",
+      "cache-isolated zero-allocation diagnostic ladder",
+      "complete/incomplete work accounting",
+      "three-way relation joined to exact historical outcomes"
+    ],
+    "reject": [
+      "raising the depth-2 node budget as a gameplay fix",
+      "raising production depth to 3 before support closure is defined",
+      "treating a completed deeper positive scalar as an action certificate"
+    ],
+    "reason": "An eightfold same-depth budget increase changed zero of 211 verdicts. Depth 3 left 181 roots incomplete without any of them exhausting budget, and changed 8 of the 30 completed signs. Its 18 positive completed roots produced zero historical improvements and one regression.",
+    "next": "BP130 classifies depth-3 support exits by transition/event boundary and designs event/deadline quiescence plus explicit leaf intervals. It must not increase production depth or budget first."
+  }
+}

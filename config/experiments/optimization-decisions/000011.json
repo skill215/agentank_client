@@ -1,0 +1,99 @@
+{
+  "seq": 11,
+  "previous": "72eb926d1ed4cb6621b36a3c673c4eb5954eea33b77c4a4d8e47893152fc5655",
+  "record": {
+    "version": 1,
+    "type": "review",
+    "id": "OPT-D-0006",
+    "reviewId": "OPT-R-0005",
+    "at": "2026-10-08T04:07:16.828Z",
+    "stage": "local",
+    "disposition": "reject",
+    "outcome": "failed",
+    "primaryCause": "NO_TRIGGER",
+    "secondaryCauses": [],
+    "reason": "8场完整动作签名未改变，总得分4对4，未达预设净增1分，按快速流程否决，不追加新地图或第二候选。",
+    "nextStep": "本轮结束；下轮先验证单个冻结状态实际触发，再决定是否申请对局预算。",
+    "limitations": "这是局部筛选失败，不证明路线进展机制无效或造成劣化；独立新地图验证未运行。",
+    "experiments": [
+      "BP417_SCREEN"
+    ],
+    "assessments": [
+      {
+        "criterion": "integrity",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp417-fast-star/core-tests.txt"
+      },
+      {
+        "criterion": "old",
+        "status": "fail",
+        "evidencePath": "artifacts/native-causal-audit/bp417-fast-star/screen-summary.json"
+      },
+      {
+        "criterion": "fresh",
+        "status": "unknown",
+        "evidencePath": "artifacts/native-causal-audit/bp417-fast-star/campaign-summary.json"
+      },
+      {
+        "criterion": "runtime",
+        "status": "unknown",
+        "evidencePath": "artifacts/native-causal-audit/bp417-fast-star/campaign-summary.json"
+      }
+    ],
+    "cost": {
+      "attemptedGames": 8,
+      "completedGames": 8,
+      "independentUnits": 0,
+      "executionSeconds": 14.019836512,
+      "analysisSeconds": null
+    },
+    "metrics": [
+      {
+        "name": "score_gain",
+        "value": 0,
+        "unit": "total score over8 historical games",
+        "source": "artifacts/native-causal-audit/bp417-fast-star/screen-summary.json"
+      },
+      {
+        "name": "death_delta",
+        "value": 0,
+        "unit": "deaths over8 games",
+        "source": "artifacts/native-causal-audit/bp417-fast-star/screen-summary.json"
+      },
+      {
+        "name": "changed_games",
+        "value": 0,
+        "unit": "0/8 games",
+        "source": "artifacts/native-causal-audit/bp417-fast-star/screen-summary.json"
+      }
+    ],
+    "productionAdoption": false,
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp417-fast-star/screen-summary.json",
+        "sha256": "202953260df898b4d3649cfe5bc03d71959b9ea616a68498e506a08a71991288"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp417-fast-star/screen-review.json",
+        "sha256": "d88fe429f41964c9d56614ae1965e9bf530b107fccfd9467a1881d005c3ccc06"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp417-fast-star/screen-run/state.json",
+        "sha256": "4a91d07ebfb609f36700be0b23b886f999f282c797641198fa2def9f73516ada"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp417-fast-star/core-tests.txt",
+        "sha256": "11dc64c3a9962757dee05ca66170ddf70a458c4d98772e8a421fa317eddff161"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp417-fast-star/campaign-summary.json",
+        "sha256": "8d899b165d40039aaa85697b0ce200a9d1fdd5b05107598ee067d096c0baa26e"
+      },
+      {
+        "path": "docs/implementation/optimization-decisions/bp417-fast-review.md",
+        "sha256": "6dc8f8864b1c981f00aceeaac553536c099f15c33e396399700cc8de52886229"
+      }
+    ]
+  },
+  "sha256": "9cfce7c1bb89ed5adcc89c939b965f5c9933397977d61e36cf12faa29e83a110"
+}

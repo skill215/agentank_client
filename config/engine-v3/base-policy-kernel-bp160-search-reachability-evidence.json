@@ -1,0 +1,1278 @@
+{
+  "objectKind": "BasePolicySearchReachabilityEvidenceV1",
+  "generatedAt": "2026-09-02T06:03:06.576Z",
+  "productionDefaultChanged": false,
+  "contract": {
+    "profile": "BP68_EXACT_NATIVE_ALWAYS",
+    "auditDefault": "ON_FOR_HISTORICAL_DIAGNOSTICS",
+    "nativeMeasurement": "V1_VM_AND_ORACLE_COMPARISON_DISABLED",
+    "semantics": "SEARCH_ACTIONS_UNCHANGED; ONLY_REFERENCE_EXECUTION_AND_COMPARISON_REMOVED"
+  },
+  "behaviorEquivalence": {
+    "baselineVsAuditedCensus": {
+      "missing": 0,
+      "actionStream": 0,
+      "arguments": 0,
+      "result": 0,
+      "frames": 0,
+      "counts": 0,
+      "analysisOutcome": 0,
+      "terminalCategory": 0
+    },
+    "baselineVsNativeOnly": {
+      "missing": 0,
+      "actionStream": 0,
+      "arguments": 0,
+      "result": 0,
+      "frames": 0,
+      "counts": 0,
+      "analysisOutcome": 0,
+      "terminalCategory": 0
+    },
+    "baselineVsNativeCensus": {
+      "missing": 0,
+      "actionStream": 0,
+      "arguments": 0,
+      "result": 0,
+      "frames": 0,
+      "counts": 0,
+      "analysisOutcome": 0,
+      "terminalCategory": 0
+    },
+    "baseline": {
+      "wins": 21,
+      "losses": 11,
+      "draws": 0,
+      "scoreBasisPoints": 6563,
+      "stars": {
+        "candidate": 21,
+        "control": 21
+      },
+      "crashes": {
+        "candidate": 8,
+        "control": 17
+      }
+    },
+    "nativeOnly": {
+      "wins": 21,
+      "losses": 11,
+      "draws": 0,
+      "scoreBasisPoints": 6563,
+      "stars": {
+        "candidate": 21,
+        "control": 21
+      },
+      "crashes": {
+        "candidate": 8,
+        "control": 17
+      }
+    },
+    "discovery64AuditedVsNativeOnly": {
+      "missing": 0,
+      "actionStream": 0,
+      "arguments": 0,
+      "result": 13,
+      "frames": 0,
+      "counts": 0,
+      "analysisOutcome": 0,
+      "terminalCategory": 0
+    },
+    "discovery64Audited": {
+      "wins": 67,
+      "losses": 48,
+      "draws": 13,
+      "scoreBasisPoints": 5742,
+      "stars": {
+        "candidate": 93,
+        "control": 101
+      },
+      "crashes": {
+        "candidate": 35,
+        "control": 52
+      }
+    },
+    "discovery64NativeOnly": {
+      "wins": 67,
+      "losses": 48,
+      "draws": 13,
+      "scoreBasisPoints": 5742,
+      "stars": {
+        "candidate": 93,
+        "control": 101
+      },
+      "crashes": {
+        "candidate": 35,
+        "control": 52
+      }
+    },
+    "rawResultDifferenceReason": "runtime winner metadata changes when local elapsed time changes; analysis outcome, action stream and physical counts are invariant"
+  },
+  "performance": {
+    "auditedBaseline": {
+      "candidateTotalMicros": 19198720,
+      "controlTotalMicros": 11103266,
+      "candidateP95Max": 25117,
+      "controlP95Max": 18587,
+      "totalRatioBasisPoints": 17291,
+      "p95RatioBasisPoints": 13513
+    },
+    "nativeOnly": {
+      "candidateTotalMicros": 8646264,
+      "controlTotalMicros": 15407734,
+      "candidateP95Max": 11634,
+      "controlP95Max": 25445,
+      "totalRatioBasisPoints": 5611,
+      "p95RatioBasisPoints": 4572
+    },
+    "crossRunCandidateRatioBasisPoints": 4503,
+    "discovery64Audited": {
+      "candidateTotalMicros": 133861802,
+      "controlTotalMicros": 80942172,
+      "candidateP95Max": 46294,
+      "controlP95Max": 32756,
+      "totalRatioBasisPoints": 16537,
+      "p95RatioBasisPoints": 14132
+    },
+    "discovery64NativeOnly": {
+      "candidateTotalMicros": 28311019,
+      "controlTotalMicros": 49294161,
+      "candidateP95Max": 10550,
+      "controlP95Max": 25728,
+      "totalRatioBasisPoints": 5743,
+      "p95RatioBasisPoints": 4100
+    },
+    "discovery64CrossRunCandidateRatioBasisPoints": 2114,
+    "interpretation": "same-host local relative evidence only; not platform 3000ms evidence"
+  },
+  "reachability": {
+    "auditedMethodCount": 83,
+    "auditedCalledMethodCount": 72,
+    "nativeCalledMethodCount": 50,
+    "nativeNeverCalledMethodCount": 33,
+    "removedReachedAuditMethodCount": 22,
+    "removedReachedAuditCalls": 1292073,
+    "removedReachedAuditMethods": [
+      {
+        "name": "remaining",
+        "calls": 563148,
+        "matches": 32,
+        "minimumCalls": 2760,
+        "maximumCalls": 29808
+      },
+      {
+        "name": "legacyAction",
+        "calls": 348375,
+        "matches": 32,
+        "minimumCalls": 1740,
+        "maximumCalls": 18790
+      },
+      {
+        "name": "bombMismatch",
+        "calls": 46929,
+        "matches": 32,
+        "minimumCalls": 230,
+        "maximumCalls": 2484
+      },
+      {
+        "name": "dirtCount",
+        "calls": 46929,
+        "matches": 32,
+        "minimumCalls": 230,
+        "maximumCalls": 2484
+      },
+      {
+        "name": "projectileMismatch",
+        "calls": 46929,
+        "matches": 32,
+        "minimumCalls": 230,
+        "maximumCalls": 2484
+      },
+      {
+        "name": "statusMismatch",
+        "calls": 46929,
+        "matches": 32,
+        "minimumCalls": 230,
+        "maximumCalls": 2484
+      },
+      {
+        "name": "leafComponentsAvailable",
+        "calls": 44277,
+        "matches": 32,
+        "minimumCalls": 222,
+        "maximumCalls": 2340
+      },
+      {
+        "name": "compareDeepActionDomain",
+        "calls": 38750,
+        "matches": 32,
+        "minimumCalls": 192,
+        "maximumCalls": 2092
+      },
+      {
+        "name": "compareAppliedTransition",
+        "calls": 25297,
+        "matches": 32,
+        "minimumCalls": 126,
+        "maximumCalls": 1432
+      },
+      {
+        "name": "compareOrderedDomain",
+        "calls": 24004,
+        "matches": 32,
+        "minimumCalls": 128,
+        "maximumCalls": 1296
+      },
+      {
+        "name": "appliedMismatchMask",
+        "calls": 19851,
+        "matches": 32,
+        "minimumCalls": 96,
+        "maximumCalls": 1065
+      },
+      {
+        "name": "nativeProjectileCount",
+        "calls": 10196,
+        "matches": 32,
+        "minimumCalls": 2,
+        "maximumCalls": 670
+      },
+      {
+        "name": "pushAuditRoot",
+        "calls": 9786,
+        "matches": 32,
+        "minimumCalls": 49,
+        "maximumCalls": 592
+      },
+      {
+        "name": "nativeRootRow",
+        "calls": 3606,
+        "matches": 32,
+        "minimumCalls": 18,
+        "maximumCalls": 261
+      },
+      {
+        "name": "generateAuditRootDomain",
+        "calls": 2854,
+        "matches": 32,
+        "minimumCalls": 16,
+        "maximumCalls": 172
+      },
+      {
+        "name": "compareDeepTransitions",
+        "calls": 2586,
+        "matches": 32,
+        "minimumCalls": 17,
+        "maximumCalls": 125
+      },
+      {
+        "name": "compareInvocation",
+        "calls": 2586,
+        "matches": 32,
+        "minimumCalls": 17,
+        "maximumCalls": 125
+      },
+      {
+        "name": "compareOneStep",
+        "calls": 2586,
+        "matches": 32,
+        "minimumCalls": 17,
+        "maximumCalls": 125
+      },
+      {
+        "name": "compareRootSnapshot",
+        "calls": 1781,
+        "matches": 32,
+        "minimumCalls": 8,
+        "maximumCalls": 99
+      },
+      {
+        "name": "compareRecursion",
+        "calls": 1558,
+        "matches": 32,
+        "minimumCalls": 10,
+        "maximumCalls": 99
+      },
+      {
+        "name": "compareRootActionDomains",
+        "calls": 1558,
+        "matches": 32,
+        "minimumCalls": 10,
+        "maximumCalls": 99
+      },
+      {
+        "name": "compareRootValueOrdering",
+        "calls": 1558,
+        "matches": 32,
+        "minimumCalls": 10,
+        "maximumCalls": 99
+      }
+    ],
+    "nativeCalledMethods": [
+      {
+        "name": "targetCell",
+        "calls": 432938,
+        "matches": 32,
+        "minimumCalls": 3115,
+        "maximumCalls": 31790
+      },
+      {
+        "name": "directionTo",
+        "calls": 324564,
+        "matches": 32,
+        "minimumCalls": 2342,
+        "maximumCalls": 25162
+      },
+      {
+        "name": "positionWalkable",
+        "calls": 322408,
+        "matches": 32,
+        "minimumCalls": 2377,
+        "maximumCalls": 24760
+      },
+      {
+        "name": "push",
+        "calls": 307441,
+        "matches": 32,
+        "minimumCalls": 1555,
+        "maximumCalls": 21033
+      },
+      {
+        "name": "poseKey",
+        "calls": 304838,
+        "matches": 32,
+        "minimumCalls": 1775,
+        "maximumCalls": 20389
+      },
+      {
+        "name": "extendV1StunCountdown",
+        "calls": 302252,
+        "matches": 32,
+        "minimumCalls": 1758,
+        "maximumCalls": 20266
+      },
+      {
+        "name": "superkoPenalty",
+        "calls": 302252,
+        "matches": 32,
+        "minimumCalls": 1758,
+        "maximumCalls": 20266
+      },
+      {
+        "name": "policyValue",
+        "calls": 290291,
+        "matches": 32,
+        "minimumCalls": 1726,
+        "maximumCalls": 18481
+      },
+      {
+        "name": "recordPolicyEnvelopeLeaf",
+        "calls": 280283,
+        "matches": 32,
+        "minimumCalls": 1628,
+        "maximumCalls": 18805
+      },
+      {
+        "name": "leaf",
+        "calls": 272366,
+        "matches": 32,
+        "minimumCalls": 1594,
+        "maximumCalls": 18346
+      },
+      {
+        "name": "distance",
+        "calls": 269608,
+        "matches": 32,
+        "minimumCalls": 2144,
+        "maximumCalls": 24655
+      },
+      {
+        "name": "pairedLeaf",
+        "calls": 267668,
+        "matches": 32,
+        "minimumCalls": 1594,
+        "maximumCalls": 16953
+      },
+      {
+        "name": "opponentWeight",
+        "calls": 255359,
+        "matches": 32,
+        "minimumCalls": 1274,
+        "maximumCalls": 17439
+      },
+      {
+        "name": "transitionValue",
+        "calls": 255359,
+        "matches": 32,
+        "minimumCalls": 1274,
+        "maximumCalls": 17439
+      },
+      {
+        "name": "v1OpponentWeight",
+        "calls": 255359,
+        "matches": 32,
+        "minimumCalls": 1274,
+        "maximumCalls": 17439
+      },
+      {
+        "name": "blended",
+        "calls": 151778,
+        "matches": 32,
+        "minimumCalls": 824,
+        "maximumCalls": 10282
+      },
+      {
+        "name": "v1ShapedStun",
+        "calls": 94350,
+        "matches": 32,
+        "minimumCalls": 518,
+        "maximumCalls": 6366
+      },
+      {
+        "name": "generate",
+        "calls": 93292,
+        "matches": 32,
+        "minimumCalls": 512,
+        "maximumCalls": 6331
+      },
+      {
+        "name": "generatePrimitive",
+        "calls": 93292,
+        "matches": 32,
+        "minimumCalls": 512,
+        "maximumCalls": 6331
+      },
+      {
+        "name": "worstReply",
+        "calls": 70641,
+        "matches": 32,
+        "minimumCalls": 380,
+        "maximumCalls": 4802
+      },
+      {
+        "name": "activeProjectile",
+        "calls": 67329,
+        "matches": 32,
+        "minimumCalls": 458,
+        "maximumCalls": 5474
+      },
+      {
+        "name": "canFire",
+        "calls": 67329,
+        "matches": 32,
+        "minimumCalls": 458,
+        "maximumCalls": 5474
+      },
+      {
+        "name": "positionEdgePenalty",
+        "calls": 67322,
+        "matches": 32,
+        "minimumCalls": 458,
+        "maximumCalls": 5474
+      },
+      {
+        "name": "positionImmediateRisk",
+        "calls": 67322,
+        "matches": 32,
+        "minimumCalls": 458,
+        "maximumCalls": 5474
+      },
+      {
+        "name": "positionMuzzleRisk",
+        "calls": 67322,
+        "matches": 32,
+        "minimumCalls": 458,
+        "maximumCalls": 5474
+      },
+      {
+        "name": "positionSingleMuzzleRisk",
+        "calls": 67322,
+        "matches": 32,
+        "minimumCalls": 458,
+        "maximumCalls": 5474
+      },
+      {
+        "name": "repetitionPenalty",
+        "calls": 51713,
+        "matches": 32,
+        "minimumCalls": 201,
+        "maximumCalls": 3373
+      },
+      {
+        "name": "rootColumnIndex",
+        "calls": 33755,
+        "matches": 32,
+        "minimumCalls": 211,
+        "maximumCalls": 2141
+      },
+      {
+        "name": "v1OwnChance",
+        "calls": 33661,
+        "matches": 32,
+        "minimumCalls": 229,
+        "maximumCalls": 2737
+      },
+      {
+        "name": "positionAdvance",
+        "calls": 30604,
+        "matches": 32,
+        "minimumCalls": 174,
+        "maximumCalls": 2032
+      },
+      {
+        "name": "terminalTradeClass",
+        "calls": 23200,
+        "matches": 32,
+        "minimumCalls": 156,
+        "maximumCalls": 1537
+      },
+      {
+        "name": "v1EnemyMotionBasisPoints",
+        "calls": 22651,
+        "matches": 32,
+        "minimumCalls": 132,
+        "maximumCalls": 1529
+      },
+      {
+        "name": "clearLine",
+        "calls": 22601,
+        "matches": 31,
+        "minimumCalls": 79,
+        "maximumCalls": 1650
+      },
+      {
+        "name": "rootCell",
+        "calls": 18559,
+        "matches": 32,
+        "minimumCalls": 98,
+        "maximumCalls": 1208
+      },
+      {
+        "name": "pairedTerminalUtility",
+        "calls": 11554,
+        "matches": 32,
+        "minimumCalls": 9,
+        "maximumCalls": 1765
+      },
+      {
+        "name": "terminalUtility",
+        "calls": 11554,
+        "matches": 32,
+        "minimumCalls": 9,
+        "maximumCalls": 1765
+      },
+      {
+        "name": "rootEnemyActionAllowed",
+        "calls": 10018,
+        "matches": 32,
+        "minimumCalls": 66,
+        "maximumCalls": 625
+      },
+      {
+        "name": "rootV1ShapedAllowed",
+        "calls": 7735,
+        "matches": 32,
+        "minimumCalls": 49,
+        "maximumCalls": 471
+      },
+      {
+        "name": "exactMask",
+        "calls": 6806,
+        "matches": 32,
+        "minimumCalls": 42,
+        "maximumCalls": 438
+      },
+      {
+        "name": "positionProjectileEscape",
+        "calls": 4322,
+        "matches": 29,
+        "minimumCalls": 13,
+        "maximumCalls": 462
+      },
+      {
+        "name": "observeRoot",
+        "calls": 2586,
+        "matches": 32,
+        "minimumCalls": 17,
+        "maximumCalls": 125
+      },
+      {
+        "name": "setOracleOpponentContext",
+        "calls": 2586,
+        "matches": 32,
+        "minimumCalls": 17,
+        "maximumCalls": 125
+      },
+      {
+        "name": "setOracleRootActions",
+        "calls": 2586,
+        "matches": 32,
+        "minimumCalls": 17,
+        "maximumCalls": 125
+      },
+      {
+        "name": "bindIsolatedHard",
+        "calls": 1558,
+        "matches": 32,
+        "minimumCalls": 10,
+        "maximumCalls": 99
+      },
+      {
+        "name": "buildRootColumnSequence",
+        "calls": 1558,
+        "matches": 32,
+        "minimumCalls": 10,
+        "maximumCalls": 99
+      },
+      {
+        "name": "classifyExactBlock",
+        "calls": 1558,
+        "matches": 32,
+        "minimumCalls": 10,
+        "maximumCalls": 99
+      },
+      {
+        "name": "prepare",
+        "calls": 1558,
+        "matches": 32,
+        "minimumCalls": 10,
+        "maximumCalls": 99
+      },
+      {
+        "name": "scheduleBlend",
+        "calls": 1558,
+        "matches": 32,
+        "minimumCalls": 10,
+        "maximumCalls": 99
+      },
+      {
+        "name": "scheduledDepth",
+        "calls": 1558,
+        "matches": 32,
+        "minimumCalls": 10,
+        "maximumCalls": 99
+      },
+      {
+        "name": "positionBombHit",
+        "calls": 972,
+        "matches": 15,
+        "minimumCalls": 12,
+        "maximumCalls": 132
+      }
+    ],
+    "nativeNeverCalledMethods": [
+      "appliedMismatchMask",
+      "bombMismatch",
+      "compareAppliedTransition",
+      "compareDeepActionDomain",
+      "compareDeepTransitions",
+      "compareInvocation",
+      "compareOneStep",
+      "compareOrderedDomain",
+      "compareRecursion",
+      "compareRootActionDomains",
+      "compareRootSnapshot",
+      "compareRootValueOrdering",
+      "compareTerminalRows",
+      "context",
+      "dirtCount",
+      "earliestAttackFrames",
+      "evaluatePolicyResponseEnvelope",
+      "evaluateSyntheticResourceOption",
+      "evaluateSyntheticRoot",
+      "eventInstabilityMask",
+      "generateAuditRootDomain",
+      "leafComponentsAvailable",
+      "legacyAction",
+      "nativeProjectileCount",
+      "nativeRootRow",
+      "projectileArrivalFrames",
+      "projectileMismatch",
+      "pushAuditRoot",
+      "qualifyRootPolicySecondary",
+      "remaining",
+      "statusMismatch",
+      "usefulFire",
+      "usefulStun"
+    ],
+    "hotNoOpCandidate": {
+      "name": "recordPolicyEnvelopeLeaf",
+      "calls": 280283,
+      "reason": "BP68 continuation policy is BASE, so every call returns immediately"
+    }
+  },
+  "leafPathReachability": {
+    "leaf": {
+      "methodCount": 33,
+      "calledMethodCount": 31,
+      "neverCalledMethodCount": 2,
+      "calledMethods": [
+        {
+          "name": "target",
+          "calls": 4969169,
+          "matches": 32,
+          "minimumCalls": 29867,
+          "maximumCalls": 321181
+        },
+        {
+          "name": "walkable",
+          "calls": 4801677,
+          "matches": 32,
+          "minimumCalls": 29002,
+          "maximumCalls": 311806
+        },
+        {
+          "name": "remaining",
+          "calls": 1656377,
+          "matches": 32,
+          "minimumCalls": 9731,
+          "maximumCalls": 111446
+        },
+        {
+          "name": "active",
+          "calls": 1493119,
+          "matches": 32,
+          "minimumCalls": 8554,
+          "maximumCalls": 101053
+        },
+        {
+          "name": "mobility",
+          "calls": 1099808,
+          "matches": 32,
+          "minimumCalls": 6444,
+          "maximumCalls": 73876
+        },
+        {
+          "name": "distance",
+          "calls": 1094758,
+          "matches": 32,
+          "minimumCalls": 7621,
+          "maximumCalls": 76239
+        },
+        {
+          "name": "canFire",
+          "calls": 677697,
+          "matches": 32,
+          "minimumCalls": 3636,
+          "maximumCalls": 48020
+        },
+        {
+          "name": "boosted",
+          "calls": 661598,
+          "matches": 32,
+          "minimumCalls": 3656,
+          "maximumCalls": 45014
+        },
+        {
+          "name": "alignedDirection",
+          "calls": 652181,
+          "matches": 32,
+          "minimumCalls": 3515,
+          "maximumCalls": 46104
+        },
+        {
+          "name": "bombPressure",
+          "calls": 559846,
+          "matches": 32,
+          "minimumCalls": 3460,
+          "maximumCalls": 37216
+        },
+        {
+          "name": "muzzleRisk",
+          "calls": 550237,
+          "matches": 32,
+          "minimumCalls": 3225,
+          "maximumCalls": 36977
+        },
+        {
+          "name": "attackArrival",
+          "calls": 549904,
+          "matches": 32,
+          "minimumCalls": 3222,
+          "maximumCalls": 36938
+        },
+        {
+          "name": "edgeDistance",
+          "calls": 549904,
+          "matches": 32,
+          "minimumCalls": 3222,
+          "maximumCalls": 36938
+        },
+        {
+          "name": "edgePenalty",
+          "calls": 549904,
+          "matches": 32,
+          "minimumCalls": 3222,
+          "maximumCalls": 36938
+        },
+        {
+          "name": "projectileThreat",
+          "calls": 549904,
+          "matches": 32,
+          "minimumCalls": 3222,
+          "maximumCalls": 36938
+        },
+        {
+          "name": "evaluate",
+          "calls": 274952,
+          "matches": 32,
+          "minimumCalls": 1611,
+          "maximumCalls": 18469
+        },
+        {
+          "name": "skillOptionPenalty",
+          "calls": 274952,
+          "matches": 32,
+          "minimumCalls": 1611,
+          "maximumCalls": 18469
+        },
+        {
+          "name": "finiteStarDistance",
+          "calls": 267802,
+          "matches": 32,
+          "minimumCalls": 2222,
+          "maximumCalls": 27322
+        },
+        {
+          "name": "turns",
+          "calls": 195989,
+          "matches": 32,
+          "minimumCalls": 491,
+          "maximumCalls": 16175
+        },
+        {
+          "name": "advance",
+          "calls": 157177,
+          "matches": 32,
+          "minimumCalls": 628,
+          "maximumCalls": 11746
+        },
+        {
+          "name": "prepareStarField",
+          "calls": 133901,
+          "matches": 32,
+          "minimumCalls": 1111,
+          "maximumCalls": 13661
+        },
+        {
+          "name": "cachedTerrainEquals",
+          "calls": 133824,
+          "matches": 32,
+          "minimumCalls": 1110,
+          "maximumCalls": 13655
+        },
+        {
+          "name": "leavesAxis",
+          "calls": 75601,
+          "matches": 32,
+          "minimumCalls": 151,
+          "maximumCalls": 5466
+        },
+        {
+          "name": "bombHits",
+          "calls": 68511,
+          "matches": 32,
+          "minimumCalls": 141,
+          "maximumCalls": 5905
+        },
+        {
+          "name": "rayClear",
+          "calls": 57050,
+          "matches": 32,
+          "minimumCalls": 140,
+          "maximumCalls": 4704
+        },
+        {
+          "name": "minimumProjectileEscape",
+          "calls": 45056,
+          "matches": 32,
+          "minimumCalls": 106,
+          "maximumCalls": 3446
+        },
+        {
+          "name": "lineValue",
+          "calls": 22442,
+          "matches": 32,
+          "minimumCalls": 54,
+          "maximumCalls": 1707
+        },
+        {
+          "name": "minimumBombEscape",
+          "calls": 6998,
+          "matches": 32,
+          "minimumCalls": 14,
+          "maximumCalls": 671
+        },
+        {
+          "name": "nextStamp",
+          "calls": 6998,
+          "matches": 32,
+          "minimumCalls": 14,
+          "maximumCalls": 671
+        },
+        {
+          "name": "beginRoot",
+          "calls": 4144,
+          "matches": 32,
+          "minimumCalls": 27,
+          "maximumCalls": 222
+        },
+        {
+          "name": "buildStarField",
+          "calls": 77,
+          "matches": 32,
+          "minimumCalls": 1,
+          "maximumCalls": 6
+        }
+      ],
+      "neverCalledMethods": [
+        "install",
+        "simulatedProjectile"
+      ]
+    },
+    "path": {
+      "methodCount": 25,
+      "calledMethodCount": 20,
+      "neverCalledMethodCount": 5,
+      "calledMethods": [
+        {
+          "name": "prepareAppliedTransition",
+          "calls": 302934,
+          "matches": 32,
+          "minimumCalls": 1760,
+          "maximumCalls": 20334
+        },
+        {
+          "name": "scoreAppliedTransition",
+          "calls": 302252,
+          "matches": 32,
+          "minimumCalls": 1758,
+          "maximumCalls": 20266
+        },
+        {
+          "name": "scoreTransition",
+          "calls": 255359,
+          "matches": 32,
+          "minimumCalls": 1274,
+          "maximumCalls": 17439
+        },
+        {
+          "name": "edgeDistance",
+          "calls": 121685,
+          "matches": 32,
+          "minimumCalls": 397,
+          "maximumCalls": 9117
+        },
+        {
+          "name": "target",
+          "calls": 76415,
+          "matches": 32,
+          "minimumCalls": 178,
+          "maximumCalls": 6208
+        },
+        {
+          "name": "goEdgeUtility",
+          "calls": 71095,
+          "matches": 32,
+          "minimumCalls": 360,
+          "maximumCalls": 5292
+        },
+        {
+          "name": "distance",
+          "calls": 21692,
+          "matches": 32,
+          "minimumCalls": 54,
+          "maximumCalls": 1888
+        },
+        {
+          "name": "scanRay",
+          "calls": 11938,
+          "matches": 32,
+          "minimumCalls": 38,
+          "maximumCalls": 970
+        },
+        {
+          "name": "canFire",
+          "calls": 11133,
+          "matches": 32,
+          "minimumCalls": 34,
+          "maximumCalls": 854
+        },
+        {
+          "name": "fireTransitionUtility",
+          "calls": 9967,
+          "matches": 32,
+          "minimumCalls": 27,
+          "maximumCalls": 722
+        },
+        {
+          "name": "longRangeHitScore",
+          "calls": 2593,
+          "matches": 32,
+          "minimumCalls": 4,
+          "maximumCalls": 207
+        },
+        {
+          "name": "setOpponentContext",
+          "calls": 2586,
+          "matches": 32,
+          "minimumCalls": 17,
+          "maximumCalls": 125
+        },
+        {
+          "name": "walkable",
+          "calls": 2091,
+          "matches": 31,
+          "minimumCalls": 12,
+          "maximumCalls": 232
+        },
+        {
+          "name": "fireUtility",
+          "calls": 1166,
+          "matches": 31,
+          "minimumCalls": 3,
+          "maximumCalls": 155
+        },
+        {
+          "name": "alignedDirection",
+          "calls": 853,
+          "matches": 21,
+          "minimumCalls": 3,
+          "maximumCalls": 119
+        },
+        {
+          "name": "bombHits",
+          "calls": 529,
+          "matches": 31,
+          "minimumCalls": 4,
+          "maximumCalls": 42
+        },
+        {
+          "name": "activeProjectile",
+          "calls": 333,
+          "matches": 31,
+          "minimumCalls": 3,
+          "maximumCalls": 39
+        },
+        {
+          "name": "bombPlacementUtility",
+          "calls": 333,
+          "matches": 31,
+          "minimumCalls": 3,
+          "maximumCalls": 39
+        },
+        {
+          "name": "mobility",
+          "calls": 333,
+          "matches": 31,
+          "minimumCalls": 3,
+          "maximumCalls": 39
+        },
+        {
+          "name": "lateralExitCount",
+          "calls": 253,
+          "matches": 16,
+          "minimumCalls": 3,
+          "maximumCalls": 60
+        }
+      ],
+      "neverCalledMethods": [
+        "distanceToShotLane",
+        "enemyMotionBasisPoints",
+        "predictiveInterceptUtility",
+        "quarterTurns",
+        "responseEnemyAction"
+      ]
+    },
+    "starFieldCache": {
+      "cache1": {
+        "entries": 1,
+        "hits": 133701,
+        "misses": 200,
+        "builds": 200,
+        "terrainCompares": 133701,
+        "hitBasisPoints": 9985,
+        "runtime": {
+          "candidateTotalMicros": 5495824,
+          "controlTotalMicros": 12743201,
+          "candidateP95Max": 9066,
+          "controlP95Max": 31547,
+          "totalRatioBasisPoints": 4312,
+          "p95RatioBasisPoints": 2873
+        }
+      },
+      "cache2": {
+        "entries": 2,
+        "hits": 133824,
+        "misses": 77,
+        "builds": 77,
+        "terrainCompares": 133824,
+        "hitBasisPoints": 9994,
+        "runtime": {
+          "candidateTotalMicros": 5365127,
+          "controlTotalMicros": 12145850,
+          "candidateP95Max": 9430,
+          "controlP95Max": 21650,
+          "totalRatioBasisPoints": 4417,
+          "p95RatioBasisPoints": 4355
+        }
+      },
+      "cache4": {
+        "entries": 4,
+        "hits": 133824,
+        "misses": 77,
+        "builds": 77,
+        "terrainCompares": 133824,
+        "hitBasisPoints": 9994,
+        "runtime": {
+          "candidateTotalMicros": 5468951,
+          "controlTotalMicros": 12356332,
+          "candidateP95Max": 10255,
+          "controlP95Max": 21091,
+          "totalRatioBasisPoints": 4426,
+          "p95RatioBasisPoints": 4862
+        }
+      },
+      "selectedEntries": 2,
+      "reason": "two entries have the same misses/builds as four; one entry rebuilds 200 instead of 77",
+      "exactComparisons": {
+        "cache1": {
+          "missing": 0,
+          "actionStream": 0,
+          "arguments": 0,
+          "result": 0,
+          "frames": 0,
+          "counts": 0,
+          "analysisOutcome": 0,
+          "terminalCategory": 0
+        },
+        "cache2": {
+          "missing": 0,
+          "actionStream": 0,
+          "arguments": 0,
+          "result": 0,
+          "frames": 0,
+          "counts": 0,
+          "analysisOutcome": 0,
+          "terminalCategory": 0
+        },
+        "cache4": {
+          "missing": 0,
+          "actionStream": 0,
+          "arguments": 0,
+          "result": 0,
+          "frames": 0,
+          "counts": 0,
+          "analysisOutcome": 0,
+          "terminalCategory": 0
+        }
+      }
+    }
+  },
+  "source": {
+    "searchPoc": {
+      "path": "tools/agentank/diagnostics/native-bounded-policy-search-poc.js",
+      "bytes": 188150,
+      "sha256": "33849053038976528eb33b06a6165869b082a6ec6d1266ac8904e91612a9ede0"
+    },
+    "arena": {
+      "path": "tools/agentank/diagnostics/v2-native-initiative-arena.js",
+      "bytes": 344730,
+      "sha256": "37a202ac6f016435f06f1dd1a98496ff3da7255436f4700cfe58ecaceeb4dbd5"
+    },
+    "leafPoc": {
+      "path": "tools/agentank/diagnostics/native-v1-policy-leaf-evaluator-poc.js",
+      "bytes": 26383,
+      "sha256": "ab20f1fbf4f70d107caac7af183dc805448df401ea03d70e11a44be6efab0a59"
+    },
+    "pathPoc": {
+      "path": "tools/agentank/diagnostics/native-v1-path-utility-poc.js",
+      "bytes": 21157,
+      "sha256": "43da0d20a577c2aa97b4571d46a501a695d8cacb4440f62c90bb68428446b509"
+    },
+    "productionRoot": {
+      "path": "engine-v2/src/runtime/production-root.js",
+      "sha256": "73e08f1471a450967e26e931c639c88bf88d986870cb5b07a72e456ec2a8b551"
+    }
+  },
+  "artifacts": {
+    "baseline": {
+      "path": "/tmp/agentank-bp159-opponent-native-active",
+      "manifestSha256": "a2f8948938146e7030377ddc8ccbddbff9230dc2047d22b8bdeb938118e0871d",
+      "overviewSha256": "f100f726564522f082eb13af67d7ea48065e472363be5680d2f602529c1cd1e5",
+      "matchesSha256": "88e687ce43e696dacf0e8ec5ff6e42a4a4b6c5dc31fc00dd94400f5948472491",
+      "candidateFingerprint": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "auditCensus": {
+      "path": "/tmp/agentank-bp160-search-method-census-fixed16",
+      "manifestSha256": "69200873656f0d5f1ee51dc44810a42d8a1ecb46f201d9c70272992b5bf2c045",
+      "overviewSha256": "f791d3edbe2a50611e629d1f741f347234e4a30b11bdff444b55e01ce13cf497",
+      "matchesSha256": "8085ae1b645bb3574a170fd9ac3a6534097383afb55ab00d3c69399a4b285c8d",
+      "candidateFingerprint": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "nativeOnly": {
+      "path": "/tmp/agentank-bp160-native-no-oracle-fixed16",
+      "manifestSha256": "696c04b5402753b0ccd57b9240e7c66149de972d976649aa49cee65ea4bcf785",
+      "overviewSha256": "a351b8dc33625560a24e5adf14aaa8a4065c5e3a282ee612ac4c6d858344ad60",
+      "matchesSha256": "7787b8bf3ca528775555e5cd4c015269ebd5c3bb700611d463c7f3073291ab42",
+      "candidateFingerprint": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "nativeCensus": {
+      "path": "/tmp/agentank-bp160-native-no-oracle-census-fixed16",
+      "manifestSha256": "55653b3dddb9c5fbc816b76367c7c2af348b0b738c48e3ee2c226eb546231dea",
+      "overviewSha256": "dd1221cc5a031bfbd4bacbdab5e2cfd992191b996876e3b915159bdbd6279019",
+      "matchesSha256": "a68c37f51988201378e3101439ff92b79b2a673cfc9a357e604d3a3a92571575",
+      "candidateFingerprint": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "discoveryAudited": {
+      "path": "/tmp/agentank-bp159-opponent-native-discovery64",
+      "manifestSha256": "e298844278f4aadf61574e3f58c7c0ffcef56c20a29a9cd18a510105b14f9687",
+      "overviewSha256": "5d90f181ed3a91e8d4e70b0d4b7512b6dafa282ce87a93dee546887fb7dba077",
+      "matchesSha256": "90817d7604023ec04e93cb49c06b11abde39fc44acaa6aeba9a84c7eec47b7cc",
+      "candidateFingerprint": "1bd01a6f5dffa4bdc4eea6c3cac94b361d1b7a1bd4580d18671e24932e3a6a2e"
+    },
+    "discoveryNativeOnly": {
+      "path": "/tmp/agentank-bp160-native-no-oracle-discovery64",
+      "manifestSha256": "6de19cb60793a438aa101cc30dcdc122bf6d593dfc87deddac273731d5a60618",
+      "overviewSha256": "e1bd27cbf0d9d4309371e20654a2fd44d5468783dcbe841c4d32a64592b5caf2",
+      "matchesSha256": "3d9949953ded3853eec82b9f1118a1bf8c61113ce75b3b7b8526180933684d48",
+      "candidateFingerprint": "d6db15f8815dc9243ef758778bbeb558b6492f801e73e2fc36e4bd35f1162555"
+    },
+    "cache1": {
+      "path": "/tmp/agentank-bp163-star-cache1-fixed16",
+      "manifestSha256": "e1e451b085243caa40f0e61a834f9a17a0294d7b0dbec0fe9f92f0c744adf507",
+      "overviewSha256": "d0740a8363257bb22e8bcc357426ab649d3f0e8a3d0f56e471f17d90fd3cade7",
+      "matchesSha256": "7b2633a61e85e156367e1fd3339e22ca38da399597ca2a52717aa37d96195a0d",
+      "candidateFingerprint": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "cache2": {
+      "path": "/tmp/agentank-bp163-star-cache2-fixed16",
+      "manifestSha256": "8eaeb08a6fcdad1dec2d2411919ee29ad4808d07d3e14870cc31492c689945b3",
+      "overviewSha256": "21ff1c2ab4365f28b85849d6491e7de123b8c8364829a623409504c7b3c19c88",
+      "matchesSha256": "657d4d670d5b0eefad89aa0ef7e556cb332b5d459e2bf5911990094748510a93",
+      "candidateFingerprint": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "cache4": {
+      "path": "/tmp/agentank-bp163-star-cache4-fixed16",
+      "manifestSha256": "bcd02cc9eaebd9e58758f9a365523c458cf6ccfead88487fc44a944b99fba46f",
+      "overviewSha256": "1e97ceade27090aec2a917c5271d0926e822e7b9c51d47165854e99a64d93ff9",
+      "matchesSha256": "fa98bd00e02228c898c67836cd3601ecfc4969f99a833b5b6dd2f664a0af39c7",
+      "candidateFingerprint": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "leafPathCensus": {
+      "path": "/tmp/agentank-bp164-leaf-path-cache2-census-fixed16",
+      "manifestSha256": "1eff5c80d2d33303839a5d3fb699d0a15ba44bb6aebab05fdd28c481d75a6074",
+      "overviewSha256": "78a95c582f651fa82c3d6e30903de6235a7de1185638014a98f83f87e33d4489",
+      "matchesSha256": "4433ebabfa01b0fc6db1872bd7671b41f79eb9cece7e1025638b538723481ca3",
+      "candidateFingerprint": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    }
+  },
+  "verdicts": [
+    "V1_VM_ORACLE_AUDIT_IS_NOT_PART_OF_NATIVE_MINIMAX_SEMANTICS",
+    "REMOVING_AUDIT_PRESERVES_ALL_FIXED16_ACTIONS_AND_RESULTS",
+    "NATIVE_ONLY_TOTAL_AND_P95_ARE_LOWER_THAN_MATCHED_V1_IN_THIS_LOCAL_RUN",
+    "TWO_ENTRY_EXACT_STAR_FIELD_CACHE_REMOVES_133824_OF_133901_REBUILDS",
+    "PRODUCTION_THIN_SEARCH_MUST_EXCLUDE_AUDIT_AND_UNREACHED_PROFILE_CODE",
+    "PRODUCTION_DEFAULT_REMAINS_UNCHANGED"
+  ],
+  "fingerprint": "1ad243915b1016531340f43370ab611cc19f63cdea20d23721dc18200e7a4e78"
+}

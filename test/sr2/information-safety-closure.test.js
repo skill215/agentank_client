@@ -29,12 +29,15 @@ function evaluate(options = {}) {
     worlds, mass, list.length, options.complete === false ? 0 : 1,
     options.possible || null, options.enemyCanFire === false ? 0 : 1,
     options.enemyDirection || 0, options.budget ?? 100, options.strategyConsistent === false ? 0 : 1,
-    10000, null, null, null, options.timeline || null);
+    10000, null, null, null, options.timeline || null, null, null,
+    options.deadlineAware ? 1 : 0);
   return { closure, outcome, item };
 }
 
 function evaluateChance(options = {}) {
-  const item = options.item || fixture(); const closure = new InformationSafetyClosure();
+  const item = options.item || fixture(); const closure = new InformationSafetyClosure({
+    uniformChanceMass: options.uniformChanceMass
+  });
   const target = options.target ?? item.state.cell(4, 3);
   const outcome = closure.evaluate(item.bundle, new Uint8Array([0]), 1,
     new Uint8Array([HARD_STATUS.ALLOW]), new Uint16Array([target]), new Uint8Array([0]),
@@ -68,6 +71,14 @@ test("SR2 fatal stun support is Safety risk and never a false PROVEN_SAFE or Har
   assert.equal(outcome.immediateFatalMass[0], 10000);
   assert.equal(outcome.chanceSupportCount[0], 2);
   assert.equal(outcome.chanceFatalSupportCount[0], 1);
+});
+
+test("SR2 diagnostic uniform ChanceOutcome mass distinguishes partial from universal death", () => {
+  const partial = evaluateChance({ support: 2, fatal: 1, uniformChanceMass: true });
+  const universal = evaluateChance({ support: 2, fatal: 2, uniformChanceMass: true });
+  assert.equal(partial.outcome.status[0], SAFETY_STATUS.POSSIBLE_DEATH);
+  assert.equal(partial.outcome.immediateFatalMass[0], 5000);
+  assert.equal(universal.outcome.immediateFatalMass[0], 10000);
 });
 
 test("SR2 incomplete hidden support budget or observation strategy returns UNKNOWN or POSSIBLE", () => {
@@ -114,6 +125,51 @@ test("SR2 existing possible projectile uses arrival versus turn-and-escape viabi
   const escaped = evaluate({ item, target, direction: 0, possible, enemyCanFire: false });
   assert.equal(escaped.outcome.horizonFatalMass[0], 0);
   assert.ok(escaped.outcome.escapeSlack[0] >= 0);
+});
+
+test("SR2 zero frontier budget still evaluates an already tracked possible projectile", () => {
+  const item = fixture(9, 7); const possible = new PossibleProjectileTracker(); possible.reset(4);
+  const source = item.state.cell(4, 3); const target = item.state.cell(2, 3);
+  assert.equal(possible.addFired(item.state, source, 3, 4, 4, 0xffff, 6412), 1);
+  const result = evaluate({ item, target, direction: 2, possible,
+    enemyCanFire: true, worlds: [[item.state.cell(6, 3), 10000]],
+    enemyDirection: 3, budget: 0 });
+  assert.equal(result.outcome.possibleProjectileDeathMass[0], 6412);
+  assert.equal(result.outcome.immediateFatalMass[0], 6412);
+  assert.equal(result.outcome.unknownMass[0], 10000);
+  assert.notEqual(result.outcome.status[0], SAFETY_STATUS.PROVEN_SAFE);
+});
+
+test("SR2 aligned future FIRE uses projectile impact deadline and pose escape latency", () => {
+  const item = fixture(9, 11); const target = item.state.cell(2, 8);
+  const world = item.state.cell(6, 8);
+  item.state.arrays[ARRAY.TANK_CELL][1] = world;
+  item.state.arrays[ARRAY.TERRAIN][item.state.cell(2, 9)] = TERRAIN.WALL;
+  const trapped = evaluate({ item, target, direction: 2,
+    worlds: [[world, 10000]], enemyDirection: 3, budget: 100, deadlineAware: true });
+  assert.equal(trapped.outcome.futureFireDepth[0], 2);
+  assert.equal(trapped.outcome.futureFireDeathMass[1], 10000);
+  assert.ok(trapped.outcome.escapeSlack[0] < 0);
+
+  const ready = evaluate({ item, target, direction: 0,
+    worlds: [[world, 10000]], enemyDirection: 3, budget: 100, deadlineAware: true });
+  assert.equal(ready.outcome.futureFireDepth[0], 0xff);
+  assert.equal(ready.outcome.horizonFatalMass[0], 0);
+  assert.ok(ready.outcome.escapeSlack[0] >= 0);
+});
+
+test("SR2 non-aligned future FIRE retains conservative soft-risk slack", () => {
+  const item = fixture(9, 11); const target = item.state.cell(4, 8);
+  const world = item.state.cell(3, 10);
+  item.state.arrays[ARRAY.TANK_CELL][1] = world;
+  const result = evaluate({ item, target, direction: 1,
+    worlds: [[world, 10000]], enemyDirection: 3, budget: 100 });
+  // This is a soft InformationState ordering bound, not committed
+  // ReverseViability. Keeping it conservative avoids promoting a lateral
+  // move before a complete directional safety referee exists.
+  assert.equal(result.outcome.escapeSlack[0], -1);
+  assert.notEqual(result.outcome.status[0], SAFETY_STATUS.PROVEN_SAFE);
+  assert.ok(result.outcome.horizonFatalMass[0] > 0);
 });
 
 test("SR2 exhaustive 1 to 4 frame threat fixtures have no safe or dead false positive", () => {

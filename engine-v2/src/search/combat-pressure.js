@@ -1,6 +1,6 @@
 "use strict";
 
-const { RULE } = require("../generated/fast-config");
+const { CAPACITY, RULE } = require("../generated/fast-config");
 const { SEARCH_CAPACITY } = require("../generated/search-config");
 const { ACTION, TERRAIN, NONE_CELL, NONE_FRAME, DX, DY } = require("../abi/fast-codes");
 const { ARRAY, SCALAR } = require("../state/fast-state");
@@ -23,7 +23,18 @@ class CombatVectorSlab {
     this.directKill = new Uint8Array(maxActions); this.aimSetup = new Uint8Array(maxActions);
     this.intercept = new Uint8Array(maxActions); this.escapeDenial = new Uint8Array(maxActions);
     this.shieldBreak = new Uint8Array(maxActions); this.zoneDenial = new Uint8Array(maxActions);
-    this.beliefSweep = new Uint8Array(maxActions); this.hitDeadline = new Uint8Array(maxActions);
+    this.beliefSweep = new Uint8Array(maxActions); this.possibleHit = new Uint8Array(maxActions);
+    this.attackClosureStatus = new Uint8Array(maxActions);
+    this.enemyDoomedFirstActions = new Uint8Array(maxActions);
+    this.enemySurvivingFirstActions = new Uint8Array(maxActions);
+    this.enemyUnknownFirstActions = new Uint8Array(maxActions);
+    this.attackDoomedByFrame = new Uint8Array(maxActions);
+    this.attackPressureContribution = new Int16Array(maxActions);
+    this.enemyFrontierColumns = new Uint8Array(maxActions);
+    this.enemyCounterfireDelay = new Uint8Array(maxActions);
+    this.enemyMobilityLoss = new Uint8Array(maxActions);
+    this.enemyEndpointReduction = new Uint16Array(maxActions);
+    this.hitDeadline = new Uint8Array(maxActions);
     this.enemySafeSuccessors = new Uint8Array(maxActions);
     this.ownCounterExposure = new Uint16Array(maxActions);
     this.resourceOccupancy = new Uint8Array(maxActions); this.blockadeValue = new Uint16Array(maxActions);
@@ -37,7 +48,18 @@ class CombatVectorSlab {
     this.directKill.fill(0, 0, count); this.aimSetup.fill(0, 0, count);
     this.intercept.fill(0, 0, count); this.escapeDenial.fill(0, 0, count);
     this.shieldBreak.fill(0, 0, count); this.zoneDenial.fill(0, 0, count);
-    this.beliefSweep.fill(0, 0, count); this.hitDeadline.fill(NO_HIT_DEADLINE, 0, count);
+    this.beliefSweep.fill(0, 0, count); this.possibleHit.fill(0, 0, count);
+    this.attackClosureStatus.fill(0, 0, count);
+    this.enemyDoomedFirstActions.fill(0, 0, count);
+    this.enemySurvivingFirstActions.fill(0, 0, count);
+    this.enemyUnknownFirstActions.fill(0, 0, count);
+    this.attackDoomedByFrame.fill(NO_HIT_DEADLINE, 0, count);
+    this.attackPressureContribution.fill(0, 0, count);
+    this.enemyFrontierColumns.fill(0, 0, count);
+    this.enemyCounterfireDelay.fill(0, 0, count);
+    this.enemyMobilityLoss.fill(0, 0, count);
+    this.enemyEndpointReduction.fill(0, 0, count);
+    this.hitDeadline.fill(NO_HIT_DEADLINE, 0, count);
     this.enemySafeSuccessors.fill(0, 0, count); this.ownCounterExposure.fill(0, 0, count);
     this.resourceOccupancy.fill(0, 0, count); this.blockadeValue.fill(0, 0, count);
     this.purposeCompleteness.fill(0, 0, count); this.postFireEscape.fill(0, 0, count);
@@ -61,6 +83,23 @@ class CombatVectorSlab {
 class CombatPressure {
   constructor(maxActions = SEARCH_CAPACITY.MAX_OUR_ACTIONS) {
     this.vector = new CombatVectorSlab(maxActions); this.evaluationCount = 0;
+    this.possibleHitQueue = new Uint16Array(CAPACITY.MAX_CELLS);
+    this.possibleHitVisited = new Uint16Array(CAPACITY.MAX_CELLS);
+    this.possibleHitVisitDepth = new Uint8Array(CAPACITY.MAX_CELLS);
+    this.possibleHitRayCells = new Uint16Array(CAPACITY.MAX_CELLS);
+    this.possibleHitRayArrival = new Uint8Array(CAPACITY.MAX_CELLS);
+    this.possibleHitGeneration = 0; this.possibleHitEnabled = 1;
+    this.possibleHitReachBuilds = 0;
+    this.possibleHitEvaluationCount = 0; this.possibleHitFoundCount = 0;
+    this.possibleHitQueryCacheHits = 0;
+    this.possibleHitQuerySource = NONE_CELL; this.possibleHitQueryDirection = 0xff;
+    this.possibleHitQueryEnemy = NONE_CELL; this.possibleHitQueryTopology = 0xffffffff;
+    this.possibleHitQueryWidth = 0; this.possibleHitQueryHeight = 0;
+    this.possibleHitQueryEnemyCanAct = 0; this.possibleHitQueryResult = 0;
+    this.possibleHitQueryDeadline = NO_HIT_DEADLINE;
+    this.possibleHitQueryCompleteness = 0;
+    this.lastPossibleHitDeadline = NO_HIT_DEADLINE;
+    this.lastPossibleHitCompleteness = 0;
     this.hotAllocationCount = 0;
   }
   target(state, cell, direction) {
@@ -88,6 +127,96 @@ class CombatPressure {
       cell = this.target(state, cell, direction);
     }
     return cell === to ? 1 : 0;
+  }
+  nextPossibleHitGeneration() {
+    this.possibleHitGeneration = (this.possibleHitGeneration + 1) & 0xffff;
+    if (this.possibleHitGeneration === 0) {
+      this.possibleHitVisited.fill(0);
+      this.possibleHitGeneration = 1;
+    }
+    return this.possibleHitGeneration;
+  }
+  findPossibleHit(state, source, direction, enemyCell, enemyCanAct = 1) {
+    this.lastPossibleHitDeadline = NO_HIT_DEADLINE;
+    this.lastPossibleHitCompleteness = 0;
+    this.possibleHitEvaluationCount += 1;
+    if (!this.possibleHitEnabled) return 0;
+    const topology = state.arrays[ARRAY.SCALAR][SCALAR.TOPOLOGY_VERSION];
+    const canAct = enemyCanAct ? 1 : 0;
+    if (this.possibleHitQuerySource === source &&
+        this.possibleHitQueryDirection === direction &&
+        this.possibleHitQueryEnemy === enemyCell &&
+        this.possibleHitQueryTopology === topology &&
+        this.possibleHitQueryWidth === state.width &&
+        this.possibleHitQueryHeight === state.height &&
+        this.possibleHitQueryEnemyCanAct === canAct) {
+      this.lastPossibleHitDeadline = this.possibleHitQueryDeadline;
+      this.lastPossibleHitCompleteness = this.possibleHitQueryCompleteness;
+      this.possibleHitQueryCacheHits += 1;
+      if (this.possibleHitQueryResult) this.possibleHitFoundCount += 1;
+      return this.possibleHitQueryResult;
+    }
+    let found = 0; let rayCount = 0; let maxArrival = 0;
+    let cell = source;
+    for (let distance = 1; distance <= state.cells; distance += 1) {
+      cell = this.target(state, cell, direction);
+      if (cell === NONE_CELL) break;
+      const terrain = state.arrays[ARRAY.TERRAIN][cell];
+      if (terrain === TERRAIN.WALL || terrain === TERRAIN.DIRT) break;
+      const arrival = Math.max(1, Math.floor(
+        (distance + RULE.PROJECTILE_STEPS - 1) / RULE.PROJECTILE_STEPS));
+      this.possibleHitRayCells[rayCount] = cell;
+      this.possibleHitRayArrival[rayCount] = arrival;
+      rayCount += 1; maxArrival = arrival;
+    }
+    const delay = canAct ? 0 : 1;
+    if (rayCount > 0 && this.walkable(state, enemyCell) && maxArrival >= delay) {
+      const generation = this.nextPossibleHitGeneration();
+      let head = 0; let tail = 1; let depth = 0; let levelEnd = 1;
+      const maximumDepth = maxArrival - delay;
+      this.possibleHitQueue[0] = enemyCell;
+      this.possibleHitVisited[enemyCell] = generation;
+      this.possibleHitVisitDepth[enemyCell] = 0;
+      while (head < tail && depth <= maximumDepth) {
+        const currentEnd = levelEnd;
+        while (head < currentEnd) {
+          const current = this.possibleHitQueue[head++];
+          if (depth < maximumDepth) {
+            for (let move = 0; move < 4; move += 1) {
+              const next = this.target(state, current, move);
+              if (this.walkable(state, next) &&
+                  this.possibleHitVisited[next] !== generation) {
+                this.possibleHitVisited[next] = generation;
+                this.possibleHitVisitDepth[next] = depth + 1;
+                this.possibleHitQueue[tail++] = next;
+              }
+            }
+          }
+        }
+        depth += 1; levelEnd = tail;
+      }
+      this.possibleHitReachBuilds += 1;
+      for (let ray = 0; ray < rayCount; ray += 1) {
+        const rayCell = this.possibleHitRayCells[ray];
+        if (this.possibleHitVisited[rayCell] !== generation) continue;
+        const arrival = this.possibleHitRayArrival[ray];
+        const required = this.possibleHitVisitDepth[rayCell] + delay;
+        if (required > arrival) continue;
+        const slack = arrival - required;
+        this.lastPossibleHitDeadline = Math.min(NO_HIT_DEADLINE - 1, arrival);
+        this.lastPossibleHitCompleteness = clamp(4500 + Math.min(2000, slack * 500),
+          3500, 6500);
+        found = 1; break;
+      }
+    }
+    this.possibleHitQuerySource = source; this.possibleHitQueryDirection = direction;
+    this.possibleHitQueryEnemy = enemyCell; this.possibleHitQueryTopology = topology;
+    this.possibleHitQueryWidth = state.width; this.possibleHitQueryHeight = state.height;
+    this.possibleHitQueryEnemyCanAct = canAct; this.possibleHitQueryResult = found;
+    this.possibleHitQueryDeadline = this.lastPossibleHitDeadline;
+    this.possibleHitQueryCompleteness = this.lastPossibleHitCompleteness;
+    if (found) this.possibleHitFoundCount += 1;
+    return found;
   }
   mobility(state, seat, cell) {
     const opposing = state.arrays[ARRAY.TANK_CELL][seat ^ 1]; let count = 0;
@@ -132,7 +261,7 @@ class CombatPressure {
     return 0;
   }
   evaluate(bundle, actions, count, projectedCell, projectedDirection, enemyVisible,
-      beliefCoverage = null, tactical = null) {
+      beliefCoverage = null, tactical = null, enemyCanAct = 1) {
     const state = bundle.state; const a = state.arrays; const vector = this.vector; vector.reset(count);
     const enemyCell = a[ARRAY.TANK_CELL][1]; const enemyDirection = a[ARRAY.TANK_DIR][1];
     const enemyMobility = this.mobility(state, 1, enemyCell); const frame = a[ARRAY.SCALAR][SCALAR.FRAME];
@@ -162,6 +291,21 @@ class CombatPressure {
         }
         if (this.directionTo(state, ownCell, enemyCell) !== ownDirection ||
             !this.clearLine(state, ownCell, enemyCell)) {
+          if (this.findPossibleHit(state, ownCell, ownDirection, enemyCell, enemyCanAct)) {
+            vector.mark(row, COMBAT_PURPOSE.INTERCEPT, PLAN_PURPOSE.INTERCEPT, 3);
+            vector.possibleHit[row] = 1;
+            vector.hitDeadline[row] = this.lastPossibleHitDeadline;
+            vector.resourceOccupancy[row] = this.lastPossibleHitDeadline;
+            vector.enemySafeSuccessors[row] = enemyMobility;
+            vector.purposeCompleteness[row] = this.lastPossibleHitCompleteness;
+            const pressure = 400 + Math.trunc(this.lastPossibleHitCompleteness / 4) -
+              enemyMobility * 150 - Math.trunc(vector.ownCounterExposure[row] / 10);
+            vector.pressureValue[row] = clamp(pressure, -500, 2500);
+            // The enemy can choose not to enter the ray. This is tactical
+            // possibility, never committed/proven lower-bound pressure.
+            vector.robustPressure[row] = 0;
+            continue;
+          }
           vector.pressureValue[row] = tactical &&
             Number.isSafeInteger(tactical.FIRE_VISIBLE_MISS_SCORE) ?
             tactical.FIRE_VISIBLE_MISS_SCORE : -2500;

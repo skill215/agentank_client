@@ -1,0 +1,65 @@
+{
+  "objectKind": "BasePolicyKernelBudgetFrontierCensusV1",
+  "stage": "BP38",
+  "status": "ACCEPTED_DIAGNOSTIC",
+  "actionOwnership": false,
+  "productionDefaultChanged": false,
+  "cohort": {
+    "scenarioLimit": 16,
+    "physicalMatches": 64,
+    "pairedRoots": 606,
+    "nodeBudgetPerPolicy": 2048,
+    "maximumFrames": 6
+  },
+  "result": {
+    "completePairs": 295,
+    "incompletePairs": 311,
+    "budgetStops": 144,
+    "transitionBudgetStops": 144,
+    "nodeBudgetStops": 0,
+    "transitionBudgetStopByDepth": [17, 27, 29, 27, 24, 20, 0, 0, 0, 0],
+    "nodeBudgetStopByDepth": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "budgetStopByPolicy": [0, 99, 45],
+    "stateEntryByDepth": [0, 4391, 11743, 27095, 58256, 115950, 221250, 0, 0, 0],
+    "stateLeafByDepth": [0, 798, 1143, 2566, 4956, 9464, 221250, 0, 0, 0],
+    "ttHitByDepth": [0, 0, 2129, 5894, 14387, 32329, 0, 0, 0, 0],
+    "domainVisitByDepth": [1210, 3593, 8471, 18635, 38913, 74157, 0, 0, 0, 0],
+    "domainActionTotalByDepth": [4004, 11476, 26684, 57925, 122129, 233658, 0, 0, 0, 0],
+    "budgetStopByOwnAction": {
+      "GO": 55,
+      "TURN_LEFT": 41,
+      "TURN_RIGHT": 47,
+      "CAST_STUN": 1
+    },
+    "budgetStopByEnemyAction": {
+      "GO": 25,
+      "TURN_LEFT": 70,
+      "TURN_RIGHT": 3,
+      "FIRE": 6,
+      "CAST_STUN": 40
+    },
+    "baseTransitions": 311550,
+    "candidateTransitions": 191343,
+    "baseNodes": 284254,
+    "candidateNodes": 154431,
+    "compactedStunTurnDomains": 25072,
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0
+  },
+  "interpretation": {
+    "depth5ActionShareBasisPoints": 5125,
+    "depth4And5ActionShareBasisPoints": 7805,
+    "basePolicyBudgetStopShareBasisPoints": 6875,
+    "orderingIsNotRootCause": true,
+    "reason": "Every stop is caused by the physical transition counter, none by the logical node counter. Stops span all depths and the reported action is usually just the first branch observed after exhaustion. Primitive enemy actions still grow exponentially, with 78.05 percent of generated actions at depths four and five."
+  },
+  "decision": {
+    "retainCensus": true,
+    "enableActionReordering": false,
+    "nextTarget": "Replace repeated deep primitive enemy enumeration in nominal value search with a small state-conditioned enemy Response Option portfolio. Strict Hard and ForcedWin quantifiers remain unchanged."
+  },
+  "fingerprints": {
+    "overviewSha256": "3396d68843333be8c4c5e9e1ed652c815c49aad43d6a289ef08766cbdbd4cc5c",
+    "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7"
+  }
+}

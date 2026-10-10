@@ -1,0 +1,67 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP12_EVIDENCE_V1",
+  "status": "ACCEPTED_ARCHITECTURE_REJECTED_NOMINAL_ACTION_OWNERSHIP",
+  "createdAt": "2026-08-26",
+  "scope": "ROBUST_NOMINAL_PATH_VALUE_OWNERSHIP_SPLIT",
+  "productionBehaviorChanged": false,
+  "productionDefaultEnabled": false,
+  "productionRootSha256": "c4443ddbd2a7a651d77f1582e5b68ce3715dfc87af7cf40ac7432396def39c48",
+  "sources": {
+    "nativeBoundedPolicySearchPocSha256": "a58cc03515efa7489e0a8c7e8e1fd5d8f6ff3a506beeead2fd2bb92174b681e2",
+    "nativeTacticalActionOwnerPocSha256": "612be5c67210a7dc67a5321638a7748b2fe4b459801715c85339d9684d779ef1",
+    "nativeInitiativeArenaSha256": "7971fc9f312721687cd0511dd289384cd36060f2952f26f575bb86a9a9b81918",
+    "auditSourceSha256": "be0f1003a1f61bb71a08c501f4e72e26d0cfb8c7c50ab8e2ad7e0f1a11006605",
+    "toolchainSha256": "b22ffe2bfbd3a4825219e369cae1cf9868ba7131e2f705a83998adcd37d1ea08"
+  },
+  "cohort": { "scenarios": 16, "candidateMatchesPerMode": 32, "skill": "STUN" },
+  "modeResults": {
+    "ROBUST_BASE": {
+      "wins": 16, "losses": 14, "draws": 2, "scoreBasisPoints": 5313,
+      "stars": 16, "crashes": 11, "fire": 186, "nodes": 290322,
+      "averageRuntimeMicros": 6210, "hotAllocationCount": 0
+    },
+    "SOFT_IN_ROBUST": {
+      "wins": 12, "losses": 19, "draws": 1, "scoreBasisPoints": 3906,
+      "stars": 14, "crashes": 15, "fire": 170, "nodes": 271822,
+      "averageRuntimeMicros": 6672, "hotAllocationCount": 0
+    },
+    "SOFT_NOMINAL_ONLY": {
+      "wins": 15, "losses": 15, "draws": 2, "scoreBasisPoints": 5000,
+      "stars": 16, "crashes": 12, "fire": 186, "nodes": 288471,
+      "averageRuntimeMicros": 6673, "pathNominalTieBreaks": 1,
+      "hotAllocationCount": 0
+    }
+  },
+  "behaviorEquivalence": {
+    "robustBaseVersusBp11Off": { "same": 32, "different": 0 },
+    "softRobustVersusBp11On": { "same": 32, "different": 0 }
+  },
+  "relativeToRobustBase": {
+    "SOFT_IN_ROBUST": { "actionDifferent": 13, "positive": 1, "negative": 6 },
+    "SOFT_NOMINAL_ONLY": { "actionDifferent": 1, "positive": 0, "negative": 1 }
+  },
+  "auditArtifacts": {
+    "overviewSha256": "9a596fa1a83932dcc32a780083594ee1fe55066c225596818905b3fe1f8dc818",
+    "manifestSha256": "8eab1bdc9a1ecef01e82add3b015250a695a1a52968c2e64ca0954a7863b71cd",
+    "singleRootOverviewSha256": "af155b48dce31469357e332d4f37807b12d0eefe2cd56e03a0b0d97348be833f",
+    "singleRootRowsSha256": "31ad1a1683ab2985ebbb489869d9bfe503b2b2ec64c4bed9d5ee21c6413ba77c"
+  },
+  "singleNominalDivergence": {
+    "scenario": "mat_2oo7Bhd32HH4mziLA",
+    "candidateSeat": 1,
+    "engineDecisionIndex": 94,
+    "stateExact": true,
+    "robust": { "GO": 418, "FIRE": 418 },
+    "nominal": { "GO": 418, "FIRE": 474 },
+    "action": "GO_TO_FIRE",
+    "oracleSelectedFire": false,
+    "outcome": "V2_WIN_TO_V1_WIN"
+  },
+  "conclusion": {
+    "splitValueArchitectureAccepted": true,
+    "softNominalMaySelectAction": false,
+    "softEvidenceProductionEnable": false,
+    "softEvidenceUse": "SHADOW_OR_REQUIRE_COMPLETE_NONREGRESSION_CERTIFICATE",
+    "nextTarget": "Audit and eliminate proposal-to-emitter action coercion, then search for exact/committed certificates that improve ROBUST_BASE without granting ownership to speculative values."
+  }
+}

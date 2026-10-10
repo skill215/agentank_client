@@ -1,0 +1,65 @@
+{
+  "seq": 9,
+  "previous": "bac4f51fec449ce6bc7348952af393115776ef8f93275fe639e34aa3255e1719",
+  "record": {
+    "version": 1,
+    "type": "register",
+    "id": "OPT-D-0005",
+    "at": "2026-10-08T04:01:54.141Z",
+    "process": "OPT-P-002",
+    "category": "process",
+    "registration": "prospective",
+    "parent": "OPT-D-0004",
+    "title": "六步限时快速筛选争星改动",
+    "hypothesis": "以8场定向筛选、单一机制改动和16场新地图配对，能在有限成本内作出下一轮取舍，无需精细确认总体收益。",
+    "scope": "一个争星机制；最多6步、1候选、48局、1800秒主动工作；保留只代表本地候选。",
+    "baseline": "BP415 frozen baseline and BP416 complete loss cohort",
+    "falsifier": "超出预算、增加候选或反复加样本仍不作处置；若无法定位明确机制，应立即搁置。",
+    "nextStep": "按编号固定4场存活失分和4场胜局，做一次只读追踪。",
+    "alternatives": [
+      {
+        "name": "继续全量精细诊断和统计确认",
+        "benefit": "证据更精细",
+        "risk": "反馈慢、诊断成本可能超过收益",
+        "reason": "本轮不采用"
+      },
+      {
+        "name": "六步限时单候选筛选",
+        "benefit": "快速得到取舍、失败早停",
+        "risk": "小样本误判风险更高，只能暂时保留",
+        "reason": "按用户偏好采用"
+      }
+    ],
+    "criteria": [
+      {
+        "id": "budget",
+        "metric": "steps/games/active time/candidates",
+        "rule": "<=6 steps, <=48 attempted games, <=1800 active seconds, <=1 candidate",
+        "unit": "step/game/second/candidate",
+        "kind": "hard"
+      },
+      {
+        "id": "decision",
+        "metric": "terminal disposition",
+        "rule": "retain/rollback/defer with recorded evidence; no repeated sample extension",
+        "unit": "review",
+        "kind": "hard"
+      }
+    ],
+    "budget": {
+      "games": 48,
+      "seconds": 1800
+    },
+    "evidence": [
+      {
+        "path": "docs/implementation/optimization-decisions/fast-iteration-opt-p002.md",
+        "sha256": "8259f7d302b7aac385881168e095dc5ba46caff0026c6307f524003a397b8163"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp416-loss-diagnosis/summary.json",
+        "sha256": "6c401af89e07ae0276840275b6c10c4fe9bdbae72bc8f18d18e6d2011153596e"
+      }
+    ]
+  },
+  "sha256": "a0626a82e933ccdcbf2eefa3179b05bbadcad182f7685042694976c7dedda479"
+}

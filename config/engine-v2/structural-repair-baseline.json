@@ -2,7 +2,9 @@
   "schemaVersion": 1,
   "trackId": "V2_STRUCTURAL_REPAIR_SR0_SR6",
   "fixedCohort": {
-    "overviewRelativePath": "artifacts/diagnostics/v1-v2-working/9c0c3f6b246a2e76-r2-discovery-calibration-frozen-pd71e5ee1339e-rolling-3c663bc6/working-arena-overview.json",
+    "summaryRelativePath": "config/engine-v2/sr0-fixed-cohort-summary.json",
+    "scenarioIdentityManifestRelativePath": "artifacts/retention/gr0/baselines/sr3-final-2128/manifest.json",
+    "prunedOverviewRelativePath": "artifacts/diagnostics/v1-v2-working/9c0c3f6b246a2e76-r2-discovery-calibration-frozen-pd71e5ee1339e-rolling-3c663bc6/working-arena-overview.json",
     "scenarioCount": 266,
     "repetitions": 2,
     "variants": 4,

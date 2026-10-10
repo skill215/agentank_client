@@ -11,8 +11,11 @@ const { writeReport, writeImmutableJsonEvidence, writeImmutableRawEvidence, arti
   require("./foundation-gate");
 const policy = require("../../../engine-v2/src/policy");
 const search = require("../../../engine-v2/src/search");
+const { RiskAcceptanceController } =
+  require("../../../engine-v2/src/search/risk-acceptance-controller");
 const fast = require("../../../engine-v2/src/fast");
 const { RULE } = require("../../../engine-v2/src/generated/fast-config");
+const { STRATEGY_CONFIG } = require("../../../engine-v2/src/generated/policy-config");
 
 function finalized(value) { value.fingerprint = fingerprintObject(value); return value; }
 function boxedMap(width = 7, height = 5) { return Array.from({ length: width }, (_, x) =>
@@ -55,10 +58,25 @@ function layoutAudit(root) {
   const files = fs.readdirSync(path.join(root, "engine-v2", "src", "policy")).filter(name => name.endsWith(".js"));
   const source = files.map(name => fs.readFileSync(path.join(root, "engine-v2", "src", "policy", name),
     "utf8")).join("\n"); const forbiddenCount = (source.match(/Float32Array|Float64Array|Math\.random|Date\.now|console\./g) || []).length;
-  return finalized({ schemaVersion: 1, status: layout.floatArrayCount === 0 &&
+  const descriptorFingerprint = fingerprintObject({ tableVersion: STRATEGY_CONFIG.TABLE_VERSION,
+    abiVersion: STRATEGY_CONFIG.ABI_VERSION,
+    primary: Array.from(STRATEGY_CONFIG.PRIMARY_PURPOSE_MASK),
+    support: Array.from(STRATEGY_CONFIG.SUPPORT_PURPOSE_MASK),
+    fallback: Array.from(STRATEGY_CONFIG.FALLBACK_PURPOSE_MASK),
+    requiredCapability: Array.from(STRATEGY_CONFIG.REQUIRED_CAPABILITY_MASK),
+    forbiddenRootMode: Array.from(STRATEGY_CONFIG.FORBIDDEN_ROOT_MODE_MASK),
+    minimumDwellRoots: Array.from(STRATEGY_CONFIG.MINIMUM_DWELL_ROOTS),
+    switchMargin: Array.from(STRATEGY_CONFIG.SWITCH_MARGIN_MATRIX),
+    orderingProfile: Array.from(STRATEGY_CONFIG.ORDERING_PROFILE_ID),
+    searchHint: Array.from(STRATEGY_CONFIG.SEARCH_HINT_ID),
+    fallbackStrategy: Array.from(STRATEGY_CONFIG.FALLBACK_STRATEGY),
+    reasonMask: Array.from(STRATEGY_CONFIG.REASON_MASK) });
+  return finalized({ schemaVersion: 2, status: layout.floatArrayCount === 0 &&
     layout.hotAllocationCount === 0 && incompleteDescriptors === 0 && forbiddenCount === 0 &&
-    manifest.limits.featureCount === layer.registry.count ? "PASS" : "FAIL",
+    manifest.limits.featureCount === layer.registry.count &&
+    manifest.strategy.strategyDescriptorFingerprint === descriptorFingerprint ? "PASS" : "FAIL",
   profileId: manifest.profileId, policyAbiRevision: manifest.policyAbiRevision,
+  strategyDescriptorFingerprint: descriptorFingerprint,
   featureCount: layer.registry.count, incompleteDescriptors, forbiddenCount, ...layout });
 }
 
@@ -91,18 +109,31 @@ function evaluatorAudit() {
 
 function strategyAudit() {
   const selector = new policy.StrategySelector(); const input = new policy.StrategyInputFrame();
+  const defaultStrategy = selector.current; const evalProfileId = selector.evalProfileId;
+  const baseRisk = selector.baseRisk;
   input.set(policy.STRATEGY_INPUT.DIRECT_HIT_WINDOW, 9000); input.set(policy.STRATEGY_INPUT.OPPONENT_ATTACK, 8000);
   let prematureSwitchCount = 0; for (let root = 0; root < 3; root += 1)
-    if (selector.select(input) !== policy.STRATEGY.STAR_CONTROL) prematureSwitchCount += 1;
+    if (selector.select(input) !== policy.STRATEGY.KILL_PRESSURE) prematureSwitchCount += 1;
+  input.set(policy.STRATEGY_INPUT.DIRECT_HIT_WINDOW, 0);
+  input.set(policy.STRATEGY_INPUT.KILL_OPPORTUNITY, 0);
+  input.set(policy.STRATEGY_INPUT.SETUP_OPPORTUNITY, 8900);
   const switched = selector.select(input); const switchCount = selector.switchCount;
-  input.set(policy.STRATEGY_INPUT.DIRECT_HIT_WINDOW, 8800); input.set(policy.STRATEGY_INPUT.POSITION_CONTROL, 8900);
-  const jittered = selector.select(input) !== policy.STRATEGY.KILL_PRESSURE || selector.switchCount !== switchCount;
+  input.set(policy.STRATEGY_INPUT.DIRECT_HIT_WINDOW, 8800);
+  input.set(policy.STRATEGY_INPUT.SETUP_OPPORTUNITY, 8900);
+  const jittered = selector.select(input) !== policy.STRATEGY.ATTACK_SETUP ||
+    selector.switchCount !== switchCount;
   input.set(policy.STRATEGY_INPUT.TERMINAL_URGENCY, 9600); selector.select(input);
   const phase = selector.phase; const forced = selector.select(input, policy.GLOBAL_MODE.HARD_SURVIVAL);
-  return finalized({ schemaVersion: 1, status: prematureSwitchCount === 0 &&
-    switched === policy.STRATEGY.KILL_PRESSURE && !jittered && phase === policy.STRATEGY_PHASE.LOCKED &&
-    forced === policy.STRATEGY.PRESERVE_LEAD ? "PASS" : "FAIL", prematureSwitchCount,
-  switchCount: selector.switchCount, jitterCount: jittered ? 1 : 0, decisivePhase: phase, forcedStrategy: forced });
+  return finalized({ schemaVersion: 2, status:
+    defaultStrategy === policy.STRATEGY.KILL_PRESSURE &&
+    evalProfileId === policy.EVAL_PROFILE.CANONICAL_OUTCOME &&
+    baseRisk === selector.baseRisk && prematureSwitchCount === 0 &&
+    switched === policy.STRATEGY.ATTACK_SETUP && !jittered &&
+    phase === policy.STRATEGY_PHASE.LOCKED &&
+    forced === policy.STRATEGY.PRESERVE_LEAD ? "PASS" : "FAIL",
+  defaultStrategy, evalProfileId, baseRisk, prematureSwitchCount,
+  switchCount: selector.switchCount, jitterCount: jittered ? 1 : 0,
+  decisivePhase: phase, forcedStrategy: forced });
 }
 
 function opponentAudit() {
@@ -209,12 +240,44 @@ function performanceAudit() {
       (policy.PLAN_KIND.COUNT - 1)), 128,
     () => plans.validateContinuation(handle, bundle, fast.ACTION.NONE)));
   }
-  const metrics = featureMetrics.concat(opponentMetrics, planMetrics); const invalid = metrics.filter(item =>
+  const strategyInput = new policy.StrategyInputFrame();
+  strategyInput.set(policy.STRATEGY_INPUT.KILL_OPPORTUNITY, 8000);
+  strategyInput.set(policy.STRATEGY_INPUT.PURPOSE_COMPLETENESS, 9000);
+  strategyInput.set(policy.STRATEGY_INPUT.KILL_DEADLINE, 2);
+  const selector = new policy.StrategySelector();
+  const bandActions = new Uint8Array([fast.ACTION.FIRE, fast.ACTION.GO,
+    fast.ACTION.TURN_LEFT, fast.ACTION.NONE]);
+  const bandCombat = { purposeFlags: new Uint8Array(4),
+    purposeCompleteness: new Uint16Array(4), postFireEscape: new Uint8Array(4),
+    ownCounterExposure: new Uint16Array(4) };
+  bandCombat.purposeFlags[0] = policy.COMBAT_PURPOSE.DIRECT_KILL;
+  bandCombat.purposeCompleteness[0] = 10000; bandCombat.postFireEscape[0] = 1;
+  const bands = new policy.StrategyBandSlab(); const controller = new RiskAcceptanceController();
+  controller.outcome.reset(4); controller.acceptableCount = 4; controller.safeFloor = 5000;
+  for (let row = 0; row < 4; row += 1) {
+    controller.outcome.acceptable[row] = 1; controller.outcome.robustLower[row] = 5000;
+    controller.outcome.expectedValue[row] = 5000;
+    controller.outcome.tacticalValue[row] = 5000;
+    controller.outcome.purposeCompleteness[row] = 10000;
+  }
+  selector.prepare(strategyInput);
+  const strategyMetrics = [
+    measure("strategy-selector", inspectArrays(selector).bytes, 512,
+      () => selector.prepare(strategyInput)),
+    measure("strategy-portfolio", inspectArrays(bands).bytes, 512, () => {
+      bands.reset(4); bands.configureRoot(2, 4, 10000);
+      return bands.buildPortfolio(controller, selector.decisions, selector.current,
+        bandActions, 4, bandCombat);
+    })
+  ];
+  const metrics = featureMetrics.concat(opponentMetrics, planMetrics, strategyMetrics);
+  const invalid = metrics.filter(item =>
     item.samples < 1 || item.bytes < 1 || item.p99Nanoseconds < item.p95Nanoseconds ||
     item.instrumentedAllocations !== 0).length;
   return finalized({ schemaVersion: 1, status: invalid === 0 ? "PASS" : "FAIL",
     metricCount: metrics.length, featureMetricCount: featureMetrics.length,
     opponentMetricCount: opponentMetrics.length, planMetricCount: planMetrics.length,
+    strategyMetricCount: strategyMetrics.length,
     invalidMetricCount: invalid, metrics });
 }
 

@@ -75,6 +75,22 @@
 59. [legacy-evidence-contract.md](legacy-evidence-contract.md)
 60. [benchmark-contract.md](benchmark-contract.md)
 61. [fast-regression-contract.md](fast-regression-contract.md)
+62. [projectile-attack-closure-contract.md](projectile-attack-closure-contract.md)
+63. [projectile-survivor-frontier-contract.md](projectile-survivor-frontier-contract.md)
+64. [v2-strategy-search-rearchitecture.md](v2-strategy-search-rearchitecture.md)
+65. [v3-v2-component-transplant-recovery-plan.md](v3-v2-component-transplant-recovery-plan.md)
+66. [v2-option-aware-minimax-architecture.md](v2-option-aware-minimax-architecture.md)
+
+DD7 战略层修订
+[v2-strategy-layer-contract.md](v2-strategy-layer-contract.md) 已由 `DEC-0095`
+接受并完成 D0–D3 本地实现：单一 Minimax、离散 StrategyBand、默认击杀和
+统一 outcome evaluator 已接入 production。D4 战斗、相对性能和上传体积资格
+仍未完成，`OI-ARCH-019` 保持 `DECIDED`。
+
+STRAT2 的单一 active band 合同已被 `DEC-0096` 部分替代。当前权威顺序见
+[v2-strategy-search-rearchitecture.md](v2-strategy-search-rearchitecture.md)：中立基础估值和
+一次战术搜索先运行，Strategy只消费Risk/EO/Pareto/safe-floor后的合格证据并提出portfolio，
+最终动作确定后才提交跨root strategy state。
 
 平台规则基线保存在 [../agent-guide.md](../agent-guide.md)。该页面元数据仍标注 2026-06-06，但正文已经包含后续变更；规则冲突以官方 Updates 的具体变更为最高优先级，并由 RuleRegistry 记录来源与版本。
 

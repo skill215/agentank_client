@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_EVENT_DEADLINE_EVIDENCE_V1",
+  "stage": "BP138",
+  "status": "ACCEPT_EVENT_LEAF_LIMIT_CLASSIFIED",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "contract": {
+    "fixedPairRootCount": 211,
+    "analyzedRootCount": 35,
+    "movementWorldCount": 3,
+    "eventLaneCount": 2,
+    "completeRootCount": 35,
+    "incompleteRootCount": 0,
+    "commonWorldAgreementLaneCount": 70,
+    "valueWorldAgreementLaneCount": 70,
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0,
+    "behaviorNeutral": true,
+    "actionOwnership": false,
+    "genericAttackScalarRemoved": true
+  },
+  "lanes": {
+    "outcomeFrontier": "At the common depth-3 leaf, compare committed incoming/outgoing projectile presence, aim-ready setup and counter exposure. The old ATTACK scalar is absent.",
+    "projectileSettlement": "When a projectile already exists at the common depth-3 leaf, follow its normative timeline and reverse viability to invalidation or escape deadline. The old ATTACK scalar is absent."
+  },
+  "historicalDirection": {
+    "regressions": {
+      "roots": 2,
+      "outcomeCommonEqual": 2,
+      "settlementCommonEqual": 2,
+      "outcomeHistoricalCandidateHigher": 0,
+      "settlementHistoricalCandidateHigher": 0
+    },
+    "improvements": {
+      "roots": 2,
+      "outcomeCommonEqual": 1,
+      "outcomeCommonCandidateLower": 1,
+      "settlementCommonEqual": 1,
+      "settlementCommonCandidateLower": 1,
+      "outcomeHistoricalCandidateHigher": 0,
+      "settlementHistoricalCandidateHigher": 0
+    },
+    "interpretation": "Structural event views remove the false candidate advantage on both regressions, but certify neither improvement and conservatively reject one. They are useful dimensions, not owners or vetoes."
+  },
+  "horizonBoundary": {
+    "fixedDepth": 3,
+    "canSettleAlreadyEmittedProjectile": true,
+    "canContinueUntilFutureFirstFire": false,
+    "nonEventLeafMeaning": "An observation at a fixed horizon, not an event-complete result.",
+    "decision": "A fixed-depth non-event must become UNKNOWN in the next design."
+  },
+  "performance": {
+    "elapsedMs": 51102,
+    "shadowArtifactBytes": 402610,
+    "reportArtifactBytes": 9172
+  },
+  "artifacts": {
+    "shadowDirectory": "artifacts/v2-native-initiative/bp138-event-deadline-shadow",
+    "shadowManifestSha256": "12990d802c71158d76e60d7f42337181eac987dcdf9d5dc6c7fec6a56b2616f3",
+    "shadowOverviewSha256": "eaa4f94ea7944cb45ae74cf30ca86e482723694c48fb187a99b260106ba5983a",
+    "shadowMatchesSha256": "e6c8fa582291c377f712dfba8291fed1cd599ae3ea0ebc6e2fbb9f8d01884daf",
+    "reportDirectory": "artifacts/v2-native-initiative/bp138-semantic-attack-event-deadline",
+    "reportManifestSha256": "b5313695aac955331ff89a5bf0fed7cb2e1169ebf23ff1eb781d820155a6fe64",
+    "reportOverviewSha256": "d7a895cacc1a8df6de447dc3d81e1f18a11539d4a4572857686818f04e95853c",
+    "reportRootsSha256": "f3c6739efdedcebcb16b2bf0613570262d6bd205325359c7bde53c1e55a766a4",
+    "reportFingerprint": "97c97573c87539f13d82bffa4db9d93d12666fff7cf7b0cccbe5ed554ef1f117"
+  },
+  "source": {
+    "eventDeadlineShadowSha256": "1c79ecaed7c9f9d408ddb231bfa4a19ab66c2bbf1dcd504e81a01358697ece81",
+    "eventDeadlineReportSha256": "6955b6bda03439cf97f56c6c514c28315eafd6a34d351b76ef4b1f357446a813",
+    "policyIntervalShadowSha256": "40032743670f371f24641b95834051091ad170576d2f07ea00dc11fb117ef033",
+    "productionDiagnosticBotSha256": "dc9c295f527319298f1a386307becbcf06bd8d235b840752a42da64a45e3c3ac",
+    "arenaSha256": "abe0828f69b53ed424fac274615b603194db04e746e10086b62e1fbc54aaa8a3",
+    "eventDeadlineShadowTestSha256": "f3e8992e3611dce85bec43c0e42abd7d3a8d694b5dafec5e5a95b057bfdb1237",
+    "eventDeadlineReportTestSha256": "658d040c6f2acba0e593ee8ed76281050e9e269e83f0fed9a763ecdc850ea680"
+  },
+  "decision": {
+    "retain": [
+      "outcome frontier and projectile settlement as separate structural dimensions",
+      "generic ATTACK scalar removal in event diagnostics",
+      "three-world fail-closed comparison",
+      "fixed-memory Shadow implementation",
+      "production fail-closed behavior"
+    ],
+    "reject": [
+      "either BP138 lane as an action owner",
+      "either BP138 lane as a hard veto",
+      "fixed depth-3 leaf observation as event completion",
+      "settlement evidence when no projectile has yet been emitted",
+      "tuning leaf weights from the four directional roots"
+    ],
+    "next": "BP139 continues each common policy until FIRE, terminal, committed hazard deadline, support loss or a strict work cap. A path that reaches only the frame cap without an event is UNKNOWN."
+  }
+}

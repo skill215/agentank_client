@@ -1,0 +1,68 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP45_BP46_VALUE_CROSSCHECK_V1",
+  "status": "REJECTED_AS_ACTION_OWNER",
+  "source": {
+    "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7",
+    "selectiveVerifierSha256": "f6cc1f27534cff4f47c93b32f49d53112d06d0fc661d10e201364244587c34e6",
+    "arenaSha256": "6b4c5b47046a268de8e436826d73496d8e86882726fcc40bee26aa81fbcfa283",
+    "bp42RunnerSha256": "b6da387810f3d0af339303043af026d6d975ba911f5e47edecd389972639c61f",
+    "bp43RunnerSha256": "27dee4ddc7c63a26e1933db7f67d0d749e93dacb412c80f1dd3ef03c2bd0f317"
+  },
+  "bp45Shadow": {
+    "role": "TACTICAL_HOLDOUT",
+    "scenarios": 64,
+    "candidateMatches": 128,
+    "wins": 62,
+    "losses": 55,
+    "draws": 11,
+    "scoreBasisPoints": 5273,
+    "certificates": 26,
+    "rootValueRelation": {
+      "candidateHigher": 6,
+      "equal": 0,
+      "candidateLower": 20,
+      "unavailable": 0
+    },
+    "classByRootValue": {
+      "horizonFailureElimination": {
+        "higher": 1,
+        "lower": 4
+      },
+      "nominalMassOnly": {
+        "higher": 3,
+        "lower": 8
+      },
+      "outcomeMaskChange": {
+        "higher": 2,
+        "lower": 8
+      }
+    },
+    "overviewSha256": "d80236cdb6bbf88fee26103ef902551103260baf4414ada44c312f2fc0be6e4b"
+  },
+  "bp46ValueActive": {
+    "ownership": "RESPONSE_DOMINANCE_AND_ROOT_VALUE_HIGHER",
+    "overrides": 6,
+    "valueRejects": 18,
+    "wins": 61,
+    "losses": 54,
+    "draws": 13,
+    "scoreBasisPoints": 5273,
+    "scoreBasisPointDelta": 0,
+    "transitions": {
+      "lossToDraw": 1,
+      "winToDraw": 1
+    },
+    "invariantDelta": {
+      "avoidableHardReject": 0,
+      "riskDominatedSelection": 0,
+      "rootRestoreFailure": 0,
+      "timeoutError": 0
+    },
+    "overviewSha256": "3f91f9f975671b7b2c42210c7fd37c0be678708e507044d20540e5fa28c2d17a"
+  },
+  "conclusion": {
+    "responseAndRootAgreementIsNotSufficientOwnership": true,
+    "doNotAddAnotherThresholdGate": true,
+    "next": "Decouple proposal generation from AttackPose. Let the already-computed root frontier propose its own argmax, then reuse the existing response verifier as a separate validator."
+  }
+}

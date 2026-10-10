@@ -1,0 +1,87 @@
+{
+  "seq": 5,
+  "previous": "a99b4a069ee05e5feb5785e36b7295f9a1352607cee5500e89fcdade17996a40",
+  "record": {
+    "version": 1,
+    "type": "register",
+    "id": "OPT-D-0003",
+    "at": "2026-10-08T02:55:00.076Z",
+    "process": "OPT-P-001",
+    "category": "algorithm",
+    "registration": "prospective",
+    "parent": "OPT-D-0002",
+    "title": "以新生成完整对局检验逃生候选覆盖和收益",
+    "hypothesis": "同一冻结候选在新生成地图上的自然对局中可触发，并可能改善配对得分。",
+    "scope": "32 new generated terrain clusters; seats and arms paired within cluster. Synthetic distribution only, not independent platform evidence.",
+    "baseline": "285f9863227d6af3638bed74e008f0260fd25440034d95eec5e3f8cac44d9120",
+    "falsifier": "One frozen 128-game batch, 10 sec/job, 1800 sec cap. No tuning or extra seeds after results. No-trigger => defer for insufficient coverage; negative paired mean => investigate regression; production adoption always false.",
+    "nextStep": "运行128局并保存完整回放；按固定标准评审，不按结果挑场景。",
+    "alternatives": [
+      {
+        "name": "复用旧局面加种子",
+        "benefit": "复现便宜",
+        "risk": "无法验证新场景覆盖",
+        "reason": "不采用"
+      },
+      {
+        "name": "新生成地图完整对局",
+        "benefit": "无需历史后缀，可冻结和复现",
+        "risk": "模拟器/地图分布不等同平台",
+        "reason": "用于本次覆盖筛查"
+      }
+    ],
+    "criteria": [
+      {
+        "id": "integrity",
+        "metric": "execution, priority, gates, map uniqueness",
+        "rule": "all pass; complete 128 games",
+        "unit": "game/map",
+        "kind": "hard"
+      },
+      {
+        "id": "coverage",
+        "metric": "triggered terrains",
+        "rule": ">=8 of32",
+        "unit": "terrain",
+        "kind": "soft"
+      },
+      {
+        "id": "effect",
+        "metric": "paired map mean score and death",
+        "rule": "Screening coverage requires >=8 triggered terrains. Evidence supporting continuation additionally requires mean paired score>=0.1, distribution-free 95% Hoeffding lower bound >0 and death delta<=0. Otherwise no quality success claim. Any integrity/gate failure stops.",
+        "unit": "terrain cluster",
+        "kind": "soft"
+      },
+      {
+        "id": "release",
+        "metric": "platform and runtime acceptance",
+        "rule": "Separate future platform and target-runtime validation required",
+        "unit": "platform",
+        "kind": "hard"
+      }
+    ],
+    "budget": {
+      "games": 128,
+      "seconds": 1800
+    },
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp415-fresh-games/plan.json",
+        "sha256": "1703f003cffcac5d0170ccf10bae8df370d4b5ea32d6c8381996ca1560bbffca"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp415-fresh-games/provenance.json",
+        "sha256": "02aa103bc458fd6206fde9ca710757ae32e6da86d2b6308474c258556134049c"
+      },
+      {
+        "path": "tools/agentank/diagnostics/fresh-game-escape-adapter.js",
+        "sha256": "f627feb1cf914e5954ca6b29ee3e00f3f86212dacfe12811bc35f365fcb13ee5"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp414-escape-progress/summary.json",
+        "sha256": "a8087fbee9a42ff662283c8850cfb1a46769ed660fa10826a43d40eec59d5b61"
+      }
+    ]
+  },
+  "sha256": "8e668c8ce3561a158eaeddd8b6e424273340e65b0af01310b58d263798c42653"
+}

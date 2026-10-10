@@ -1,0 +1,94 @@
+{
+  "seq": 22,
+  "previous": "8f42f15f3081c48e8935e6df9bcfb3c0be79e0afecce939f6052ee729b77f0ba",
+  "record": {
+    "version": 1,
+    "type": "review",
+    "id": "OPT-D-0010",
+    "reviewId": "OPT-R-0010",
+    "at": "2026-10-09T03:11:36.926Z",
+    "stage": "local",
+    "disposition": "retain",
+    "outcome": "passed",
+    "primaryCause": "NONE",
+    "secondaryCauses": [],
+    "reason": "Reward goal passes; retain for new-data validation.",
+    "nextStep": "Fresh data validation; preserve independent candidates.",
+    "limitations": "Historical stratified quick screen; work proxy not runtime; no production acceptance. Branch wall times overlap.",
+    "experiments": [
+      "BP420_REWARD"
+    ],
+    "assessments": [
+      {
+        "criterion": "integrity",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp420-multi-objective/summary.json"
+      },
+      {
+        "criterion": "goal",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp420-multi-objective/summary.json"
+      },
+      {
+        "criterion": "release",
+        "status": "unknown",
+        "evidencePath": "artifacts/native-causal-audit/bp420-multi-objective/summary.json"
+      }
+    ],
+    "cost": {
+      "attemptedGames": 8,
+      "completedGames": 8,
+      "independentUnits": 0,
+      "executionSeconds": 10.038806113000001,
+      "analysisSeconds": null
+    },
+    "metrics": [
+      {
+        "name": "score",
+        "value": 4,
+        "unit": "total over8 games",
+        "source": "artifacts/native-causal-audit/bp420-multi-objective/summary.json"
+      },
+      {
+        "name": "deaths",
+        "value": 2,
+        "unit": "deaths over8 games",
+        "source": "artifacts/native-causal-audit/bp420-multi-objective/summary.json"
+      },
+      {
+        "name": "transitions",
+        "value": 94994,
+        "unit": "simulated transitions",
+        "source": "artifacts/native-causal-audit/bp420-multi-objective/summary.json"
+      }
+    ],
+    "productionAdoption": false,
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp420-multi-objective/summary.json",
+        "sha256": "ec8682b26e86f397539dfaac01ae9774ff78c08b897abd01579a8a616b0444bc"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp420-multi-objective/per-game-metrics.json",
+        "sha256": "2e49e39886177ed6e8a7f5f90a53d14303ad26cf668d23d71b380900dca1a87c"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp420-multi-objective/reward-review.json",
+        "sha256": "26e3b3acc7d742249282572b2c66fd2ab42192d89e21cb5bbc2afb3e153e6880"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp420-multi-objective/reward-run/state.json",
+        "sha256": "08ca6844682714f862219843833085de572f5f4293777dc2b7fc0291137d3e96"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp420-multi-objective/core-tests.txt",
+        "sha256": "e2d9abcf82129f9e48e03fdc4ad4e7509bdd463ceddb71929de1e6535eb045b8"
+      },
+      {
+        "path": "docs/implementation/optimization-decisions/bp420-multi-review.md",
+        "sha256": "8ee5b3e6c1bc81669b7cab32d8cc6787a04afa967d4dc21f85c199a5472e1128"
+      }
+    ]
+  },
+  "sha256": "7e8eb937e301e0efdaf869889d011df4e2a10d1ff8813cc4c0fdecfa93daaebe"
+}

@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "V3_V2_COMPONENT_CAUSAL_ACCEPTANCE_V1",
+  "completedOn": "2026-07-29",
+  "officialPlatformOperationPerformed": false,
+  "cohort": {
+    "fingerprint": "bcfc3a2de8675abefb04f531cc8c9e3c77fdd4cd600e65590ff50073321a6d70",
+    "fileSha256": "6af59b951ec38b97b8db56992c17be74deaf4b7b01350e0294daea641a039b92",
+    "v1Sha256": "8da68843a292c6a6230a32baf60392916f9fb85aaa5d9a94feac7085ddc9e82e",
+    "scenarioCount": 64,
+    "matchCount": 128,
+    "discoveryScenarioCount": 16,
+    "holdoutScenarioCount": 48,
+    "newHistoryScenarioCount": 16,
+    "fixedHashScenarioCount": 48
+  },
+  "stages": [
+    {
+      "stage": "VC0",
+      "classification": "ACCEPTED_BASELINE",
+      "includeInBest": true,
+      "matches": 128,
+      "candidateWins": 62,
+      "baselineWins": 62,
+      "draws": 4,
+      "scoreBasisPoints": 5000
+    },
+    {
+      "stage": "VC1",
+      "classification": "ACCEPTED_FACT_LAYER",
+      "includeInBest": true,
+      "matches": 128,
+      "candidateWins": 62,
+      "baselineWins": 62,
+      "draws": 4,
+      "scoreBasisPoints": 5000,
+      "artifactManifestSha256": "99f8bcba9d721e8140ae149915501d5eafeafe1363ff2a0d06580a3fe5629500"
+    },
+    {
+      "stage": "VC2",
+      "classification": "ACCEPTED_SAFETY_LAYER",
+      "includeInBest": true,
+      "matches": 128,
+      "candidateWins": 62,
+      "baselineWins": 62,
+      "draws": 4,
+      "scoreBasisPoints": 5000,
+      "artifactManifestSha256": "1d8852ea45562aa7d9912e1ffff2463e8db99f7b7637fea64421f8b59cb5135c"
+    },
+    {
+      "stage": "VC3",
+      "classification": "NEGATIVE",
+      "includeInBest": false,
+      "matches": 128,
+      "candidateWins": 41,
+      "baselineWins": 70,
+      "draws": 17,
+      "scoreBasisPoints": 3867,
+      "artifactManifestSha256": "e0ea097effa331b0f162ce3df249dd15ad78f429dba4325221779923510e056c"
+    },
+    {
+      "stage": "VC4",
+      "classification": "NEUTRAL",
+      "includeInBest": false,
+      "matches": 128,
+      "candidateWins": 62,
+      "baselineWins": 62,
+      "draws": 4,
+      "scoreBasisPoints": 5000,
+      "artifactManifestSha256": "a3f2badb7fc5c23fe7f7a9bdadcaa8a59728fa90bdaeca6e147d309e9d8b3046"
+    },
+    {
+      "stage": "VC5",
+      "classification": "NEUTRAL",
+      "includeInBest": false,
+      "holdoutMatches": 96,
+      "candidateWins": 47,
+      "baselineWins": 45,
+      "draws": 4,
+      "scoreBasisPoints": 5104,
+      "pPartsPerMillion": 876953,
+      "holdoutArtifactManifestSha256": "03a7b06ecd11d3893c3b969a3f11b493f2eb58f2ae7cbe2fc67dced211d18663"
+    },
+    {
+      "stage": "VC6",
+      "classification": "NEGATIVE",
+      "includeInBest": false,
+      "discoveryMatches": 32,
+      "candidateWins": 2,
+      "baselineWins": 30,
+      "draws": 0,
+      "scoreBasisPoints": 625,
+      "pPartsPerMillion": 122,
+      "artifactManifestSha256": "f0d0fb801490e691e3fc7c8ed73746ec6b040a6ec4523aba2f3c496fd022ed73"
+    },
+    {
+      "stage": "VC7",
+      "classification": "NEGATIVE",
+      "includeInBest": false,
+      "discoveryMatches": 32,
+      "candidateWins": 10,
+      "baselineWins": 19,
+      "draws": 3,
+      "scoreBasisPoints": 3594,
+      "noneActionCount": 886,
+      "artifactManifestSha256": "6b36c0f0e1016e3cab68e3aa06f2a62de38e60551e596c1e3b504db7554c2776"
+    },
+    {
+      "stage": "VC8",
+      "classification": "ACCEPTED_STABLE_BEST",
+      "includeInBest": true,
+      "enabledComponents": [
+        "VC1_SHARED_OBSERVATION_BRIDGE",
+        "VC2_COMPLETE_PHYSICAL_HARD_FINAL_GATE"
+      ],
+      "matches": 128,
+      "candidateWins": 62,
+      "baselineWins": 62,
+      "draws": 4,
+      "scoreBasisPoints": 5000,
+      "finalArenaFingerprint": "af9116f0a46cfb8689facdc90de9f4f59d1488cd6133e95ab1a656b22f5366e5",
+      "finalArenaFileSha256": "10cff6a13c52b1292287521952e82b9f3700bf62da6d6c1dcda8cc6dac2488b7",
+      "discoveryArtifactManifestSha256": "9586348f2069826d35a4625d80133beebe541b6c52f8b582c98e0fde0f03598c",
+      "holdoutArtifactManifestSha256": "854edb916cf9c9f09e05e2bb98f152134e626fc7a390e00b841a8c0a0428cb00"
+    }
+  ],
+  "tests": {
+    "v3": {
+      "pass": 15,
+      "fail": 0
+    },
+    "minimaxCore": {
+      "pass": 91,
+      "fail": 0
+    },
+    "gr0": {
+      "pass": 208,
+      "fail": 0
+    },
+    "imp5": {
+      "pass": 14,
+      "fail": 0
+    },
+    "imp6": {
+      "pass": 15,
+      "fail": 1,
+      "knownCapacityOnly": true,
+      "sourceBytes": 534151,
+      "minifiedBytes": 515064,
+      "platformMaximumBytes": 204800,
+      "typedArrayBytes": 999280,
+      "coldInitPassed": true,
+      "callbackPassed": true,
+      "semanticDifferentialPassed": true
+    },
+    "legacySr4CombatPressure": {
+      "pass": 19,
+      "fail": 1,
+      "knownOwnershipContractConflict": true
+    }
+  },
+  "artifactBudget": {
+    "retainedCompactMatchRows": 1184,
+    "timeoutCount": 0,
+    "errorCount": 0,
+    "rootRestoreFailureCount": 0,
+    "adapterExceptionCount": 0,
+    "projectileCapacityFailureCount": 0,
+    "hotAllocationCount": 0,
+    "allComponentArtifactsBytes": 346504,
+    "allComponentArtifactsMaximumBytes": 33554432,
+    "perStageMaximumBytes": 2097152,
+    "rawReplayRetained": false
+  }
+}

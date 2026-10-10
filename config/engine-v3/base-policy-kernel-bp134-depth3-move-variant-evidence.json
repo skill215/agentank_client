@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_DEPTH3_MOVE_VARIANT_EVIDENCE_V1",
+  "stage": "BP134",
+  "status": "ACCEPT_VARIANT_INVARIANT_RELATIONS",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "contract": {
+    "fixedPairRootCount": 211,
+    "formerJointMovementGapCount": 35,
+    "variantCount": 3,
+    "completeAcrossVariantsCount": 35,
+    "agreementCount": 35,
+    "disagreementCount": 0,
+    "incompleteVariantCellCount": 0,
+    "variantValueDisagreementRootCount": 0,
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0,
+    "behaviorNeutral": true
+  },
+  "ruleWorlds": {
+    "SEQUENTIAL_BLOCK": {
+      "nodes": 21774,
+      "contestedTransitions": 182,
+      "contestKinds": {
+        "SAME_TARGET": 149,
+        "SWAP": 1,
+        "ENTER_OCCUPIED_START": 32
+      },
+      "relation": {
+        "candidateHigher": 17,
+        "equal": 9,
+        "candidateLower": 9,
+        "incomplete": 0
+      }
+    },
+    "INTENT_BLOCK": {
+      "nodes": 21774,
+      "contestedTransitions": 182,
+      "contestKinds": {
+        "SAME_TARGET": 149,
+        "SWAP": 1,
+        "ENTER_OCCUPIED_START": 32
+      },
+      "relation": {
+        "candidateHigher": 17,
+        "equal": 9,
+        "candidateLower": 9,
+        "incomplete": 0
+      }
+    },
+    "COLLISION_CRASH": {
+      "nodes": 21773,
+      "contestedTransitions": 182,
+      "contestKinds": {
+        "SAME_TARGET": 149,
+        "SWAP": 1,
+        "ENTER_OCCUPIED_START": 32
+      },
+      "relation": {
+        "candidateHigher": 17,
+        "equal": 9,
+        "candidateLower": 9,
+        "incomplete": 0
+      }
+    }
+  },
+  "historicalJoin": {
+    "CANDIDATE_HIGHER": {
+      "roots": 17,
+      "outcome": {
+        "equal": 15,
+        "incumbentBetter": 2,
+        "candidateBetter": 0
+      },
+      "pareto": {
+        "equal": 6,
+        "incumbentDominates": 6,
+        "mixed": 3,
+        "candidateDominates": 2
+      },
+      "geometry": {
+        "sameTarget": 14,
+        "stunAffectedPartialPreparation": 3
+      }
+    },
+    "EQUAL": {
+      "roots": 9,
+      "outcome": { "equal": 9 },
+      "pareto": { "equal": 9 },
+      "geometry": {
+        "sameTarget": 7,
+        "stunAffectedPartialPreparation": 2
+      }
+    },
+    "CANDIDATE_LOWER": {
+      "roots": 9,
+      "outcome": {
+        "equal": 7,
+        "incumbentBetter": 0,
+        "candidateBetter": 2
+      },
+      "pareto": {
+        "equal": 6,
+        "mixed": 1,
+        "candidateDominates": 2
+      },
+      "geometry": {
+        "sameTarget": 5,
+        "stunAffectedPartialPreparation": 4
+      }
+    }
+  },
+  "diagnosis": {
+    "physicalSupport": "The explicit three-world envelope closes every former joint-movement support gap and is therefore useful as a finite completeness tool.",
+    "searchScale": "All worlds have full support and nearly identical node work, so depth, representative width and node budget are not the remaining cause on these roots.",
+    "valueDirection": "The invariant scalar direction is historically anti-directional: candidate-higher has zero improvements and two regressions, while both improvements are candidate-lower.",
+    "ownership": "Cross-world completion does not turn the scalar relation into a safe action certificate. The envelope remains diagnostic-only."
+  },
+  "artifacts": {
+    "shadowDirectory": "artifacts/v2-native-initiative/bp134-depth3-move-variant-shadow-v2",
+    "shadowManifestSha256": "fa203c19123c4982470ef499267b9ec6f707d3ad0f3d788d3f19731303c64295",
+    "shadowOverviewSha256": "95ca13fa386a558d769e5cadccc110881df24af27827fb8997e5110f756cf520",
+    "shadowMatchesSha256": "65f013a3c7be12c7f652c2d6b0dc1019dce881727f665a249c5d921c66d09298",
+    "shadowBytes": 356851,
+    "reportDirectory": "artifacts/v2-native-initiative/bp134-semantic-attack-depth3-move-variant",
+    "reportManifestSha256": "824bb507494ba965517b5e3a345f338a760cd54a4ee5c1c4e8a62d0d600f7ef3",
+    "reportOverviewSha256": "1d773a7358545b0a5da2e94f43eb78c8899239dbbeae2729985fc29bf355135e",
+    "reportRootsSha256": "d0ca11aff18406fa57e6d76043ee14d1afeec131853fb450a88583ccae210c3f",
+    "reportFingerprint": "9ead8c21644a919890b160bc632da8534f5ebb774a2d0381955f051fb3f0eda0",
+    "reportBytes": 7601
+  },
+  "source": {
+    "moveContestVariantKernelSha256": "b4715903011b26eb7c30c4d7f84ae1f58cd1d7e3a18146013dd93617c747146f",
+    "moveVariantShadowSha256": "0c2fb04790755159f638b24ff55d285535fdf27b55383e2a2b2e1f6218e4bee7",
+    "moveVariantReportSha256": "707d1f493090db3e968c2f291cf2d1ca8a7bff88fbd55ba159ae25f734d350eb",
+    "policyIntervalShadowSha256": "47cae7f90032123877f91ceffad48f4955747dca6596e88710ca683d0605301f",
+    "productionDiagnosticBotSha256": "5aa4e1d9c1373ae1bc40eb493c9a33802b975c4a204df87c6afd58cd31f4446a",
+    "arenaSha256": "0a3612eafe02caa45c091cef0770bba22179c1215c78a9b36ce73c87fd451c24",
+    "moveContestVariantKernelTestSha256": "607f55e18ea3d83c3aebeac68cfd3fae79c14e963bd5194a75c8eb4c0c9a4137",
+    "moveVariantShadowTestSha256": "87a16fe861a49cfd2a23d1ed2f2d7a66652a61df81c28afcefe2848837f3567d",
+    "moveVariantReportTestSha256": "5e2218802caf52c4c68504147c4dbe53405ef24baa2904b063e83ed86cbbc221"
+  },
+  "decision": {
+    "retain": [
+      "three explicit isolated movement-rule worlds",
+      "per-world Fast/Hazard/Hard/cache ownership",
+      "cross-world invariant relations as diagnostic completeness evidence",
+      "production fail-closed behavior for unresolved platform movement contests"
+    ],
+    "reject": [
+      "selecting one finite movement world as platform truth",
+      "using the invariant scalar relation as an action owner",
+      "increasing depth, width or node budget for these roots",
+      "changing production physical semantics in BP134"
+    ],
+    "next": "BP135 decomposes leaf and backup components on the 35 invariant roots, focusing on why candidate-higher is historically anti-directional. It does not change physical rules, search scale or production ownership."
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP5_EVIDENCE_V1",
+  "status": "ACCEPTED_DIAGNOSTIC_BASELINE",
+  "productionDefault": "off",
+  "productionRootSha256": "c4443ddbd2a7a651d77f1582e5b68ce3715dfc87af7cf40ac7432396def39c48",
+  "cohort": {
+    "scenarios": 16,
+    "candidateMatches": 32,
+    "skill": "stun",
+    "fingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667"
+  },
+  "sources": {
+    "boundedPolicySearchSha256": "ba99163b9ee40821d87de378708a7907fa9aee5eedcae90a3fef9fa442d185e2",
+    "tacticalOwnerSha256": "670272c7253406ee9d3b1ab3b89a032a07a9b29395c4ae7d4d1ee003dc34b6c3",
+    "arenaSha256": "bb91aa3ac852bf7418a881b620987abf4ee4797152e58b82949461d23ec6d6ff",
+    "toolSha256": "ece780d35f571499fa7636f00c542fc57c3e08ea10bbc2d59823101b4bcdd33d"
+  },
+  "control": {
+    "overviewSha256": "e491fc7c51e109a539b26e66f9600c1467b6f4eed60b9a8c39a8df132762d142",
+    "wins": 15,
+    "losses": 16,
+    "draws": 1,
+    "scoreBasisPoints": 4844,
+    "fire": 231,
+    "candidateCrashes": 14,
+    "searchPrepareCount": 1448,
+    "searchNodes": 266617,
+    "budgetLeaves": 91888,
+    "nativeOnlyInvocation": 144,
+    "oracleOnlyInvocation": 621,
+    "oracleOnlyInvocationByNativeResult": [0, 214, 1, 406, 0, 0]
+  },
+  "shadowInvocationAblation": {
+    "broadVisible": {
+      "overviewSha256": "973a839ed6e689a8ad3098ec586b2df7c8a7f4847e05e474bcabc469d1f67265",
+      "searchPrepareCount": 2206,
+      "searchNodes": 393429,
+      "nativeOnlyInvocation": 543,
+      "oracleOnlyInvocation": 427,
+      "decision": "REJECTED_OVERSEARCH"
+    },
+    "enemyDisabledOnly": {
+      "searchPrepareCount": 1852,
+      "searchNodes": 347043,
+      "nativeOnlyInvocation": 169,
+      "oracleOnlyInvocation": 418,
+      "oracleOnlyInvocationByNativeResult": [0, 16, 0, 402, 0, 0]
+    },
+    "committedBombOnly": {
+      "searchPrepareCount": 1608,
+      "searchNodes": 299270,
+      "nativeOnlyInvocation": 147,
+      "oracleOnlyInvocation": 629,
+      "oracleOnlyInvocationByNativeResult": [0, 207, 0, 422, 0, 0]
+    },
+    "predictiveAttackOnly": {
+      "searchPrepareCount": 1613,
+      "searchNodes": 300049,
+      "nativeOnlyInvocation": 150,
+      "oracleOnlyInvocation": 617,
+      "oracleOnlyInvocationByNativeResult": [0, 205, 0, 412, 0, 0]
+    },
+    "allTriggers": {
+      "overviewSha256": "15e0ca9254da161c3dce36f71afa78121612d2f561e8d2899532b8438724e950",
+      "searchPrepareCount": 1843,
+      "searchNodes": 346240,
+      "nativeOnlyInvocation": 172,
+      "oracleOnlyInvocation": 427,
+      "oracleOnlyInvocationByNativeResult": [0, 8, 0, 419, 0, 0]
+    }
+  },
+  "enemyDisabledActive": {
+    "overviewSha256": "3eb3d66f9c8b462219014ae409619b068f7cc4d4ca5c416a32849964d0cb3e7c",
+    "wins": 16,
+    "losses": 14,
+    "draws": 2,
+    "scoreBasisPoints": 5313,
+    "fire": 186,
+    "candidateCrashes": 11,
+    "searchPrepareCount": 1538,
+    "searchNodes": 290322,
+    "budgetLeaves": 103618,
+    "expandedEnemyDisabledRoots": 202,
+    "nativeOnlyInvocation": 142,
+    "oracleOnlyInvocation": 331,
+    "oracleOnlyInvocationByNativeResult": [0, 8, 0, 323, 0, 0]
+  },
+  "allTriggersActive": {
+    "overviewSha256": "40abe38eb2af18f68a0119d504ffc2e6a373e128d7241bd393fb4794fa5d1a0f",
+    "wins": 14,
+    "losses": 16,
+    "draws": 2,
+    "scoreBasisPoints": 4688,
+    "fire": 183,
+    "candidateCrashes": 12,
+    "searchPrepareCount": 1549,
+    "searchNodes": 292276,
+    "budgetLeaves": 104104
+  },
+  "pairedTransitionAgainstControl": {
+    "enemyDisabledOnly": {
+      "v1WinToV2Win": 3,
+      "v2WinToV1Win": 1,
+      "v1WinToDraw": 1,
+      "v2WinToDraw": 1,
+      "drawToV1Win": 1,
+      "unchangedV2Win": 13,
+      "unchangedV1Win": 12,
+      "fireDelta": -45,
+      "candidateCrashDelta": -3,
+      "starDelta": 0
+    },
+    "allTriggers": {
+      "v1WinToV2Win": 2,
+      "v2WinToV1Win": 2,
+      "v1WinToDraw": 1,
+      "v2WinToDraw": 1,
+      "drawToV1Win": 1,
+      "unchangedV2Win": 12,
+      "unchangedV1Win": 13,
+      "fireDelta": -48,
+      "candidateCrashDelta": -2,
+      "starDelta": -1
+    }
+  },
+  "invariants": {
+    "timeoutError": 0,
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "hotAllocationCount": 0
+  },
+  "decision": {
+    "acceptedBaseline": "BP5_ENEMY_DISABLED_ONLY",
+    "rejected": [
+      "BROAD_VISIBLE_CONTACT",
+      "COMMITTED_BOMB_TRIGGER_OWNERSHIP",
+      "PREDICTIVE_ATTACK_TRIGGER_OWNERSHIP",
+      "ALL_TRIGGER_COMBINATION"
+    ],
+    "reason": "Restoring bounded Minimax while the visible opponent is actually stunned closes nearly all non-contact invocation misses and improves the fixed cohort by 469 basis points. Broad visibility over-searches V1 navigation roots, while bomb and predictive triggers add negative interaction and erase the gain. The accepted result remains diagnostic-only until a larger independent cohort confirms it."
+  }
+}

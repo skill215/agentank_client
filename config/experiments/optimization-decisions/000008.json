@@ -1,0 +1,91 @@
+{
+  "seq": 8,
+  "previous": "a6c159287e0f96bdbabb1a1d7e8e21d865f572670e8e44ec78f237a7b2bd9d44",
+  "record": {
+    "version": 1,
+    "type": "review",
+    "id": "OPT-D-0004",
+    "reviewId": "OPT-R-0004",
+    "at": "2026-10-08T03:42:50.987Z",
+    "stage": "process",
+    "disposition": "retain",
+    "outcome": "passed",
+    "primaryCause": "NONE",
+    "secondaryCauses": [],
+    "reason": "全64局重算一致；32败中17局存活星星落后，优先追踪争星进展和策略切换。15局死亡保留为第二诊断方向。",
+    "nextStep": "Replay the complete largest-loss-category cohort with read-only policy/mode/risk instrumentation. Confirm a reproducible mechanism before writing a new policy candidate.",
+    "limitations": "BP415 generated-map/stun-opponent distribution only. Two seats share a terrain; category counts are descriptive, not independent Bernoulli samples. Bomb/bullet-in-frame labels are contextual co-occurrence; replay lacks authoritative crash-source links. Turning, nonmovement and star drought can be justified by tactical risk; no policy defect inferred from action counts alone.",
+    "experiments": [
+      "BP416"
+    ],
+    "assessments": [
+      {
+        "criterion": "integrity",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp416-loss-diagnosis/summary.json"
+      },
+      {
+        "criterion": "cohort",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp416-loss-diagnosis/priority-scenes.json"
+      }
+    ],
+    "cost": {
+      "attemptedGames": 0,
+      "completedGames": 0,
+      "independentUnits": 0,
+      "executionSeconds": 0.10642188799999999,
+      "analysisSeconds": null
+    },
+    "metrics": [
+      {
+        "name": "alive_star_deficit_losses",
+        "value": 17,
+        "unit": "17/32 losses",
+        "source": "artifacts/native-causal-audit/bp416-loss-diagnosis/game-diagnoses.json"
+      },
+      {
+        "name": "crash_losses",
+        "value": 15,
+        "unit": "15/32 losses",
+        "source": "artifacts/native-causal-audit/bp416-loss-diagnosis/game-diagnoses.json"
+      },
+      {
+        "name": "priority_terrains",
+        "value": 15,
+        "unit": "unique terrain",
+        "source": "artifacts/native-causal-audit/bp416-loss-diagnosis/priority-scenes.json"
+      },
+      {
+        "name": "recoverable_win_gain",
+        "value": null,
+        "unit": "score",
+        "source": "artifacts/native-causal-audit/bp416-loss-diagnosis/summary.json"
+      }
+    ],
+    "productionAdoption": false,
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp416-loss-diagnosis/summary.json",
+        "sha256": "6c401af89e07ae0276840275b6c10c4fe9bdbae72bc8f18d18e6d2011153596e"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp416-loss-diagnosis/game-diagnoses.json",
+        "sha256": "5c9250f16ddba25bfa955bac4cdf648f42b71367a42f3e1dac43903d50990af4"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp416-loss-diagnosis/priority-scenes.json",
+        "sha256": "38787221e666cd9865675ae030a40dd61108d55ac8c0f1beabd8e1227edc096d"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp416-loss-diagnosis/tests.txt",
+        "sha256": "a3232504447913edf46156cfaa9bb81efa222955afe6286e51135f099d5cd5f9"
+      },
+      {
+        "path": "docs/implementation/optimization-decisions/bp416-review.md",
+        "sha256": "3e13910f327b49f71aa1ba4c949ac29adcf489cb627b4a83a1c6815997aaf3ad"
+      }
+    ]
+  },
+  "sha256": "bac4f51fec449ce6bc7348952af393115776ef8f93275fe639e34aa3255e1719"
+}

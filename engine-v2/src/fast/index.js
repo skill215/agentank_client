@@ -10,7 +10,14 @@ const search = require("../search");
 function createFastPhysical(spec, options) {
   const imported = state.importPhysicalState(spec, options);
   if (!imported.state) return { ...imported, kernel: null, hazard: null, hard: null };
-  const kernel = new FastKernel(imported.state); const hazard = new HazardKernel(imported.state);
+  const kernel = new FastKernel(imported.state, {
+    stationaryOccupiedBlock: options?.stationaryOccupiedBlock
+  }); const hazard = new HazardKernel(imported.state, {
+    reverseViabilityCacheEntries: options?.reverseViabilityCacheEntries,
+    reverseLatticeCacheEntries: options?.reverseLatticeCacheEntries,
+    reverseLatticeLayerCache: options?.reverseLatticeLayerCache,
+    hazardSignatureCache: options?.hazardSignatureCache
+  });
   const hard = new HardGate(kernel, hazard, options?.perspectiveSeat || 0);
   return { ...imported, kernel, hazard, hard };
 }

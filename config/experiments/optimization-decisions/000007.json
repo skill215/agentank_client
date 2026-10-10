@@ -1,0 +1,69 @@
+{
+  "seq": 7,
+  "previous": "ad2990013652d6798736d85d1bbb98b32cf5b89b363f8f8cb7c0be725042db76",
+  "record": {
+    "version": 1,
+    "type": "register",
+    "id": "OPT-D-0004",
+    "at": "2026-10-08T03:42:04.164Z",
+    "process": "OPT-P-001",
+    "category": "process",
+    "registration": "prospective",
+    "parent": "OPT-D-0003",
+    "title": "用新对局失分构成选择下一项调优任务",
+    "hypothesis": "先统计全部新对局的失分构成，可以避免继续投入未触发的逃生机制；类别频率只用于诊断优先级。",
+    "scope": "BP415 all64 baseline games,32 terrains; exclude64 identical candidate traces; Four illustrative loss replays viewed before registration; analysis is unblinded descriptive, not confirmatory.",
+    "baseline": "BP415 frozen baseline records",
+    "falsifier": "数据无法一致重算，或最大类别不能提供可追溯的完整诊断队列。",
+    "nextStep": "对最大失分类别做只读机制追踪，再决定算法改动。",
+    "alternatives": [
+      {
+        "name": "继续扩大逃生候选范围",
+        "benefit": "可提高触发率",
+        "risk": "没有损失覆盖证据，可能削弱保护",
+        "reason": "暂不采用"
+      },
+      {
+        "name": "全部新对局失分分类",
+        "benefit": "零新增对局成本，按实际损失定位",
+        "risk": "频率不等于可修复性，需要后续因果验证",
+        "reason": "采用"
+      }
+    ],
+    "criteria": [
+      {
+        "id": "integrity",
+        "metric": "all64 source games reconciled",
+        "rule": "all hash/count/frame checks pass",
+        "unit": "game",
+        "kind": "hard"
+      },
+      {
+        "id": "cohort",
+        "metric": "priority loss cohort",
+        "rule": "all cases from largest category retained with replay hashes; strata reported",
+        "unit": "game/terrain",
+        "kind": "hard"
+      }
+    ],
+    "budget": {
+      "games": 0,
+      "seconds": 120
+    },
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp416-loss-diagnosis/protocol.json",
+        "sha256": "e5d8d45f28c403c8266e64a0a8e9245550d76d06539b77bfbad5e0788e50b5a6"
+      },
+      {
+        "path": "tools/agentank/diagnostics/fresh-game-failure-audit.js",
+        "sha256": "9a24a00ef03bd2e019888179269a01a06915e9c35deaa9194f7c8369430360de"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp415-fresh-games/manifest.json",
+        "sha256": "2019eab3728bb6f972e03d18967b202cf0d7408691952f9360cc6d67386244f1"
+      }
+    ]
+  },
+  "sha256": "a6c159287e0f96bdbabb1a1d7e8e21d865f572670e8e44ec78f237a7b2bd9d44"
+}

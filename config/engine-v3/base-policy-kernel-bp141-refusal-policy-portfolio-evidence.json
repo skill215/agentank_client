@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_REFUSAL_POLICY_PORTFOLIO_EVIDENCE_V1",
+  "stage": "BP141",
+  "status": "ACCEPT_PORTFOLIO_CLASSIFIED_REJECT_ACTION_OWNER",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "contract": {
+    "rootCount": 35,
+    "movementWorldCount": 3,
+    "variantInstanceCount": 105,
+    "completeVariantInstanceCount": 105,
+    "maximumDepth": 4,
+    "nodeBudgetPerSideWorldPolicy": 4096,
+    "policyIdentity": "FIXED_FOR_COMPLETE_HORIZON",
+    "rootPolicySelection": "MAXIMUM_CROSS_WORLD_WORST_VALUE",
+    "enemyContinuation": "ALL_GENERATED_ACTIONS",
+    "chanceContinuation": "ALL_GENERATED_OUTCOMES",
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0,
+    "actionOwnership": false
+  },
+  "portfolio": {
+    "policies": ["DIRECT_PURSUIT", "FLANKING_LINE", "COUNTER_SAFE_PRESSURE"],
+    "incumbentSelections": {
+      "DIRECT_PURSUIT": 35,
+      "FLANKING_LINE": 0,
+      "COUNTER_SAFE_PRESSURE": 0
+    },
+    "candidateSelections": {
+      "DIRECT_PURSUIT": 35,
+      "FLANKING_LINE": 0,
+      "COUNTER_SAFE_PRESSURE": 0
+    },
+    "classifications": {
+      "LOCAL_EQUAL": 25,
+      "LOCAL_TRADEOFF": 8,
+      "LOCAL_ROBUST_INCUMBENT": 2,
+      "LOCAL_ROBUST_CANDIDATE": 0,
+      "INCOMPLETE": 0,
+      "RULE_WORLD_DISAGREEMENT": 0
+    },
+    "robustValueVsDirect": {
+      "incumbent": {
+        "FLANKING_LINE": { "higher": 0, "equal": 31, "lower": 4 },
+        "COUNTER_SAFE_PRESSURE": { "higher": 0, "equal": 35, "lower": 0 }
+      },
+      "candidate": {
+        "FLANKING_LINE": { "higher": 0, "equal": 27, "lower": 8 },
+        "COUNTER_SAFE_PRESSURE": { "higher": 0, "equal": 35, "lower": 0 }
+      }
+    }
+  },
+  "activity": {
+    "DIRECT_PURSUIT": {
+      "policyDecisions": 40919,
+      "directRayDecisions": 1779,
+      "fallbackDecisions": 39140
+    },
+    "FLANKING_LINE": {
+      "policyDecisions": 22786,
+      "directRayDecisions": 5498,
+      "flankingDecisions": 15644,
+      "fallbackDecisions": 1644
+    },
+    "COUNTER_SAFE_PRESSURE": {
+      "policyDecisions": 42129,
+      "directRayDecisions": 1842,
+      "counterEscapeDecisions": 350,
+      "fallbackDecisions": 39937
+    },
+    "interpretation": "Both alternatives were reachable and changed deep actions. Their failure is a value-frontier result, not a dormant branch result."
+  },
+  "performance": {
+    "q1SinglePolicyNodes": 333717,
+    "portfolioNodes": 844150,
+    "nodeMultiplierBasisPointsVsQ1": 25295,
+    "maximumNodesPerSideWorldPolicy": 3380,
+    "transpositionHits": 27390,
+    "absoluteLowerBoundCutoffs": 14832
+  },
+  "artifacts": {
+    "directory": "artifacts/v2-native-initiative/bp141-semantic-attack-refusal-policy-portfolio",
+    "manifestSha256": "1731d9e6cd0260ded583f4ee492a6ff17551d808d48df03d10cfbbd76057f8ea",
+    "overviewSha256": "d908609fc5c1c25c8d7789fc53254ff5487641aabec1fff67c42d618597a8e09",
+    "rootsSha256": "9f53d28412696ffc13637bd1f04d7479a746b263e358b4f3569dad6916c0c301",
+    "fingerprint": "c82b31edd0029cfa4bfe941fb4c4e1bfc32a61137f3526ee3af7d443f843bd06",
+    "totalBytes": 23022
+  },
+  "source": {
+    "valueSearchSha256": "3ac59e9eb2f01660cb9294e28b683c4da9e60b1601d54bcc6f27e3f42a28b73f",
+    "q1CorpusSha256": "aea01d758aedfb2e5200f7bf8b73a28dcc848bf53824c1b0dba7b32b8bd85443",
+    "portfolioCorpusSha256": "ce551aed53e982ed7eaa1f0531e529ee643c52305eb85bfd060170ff4c11f9cc",
+    "valueSearchTestSha256": "b87e9494cfff3518386e682e27a2e84408da5a1d0665ca2ae83b6f897cb244c7",
+    "q1CorpusTestSha256": "c28ae8575ca7c8bf9b2a9eb5af7e391ce460feb798e991d81ddda0356d329be2",
+    "portfolioTestSha256": "39e299004ab43be9f1790ce742ffe416431a759b927876f081b96f912b6155e2"
+  },
+  "decision": {
+    "retain": [
+      "root selection over separately evaluated complete policy intervals",
+      "persistent policy identity and stable integer tie breaking",
+      "policy activity counters that distinguish dormant code from dominated behavior"
+    ],
+    "reject": [
+      "FLANKING_LINE as an action owner",
+      "COUNTER_SAFE_PRESSURE as an action owner",
+      "adding further hand-written fixed policies without a policy-improvement witness",
+      "paying 2.5295x search work for an unchanged root choice"
+    ],
+    "next": "Run bounded one-deviation policy improvement around DIRECT_PURSUIT. Enumerate a single supported deviation at reachable information sets, then resume the baseline policy. This identifies response-conditioned policy witnesses without restoring exponential own-action branching."
+  }
+}

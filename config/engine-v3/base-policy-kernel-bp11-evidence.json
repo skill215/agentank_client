@@ -1,0 +1,55 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP11_EVIDENCE_V1",
+  "status": "ACCEPTED_DIAGNOSTIC_REJECTED_SOFT_ROBUST_OWNERSHIP",
+  "createdAt": "2026-08-26",
+  "scope": "FIRST_DIVERGENCE_VALUE_TO_ROOT_TO_OUTCOME_CAUSAL_AUDIT",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "c4443ddbd2a7a651d77f1582e5b68ce3715dfc87af7cf40ac7432396def39c48",
+  "sources": {
+    "nativeTacticalActionOwnerPocSha256": "a7c13f364f33725ccf013e0dc6c417458c81b600f4707663ede884de9eb43ee2",
+    "nativeInitiativeArenaSha256": "5046ba86988f9da7e330c04733a9f323835bd5eae8c7ba7c556ca9c8fe789719",
+    "firstDivergenceAuditSha256": "b7f8c0f0df328574c20717c2d5f4b3f89e3a00ad29d94f7a409da43047edf15b",
+    "toolchainSha256": "89d75c275fe4044a3201ea72362b74e2fb8c725049661196c55dbd95a445bada"
+  },
+  "cohort": {
+    "scenarios": 16,
+    "candidateMatches": 32,
+    "skill": "STUN",
+    "offOverviewSha256": "2cb24bd0fcabfabb1121da48c319f9e4fb537cee46aa40796dda3747a311dc7d",
+    "onOverviewSha256": "57d8eee6fe595c9b9313418cad6f106afe282e6f4656ad8e23b72076f29659f8"
+  },
+  "activeResults": {
+    "off": { "wins": 16, "losses": 14, "draws": 2, "scoreBasisPoints": 5313, "crashes": 11, "fire": 186 },
+    "on": { "wins": 12, "losses": 19, "draws": 1, "scoreBasisPoints": 3906, "crashes": 15, "fire": 170 },
+    "transitions": {
+      "V2_WIN_TO_V1_WIN": 5,
+      "DRAW_TO_V1_WIN": 1,
+      "V1_WIN_TO_V2_WIN": 1
+    }
+  },
+  "firstDivergence": {
+    "overviewSha256": "56751d64125383841a4c079e5cac0d7ce4980b758130334f65843b68fa846c55",
+    "rootsSha256": "89964a60893a389260d40771d295c3050f3eddd9c7a29300d69dc09b41c6e78f",
+    "manifestSha256": "89fc239cda28de1e4163252d069d919e596757a622ab9729c15c0a80a97788a8",
+    "commonMatches": 10,
+    "actionDifferentMatches": 7,
+    "outcomeChanged": 7,
+    "negativeTransitions": 6,
+    "positiveTransitions": 1,
+    "stateExactRoots": 7,
+    "onOracleAgreement": 5,
+    "negativeOnOracleAgreement": 4,
+    "responseDeltaOwnsFlip": 7,
+    "recursiveNonFireFlips": 2,
+    "offEmitterCoercion": 1,
+    "onEmitterCoercion": 0,
+    "selectionMargin": { "minimum": 2, "median": 38, "maximum": 63 },
+    "selectedRootScoreDelta": { "minimum": 68, "median": 80, "maximum": 87 }
+  },
+  "conclusion": {
+    "v1LocalFidelityIsOwnershipCertificate": false,
+    "responseConditionedFireMayEnterRobustScalar": false,
+    "fireConstantTuningAuthorized": false,
+    "nextExperiment": "Separate committed/terminal robust value from speculative nominal path utility and compare ownership on fixed16 before any larger arena."
+  }
+}

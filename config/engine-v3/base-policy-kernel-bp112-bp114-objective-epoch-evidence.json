@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_OBJECTIVE_EPOCH_EVIDENCE_V1",
+  "stage": "BP112_BP114",
+  "status": "ACTION_OWNER_REJECTED",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "source": {
+    "objectiveEpochContinuitySha256": "3ab1c0048ef4a3331e5a054581ac33caca7a5e93e55573e56ef567752f1dbecd",
+    "objectiveEpochExecutionSha256": "c2521bb64f6f36331a6c25fc291095b27354ae44748c81d6b128e11fb391b298",
+    "objectiveEpochActivePocSha256": "e89e7b9c7c51eaf14af2f8f42c309f6be8cb59e2ce75942d1aa01e5dda8b32a9",
+    "arenaSha256": "b5624838e627387e67ef01f4b306a399101d1d2d049277221fb4cae5896a66f5",
+    "testSha256": "707dba0594b245d39eb9602ee695799432318668a3cb84cd15dcbfd5d7c40160"
+  },
+  "shadowCensus": {
+    "scenarioCount": 16,
+    "candidateMatches": 32,
+    "decisions": 3030,
+    "epochFrames": 2955,
+    "epochFrameBasisPoints": 9752,
+    "strictExecutionSupported": 1662,
+    "strictExecutionBasisPoints": 5624,
+    "strictExecutionGaps": 1293,
+    "unsignaledHolds": 1181,
+    "currentOutsideStrictExecution": 316,
+    "currentOutsideStrictBasisPoints": 1901,
+    "expandedExecutionSupported": 1976,
+    "expandedExecutionBasisPoints": 7533,
+    "recoveredGaps": 320,
+    "remainingGaps": 647,
+    "remainingNoTarget": 182,
+    "remainingNoSafeProgress": 465,
+    "currentInsideExpanded": 1781,
+    "currentInsideExpandedBasisPoints": 9013,
+    "hotAllocationCount": 0,
+    "continuityOverviewSha256": "6acb42b8259cc65847cdc768061e7a313c6575a052f8d640468dc181b1cb64db",
+    "executionOverviewSha256": "480c11bb6205c6dbad82405211e5d9b263e4fca4bc896208bd5b094b1520d510"
+  },
+  "ownershipCorrection": {
+    "rule": "verified attack outranks strategic progress",
+    "sensitiveScenarioCount": 4,
+    "candidateMatches": 8,
+    "baseline": { "wins": 1, "losses": 6, "draws": 1, "scoreBasisPoints": 1875 },
+    "candidate": { "wins": 2, "losses": 5, "draws": 1, "scoreBasisPoints": 3125 },
+    "verifiedAttackYields": 6,
+    "overrides": 25,
+    "positiveTransitions": 1,
+    "negativeTransitions": 0,
+    "hardInvariantFailures": 0
+  },
+  "activeExperiments": {
+    "fixed16H4": {
+      "scenarioCount": 16,
+      "candidateMatches": 32,
+      "baseline": { "wins": 2, "losses": 28, "draws": 2, "scoreBasisPoints": 938 },
+      "candidate": { "wins": 3, "losses": 27, "draws": 2, "scoreBasisPoints": 1250 },
+      "scoreBasisPointDelta": 312,
+      "starDelta": -7,
+      "crashDelta": -2,
+      "verifiedAttackYields": 11,
+      "overrides": 32,
+      "positiveTransitions": 1,
+      "negativeTransitions": 0,
+      "overviewSha256": "8369ebe08ca3e17caf1c75fde0121fdcbef2e37bad302c41e480d91e1475d854"
+    },
+    "fixed16H8": {
+      "scenarioCount": 16,
+      "candidateMatches": 32,
+      "baseline": { "wins": 2, "losses": 28, "draws": 2, "scoreBasisPoints": 938 },
+      "candidate": { "wins": 2, "losses": 28, "draws": 2, "scoreBasisPoints": 938 },
+      "scoreBasisPointDelta": 0,
+      "starDelta": -5,
+      "crashDelta": -1,
+      "verifiedAttackYields": 28,
+      "overrides": 68,
+      "positiveTransitions": 1,
+      "negativeTransitions": 1,
+      "overviewSha256": "45c968bbe7a99b9abf6ff4f6e0ed341174a2bc2bff5cec4a2fecdc01ee4e4ee3"
+    },
+    "independent16H4": {
+      "scenarioOffset": 16,
+      "scenarioCount": 16,
+      "candidateMatches": 32,
+      "baseline": { "wins": 2, "losses": 29, "draws": 1, "scoreBasisPoints": 781 },
+      "candidate": { "wins": 1, "losses": 30, "draws": 1, "scoreBasisPoints": 469 },
+      "scoreBasisPointDelta": -312,
+      "starDelta": -11,
+      "crashDelta": -3,
+      "verifiedAttackYields": 10,
+      "overrides": 21,
+      "positiveTransitions": 1,
+      "negativeTransitions": 2,
+      "allResultChangingOverrideSamplesOutsideStrictDomain": true,
+      "overviewSha256": "ea44496c72061a1bbc7e72e2669fa69a59c865a0846d2a71c64ba4b5f9e252dd"
+    },
+    "combinedH4": {
+      "scenarioCount": 32,
+      "candidateMatches": 64,
+      "baseline": { "wins": 4, "losses": 57, "draws": 3, "scoreBasisPoints": 859 },
+      "candidate": { "wins": 4, "losses": 57, "draws": 3, "scoreBasisPoints": 859 },
+      "scoreBasisPointDelta": 0,
+      "starDelta": -18,
+      "crashDelta": -5,
+      "fireDelta": 9,
+      "verifiedAttackYields": 21,
+      "overrides": 53
+    }
+  },
+  "invariants": {
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "timeoutError": 0,
+    "finalReject": 0,
+    "hotAllocationCount": 0
+  },
+  "decision": {
+    "retain": [
+      "ObjectiveEpoch target identity and event-driven lifetime",
+      "strict execution and expanded-candidate shadow census",
+      "verified attack before strategic progress ownership order"
+    ],
+    "reject": [
+      "fixed 2/4/8 frame objective horizon as an action certificate",
+      "one-step geometric GO/TURN progress as a primitive action owner",
+      "generated rows outside the strict Option domain as executable proposals"
+    ],
+    "next": "ObjectiveEpoch remains a target/value service. Only support-complete existing Options may enter strategic arbitration; generated primitive rows remain search candidates until a complete option-level certificate exists."
+  },
+  "tests": {
+    "selectedSuitePassed": 17,
+    "selectedSuiteFailed": 0
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "objectKind": "BasePolicyKernelStunTurnDomainCompactionEvidenceV1",
+  "stage": "BP37",
+  "status": "ACCEPTED_DIAGNOSTIC_DEPTH_EFFICIENCY",
+  "actionOwnership": false,
+  "productionDefaultChanged": false,
+  "contract": {
+    "scope": "ENEMY_STUNNED_TURN_LEFT_RIGHT_RESPONSE_DISTRIBUTION",
+    "chanceOutcomesRemoved": 0,
+    "opponentWeightPreservedBySum": true,
+    "nonStunnedDomainUnchanged": true,
+    "hotAllocationCount": 0
+  },
+  "highBudgetSemanticOracle": {
+    "scenarioLimit": 8,
+    "nodeBudget": 16384,
+    "budgetStops": 0,
+    "winsLossesDrawsEqual": true,
+    "pairCompletenessEqual": true,
+    "relationsEqual": true,
+    "massVectorsEqual": true,
+    "massVectorSha256": "0bdfe3d39044ab5a5091fc71d87430e2c666ca544a7e104674404210627aeefa",
+    "baseline": {
+      "baseNodes": 137258,
+      "candidateNodes": 76366,
+      "baseTransitions": 150901,
+      "candidateTransitions": 94127
+    },
+    "compacted": {
+      "baseNodes": 123224,
+      "candidateNodes": 69064,
+      "baseTransitions": 135673,
+      "candidateTransitions": 85355,
+      "compactedDomains": 12000
+    },
+    "overviewSha256": {
+      "baseline": "af4a725239c8f30176fd9256c5534e853a10864151e5b812c7dabae0a8422b1a",
+      "compacted": "83c4aeb1b6769e8803cd3ddd41d8b699b7720c7572ef766a59889c8ae332828d"
+    }
+  },
+  "highBudgetFiveBatchFixed4": {
+    "batchesPerArm": 5,
+    "order": "ALTERNATING",
+    "baseline": {
+      "elapsedMs": 52705,
+      "candidateTotalMicros": 25241697,
+      "controlTotalMicros": 12023491,
+      "meanCandidateControlRatio": 2.1004129845046546,
+      "meanP95Ratio": 2.5216449900077196,
+      "complete": 270,
+      "incomplete": 230,
+      "baseTransitions": 322425,
+      "candidateTransitions": 193555
+    },
+    "compacted": {
+      "elapsedMs": 51395,
+      "candidateTotalMicros": 24282500,
+      "controlTotalMicros": 11497180,
+      "meanCandidateControlRatio": 2.112090707932205,
+      "meanP95Ratio": 2.358532297668003,
+      "complete": 270,
+      "incomplete": 230,
+      "baseTransitions": 285905,
+      "candidateTransitions": 173765,
+      "compactedDomains": 28155
+    },
+    "deltaBasisPoints": {
+      "candidateTotalMicros": -380,
+      "meanCandidateControlRatio": 56,
+      "meanP95Ratio": -647
+    },
+    "summarySha256": "80bdca54dc8fd799efa15d4f544b3f9f01f01f64f617cae0318906489e1a2088",
+    "aggregateSha256": "72ed15b65235ee0c10cafab312a05606cbd29687a0908310cf2028fc603ff381"
+  },
+  "normalBudgetFiveBatchFixed8": {
+    "batchesPerArm": 5,
+    "nodeBudget": 2048,
+    "order": "ALTERNATING",
+    "baseline": {
+      "elapsedMs": 133160,
+      "candidateTotalMicros": 66819304,
+      "controlTotalMicros": 31137668,
+      "meanCandidateControlRatio": 2.146552290759051,
+      "medianCandidateControlRatio": 2.148680056813466,
+      "meanP95Ratio": 2.147585635005616,
+      "medianP95Ratio": 2.3193166057243726,
+      "complete": 615,
+      "incomplete": 680,
+      "baseTransitions": 706795,
+      "candidateTransitions": 449940,
+      "budgetStops": 705
+    },
+    "compacted": {
+      "elapsedMs": 128052,
+      "candidateTotalMicros": 63722671,
+      "controlTotalMicros": 29924141,
+      "meanCandidateControlRatio": 2.1302413674191554,
+      "medianCandidateControlRatio": 2.1406805091718697,
+      "meanP95Ratio": 2.216896160473957,
+      "medianP95Ratio": 2.1879421902400678,
+      "complete": 620,
+      "incomplete": 675,
+      "baseTransitions": 667055,
+      "candidateTransitions": 421970,
+      "budgetStops": 280,
+      "compactedDomains": 56190
+    },
+    "deltaBasisPoints": {
+      "candidateTotalMicros": -463,
+      "meanCandidateControlRatio": -76,
+      "medianCandidateControlRatio": -37,
+      "meanP95Ratio": 323,
+      "medianP95Ratio": -566,
+      "baseTransitions": -562,
+      "candidateTransitions": -622,
+      "budgetStops": -6028
+    },
+    "summarySha256": "0a62c11dad3e6f69aa472ddf4f913fd91dfc128fc9e8135c0ca9d898ef4edc31",
+    "aggregateSha256": "c050d89a095944d7d4511719de2f0f22c2902b8888457c40f86ca9d2beeb0fba"
+  },
+  "decision": {
+    "diagnosticRuntimeRetained": true,
+    "productionRuntimeChanged": false,
+    "classification": "DEPTH_EFFICIENCY_NOT_PURE_THROUGHPUT",
+    "reason": "The exact high-budget oracle proves unchanged values while removing about ten percent of duplicated work. Under the real budget it converts repeated Stun turn distributions into five additional complete comparisons, cuts budget stops by sixty percent, improves normalized mean cost by 0.76 percent and median P95 by 5.66 percent.",
+    "nextTarget": "Prioritize unique frontier expansion and compact other fully proven response distributions without adding another transition cache."
+  },
+  "fingerprints": {
+    "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7"
+  }
+}

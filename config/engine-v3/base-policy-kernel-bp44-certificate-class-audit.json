@@ -1,0 +1,64 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP44_CERTIFICATE_CLASS_AUDIT_V1",
+  "status": "REJECTED_AS_ACTION_OWNER",
+  "source": {
+    "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7",
+    "selectiveVerifierSha256": "806dbb1362d14f1f26036176c2c57f7dda3a7013012f6299ba2f22c2a5f41f5b",
+    "arenaSha256": "41b5b8933e2f7470089f095e2f411b21e434cfa85cfa7956e322f6ee948fcb6d",
+    "bp42RunnerSha256": "0fc2b3f39dbe743ff5f7fabf4637aa6a040dd31f9fd2e86ade5a576da758bb60",
+    "bp43RunnerSha256": "fab4ea3544726bbdc55c2f7c77bc80774ba5fe6217cb912e951fba74102ec407"
+  },
+  "audit": {
+    "role": "TACTICAL_HOLDOUT",
+    "scenarios": 64,
+    "candidateMatches": 128,
+    "transparentShadow": {
+      "actionStreamDifferences": 0,
+      "outcomeDifferences": 0,
+      "wins": 62,
+      "losses": 55,
+      "draws": 11,
+      "scoreBasisPoints": 5273,
+      "overviewSha256": "5a5e6f158161b8325767c6a9f1c4a1f55b241d7eec96ac9645aae3c5833636ce"
+    },
+    "certificateClasses": {
+      "terminalWinClosure": 0,
+      "horizonFailureElimination": 5,
+      "failureSupportReduction": 0,
+      "nominalMassOnly": 11,
+      "outcomeMaskChange": 10,
+      "total": 26
+    }
+  },
+  "strictActive": {
+    "ownership": "TERMINAL_WIN_CLOSURE_OR_HORIZON_FAILURE_ELIMINATION",
+    "overrides": 4,
+    "ownershipClassRejects": 20,
+    "wins": 61,
+    "losses": 55,
+    "draws": 12,
+    "scoreBasisPoints": 5234,
+    "scoreBasisPointDelta": -39,
+    "transitions": {
+      "winToDraw": 1,
+      "positive": 0
+    },
+    "invariantDelta": {
+      "avoidableHardReject": 0,
+      "riskDominatedSelection": 0,
+      "rootRestoreFailure": 0,
+      "timeoutError": 0
+    },
+    "overviewSha256": "23f3f0c8d39b42d7153ca18e4f8995ab47093550cabd266f3e93afe3eba91060"
+  },
+  "conclusion": {
+    "completeEnumerationIsNotCompleteUtility": true,
+    "finiteHorizonSafetyIsNotWholeMatchValue": true,
+    "allowedOwnersBeforeBootstrap": [
+      "STRICT_TERMINAL_CLOSURE",
+      "FORCED_WIN"
+    ],
+    "responseMassRole": "EVIDENCE_OR_RISK_ONLY",
+    "next": "Cross-check a response certificate against the already-computed V1-shaped root leaf/path value before adding any new leaf computation or search depth."
+  }
+}

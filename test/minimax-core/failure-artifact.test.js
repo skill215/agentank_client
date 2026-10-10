@@ -1,0 +1,4 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),os=require('node:os'),path=require('node:path'),zlib=require('node:zlib');
+const {saveFailure}=require('../../tools/agentank/diagnostics/failure-artifact');
+test('failure preserves completed compact matches and failing match without overwriting evidence',()=>{const dir=fs.mkdtempSync(path.join(os.tmpdir(),'failure-artifact-'));try{const rows=[{id:'done',outcome:'DRAW'}],pending={id:'bad',match:{compactActionStream:'AA=='}};saveFailure(dir,rows,pending,Error('DRIFT'));assert.equal(JSON.parse(fs.readFileSync(path.join(dir,'failure.json'))).completed,1);assert.deepEqual(JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(dir,'partial-matches.ndjson.gz'))).toString()),rows[0]);assert.throws(()=>saveFailure(dir,[],null,Error('again')),/EEXIST/);}finally{fs.rmSync(dir,{recursive:true});}});

@@ -1,0 +1,274 @@
+{
+  "objectKind": "BasePolicyClosedProfileFootprintEvidenceV1",
+  "generatedAt": "2026-09-02T08:41:37.743Z",
+  "stage": "BP177",
+  "status": "ACCEPTED_COMPONENT",
+  "semantics": {
+    "targetDepth": 3,
+    "nodeBudget": 128,
+    "note": "Closed-profile partial evaluation; no search depth, budget, value, action-domain or risk semantics changed."
+  },
+  "platformMaximumBytes": 204800,
+  "terser": {
+    "version": "5.43.1",
+    "options": {
+      "ecma": 2020,
+      "compress": {
+        "passes": 5
+      },
+      "mangle": {
+        "toplevel": true
+      },
+      "format": {
+        "comments": false,
+        "ascii_only": true
+      }
+    }
+  },
+  "generation": {
+    "inputDirectory": "/home/skill/workspace/git/agentank_client/engine-v2/src/base-policy-compact",
+    "outputDirectory": "/home/skill/workspace/git/agentank_client/engine-v2/src/base-policy-specialized",
+    "fixed": {
+      "action-owner": {
+        "riskFrontierMode": "joint",
+        "riskSoftBandMode": "intent-known",
+        "intentValueMode": "bonus"
+      },
+      "policy-search": {
+        "targetDepth": 3,
+        "depthSchedule": "v1-state",
+        "nodeBudget": 128,
+        "hardBudgetInterrupt": 0,
+        "blendBasisPoints": 2000,
+        "blendSchedule": "fixed",
+        "leadingBlendBasisPoints": 0,
+        "trailingBlendBasisPoints": 4000,
+        "fullPrimitiveDomain": true,
+        "deepFireMode": "v1-own",
+        "deepSkillMode": 3,
+        "deepDomainMode": "v1-shaped",
+        "deepBombMode": "off",
+        "eventQuiescenceMode": "off",
+        "eventQuiescenceContinuationMode": "full",
+        "ownContinuationMode": "full",
+        "eventQuiescenceMaximumPly": 3,
+        "pathEvidenceMode": "single",
+        "superkoMode": "v1",
+        "collectTerminalTrade": false,
+        "opponentMode": "v1-exact",
+        "opponentWeighted": true,
+        "v1StunCountdown": true,
+        "v1EntryProjectileCollision": true,
+        "deepHardMode": "full",
+        "rootDomainMode": "v1-shaped",
+        "rootExtraPoison": false,
+        "terminalMode": "v1",
+        "ownChanceMode": "v1-deterministic",
+        "rootEnemyDomainMode": "v1-shaped",
+        "rootEnemyDomainFlags": 7,
+        "rootColumnOrder": "v1",
+        "rootBudgetMode": "row-shared"
+      },
+      "policy-leaf": {
+        "discountSimulatedProjectiles": false,
+        "clampLimit": 25000,
+        "clampMode": "total",
+        "componentMask": 63,
+        "starFieldCacheEntries": 2,
+        "precomputeGeometry": true
+      },
+      "path-utility": {
+        "enableFire": true,
+        "enableBomb": true,
+        "enableTurn": true,
+        "enableStun": true,
+        "rootTurnOnly": false,
+        "reversalOnly": false,
+        "exactFireTransition": true,
+        "responseConditionedFire": false,
+        "goEdgeTransition": true
+      },
+      "strategic-intent": {
+        "margin": 150
+      }
+    },
+    "modules": {
+      "action-owner": {
+        "sourceSha256": "7a41e5db40d1ba3a8ad8e89cc38bf69d0411ca8869569d145ac747eaa2cb2021",
+        "outputSha256": "955c40b1ccc58380f03a93d5b7293b7c56d227df07856211cba28109cf86dc1a",
+        "sourceBytes": 8117,
+        "outputBytes": 7667,
+        "replacements": 7,
+        "removedAssignments": 3
+      },
+      "action-domain": {
+        "sourceSha256": "30cc37550d3a2494bf245f6a1780e565057aa0445537d5913cfee91413075947",
+        "outputSha256": "30cc37550d3a2494bf245f6a1780e565057aa0445537d5913cfee91413075947",
+        "sourceBytes": 15354,
+        "outputBytes": 15354,
+        "replacements": 0,
+        "removedAssignments": 0
+      },
+      "strategic-intent": {
+        "sourceSha256": "d46d5f8077cff785b3b0f092f46a61582f3c1f46344fe50cb6fbff3796967fa5",
+        "outputSha256": "ac35494633e03b9526d0d4176dcaeda7abbaee4cace69c2dbe9391197e06f10b",
+        "sourceBytes": 17567,
+        "outputBytes": 17539,
+        "replacements": 1,
+        "removedAssignments": 1
+      },
+      "opponent-history": {
+        "sourceSha256": "fd74284190a68b619acc0f8270782c616e54a6886bbac3628eac4cbb1329edc5",
+        "outputSha256": "fd74284190a68b619acc0f8270782c616e54a6886bbac3628eac4cbb1329edc5",
+        "sourceBytes": 5455,
+        "outputBytes": 5455,
+        "replacements": 0,
+        "removedAssignments": 0
+      },
+      "policy-search": {
+        "sourceSha256": "902849f204b3846f335c71c508f348615ca3ffe7b56f2ae8dece7e52c8b9f310",
+        "outputSha256": "d0f29908acdb7be10d55e051584bdd001af14016287848b1954e860872780ff9",
+        "sourceBytes": 76284,
+        "outputBytes": 70689,
+        "replacements": 84,
+        "removedAssignments": 34
+      },
+      "policy-leaf": {
+        "sourceSha256": "3058b3571a153333c6efaf812ad14aa6c91d8817c355e5d0685269c71bfa3d4f",
+        "outputSha256": "48e15c5a07b88e8503333a8cfba7923fd09d273ba36f2f50cd95337517390371",
+        "sourceBytes": 28081,
+        "outputBytes": 26903,
+        "replacements": 29,
+        "removedAssignments": 6
+      },
+      "path-utility": {
+        "sourceSha256": "a11eee28785ccdf5ec9dbcabda3da8bf5775381a14283c20a1ffa0a0ea518d83",
+        "outputSha256": "df145fb2764858ab2a2ce8127f485b4d97822713b1b3df60e375965fef4d4b70",
+        "sourceBytes": 14834,
+        "outputBytes": 14238,
+        "replacements": 10,
+        "removedAssignments": 9
+      },
+      "native-root": {
+        "sourceSha256": "64e1fd50d42f0c34c17ce7fbd1d07991f1a7e2f651eb016ef445045c1dc13770",
+        "outputSha256": "bbdcade3c5ca47e5b456c3ee5b016e22227fe3bc5f2ec003cb60a7e4baf169f4",
+        "sourceBytes": 4378,
+        "outputBytes": 1601,
+        "replacements": 0,
+        "removedAssignments": 0
+      }
+    }
+  },
+  "footprints": [
+    {
+      "label": "COMPACT_BASE_POLICY",
+      "modules": 21,
+      "bytes": 160777,
+      "headroomBytes": 44023,
+      "withinPlatformLimit": true,
+      "sha256": "2ff96a4b5fe4c63f738219ea5e6268364a0f3201ed292b3b336c816e7d17a54f"
+    },
+    {
+      "label": "SPECIALIZED_BASE_POLICY",
+      "modules": 21,
+      "bytes": 145694,
+      "headroomBytes": 59106,
+      "withinPlatformLimit": true,
+      "sha256": "9aa4c469ce28bb42cb858dfb4fbff439d1cb757287962a4010a3694f820560d7"
+    },
+    {
+      "label": "COMPACT_PLUS_OBSERVATION",
+      "modules": 23,
+      "bytes": 188923,
+      "headroomBytes": 15877,
+      "withinPlatformLimit": true,
+      "sha256": "0812c99d1574a2a3d65071572ccda6e81c32aea5cbc80a79c7d55bad69c3413e"
+    },
+    {
+      "label": "SPECIALIZED_PLUS_OBSERVATION",
+      "modules": 23,
+      "bytes": 173840,
+      "headroomBytes": 30960,
+      "withinPlatformLimit": true,
+      "sha256": "58835fec728c90e1ce12dd249420460d2fd3a64e75d7b04115b520fac810ec85"
+    },
+    {
+      "label": "SPECIALIZED_PLUS_OBSERVATION_PLUS_RISK_SAFETY",
+      "modules": 27,
+      "bytes": 199115,
+      "headroomBytes": 5685,
+      "withinPlatformLimit": true,
+      "sha256": "7315ecf73452d81eb61e19b1798ffab052fb09fd2ce0026b9ec3596e1b6000bd"
+    }
+  ],
+  "equivalence": {
+    "fixed16": {
+      "acceptedDirectory": "/tmp/agentank-bp176-compact-root-fixed16",
+      "candidateDirectory": "/tmp/agentank-bp177-specialized-closed-root-fixed16",
+      "physicalMatches": 32,
+      "result": {
+        "wins": 21,
+        "losses": 11,
+        "draws": 0,
+        "scoreBasisPoints": 6563
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 0,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 0,
+        "jointDominatedSelection": 0
+      },
+      "actionFingerprint": {
+        "records": 32,
+        "sha256": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+      },
+      "differences": {
+        "missing": 0,
+        "actionStream": 0,
+        "arguments": 0,
+        "result": 0,
+        "frames": 0,
+        "counts": 0,
+        "analysisOutcome": 0,
+        "terminalCategory": 0
+      }
+    },
+    "discovery64": {
+      "acceptedDirectory": "/tmp/agentank-bp176-compact-root-discovery64",
+      "candidateDirectory": "/tmp/agentank-bp177-specialized-root-discovery64",
+      "physicalMatches": 128,
+      "result": {
+        "wins": 67,
+        "losses": 48,
+        "draws": 13,
+        "scoreBasisPoints": 5742
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 0,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 0,
+        "jointDominatedSelection": 0
+      },
+      "actionFingerprint": {
+        "records": 128,
+        "sha256": "d6db15f8815dc9243ef758778bbeb558b6492f801e73e2fc36e4bd35f1162555"
+      },
+      "differences": {
+        "missing": 0,
+        "actionStream": 0,
+        "arguments": 0,
+        "result": 0,
+        "frames": 0,
+        "counts": 0,
+        "analysisOutcome": 0,
+        "terminalCategory": 0
+      }
+    }
+  },
+  "conclusion": "BasePolicy, exact observation and the existing Risk/Safety closure fit together; a thin native decision root is still required before this is an upload candidate.",
+  "fingerprint": "ba577695cbbda0ea4fb2cdd026806317e0fe67d026cc00c9c245ba47cbc87df0"
+}

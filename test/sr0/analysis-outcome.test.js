@@ -28,6 +28,8 @@ test("SR0 fixed cohort derives the exact runtime-independent W L D and seat-pair
   assert.equal(report.terminalCategories.FRAME_LIMIT_EQUAL_STARS, 161);
   assert.equal(report.terminalCategories.MUTUAL_CRASH_EQUAL_STARS, 31);
   assert.equal(report.rawPlatform.unchanged, true);
+  assert.equal(report.rawPlatform.verificationMode, "RETAINED_ACCEPTANCE_ATTESTATION");
+  assert.equal(report.rawPlatform.sourcePayloadRetained, false);
 });
 
 test("SR0 preserves rejected historical Candidate bytes and denies their publish identity", () => {

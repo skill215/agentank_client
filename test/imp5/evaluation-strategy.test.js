@@ -47,17 +47,35 @@ test("changing one action or plan weight only redoes the integer dot product", (
   weights.freeze(); assert.equal(weights.configureAction(0, 0, 0, 1), 0);
 });
 
-test("strategy phase opponent and situation changes obey hysteresis without frame jitter", () => {
+test("STRAT2 defaults to kill pressure and uses vector hysteresis without changing risk semantics", () => {
   const selector = new policy.StrategySelector(); const input = new policy.StrategyInputFrame();
+  assert.equal(selector.current, policy.STRATEGY.KILL_PRESSURE);
+  assert.equal(selector.evalProfileId, policy.EVAL_PROFILE.CANONICAL_OUTCOME);
+  const baseRisk = selector.baseRisk;
   input.set(policy.STRATEGY_INPUT.DIRECT_HIT_WINDOW, 9000);
   input.set(policy.STRATEGY_INPUT.OPPONENT_ATTACK, 8000);
   for (let index = 0; index < 3; index += 1)
-    assert.equal(selector.select(input), policy.STRATEGY.STAR_CONTROL);
-  assert.equal(selector.select(input), policy.STRATEGY.KILL_PRESSURE); const switches = selector.switchCount;
-  input.set(policy.STRATEGY_INPUT.DIRECT_HIT_WINDOW, 8800);
-  input.set(policy.STRATEGY_INPUT.POSITION_CONTROL, 8900);
-  assert.equal(selector.select(input), policy.STRATEGY.KILL_PRESSURE); assert.equal(selector.switchCount, switches);
+    assert.equal(selector.select(input), policy.STRATEGY.KILL_PRESSURE);
+  input.set(policy.STRATEGY_INPUT.DIRECT_HIT_WINDOW, 0);
+  input.set(policy.STRATEGY_INPUT.KILL_OPPORTUNITY, 0);
+  input.set(policy.STRATEGY_INPUT.SETUP_OPPORTUNITY, 8900);
+  assert.equal(selector.select(input), policy.STRATEGY.ATTACK_SETUP);
+  assert.equal(selector.evalProfileId, policy.EVAL_PROFILE.CANONICAL_OUTCOME);
+  assert.equal(selector.baseRisk, baseRisk);
   input.set(policy.STRATEGY_INPUT.TERMINAL_URGENCY, 9600); selector.select(input);
   assert.equal(selector.phase, policy.STRATEGY_PHASE.LOCKED);
   assert.equal(selector.select(input, policy.GLOBAL_MODE.HARD_SURVIVAL), policy.STRATEGY.PRESERVE_LEAD);
+  assert.equal(selector.baseRisk, baseRisk);
+});
+
+test("STRAT2 deadline is a lexicographic switch dimension after equal opportunity", () => {
+  const selector = new policy.StrategySelector(); const input = new policy.StrategyInputFrame();
+  input.set(policy.STRATEGY_INPUT.KILL_OPPORTUNITY, 5000);
+  input.set(policy.STRATEGY_INPUT.SETUP_OPPORTUNITY, 5000);
+  input.set(policy.STRATEGY_INPUT.PURPOSE_COMPLETENESS, 8000);
+  input.set(policy.STRATEGY_INPUT.KILL_DEADLINE, 4);
+  for (let root = 0; root < 3; root += 1) selector.select(input);
+  selector.current = policy.STRATEGY.ATTACK_SETUP;
+  selector.dwellRoots = 3;
+  assert.equal(selector.select(input), policy.STRATEGY.KILL_PRESSURE);
 });

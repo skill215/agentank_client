@@ -1,0 +1,56 @@
+{
+  "objectKind": "BasePolicyKernelProgressiveHorizonEvidenceV1",
+  "stage": "BP32",
+  "status": "REJECTED_AS_EARLY_STOP_OPTIMIZATION",
+  "mode": "SHADOW",
+  "actionOwnership": false,
+  "cohort": {
+    "scenarioLimit": 16,
+    "matches": 32,
+    "pairRoots": 774,
+    "frames": [2, 4, 6],
+    "nodeBudgetPerPolicy": 2048
+  },
+  "result": {
+    "horizonNodeCount": [25245, 187756, 815499],
+    "horizonTransitionCount": [26248, 200243, 901154],
+    "horizonClosedCount": [3, 3, 3],
+    "strictStopAt2Count": 3,
+    "strictStopAt4Count": 0,
+    "strictStopAt6Count": 771,
+    "strictSavedNodeCount": 48,
+    "strictSavedTransitionCount": 212,
+    "exact2To4Count": 33,
+    "exact4To6Count": 20,
+    "exact2To6Count": 12,
+    "sameRelation2To4Count": 189,
+    "sameRelation4To6Count": 422,
+    "sameRelation2To6Count": 101,
+    "closed2DriftCount": 0,
+    "closed4DriftCount": 0,
+    "budgetStopCountAt6": 579,
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0
+  },
+  "ratesBasisPoints": {
+    "strictDepth2Closure": 39,
+    "exact2To4": 426,
+    "exact4To6": 258,
+    "exact2To6": 155,
+    "sameRelation2To4": 2442,
+    "sameRelation4To6": 5452,
+    "sameRelation2To6": 1305,
+    "depth6BudgetStopPerRoot": 7481
+  },
+  "decision": {
+    "retainShadowCensus": true,
+    "enableProgressiveEarlyStop": false,
+    "reason": "Strict closure is only 3/774 roots and saves 48 measured nodes; shallow relation stability is too weak to authorize heuristic stopping.",
+    "nextBottleneck": "Physical transition branching and the transition budget, not horizon staging."
+  },
+  "fingerprints": {
+    "overviewSha256": "23d1ab8d56c124ed08c95ad94568ff92dd691a3eceb67783ba544841054c7db0",
+    "progressivePocSha256": "cf9b2e5159f00cfd5cdf679a41ff4c5e37c9d505d09b29c2feb2ed4383aad07e",
+    "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7"
+  }
+}

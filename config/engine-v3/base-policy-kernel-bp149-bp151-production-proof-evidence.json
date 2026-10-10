@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_BP149_BP151_PRODUCTION_PROOF_EVIDENCE_V1",
+  "status": "ACCEPT_PROOF_IMPLEMENTATION_REJECT_ACTION_OWNERSHIP_AND_PRUNING",
+  "sourceChanged": true,
+  "defaultProductionBehaviorChanged": false,
+  "productionApproval": false,
+  "productionRootSha256": "a2ad1572f6e8831b486da4106c21396d896d277e4fa22632d4468f3b6eada58b",
+  "bp149Arena": {
+    "artifactFingerprint": "eee68fc5794c52b1fa4bc8a0574fb42bc4a93e3a5bb075258b33905c96cadd66",
+    "rootCount": 100,
+    "selectedMode": "SHARED_TT64",
+    "totalNodes": 981,
+    "meanNodes": 9,
+    "p95Nodes": 21,
+    "maximumNodes": 27,
+    "ownedTypedArrayBytes": 24890,
+    "classificationMismatchCount": 0,
+    "restoreFailureCount": 0,
+    "hotAllocationCount": 0,
+    "manifestSha256": "0addf2cc92a37991589c14fecac1c6b3b0a2ad3d72ca56a2f113984403cb224d"
+  },
+  "bp150ProductionDifferential": {
+    "artifactFingerprint": "6bcd499081be3a476608af078571ff59cc40690a3fe65ff0670e56a4170116da",
+    "rootCount": 100,
+    "exactCount": 100,
+    "statusMismatchCount": 0,
+    "supportMismatchCount": 0,
+    "nodeMismatchCount": 0,
+    "overallMismatchCount": 0,
+    "totalNodes": 981,
+    "maximumNodes": 27,
+    "maximumOwnedTypedArrayBytes": 24869,
+    "manifestSha256": "6c17acbbe62ea7f6d0e83ff5b9e06cc82db3480c55eb7cdb4e2cb9d868997b2f"
+  },
+  "bp150ActiveDiscovery64": {
+    "artifactFingerprint": "c41f695a1d7c85ed39aac92986527cb5e2d88b54c76b5d1b3162ee0f60e28bbd",
+    "matchesPerImplementation": 128,
+    "shadow": { "wins": 11, "losses": 113, "draws": 4, "scoreBasisPoints": 1016,
+      "fire": 653, "tankKills": 8, "ownCrashes": 42 },
+    "active": { "wins": 10, "losses": 113, "draws": 5, "scoreBasisPoints": 977,
+      "fire": 675, "tankKills": 7, "ownCrashes": 41, "overrides": 40 },
+    "transitions": { "V2_WIN_TO_V1_WIN": 3, "V1_WIN_TO_V2_WIN": 2,
+      "V1_WIN_TO_DRAW": 1 },
+    "decision": "REJECT_SAFE_THREAT_AS_ACTION_OWNER",
+    "manifestSha256": "f76a60ec3b738e6861c6e8fb2a199f3db7cfa161fd4c651494915c382ab06b28"
+  },
+  "bp151PruningCensus": {
+    "artifactFingerprint": "3750b9b25978e3210c6e4078454387a5cb9c7d403f73d4dd8f8d3e0d61a60d72",
+    "matches": 128,
+    "scheduled": 999,
+    "resolvedPossibleGap": 487,
+    "rootFireBlocked": 290,
+    "proven": 62,
+    "threatOnlyProven": 62,
+    "doomedProven": 0,
+    "pacComplete": 62,
+    "prunableRoots": 22,
+    "prunableColumns": 25,
+    "prunableRootNodes": 25,
+    "proofNodes": 18279,
+    "proofNodesPerPrunableRootNode": 731,
+    "decision": "REJECT_RESIDENT_PROOF_PRUNING_AND_POSSIBLE_WORLD_EXPANSION",
+    "manifestSha256": "083ea9e2ba87d292478a97007f0dbedec00527840466b858c527cabdb7ba5f32"
+  },
+  "defaultShadowIdentity": {
+    "artifactFingerprint": "cb43b476ad00609f341b05a739676cba79ade0ba14ec8dc8873b3627d07dc40f",
+    "pairedMatches": 32,
+    "actionMismatch": 0,
+    "argumentMismatch": 0,
+    "outcomeMismatch": 0,
+    "terminalMismatch": 0,
+    "manifestSha256": "649a6bdc14934d3c48f20a722fcd93ecf730bb745bddfd26302411ae929c259d"
+  },
+  "sourceHashes": {
+    "attackEventPolicySearch": "1c506bba50b9e95e9138a23c4fe0c5967797ce3a41925feafd3b6bc07c61e707",
+    "strictSafeThreatFireProof": "d30225c9940ad94e18f0be1c2b92b4900769d1293310867808554dbf697bc8aa",
+    "productionRoot": "a2ad1572f6e8831b486da4106c21396d896d277e4fa22632d4468f3b6eada58b",
+    "productionDifferentialTool": "4ee240969a830472268952854b12b73512a3ccbe4a9d445661b910e1ade60544",
+    "strictProofTest": "df067b32cdf73a81c1672ca12dd8134d12ff0e957b93851de62edfde17ccc60e"
+  },
+  "nextStage": "GLOBAL_SEARCH_PARTICIPATION_AND_CAUSAL_ACTION_QUALITY_AUDIT"
+}

@@ -1,0 +1,121 @@
+{
+  "seq": 3,
+  "previous": "3408416b2221a2b5a944c03ee91fa578816d4f3642e7e2845c9188752858bb89",
+  "record": {
+    "version": 1,
+    "type": "review",
+    "at": "2026-10-08T02:41:34.244Z",
+    "productionAdoption": false,
+    "secondaryCauses": [],
+    "id": "OPT-D-0002",
+    "reviewId": "OPT-R-0001",
+    "stage": "local",
+    "disposition": "retain",
+    "outcome": "passed",
+    "primaryCause": "NONE",
+    "reason": "实现消融全部预设局部标准通过；32配对从32败变为10胜18平4败。保留候选，不采纳生产改动。",
+    "nextStep": "独立数据来源审计和样本精度计划，另登记子方案。",
+    "limitations": "一个被选择过的历史局面；种子重复不构成独立地形验证，诊断代码尚未做目标环境性能验收。",
+    "experiments": [
+      "BP414"
+    ],
+    "assessments": [
+      {
+        "criterion": "integrity",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp414-escape-progress/summary.json"
+      },
+      {
+        "criterion": "local",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp414-escape-progress/pairs.json"
+      },
+      {
+        "criterion": "independent",
+        "status": "unknown",
+        "evidencePath": "artifacts/native-causal-audit/bp414-escape-progress/summary.json"
+      },
+      {
+        "criterion": "runtime",
+        "status": "unknown",
+        "evidencePath": "artifacts/native-causal-audit/bp414-escape-progress/summary.json"
+      }
+    ],
+    "cost": {
+      "attemptedGames": 64,
+      "completedGames": 64,
+      "independentUnits": 1,
+      "executionSeconds": 68.075202892,
+      "analysisSeconds": null
+    },
+    "metrics": [
+      {
+        "name": "conditional_score_gain",
+        "value": 0.59375,
+        "unit": "score per paired seed",
+        "source": "artifacts/native-causal-audit/bp414-escape-progress/pairs.json"
+      },
+      {
+        "name": "conditional_survival_gain",
+        "value": 1,
+        "unit": "fraction per paired seed",
+        "source": "artifacts/native-causal-audit/bp414-escape-progress/pairs.json"
+      },
+      {
+        "name": "candidate_win_rate",
+        "value": 0.3125,
+        "unit": "wins/game",
+        "source": "artifacts/native-causal-audit/bp414-escape-progress/game-metrics.json"
+      },
+      {
+        "name": "conditional_score_ci_low",
+        "value": 0.4775468356574323,
+        "unit": "score; conditional on one state",
+        "source": "artifacts/native-causal-audit/bp414-escape-progress/summary.json"
+      },
+      {
+        "name": "conditional_score_ci_high",
+        "value": 0.7099531643425677,
+        "unit": "score; conditional on one state",
+        "source": "artifacts/native-causal-audit/bp414-escape-progress/summary.json"
+      },
+      {
+        "name": "population_gain",
+        "value": null,
+        "unit": "score per independent terrain",
+        "source": "artifacts/native-causal-audit/bp414-escape-progress/summary.json"
+      }
+    ],
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp414-escape-progress/summary.json",
+        "sha256": "a8087fbee9a42ff662283c8850cfb1a46769ed660fa10826a43d40eec59d5b61"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp414-escape-progress/pairs.json",
+        "sha256": "f0312392c958980ed23ec2d8b084b68314bd706a45ad93a953316ab4229cce07"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp414-escape-progress/game-metrics.json",
+        "sha256": "1b2ec7c2240948a0fd2268af43d3927807c91a7a6ed6af8f951344749ad71f0d"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp414-escape-progress/review.json",
+        "sha256": "2d2a2c67b1cdfe1e67ff48203de271eb429f63265a8e4181354c19c457eb62a2"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp414-escape-progress/run/state.json",
+        "sha256": "5c0d077f0e09dd58006e86e615242cafae1408e9cdea2e429d327a7748d299f9"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp414-escape-progress/audit.js",
+        "sha256": "55032901e75b8ab7955784aa8c1c929646e2bc7b03f5848edfd06062cdd68a56"
+      },
+      {
+        "path": "docs/implementation/optimization-decisions/bp414-review.md",
+        "sha256": "ed21a02315ef1bb2dfe31d901c2d77cc83c273eee13ba79d638e1d96d22ec6f9"
+      }
+    ]
+  },
+  "sha256": "3a1ef932e1a2b4855998fe5a442515692d0bb0f3fcc0f20cffc75e2ebb3b2999"
+}

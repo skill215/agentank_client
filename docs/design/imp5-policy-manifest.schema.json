@@ -1,14 +1,14 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://agentank.local/schema/imp5-policy-manifest-v1.json",
+  "$id": "https://agentank.local/schema/imp5-policy-manifest-v3.json",
   "type": "object",
   "additionalProperties": false,
   "required": ["manifestSchemaVersion", "profileId", "sourceKind", "policyAbiRevision", "limits", "integerScales", "strategy", "opponent", "notes"],
   "properties": {
-    "manifestSchemaVersion": { "const": 1 },
-    "profileId": { "const": "IMP5_INTEGER_POLICY_V1" },
+    "manifestSchemaVersion": { "const": 2 },
+    "profileId": { "const": "STRAT3_PORTFOLIO_POLICY_V3" },
     "sourceKind": { "enum": ["BUILD_CONFIGURED", "BENCHMARK_SELECTED"] },
-    "policyAbiRevision": { "const": 1 },
+    "policyAbiRevision": { "const": 3 },
     "limits": {
       "type": "object",
       "additionalProperties": { "type": "integer", "minimum": 1 },
@@ -24,9 +24,18 @@
     },
     "strategy": {
       "type": "object", "additionalProperties": false,
-      "required": ["switchMargin", "minimumDwellRoots"],
+      "required": ["switchMargin", "minimumDwellRoots", "defaultStrategy",
+        "canonicalEvalProfile", "defaultBaseRisk", "allowedStrategicRobustLoss",
+        "strategyDescriptorFingerprint"],
       "properties": { "switchMargin": { "type": "integer", "minimum": 0 },
-        "minimumDwellRoots": { "type": "integer", "minimum": 1 } }
+        "minimumDwellRoots": { "type": "integer", "minimum": 1 },
+        "defaultStrategy": { "const": "KILL_PRESSURE" },
+        "canonicalEvalProfile": { "const": "BASELINE_OUTCOME" },
+        "defaultBaseRisk": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "allowedStrategicRobustLoss": { "const": 0 },
+        "strategyDescriptorFingerprint": {
+          "type": "string", "pattern": "^[a-f0-9]{64}$"
+        } }
     },
     "opponent": {
       "type": "object", "additionalProperties": false,

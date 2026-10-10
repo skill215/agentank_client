@@ -6,6 +6,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { fast, physical, tank, boxedMap } = require("../imp3/helpers");
 const { CombatPressure } = require("../../engine-v2/src/search/combat-pressure");
+const { RULE } = require("../../engine-v2/src/generated/fast-config");
 const { RiskAcceptanceController } = require("../../engine-v2/src/search/risk-acceptance-controller");
 const { SAFETY_STATUS } = require("../../engine-v2/src/search/information-safety-closure");
 const { PlanSketchArena, PersistentPlanArena } = require("../../engine-v2/src/policy/plan");
@@ -66,12 +67,109 @@ test("SR4 escape denial shield break and zone denial require physical support", 
   assert.equal(fixture.vector.zoneDenial[0], 1); assert.ok(fixture.vector.pressureValue[0] > 0);
 });
 
-test("SR4 hidden belief sweep is soft and purposeless visible miss receives no pressure", () => {
+test("SR4 hidden belief sweep is soft and unreachable visible miss receives no pressure", () => {
   let fixture = combatFixture(tank(0, [1, 2], "right"), tank(1, [5, 2], "left"),
     { visible: false, coverage: 6400 });
   assert.equal(fixture.vector.beliefSweep[0], 1); assert.equal(fixture.vector.pressureValue[0], 800);
-  fixture = combatFixture(tank(0, [1, 1], "right"), tank(1, [5, 3], "left"));
+  fixture = combatFixture(tank(0, [1, 1], "right"), tank(1, [2, 3], "left"));
   assert.equal(fixture.vector.purposeFlags[0], 0); assert.ok(fixture.vector.pressureValue[0] < 0);
+});
+
+test("SR4 visible future ray crossing is a soft possible intercept", () => {
+  const { combat, vector } = combatFixture(
+    tank(0, [1, 2], "right"), tank(1, [4, 3], "left"));
+  assert.equal(vector.possibleHit[0], 1);
+  assert.equal(vector.intercept[0], 1);
+  assert.equal(vector.directKill[0], 0);
+  assert.equal(vector.hitDeadline[0], 2);
+  assert.ok(vector.purposeCompleteness[0] >= 3500);
+  assert.ok(vector.pressureValue[0] > 0);
+  assert.equal(vector.robustPressure[0], 0);
+  assert.equal(combat.possibleHitFoundCount, 1);
+});
+
+test("SR4 wall-blocked ray cannot become a possible intercept", () => {
+  const terrain = boxedMap(7, 5); terrain[3][2] = "x";
+  const { vector } = combatFixture(tank(0, [1, 2], "right"),
+    tank(1, [4, 3], "left"),
+    { map: { width: 7, height: 5, terrainColumnMajor: terrain } });
+  assert.equal(vector.possibleHit[0], 0);
+  assert.equal(vector.intercept[0], 0);
+  assert.equal(vector.purposeFlags[0], 0);
+});
+
+test("SR4 possible-hit temporal query is reused without hot allocation", () => {
+  const fixture = combatFixture(tank(0, [1, 2], "right"),
+    tank(1, [4, 3], "left"));
+  fixture.combat.evaluate(fixture.built, new Uint8Array([fast.ACTION.FIRE]), 1,
+    new Uint16Array([fixture.built.state.arrays[fast.ARRAY.TANK_CELL][0]]),
+    new Uint8Array([fast.DIRECTION.RIGHT]), true, new Uint16Array(1));
+  assert.equal(fixture.combat.possibleHitReachBuilds, 1);
+  assert.equal(fixture.combat.possibleHitQueryCacheHits, 1);
+  assert.equal(fixture.combat.hotAllocationCount, 0);
+});
+
+function referencePossibleHit(state, source, direction, enemyCell, enemyCanAct) {
+  const distances = new Int16Array(state.cells); distances.fill(-1);
+  const queue = new Uint16Array(state.cells); let head = 0; let tail = 1;
+  const dx = [0, 1, 0, -1]; const dy = [-1, 0, 1, 0];
+  const terrain = state.arrays[fast.ARRAY.TERRAIN];
+  const walkable = cell => cell !== fast.NONE_CELL &&
+    terrain[cell] !== fast.TERRAIN.WALL && terrain[cell] !== fast.TERRAIN.DIRT;
+  const target = (cell, move) => {
+    const x = state.x(cell) + dx[move]; const y = state.y(cell) + dy[move];
+    return x < 0 || x >= state.width || y < 0 || y >= state.height ?
+      fast.NONE_CELL : state.cell(x, y);
+  };
+  if (!walkable(enemyCell)) return [0, 255, 0];
+  queue[0] = enemyCell; distances[enemyCell] = 0;
+  while (head < tail) {
+    const cell = queue[head++]; const distance = distances[cell] + 1;
+    for (let move = 0; move < 4; move += 1) {
+      const next = target(cell, move);
+      if (walkable(next) && distances[next] < 0) {
+        distances[next] = distance; queue[tail++] = next;
+      }
+    }
+  }
+  let cell = source; const delay = enemyCanAct ? 0 : 1;
+  for (let distance = 1; distance <= state.cells; distance += 1) {
+    cell = target(cell, direction); if (cell === fast.NONE_CELL) break;
+    if (!walkable(cell)) break;
+    const arrival = Math.max(1, Math.floor(
+      (distance + RULE.PROJECTILE_STEPS - 1) / RULE.PROJECTILE_STEPS));
+    const required = distances[cell] < 0 ? 0xffff : distances[cell] + delay;
+    if (required <= arrival) {
+      const completeness = Math.max(3500, Math.min(6500,
+        4500 + Math.min(2000, (arrival - required) * 500)));
+      return [1, arrival, completeness];
+    }
+  }
+  return [0, 255, 0];
+}
+
+test("SR4 bounded possible-hit query matches an exhaustive distance oracle", () => {
+  const terrains = [boxedMap(7, 5), boxedMap(7, 5)];
+  terrains[1][3][1] = "x"; terrains[1][3][2] = "x"; terrains[1][5][3] = "x";
+  for (const terrainColumnMajor of terrains) {
+    const built = fast.createFastPhysical(physical({ map:
+      { width: 7, height: 5, terrainColumnMajor },
+    tanks: [tank(0, [1, 2], "right"), tank(1, [5, 3], "left")] }));
+    const state = built.state; const source = state.cell(1, 2);
+    const combat = new CombatPressure();
+    for (let direction = 0; direction < 4; direction += 1) {
+      for (let enemyCell = 0; enemyCell < state.cells; enemyCell += 1) {
+        for (let enemyCanAct = 0; enemyCanAct < 2; enemyCanAct += 1) {
+          const expected = referencePossibleHit(state, source, direction,
+            enemyCell, enemyCanAct);
+          const actual = combat.findPossibleHit(state, source, direction,
+            enemyCell, enemyCanAct);
+          assert.deepEqual([actual, combat.lastPossibleHitDeadline,
+            combat.lastPossibleHitCompleteness], expected);
+        }
+      }
+    }
+  }
 });
 
 test("SR4 dangerous trapped duel is not promoted by direct-fire pressure", () => {
@@ -116,7 +214,11 @@ test("SR4 committed-shot evidence is separate from speculative combat pressure",
   controller.applyCombatPressure(combat.vector);
   assert.deepEqual(Array.from(o.robustLower.slice(0, 2)), [1400, 500]);
   assert.deepEqual(Array.from(o.expectedValue.slice(0, 2)), [1400, 1700]);
-  assert.equal(controller.select(1), 0);
+  // Risk preserves the committed lower-bound evidence but no longer turns it
+  // into global action ownership. A verified attack or exact dominance must be
+  // proposed through the V3 ownership contract; ordinary selection may retain
+  // the higher tactical expectation inside the already-safe set.
+  assert.equal(controller.select(1), 1);
 });
 
 test("SR4 ShotPlan combat fields survive materialization", () => {

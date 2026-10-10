@@ -1,0 +1,69 @@
+{
+  "seq": 1,
+  "previous": null,
+  "record": {
+    "version": 1,
+    "type": "register",
+    "at": "2026-10-08T02:37:14.074Z",
+    "process": "OPT-P-001",
+    "registration": "prospective",
+    "parent": null,
+    "id": "OPT-D-0001",
+    "category": "process",
+    "title": "编号调优决策与分阶段证据台账",
+    "hypothesis": "固定分母、证据链接和处置语义能够避免误把局部诊断记为优化成功；效率改善本身仍需长期评估。",
+    "scope": "新注册调优方案，不自动回填历史，不改变局内选择",
+    "baseline": "BP408 experiment-runner / governor",
+    "falsifier": "工具允许重复编号、证据漂移、局部结果计入正式优化成功或重复评审膨胀分母",
+    "nextStep": "执行台账测试并用 OPT-D-0002 实际登记一次消融",
+    "alternatives": [
+      {
+        "name": "只写自然语言摘要",
+        "benefit": "成本低",
+        "risk": "分母和追溯不稳定",
+        "reason": "不采用"
+      },
+      {
+        "name": "编号文档加机器台账",
+        "benefit": "可校验与统计",
+        "risk": "需要维护字段，历史不完整",
+        "reason": "采用"
+      }
+    ],
+    "criteria": [
+      {
+        "id": "contract",
+        "metric": "ledger contract tests",
+        "rule": "all new tests pass",
+        "unit": "test",
+        "kind": "hard"
+      },
+      {
+        "id": "integration",
+        "metric": "real decision and review linkage",
+        "rule": "OPT-D-0002 registered before experiment and linked to a sealed review",
+        "unit": "decision",
+        "kind": "hard"
+      }
+    ],
+    "budget": {
+      "games": 0,
+      "seconds": 0
+    },
+    "evidence": [
+      {
+        "path": "docs/implementation/optimization-decisions/README.md",
+        "sha256": "b9eda448ba12fe2d9ba0666458c322376bab1269fff6426c8fd90959fc13781e"
+      },
+      {
+        "path": "tools/agentank/diagnostics/optimization-decision-ledger.js",
+        "sha256": "bd889f8d0d5f8a8890e314d80b5cda3f9c373fdddbe340a3f0de305f09e38026"
+      },
+      {
+        "path": "test/minimax-core/optimization-decision-ledger.test.js",
+        "sha256": "1a6f385c38226415bcc531af51c4e8405fd5edc1ab7f5fba91323cbbb340b6c7"
+      }
+    ]
+  },
+  "sha256": "0d8947c6fb5d6dbbe45edae3737328ad110ba4f0fc3c966d4dd07a73a24647ec"
+}

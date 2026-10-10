@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_ONE_DEVIATION_ATTACK_EVENT_EVIDENCE_V1",
+  "stage": "BP143",
+  "status": "ACCEPT_ATTACK_EVENT_CLASSIFIED_REJECT_SOURCE_CANDIDATES",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "contract": {
+    "sourceRootCount": 35,
+    "bp142CandidateRootCount": 8,
+    "allRootCount": 35,
+    "goalCount": 2,
+    "movementWorldCount": 3,
+    "sideCount": 2,
+    "searchInstanceCount": 420,
+    "maximumDepth": 6,
+    "nodeBudgetPerSearch": 32768,
+    "transpositionCapacity": 8192,
+    "ownPolicy": "DIRECT_WITH_AT_MOST_ONE_OBSERVED_STATE_DEVIATION",
+    "enemyContinuation": "ALL_GENERATED_ACTIONS",
+    "chanceContinuation": "ALL_GENERATED_OUTCOMES",
+    "nonEventAtHorizon": "UNKNOWN",
+    "policyExport": "PROVEN_SEMANTIC_STATE_TO_ACTION_ONLY",
+    "crossWorldMerge": "CONFLICT_FREE_IDENTICAL_SEMANTIC_ACTIONS",
+    "actionOwnership": false
+  },
+  "bp142CandidateAudit": {
+    "rootCount": 8,
+    "safeThreatFire": {
+      "candidateProven": 0,
+      "incumbentProven": 0,
+      "candidateFireEvents": 105,
+      "candidateThreatEvents": 0
+    },
+    "doomedTargetFire": {
+      "candidateProven": 0,
+      "incumbentProven": 0,
+      "candidateFireEvents": 105,
+      "candidateDoomedEvents": 0
+    },
+    "decision": "The eight BP142 local position certificates are rejected as attack-entry candidates."
+  },
+  "allRootAudit": {
+    "goalClassifications": {
+      "SAFE_THREAT_FIRE/NEITHER_PROVEN": 35,
+      "DOOMED_TARGET_FIRE/NEITHER_PROVEN": 35
+    },
+    "candidateExecutableSafeThreatPolicies": 0,
+    "candidateExecutableDoomedTargetPolicies": 0,
+    "incumbentSafeThreat": {
+      "fireEvents": 438,
+      "threatEvents": 48,
+      "doomedEvents": 36,
+      "counterUnsafeEvents": 0,
+      "horizonStops": 2952
+    },
+    "candidateSafeThreat": {
+      "fireEvents": 366,
+      "threatEvents": 0,
+      "doomedEvents": 0,
+      "counterUnsafeEvents": 0,
+      "horizonStops": 3009
+    },
+    "incumbentDoomedTarget": {
+      "fireEvents": 408,
+      "threatEvents": 24,
+      "doomedEvents": 18,
+      "counterUnsafeEvents": 0,
+      "horizonStops": 2952
+    },
+    "candidateDoomedTarget": {
+      "fireEvents": 366,
+      "threatEvents": 0,
+      "doomedEvents": 0,
+      "counterUnsafeEvents": 0,
+      "horizonStops": 3009
+    }
+  },
+  "performance": {
+    "totalNodes": 40644,
+    "maximumNodesPerSearch": 516,
+    "budgetStopCount": 0,
+    "transpositionCapacityStopCount": 0,
+    "supportLossCount": 0,
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0
+  },
+  "artifacts": {
+    "directory": "artifacts/v2-native-initiative/bp143-semantic-attack-one-deviation-event-all-d6",
+    "manifestSha256": "3d033dc0ff86d67a5d0ee4b9f570380b7ab8e93567f7afa4f28a88765e58bfea",
+    "overviewSha256": "22b0852de3aaad3da3dbd388027bb2c8d6916c439be54db84f8e684b06250028",
+    "rootsSha256": "234727c19501210bb8f0770f1046f8c436cb5b6b12cf495ba332a92fbeefa54b",
+    "fingerprint": "d603c69b66604cac227113966f82d17381b9115688131702da66f32a8daaedb3",
+    "totalBytes": 8922
+  },
+  "source": {
+    "proofSearchSha256": "14276c6e09f336a73c9244dbeb245edd2d417657f3af018af2b900e2ce646831",
+    "corpusSha256": "538ca719f0356bda40f82fa4150c1f39a0a04334d08936145a5f6d68c26ab70b",
+    "proofSearchTestSha256": "6acc823c8ac17a56f5b7c5593c5dd6402dc15847fee8a3f42506a0caf97de21f",
+    "corpusTestSha256": "ebfceb915f2b2abf000526cf36fdc3b145a9233321245952ec9bb3dadd6861b5"
+  },
+  "decision": {
+    "retain": [
+      "strict one-deviation attack-event AND/OR proof",
+      "UNKNOWN horizon semantics",
+      "finite semantic continuation-policy export",
+      "cross-rule action-conflict rejection"
+    ],
+    "reject": [
+      "all eight BP142 position certificates as attack action owners",
+      "all 35 scalar-derived candidate actions as safe-threat or doomed-target owners",
+      "increasing event depth beyond the engine contract to rescue the wrong candidate cohort",
+      "treating observed FIRE without settled threat as attack success"
+    ],
+    "next": "BP144 builds a new attack-opportunity root corpus from real battles: V1 FIRE/kill conversions, V2 missed-fire contact windows, and paired first divergences. Root actions are then synthesized by the attack-event proof directly instead of inherited from positional scalar candidates."
+  }
+}

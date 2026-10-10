@@ -180,15 +180,22 @@ function genericReplayAnalysis(response) {
 function analyzeMoveContest(base) {
   const positions = new Map(base.players.map(player => [player?.tank?.id, player?.tank?.position?.slice()]));
   const candidateId = base.players[0]?.tank?.id; let contestFrame = null; let contestKind = null;
-  const pending = new Map();
+  const pending = new Map(); const staticOccupiedBlockFrames = [];
   for (let frame = 0; frame < base.eventsByFrame.length; frame += 1) {
     const before = new Map([...positions].map(([id, value]) => [id, value?.slice()]));
-    const moves = base.eventsByFrame[frame].filter(event => event.type === "tank" &&
+    const events = base.eventsByFrame[frame];
+    const moves = events.filter(event => event.type === "tank" &&
       event.action === "go" && Array.isArray(event.position));
-    for (const event of base.eventsByFrame[frame]) {
+    let sameFrameIntended = null;
+    for (const event of events) {
       if (event.type === "speech" && /^P2MC:-?[0-9]+,-?[0-9]+$/.test(event.text || ""))
-        pending.set(frame + 1, event.text.slice(5));
+        sameFrameIntended = event.text.slice(5);
     }
+    // Auxiliary speech and the submitted GO are recorded in the same platform
+    // record.  If the marked target was occupied at the beginning and remains
+    // occupied, absence of the candidate GO/crash event proves a blocked move.
+    // The old frame+1 relation is retained only for legacy replay adapters.
+    if (sameFrameIntended) pending.set(frame + 1, sameFrameIntended);
     if (moves.length > 1) {
       const keys = moves.map(event => pointKey(event.position));
       if (new Set(keys).size !== keys.length) { contestFrame = frame; contestKind = "SAME_TARGET"; }
@@ -198,7 +205,22 @@ function analyzeMoveContest(base) {
         contestFrame = frame; contestKind = "SWAP";
       }
     }
-    const intended = pending.get(frame);
+    const intended = sameFrameIntended || pending.get(frame);
+    if (intended) {
+      const occupant = [...before].find(([id, position]) => id !== candidateId &&
+        pointKey(position) === intended);
+      const candidateMoved = moves.some(event => event.objectId === candidateId);
+      const candidateCrashed = events.some(event => event.type === "tank" &&
+        event.action === "crashed" && event.objectId === candidateId);
+      const occupantMovedAway = occupant && moves.some(event => event.objectId === occupant[0] &&
+        pointKey(event.position) !== intended);
+      if (occupant && !candidateMoved && !candidateCrashed && !occupantMovedAway) {
+        staticOccupiedBlockFrames.push(frame);
+        if (contestFrame === null) {
+          contestFrame = frame; contestKind = "STATIC_OCCUPIED_BLOCK";
+        }
+      }
+    }
     if (intended && moves.some(event => event.objectId !== candidateId &&
         pointKey(event.position) === intended) && !moves.some(event => event.objectId === candidateId)) {
       contestFrame = frame; contestKind = "MARKED_TARGET_TAKEN";
@@ -206,6 +228,7 @@ function analyzeMoveContest(base) {
     for (const event of moves) positions.set(event.objectId, event.position.slice());
   }
   return { targetEventReached: contestFrame !== null, contestFrame, contestKind,
+    staticOccupiedBlockFrames, staticOccupiedBlockCount: staticOccupiedBlockFrames.length,
     inferredVariant: contestKind, outcome: contestFrame === null ? "INCONCLUSIVE" : "CONCLUSIVE" };
 }
 

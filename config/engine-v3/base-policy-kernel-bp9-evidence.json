@@ -1,0 +1,79 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP9_EVIDENCE_V1",
+  "status": "ACCEPTED_DIAGNOSTIC",
+  "createdAt": "2026-08-25",
+  "scope": "CELLWISE_DOMINATED_QUALIFIED_FIRE_FIDELITY",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "c4443ddbd2a7a651d77f1582e5b68ce3715dfc87af7cf40ac7432396def39c48",
+  "componentAuditCorrection": {
+    "supersededBy": "base-policy-kernel-bp10-evidence.json",
+    "oneStepActionNumbersExact": false,
+    "reason": "BP9 one-step comparator omitted the existing scoreTransition path value; BP10 replays pre-apply and applied-transition path values in search order.",
+    "physicalTransitionAndRootOrderingEvidenceStillValid": true
+  },
+  "diagnosticSource": {
+    "v1PolicyValueInstrumentationSha256": "71bd56c21812e84c03f7e8a19e1cf81c0c7346500a59885e4f90601f2dda67cf",
+    "nativeBoundedPolicySearchPocSha256": "94f19100b7dcc56a27db7b21fca224da5c631c7a563979ecdd6b3f0e218eb1f6",
+    "nativeTacticalActionOwnerPocSha256": "12fe9544ad4efb060a9f1cf32a6b6fcfa74ba7453d8939dbb2170b92902cab7d",
+    "v2NativeInitiativeArenaSha256": "5ffcd0465d6e685f1f5f3da0af94191fc0cc05b607a04dc65a5daafee143750b"
+  },
+  "cohort": {
+    "fingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667",
+    "scenarios": 16,
+    "candidateMatches": 32,
+    "skill": "STUN",
+    "tacticalTriggerMask": 1
+  },
+  "candidateResult": {
+    "wins": 16,
+    "losses": 14,
+    "draws": 2,
+    "scoreBasisPoints": 5313,
+    "fire": 186,
+    "timeoutError": 0,
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0
+  },
+  "dominatedFireAudit": {
+    "targetRoots": 56,
+    "auditedExactlyOnce": 56,
+    "oraclePairMissing": 16,
+    "oraclePairCompared": 40,
+    "v1AlsoRanksFireLower": 30,
+    "v1RanksFireEqual": 0,
+    "v1RanksFireHigher": 10,
+    "v1BestActionAgreesWithNative": 28,
+    "v1BestActionIsFire": 7,
+    "oracleSelectedMinusFireGapSum": 131098,
+    "oracleAbsoluteGapMax": 43609
+  },
+  "nativeDefectCohortPhysicalFidelity": {
+    "oneStepFire": { "compared": 49, "mismatch": 0, "unsupported": 0 },
+    "oneStepSelected": { "compared": 49, "mismatch": 0, "unsupported": 0 },
+    "deepFire": { "compared": 22, "mismatch": 0, "unsupported": 0 },
+    "deepSelected": { "compared": 22, "mismatch": 0, "unsupported": 0 }
+  },
+  "nativeDefectCohortComponentSignedDifference": {
+    "componentOrder": ["OBJECTIVE", "PROJECTILE", "ATTACK", "POSITION", "STATUS", "ACTION", "REPETITION", "SURVIVAL"],
+    "oneStepFire": [0, 0, 0, 8, 0, -3782, 0, 0],
+    "oneStepSelected": [0, 0, 0, -42, 0, -582, 0, 0],
+    "deepFire": [0, 0, 0, 0, 0, -3890, -255, 0],
+    "deepSelected": [0, 0, 0, 1, 0, 10, 0, 0]
+  },
+  "globalRootValueFidelity": {
+    "transitionExactRoots": 482,
+    "transitionExactBestAgreement": 434,
+    "strictRoots": 20,
+    "strictBestAgreement": 18
+  },
+  "conclusion": {
+    "globalFireOverrideRejected": true,
+    "physicalTransitionMismatchRejectedAsPrimaryCause": true,
+    "localizedNativeValueDefectRoots": 10,
+    "primaryComponent": "ACTION",
+    "secondaryComponent": "REPETITION",
+    "probableMissingTerm": "response-conditioned predictiveInterceptOutcomeScore after applied transition",
+    "nextTarget": "Implement the response-conditioned FIRE action delta as a diagnostic applied-transition hook, prove component convergence, then run one fixed16 ACTIVE POC without changing repetition or adding a FIRE constant."
+  }
+}

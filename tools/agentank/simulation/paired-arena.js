@@ -168,6 +168,16 @@ function resultFor(replay, variant) {
 
 function createV2Bot(options) { return new ProductionDiagnosticBot(options || {}); }
 
+function v2DiagnosticOptions(v2Options, diagnostics = {}) {
+  return { ...(v2Options || {}),
+    captureActionFrames: diagnostics.captureActions === true,
+    captureAllFrames: diagnostics.captureAllFrames === true,
+    captureCompactFrames: diagnostics.captureCompact === true,
+    captureSampleFrames: diagnostics.captureCompact === true &&
+      diagnostics.captureSamples !== false,
+    captureExceptionalFrames: diagnostics.captureCompact !== true };
+}
+
 // Persist only fields consumed by the pinned simulator. A bot may attach diagnostic metadata
 // (including fractional scores) to an action; that metadata is not part of physical replay and
 // must not make an integer-canonical evidence run fail.
@@ -207,12 +217,8 @@ async function runMatch(simulatorModule, scenario, variant, repetition, v1Code, 
     seed: seedFor(scenario, repetition), maxFrames: 128, starLimit: false });
   const bots = [];
   for (let seat = 0; seat < 2; seat += 1) {
-    if (variant.bots[seat] === "v2") bots.push(createV2Bot({ ...(v2Options || {}),
-      captureActionFrames: diagnostics.captureActions === true,
-      captureAllFrames: diagnostics.captureAllFrames === true,
-      captureCompactFrames: diagnostics.captureCompact === true,
-      captureSampleFrames: diagnostics.captureCompact === true,
-      captureExceptionalFrames: diagnostics.captureCompact !== true }));
+    if (variant.bots[seat] === "v2") bots.push(createV2Bot(
+      v2DiagnosticOptions(v2Options, diagnostics)));
     else bots.push(new DecisionAudit(simulatorModule.loadBotFromCode(v1Code,
       { timeoutMs, loadTimeoutMs: 2000 }),
       { captureActionFrames: diagnostics.captureActions === true,
@@ -412,4 +418,5 @@ async function runPairedArena(options = {}) {
 
 module.exports = { SIMULATOR_COMMIT, SIMULATOR_ARCHIVE_SHA256, VARIANTS,
   DecisionAudit, mergeActionTrace, simulatorDirectory, loadSimulator, collectCounts, aggregate,
-  actionCode, portableScheduledAction, portableScheduledDecision, runMatch, runPairedArena };
+  actionCode, portableScheduledAction, portableScheduledDecision, v2DiagnosticOptions,
+  runMatch, runPairedArena };

@@ -1,0 +1,118 @@
+{
+  "seq": 6,
+  "previous": "8e668c8ce3561a158eaeddd8b6e424273340e65b0af01310b58d263798c42653",
+  "record": {
+    "version": 1,
+    "type": "review",
+    "id": "OPT-D-0003",
+    "reviewId": "OPT-R-0003",
+    "at": "2026-10-08T03:39:22.886Z",
+    "stage": "independent",
+    "disposition": "defer",
+    "outcome": "inconclusive",
+    "primaryCause": "NO_TRIGGER",
+    "secondaryCauses": [
+      "INSUFFICIENT_DATA",
+      "MODEL_SCOPE"
+    ],
+    "reason": "32张新生成地图128局，候选未触发，64配对行为一致。覆盖未达预设8张，缺少收益检验机会。",
+    "nextStep": "用全部新对局和逃生片段做诊断；若修改候选则新编号，不追加随机批次追显著性。",
+    "limitations": "Generated symmetric-map distribution and fixed stun-vs-stun opponent, not platform matches. 32 clusters only support coverage/very-large-effect screening, not precise small-effect estimates. All evaluated games now become discovery/regression corpus; cannot reuse as blind evidence after tuning. Static tie-break remains diagnostic; runtime includes instrumentation.",
+    "experiments": [
+      "BP415"
+    ],
+    "assessments": [
+      {
+        "criterion": "integrity",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp415-fresh-games/summary.json"
+      },
+      {
+        "criterion": "coverage",
+        "status": "fail",
+        "evidencePath": "artifacts/native-causal-audit/bp415-fresh-games/summary.json"
+      },
+      {
+        "criterion": "effect",
+        "status": "unknown",
+        "evidencePath": "artifacts/native-causal-audit/bp415-fresh-games/pairs.json"
+      },
+      {
+        "criterion": "release",
+        "status": "unknown",
+        "evidencePath": "artifacts/native-causal-audit/bp415-fresh-games/summary.json"
+      }
+    ],
+    "cost": {
+      "attemptedGames": 128,
+      "completedGames": 128,
+      "independentUnits": 32,
+      "executionSeconds": 119.457571411,
+      "analysisSeconds": null
+    },
+    "metrics": [
+      {
+        "name": "triggered_terrain_fraction",
+        "value": 0,
+        "unit": "0/32 terrains",
+        "source": "artifacts/native-causal-audit/bp415-fresh-games/map-metrics.json"
+      },
+      {
+        "name": "paired_score_delta",
+        "value": 0,
+        "unit": "score per generated terrain cluster",
+        "source": "artifacts/native-causal-audit/bp415-fresh-games/pairs.json"
+      },
+      {
+        "name": "candidate_win_rate",
+        "value": 0.375,
+        "unit": "wins/game",
+        "source": "artifacts/native-causal-audit/bp415-fresh-games/game-metrics.json"
+      },
+      {
+        "name": "hoeffding_95_low",
+        "value": -0.48016139565996035,
+        "unit": "score per generated terrain",
+        "source": "artifacts/native-causal-audit/bp415-fresh-games/summary.json"
+      },
+      {
+        "name": "hoeffding_95_high",
+        "value": 0.48016139565996035,
+        "unit": "score per generated terrain",
+        "source": "artifacts/native-causal-audit/bp415-fresh-games/summary.json"
+      }
+    ],
+    "productionAdoption": false,
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp415-fresh-games/summary.json",
+        "sha256": "657a35b095402941fb8a72eafb0d7d3695c3900a6842519306138f389d2ef5f3"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp415-fresh-games/pairs.json",
+        "sha256": "dcb737b0c943abd6a9f6ba5c5f4f115428230ec68f7247034195fc3ba723e3ef"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp415-fresh-games/escape-scenes.json",
+        "sha256": "5b2e785f40acaf00f382f07245c7581ce845be9457757d02b18a36318bc7afaa"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp415-fresh-games/scene-corpus.json",
+        "sha256": "dab4b42a3805a69faceec39abd9b3761eeffcaeb656a4015b5c7ddd30d51cd0a"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp415-fresh-games/run/state.json",
+        "sha256": "61bdc6451186e0c48404967ef1285a8732ef4ca814890fdc1a47d22ddec191c4"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp415-fresh-games/review.json",
+        "sha256": "8555fd2de01311a0bf2a0a494703f7048902a5cfb3e1a15fbe1209477b83ac26"
+      },
+      {
+        "path": "docs/implementation/optimization-decisions/bp415-review.md",
+        "sha256": "e67254d092ff9e3f01a7ba00a6b7bae9ec35f8d5e0da30ed59818638a46e27d8"
+      }
+    ]
+  },
+  "sha256": "ad2990013652d6798736d85d1bbb98b32cf5b89b363f8f8cb7c0be725042db76"
+}

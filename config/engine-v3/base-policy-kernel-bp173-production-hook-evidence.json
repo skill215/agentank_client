@@ -1,0 +1,301 @@
+{
+  "objectKind": "BasePolicyProductionHookEvidenceV1",
+  "generatedAt": "2026-09-02T07:46:43.515Z",
+  "productionDefaultChanged": false,
+  "contract": {
+    "activation": "EXPLICIT_CONSTRUCTOR_INJECTION_ONLY",
+    "staticBasePolicyDependency": false,
+    "defaultAllocation": "ZERO_NATIVE_BASE_POLICY_COMPONENTS",
+    "finalOwnerPosition": "AFTER_RUNTIME_FINISH_BEFORE_EMIT",
+    "resourceOwnership": {
+      "nonPoisonOwnSkill": "RESOURCE_CONTROLLER; BASE_POLICY_NOT_OBSERVED",
+      "poison": "BP68_CANDIDATE_DOMAIN"
+    },
+    "overrideState": {
+      "depthPrincipal": "RESET_NOT_FALSELY_COMMITTED",
+      "incumbentPlan": "NOT_FALSELY_COMMITTED"
+    },
+    "localTimeInterpretation": "CROSS_RUN_TIME_IS_INFORMATIONAL; BP171_SAME_PROCESS_CALIBRATION_IS_AUTHORITATIVE"
+  },
+  "fixed16": {
+    "acceptedToDefaultOff": {
+      "missing": 0,
+      "actionStream": 0,
+      "arguments": 0,
+      "result": 0,
+      "frames": 0,
+      "counts": 0,
+      "analysisOutcome": 0,
+      "terminalCategory": 0
+    },
+    "defaultOffToInjectedActive": {
+      "missing": 0,
+      "actionStream": 0,
+      "arguments": 0,
+      "result": 0,
+      "frames": 0,
+      "counts": 0,
+      "analysisOutcome": 0,
+      "terminalCategory": 0
+    },
+    "acceptedFingerprint": {
+      "records": 32,
+      "sha256": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "defaultOffFingerprint": {
+      "records": 32,
+      "sha256": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "activeFingerprint": {
+      "records": 32,
+      "sha256": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "acceptedOutcome": {
+      "wins": 21,
+      "losses": 11,
+      "draws": 0,
+      "scoreBasisPoints": 6563,
+      "stars": {
+        "candidate": 21,
+        "control": 21
+      },
+      "crashes": {
+        "candidate": 8,
+        "control": 17
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 240,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 240,
+        "jointDominatedSelection": 0
+      }
+    },
+    "defaultOffOutcome": {
+      "wins": 21,
+      "losses": 11,
+      "draws": 0,
+      "scoreBasisPoints": 6563,
+      "stars": {
+        "candidate": 21,
+        "control": 21
+      },
+      "crashes": {
+        "candidate": 8,
+        "control": 17
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 240,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 240,
+        "jointDominatedSelection": 0
+      }
+    },
+    "activeOutcome": {
+      "wins": 21,
+      "losses": 11,
+      "draws": 0,
+      "scoreBasisPoints": 6563,
+      "stars": {
+        "candidate": 21,
+        "control": 21
+      },
+      "crashes": {
+        "candidate": 8,
+        "control": 17
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 0,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 0,
+        "jointDominatedSelection": 0
+      }
+    }
+  },
+  "discovery64": {
+    "acceptedToInjectedActive": {
+      "missing": 0,
+      "actionStream": 0,
+      "arguments": 0,
+      "result": 0,
+      "frames": 0,
+      "counts": 0,
+      "analysisOutcome": 0,
+      "terminalCategory": 0
+    },
+    "acceptedFingerprint": {
+      "records": 128,
+      "sha256": "d6db15f8815dc9243ef758778bbeb558b6492f801e73e2fc36e4bd35f1162555"
+    },
+    "activeFingerprint": {
+      "records": 128,
+      "sha256": "d6db15f8815dc9243ef758778bbeb558b6492f801e73e2fc36e4bd35f1162555"
+    },
+    "acceptedOutcome": {
+      "wins": 67,
+      "losses": 48,
+      "draws": 13,
+      "scoreBasisPoints": 5742,
+      "stars": {
+        "candidate": 93,
+        "control": 101
+      },
+      "crashes": {
+        "candidate": 35,
+        "control": 52
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 1029,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 1029,
+        "jointDominatedSelection": 0
+      }
+    },
+    "activeOutcome": {
+      "wins": 67,
+      "losses": 48,
+      "draws": 13,
+      "scoreBasisPoints": 5742,
+      "stars": {
+        "candidate": 93,
+        "control": 101
+      },
+      "crashes": {
+        "candidate": 35,
+        "control": 52
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 0,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 0,
+        "jointDominatedSelection": 0
+      }
+    }
+  },
+  "rejectedNaiveHook": {
+    "differencesFromAccepted": {
+      "missing": 0,
+      "actionStream": 25,
+      "arguments": 0,
+      "result": 13,
+      "frames": 17,
+      "counts": 21,
+      "analysisOutcome": 10,
+      "terminalCategory": 10
+    },
+    "fingerprint": {
+      "records": 32,
+      "sha256": "cc2e22f6dcc8aebe6fcd13b2e08ab8a1811f30f78c26430cfaba3c10e5906047"
+    },
+    "outcome": {
+      "wins": 17,
+      "losses": 15,
+      "draws": 0,
+      "scoreBasisPoints": 5313,
+      "stars": {
+        "candidate": 21,
+        "control": 26
+      },
+      "crashes": {
+        "candidate": 8,
+        "control": 13
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 0,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 0,
+        "jointDominatedSelection": 0
+      }
+    },
+    "firstObservedContractBreak": "SELECTED_STUN_WAS_EMITTED_BEFORE_THE_ACCEPTED_EXTERNAL_CALLBACK",
+    "rootCause": "NAIVE_INTERNAL_HOOK_ADVANCED_INTENT_OPPONENT_AND_SUPERKO_ON_RESOURCE_OWNED_FRAMES",
+    "correction": "EXPLICIT_NON_POISON_RESOURCE_OWNER_SKIP_BEFORE_NATIVE_BASE_POLICY_ROOT"
+  },
+  "source": {
+    "productionRoot": {
+      "path": "engine-v2/src/runtime/production-root.js",
+      "bytes": 199642,
+      "sha256": "3381b6f979278140df6bdada3a10cf58ab3a0fff4bf5057eebb5d9efd54017f8"
+    },
+    "nativeRoot": {
+      "path": "engine-v2/src/base-policy/native-root.js",
+      "bytes": 4360,
+      "sha256": "22dc79ffb89d74c5176694e8445c23df7b2e1329142434b4e3f1d1ec93b193f5"
+    },
+    "test": {
+      "path": "test/minimax-core/native-base-policy-root.test.js",
+      "bytes": 5546,
+      "sha256": "21be9ba75f3d2646c0b51abfd035c4cce44130b5c0325942c6a3b46d5b9e5bb1"
+    },
+    "staticRequireAbsent": true,
+    "nativeConstructionAbsent": true
+  },
+  "tests": {
+    "minimaxCorePassed": 247,
+    "minimaxCoreFailed": 0
+  },
+  "artifacts": {
+    "accepted": {
+      "path": "/tmp/agentank-bp170-leaf-geometry-table-fixed16",
+      "manifestSha256": "d267d165a35b77b0dae340434e09fb4e2b6ab3acdb5c44ec0a55329a8485791d",
+      "overviewSha256": "4a31c80802bedffb77247783e8b39007742200a48d69383e3fbf3edfb0f8f1e9",
+      "matchesSha256": "5a91dcf6ce511d1578da6c8feeba99f7878522c4758363a98c0b26966589817a",
+      "candidateFingerprint": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "defaultOff": {
+      "path": "/tmp/agentank-bp173-production-hook-off-fixed16-r2",
+      "manifestSha256": "9af61bb9315b6021af643c1fb15883f726f29e9f4a1f0fb28d55166cb4c2b7dc",
+      "overviewSha256": "48a4b8285b0217fe9bda8c4c6a6fdac53e8ec54b49fa93f0e82ac28d5bc1621d",
+      "matchesSha256": "71a6229bbb2b2d0589a7c746cfe3083a4a9add141f20f1a635bd857fdfa4a47b",
+      "candidateFingerprint": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "active": {
+      "path": "/tmp/agentank-bp173-production-hook-active-fixed16-r3",
+      "manifestSha256": "c68ed26e1412838469240da713adb05c63d1bbe7eaec379377a276fa169de242",
+      "overviewSha256": "604e91bf15296061cd0c934216a93dbfdb778b0d26de29db5ec97b5261ef6187",
+      "matchesSha256": "f8e31c60ce1afed1d314f93f5c8e97b344a0c87d4bb2e0cd2587d930c3f65bd8",
+      "candidateFingerprint": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "rejectedNaive": {
+      "path": "/tmp/agentank-bp173-production-hook-active-fixed16",
+      "manifestSha256": "7aeef3aa90d64db457021ea0089bec2f0660d833ae9486e977b390355575006a",
+      "overviewSha256": "8046712d222def7ec48f694107b430c2555dd35e31b05cafdbaca9784ddde9a3",
+      "matchesSha256": "a9db34f1a886610b93880551b3fb647f947cf4df03af54fffb3b846c01275e7e",
+      "candidateFingerprint": "cc2e22f6dcc8aebe6fcd13b2e08ab8a1811f30f78c26430cfaba3c10e5906047"
+    },
+    "discoveryAccepted": {
+      "path": "/tmp/agentank-bp172-native-root-discovery64",
+      "manifestSha256": "e41eef2179927b98fed9b52411cbf93a492ddea58359fb084526a7200f434632",
+      "overviewSha256": "2b386ef49efa768d912e47181d8e83f78bbde07c658efc9fefadabd94cf78e7d",
+      "matchesSha256": "39cbd4e814d0ad69cc70b1eea80f7b1d77941b56143fe93a5933b24bb81b4e3e",
+      "candidateFingerprint": "d6db15f8815dc9243ef758778bbeb558b6492f801e73e2fc36e4bd35f1162555"
+    },
+    "discoveryActive": {
+      "path": "/tmp/agentank-bp173-production-hook-active-discovery64",
+      "manifestSha256": "b003764afccfad288aef6fdbf63e800897eaba2f58ceb8f27d0899122587ed43",
+      "overviewSha256": "a2e9a2a35ebe78c3bd105ae39ec0cbfacd4fbec2b5f6f883aa5663d9b2bf80e7",
+      "matchesSha256": "b45ef64da28e2e2e578f784b02a49ba5453aeb1c5083a7ce78ce6505d46b32eb",
+      "candidateFingerprint": "d6db15f8815dc9243ef758778bbeb558b6492f801e73e2fc36e4bd35f1162555"
+    }
+  },
+  "verdicts": [
+    "DEFAULT_OFF_HOOK_PRESERVES_ACCEPTED_FIXED16_BEHAVIOR",
+    "INJECTED_PRODUCTION_ROOT_PRESERVES_ACCEPTED_FIXED16_BEHAVIOR",
+    "INJECTED_PRODUCTION_ROOT_PRESERVES_ACCEPTED_DISCOVERY64_BEHAVIOR",
+    "RESOURCE_OWNERSHIP_GATE_REPAIRS_NAIVE_17_15_REGRESSION",
+    "UPLOAD_ENTRY_DOES_NOT_STATICALLY_PULL_NATIVE_BASE_POLICY_STACK",
+    "PRODUCTION_DEFAULT_REMAINS_OFF"
+  ],
+  "fingerprint": "28cba3f3c37471a608b5fca760c5a61e574daa053a04de6eabe1737d601902a1"
+}

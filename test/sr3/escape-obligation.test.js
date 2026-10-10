@@ -75,6 +75,21 @@ function evaluate(obligation, bundle, rowSet) {
     rowSet.cells, rowSet.directions, rowSet.hard, rowSet.actions.length);
 }
 
+function chanceSupport(count, cells, directions, fatal = 0, incomplete = 0) {
+  const chanceCell = new Uint16Array(count * 4).fill(NONE_CELL);
+  const chanceDirection = new Uint8Array(count * 4).fill(0xff);
+  for (let index = 0; index < cells.length; index += 1) {
+    chanceCell[index] = cells[index]; chanceDirection[index] = directions[index];
+  }
+  return {
+    chanceSupportCount: new Uint8Array([count]),
+    chanceFatalSupportCount: new Uint8Array([fatal]),
+    chanceIncompleteSupportCount: new Uint8Array([incomplete]),
+    chanceCell,
+    chanceDirection
+  };
+}
+
 function controllerFor(count, acceptable = null) {
   const values = acceptable || new Uint8Array(count).fill(1);
   return {
@@ -88,10 +103,39 @@ function controllerFor(count, acceptable = null) {
       escapeSuccessorSlack: new Int8Array(count),
       escapeSuccessorBranches: new Uint8Array(count),
       escapeSuccessorCoverage: new Uint8Array(count),
-      escapeSuccessorReady: 0
+      escapeSuccessorReady: 0,
+      immediateFatalMass: new Uint16Array(count),
+      committedChanceFatalMass: new Uint16Array(count),
+      horizonFatalMass: new Uint16Array(count),
+      unknownMass: new Uint16Array(count),
+      earliestFatalFrame: new Uint8Array(count).fill(255),
+      escapeSlack: new Int8Array(count),
+      unknownFallbackRisk: new Uint16Array(count),
+      robustLower: new Int16Array(count)
     },
     recomputeCount: 0,
-    recomputeSelectionFrontier() { this.recomputeCount += 1; }
+    recomputeSelectionFrontier() { this.recomputeCount += 1; },
+    emergencyRiskLess(left, right) {
+      if (right < 0) return true;
+      const o = this.outcome;
+      if (o.immediateFatalMass[left] !== o.immediateFatalMass[right])
+        return o.immediateFatalMass[left] < o.immediateFatalMass[right];
+      if (o.committedChanceFatalMass[left] !== o.committedChanceFatalMass[right])
+        return o.committedChanceFatalMass[left] < o.committedChanceFatalMass[right];
+      if (o.horizonFatalMass[left] !== o.horizonFatalMass[right])
+        return o.horizonFatalMass[left] < o.horizonFatalMass[right];
+      if (o.unknownMass[left] !== o.unknownMass[right])
+        return o.unknownMass[left] < o.unknownMass[right];
+      if (o.earliestFatalFrame[left] !== o.earliestFatalFrame[right])
+        return o.earliestFatalFrame[left] > o.earliestFatalFrame[right];
+      if (o.unknownFallbackRisk[left] !== o.unknownFallbackRisk[right])
+        return o.unknownFallbackRisk[left] < o.unknownFallbackRisk[right];
+      if (o.escapeSlack[left] !== o.escapeSlack[right])
+        return o.escapeSlack[left] > o.escapeSlack[right];
+      if (o.robustLower[left] !== o.robustLower[right])
+        return o.robustLower[left] > o.robustLower[right];
+      return left < right;
+    }
   };
 }
 
@@ -159,6 +203,80 @@ describe("EscapeObligation committed-only contract", () => {
     assert.deepEqual(Array.from(obligation.member.slice(0, 2)), [1, 0]);
   });
 
+  it("never restores a nominal EO witness when another stun outcome is fatal", () => {
+    const { state, bundle } = openArena();
+    placeBomb(state, state.cell(4, 4), 2);
+    const rowSet = rows(state, [ACTION.TURN_LEFT], [state.cell(7, 3)], [0]);
+    const obligation = new EscapeObligation({ chanceComplete: true,
+      chanceSurvivalMass: true });
+    const support = chanceSupport(2,
+      [state.cell(7, 3), state.cell(4, 4)], [0, 2], 1, 0);
+    assert.equal(obligation.evaluateCommitted(bundle, rowSet.actions,
+      rowSet.arguments_, rowSet.cells, rowSet.directions, rowSet.hard, 1,
+      support), SUPPORT_STATUS.INCOMPLETE);
+    assert.equal(obligation.successorProof[0], SUCCESSOR_PROOF.UNKNOWN);
+    assert.equal(obligation.member[0], 0);
+    const controller = controllerFor(1, new Uint8Array([0]));
+    assert.equal(obligation.restrictRiskController(controller, state, 1), 0);
+    assert.deepEqual(Array.from(controller.outcome.acceptable), [0]);
+  });
+
+  it("keeps a chance-complete EO member only when every stun outcome is viable", () => {
+    const { state, bundle } = openArena();
+    placeBomb(state, state.cell(4, 4), 3);
+    const rowSet = rows(state, [ACTION.GO], [state.cell(7, 3)], [0]);
+    const obligation = new EscapeObligation({ chanceComplete: true,
+      chanceSurvivalMass: true });
+    const support = chanceSupport(2,
+      [state.cell(7, 3), state.cell(7, 4)], [0, 0], 0, 0);
+    assert.equal(obligation.evaluateCommitted(bundle, rowSet.actions,
+      rowSet.arguments_, rowSet.cells, rowSet.directions, rowSet.hard, 1,
+      support), SUPPORT_STATUS.COMPLETE);
+    assert.equal(obligation.successorProof[0], SUCCESSOR_PROOF.PROVEN_VIABLE);
+    assert.equal(obligation.member[0], 1);
+  });
+
+  it("leaves complete mixed stun outcomes to Risk without granting a strict witness", () => {
+    const { state, bundle } = openArena();
+    placeBomb(state, state.cell(4, 4), 3);
+    const safeA = state.cell(7, 3); const safeB = state.cell(7, 4);
+    const rowSet = rows(state, [ACTION.TURN_LEFT, ACTION.TURN_RIGHT],
+      [safeA, safeA], [0, 0]);
+    const chanceCell = new Uint16Array(32).fill(NONE_CELL);
+    const chanceDirection = new Uint8Array(32).fill(0xff);
+    chanceCell[0] = safeA; chanceDirection[0] = 0;
+    chanceCell[1] = state.cell(4, 4); chanceDirection[1] = 2;
+    chanceCell[16] = safeA; chanceDirection[16] = 0;
+    chanceCell[17] = safeB; chanceDirection[17] = 0;
+    const support = {
+      chanceSupportCount: new Uint8Array([2, 2]),
+      chanceFatalSupportCount: new Uint8Array([1, 0]),
+      chanceIncompleteSupportCount: new Uint8Array(2),
+      chanceCell,
+      chanceDirection
+    };
+    const obligation = new EscapeObligation({ chanceComplete: true,
+      chanceSurvivalMass: true });
+    assert.equal(obligation.evaluateCommitted(bundle, rowSet.actions,
+      rowSet.arguments_, rowSet.cells, rowSet.directions, rowSet.hard, 2,
+      support), SUPPORT_STATUS.COMPLETE);
+    assert.deepEqual(Array.from(obligation.successorProof.slice(0, 2)),
+      [SUCCESSOR_PROOF.UNKNOWN, SUCCESSOR_PROOF.PROVEN_VIABLE]);
+    assert.deepEqual(Array.from(obligation.member.slice(0, 2)), [0, 1]);
+    assert.ok(obligation.successorSurvivalMass[0] <= 5000,
+      "the immediately fatal stun branch contributes zero survival mass");
+    assert.equal(obligation.successorSurvivalMass[1], 10000);
+
+    const accepted = controllerFor(2);
+    assert.equal(obligation.restrictRiskController(accepted, state, 2), 0);
+    assert.deepEqual(Array.from(accepted.outcome.acceptable), [1, 1]);
+
+    const riskRejected = controllerFor(2, new Uint8Array([0, 1]));
+    assert.equal(obligation.restrictRiskController(riskRejected, state, 2), 0);
+    assert.deepEqual(Array.from(riskRejected.outcome.acceptable), [0, 1]);
+    assert.equal(obligation.rescueOverrideCount, 0);
+  });
+
   it("intersects Risk with the committed viable set without choosing among viable members", () => {
     const { state, bundle } = openArena();
     placeBomb(state, state.cell(4, 4), 2);
@@ -172,7 +290,7 @@ describe("EscapeObligation committed-only contract", () => {
     assert.equal(controller.acceptableCount, 2);
   });
 
-  it("restores Hard-allowed committed survivors when Risk empties their intersection", () => {
+  it("restores only the least-risk committed survivor when Risk empties the intersection", () => {
     const { state, bundle } = openArena();
     placeBomb(state, state.cell(4, 4), 2);
     const rowSet = rows(state, [ACTION.GO, ACTION.FIRE],
@@ -181,9 +299,29 @@ describe("EscapeObligation committed-only contract", () => {
     evaluate(obligation, bundle, rowSet);
     const controller = controllerFor(2, new Uint8Array([0, 1]));
     assert.equal(obligation.restrictRiskController(controller, state, 2), 1);
-    assert.deepEqual(Array.from(controller.outcome.acceptable), [1, 1]);
+    assert.deepEqual(Array.from(controller.outcome.acceptable), [1, 0]);
     assert.equal(controller.noAcceptableAction, 0);
     assert.equal(obligation.rescueOverrideCount, 1);
+  });
+
+  it("never revives known immediate death over an unknown committed survivor", () => {
+    const { state, bundle } = openArena();
+    placeBomb(state, state.cell(4, 4), 2);
+    const rowSet = rows(state, [ACTION.GO, ACTION.FIRE, ACTION.TURN_LEFT],
+      [state.cell(7, 3), state.cell(7, 3), state.cell(4, 4)], [0, 0, 1]);
+    const obligation = new EscapeObligation();
+    assert.equal(evaluate(obligation, bundle, rowSet), SUPPORT_STATUS.COMPLETE);
+    assert.deepEqual(Array.from(obligation.member.slice(0, 3)), [1, 1, 0]);
+
+    const controller = controllerFor(3, new Uint8Array([0, 0, 0]));
+    controller.outcome.immediateFatalMass[0] = 10000;
+    controller.outcome.horizonFatalMass[0] = 10000;
+    controller.outcome.unknownMass[1] = 10000;
+    assert.equal(obligation.restrictRiskController(controller, state, 3), 1);
+    assert.deepEqual(Array.from(controller.outcome.acceptable), [0, 1, 0],
+      "a known-fatal EO member must not be revived beside a less-certain survivor");
+    assert.equal(controller.acceptableCount, 1);
+    assert.equal(controller.noAcceptableAction, 0);
   });
 
   it("never restores a Hard-rejected committed member", () => {
@@ -240,5 +378,76 @@ describe("EscapeObligation committed-only contract", () => {
     const sentinel = { horizonFatalMass: new Uint16Array([321, 654]) };
     assert.equal(obligation.applyToSafety(sentinel, 2), 0);
     assert.deepEqual(Array.from(sentinel.horizonFatalMass), [321, 654]);
+  });
+
+  it("selects a strict final rescue only from complete proven-viable Hard rows", () => {
+    const { state, bundle } = openArena();
+    placeBomb(state, state.cell(4, 4), 2);
+    const rowSet = rows(state, [ACTION.GO, ACTION.FIRE, ACTION.CAST_POISON],
+      [state.cell(7, 3), state.cell(4, 4), state.cell(7, 3)], [0, 1, 0]);
+    const obligation = new EscapeObligation();
+    assert.equal(evaluate(obligation, bundle, rowSet), SUPPORT_STATUS.COMPLETE);
+    assert.equal(obligation.successorProof[1], SUCCESSOR_PROOF.PROVEN_DEAD);
+    obligation.successorExposed[0] = 0; obligation.successorSlack[0] = 3;
+    obligation.successorBranches[0] = 3; obligation.successorCoverage[0] = 1;
+    obligation.successorExposed[2] = 1; obligation.successorSlack[2] = 1;
+    obligation.successorBranches[2] = 1; obligation.successorCoverage[2] = 1;
+    assert.equal(obligation.strictRescueCandidate(1, rowSet.hard, 3), 0);
+    assert.equal(obligation.strictRescueDeadPreferredCount, 1);
+    assert.equal(obligation.strictRescueCandidateCount, 1);
+
+    rowSet.hard[0] = HARD_STATUS.REJECT_PROVEN;
+    assert.equal(obligation.strictRescueCandidate(1, rowSet.hard, 3), 2,
+      "a Hard-rejected better row cannot be revived");
+  });
+
+  it("never turns NONE, incomplete support, or an unknown successor into strict rescue", () => {
+    const { state, bundle } = openArena();
+    placeProjectile(state, 0);
+    const rowSet = rows(state, [ACTION.GO, ACTION.FIRE],
+      [state.cell(5, 4), state.cell(4, 4)]);
+    const obligation = new EscapeObligation();
+    assert.equal(evaluate(obligation, bundle, rowSet), SUPPORT_STATUS.NONE);
+    assert.equal(obligation.strictRescueCandidate(1, rowSet.hard, 2), -1);
+    obligation.supportStatus = SUPPORT_STATUS.INCOMPLETE;
+    obligation.successorProof[1] = SUCCESSOR_PROOF.PROVEN_DEAD;
+    obligation.member[0] = 1;
+    obligation.successorProof[0] = SUCCESSOR_PROOF.PROVEN_VIABLE;
+    assert.equal(obligation.strictRescueCandidate(1, rowSet.hard, 2), -1);
+    obligation.supportStatus = SUPPORT_STATUS.COMPLETE;
+    obligation.successorProof[1] = SUCCESSOR_PROOF.UNKNOWN;
+    assert.equal(obligation.strictRescueCandidate(1, rowSet.hard, 2), -1);
+  });
+
+  it("persists only a strictly better committed escape continuation", () => {
+    const obligation = new EscapeObligation({ chanceSurvivalMass: true });
+    const hard = new Uint8Array([HARD_STATUS.ALLOW, HARD_STATUS.ALLOW]);
+    obligation.supportStatus = SUPPORT_STATUS.COMPLETE;
+    obligation.continuationRequired = 1;
+    obligation.member[0] = 1; obligation.member[1] = 1;
+    obligation.successorProof[0] = SUCCESSOR_PROOF.PROVEN_VIABLE;
+    obligation.successorProof[1] = SUCCESSOR_PROOF.PROVEN_VIABLE;
+    obligation.successorCoverage[0] = 1; obligation.successorCoverage[1] = 1;
+    obligation.successorSurvivalMass[0] = 10000;
+    obligation.successorSurvivalMass[1] = 10000;
+    obligation.successorExposed[0] = 1; obligation.successorExposed[1] = 0;
+    obligation.successorSlack[0] = 3; obligation.successorSlack[1] = 3;
+    obligation.successorBranches[0] = 3; obligation.successorBranches[1] = 3;
+    assert.equal(obligation.persistentEscapeCandidate(0, hard, 2), 1);
+    obligation.confirmPersistentEscape();
+    assert.equal(obligation.persistentOverrideCount, 1);
+
+    obligation.continuationRequired = 0;
+    assert.equal(obligation.persistentEscapeCandidate(0, hard, 2), -1,
+      "a current hazard without a prior selected escape member is not a persistent plan");
+    obligation.continuationRequired = 1; hard[1] = HARD_STATUS.REJECT_PROVEN;
+    assert.equal(obligation.persistentEscapeCandidate(0, hard, 2), -1,
+      "persistent escape never revives a Hard-rejected row");
+
+    obligation.successorExposed[0] = 1;
+    assert.equal(obligation.activateAfterSelection(0), 1);
+    obligation.successorExposed[1] = 0;
+    assert.equal(obligation.activateAfterSelection(1), 0,
+      "the plan ends as soon as the selected successor leaves committed exposure");
   });
 });

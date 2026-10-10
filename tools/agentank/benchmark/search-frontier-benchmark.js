@@ -93,14 +93,7 @@ function configureDirect(search, prepared, risk) {
 function materializeDirect(search, profile, prepared, complete) {
   search.attemptedDepth = profile.depth;
   if (!complete) return;
-  search.completedDepth = profile.depth;
-  search.completedExpansionLimit = profile.width;
-  search.completedGeneratedMax = search.iterationGeneratedMax;
-  search.completedTruncatedCount = search.iterationTruncatedCount;
-  search.representativeSupportComplete = search.iterationTruncatedCount === 0 ? 1 : 0;
-  for (let row = 0; row < prepared.ourCount; row += 1)
-    search.rootScore[row] = search.iterationScore[row];
-  search.rootCellScore.set(search.iterationCellScore);
+  search.commitIteration(prepared.ourCount, profile.depth);
 }
 
 function runProfile(prepared, profile, risk = 50) {

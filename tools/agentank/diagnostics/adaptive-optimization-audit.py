@@ -1,0 +1,201 @@
+"""Independent round, score, cohort and batch-decision audit for BP400."""
+import base64
+import gzip
+import hashlib
+import json
+import pathlib
+import sys
+
+ROOT = pathlib.Path.cwd()
+OUT = pathlib.Path(sys.argv[1]).resolve()
+BATCH = int(sys.argv[sys.argv.index('--batch') + 1]) if '--batch' in sys.argv else 10
+FINAL = '--batch' not in sys.argv
+
+
+def read(p):
+    return json.loads(p.read_text())
+
+
+def sha(p):
+    return hashlib.sha256(p.read_bytes()).hexdigest()
+
+
+def rows(p):
+    return [json.loads(s) for s in gzip.decompress(p.read_bytes()).splitlines()]
+
+
+def score(r):
+    own = r['candidateSeat']
+    stars, crashes = r['counts']['stars'], r['counts']['crashes']
+    if r['result']['reason'] == 'frameLimit' or all(crashes):
+        v = .5 if stars[0] == stars[1] else float(stars[own] > stars[own ^ 1])
+    elif any(crashes):
+        v = float(not crashes[own])
+    else:
+        raise AssertionError('UNEXPECTED_TERMINAL')
+    assert v == {'V2_WIN': 1, 'V1_WIN': 0, 'DRAW': .5}[r['analysisOutcome']]
+    return v
+
+
+def key(r):
+    return r['job']['round'], r['job']['env'], r['matchUrlId'], r['candidateSeat']
+
+
+def single(r):
+    return int(score(r) == 0 and r['terminalCategory'] == 'SINGLE_CRASH')
+
+
+def doubles(rs):
+    d = {}
+    for r in rs:
+        d.setdefault((r['job']['round'], r['job']['env'], r['matchUrlId']), []).append(score(r))
+    return sum(len(x) == 2 and sum(x) == 0 for x in d.values())
+
+
+def compare(base, candidate):
+    index = {key(r): r for r in base}
+    assert len(index) == len(base) == len(candidate)
+    paired = [(r, index[key(r)]) for r in candidate]
+    result = {'n': len(paired), 'maps': len({r['matchUrlId'] for r in candidate}),
+              'deltaPoints': sum(score(r) - score(b) for r, b in paired),
+              'deathDelta': sum(single(r) - single(b) for r, b in paired),
+              'doubleLossDelta': doubles(candidate) - doubles(base),
+              'nodeRatio': sum(r['audit']['nodes'] for r in candidate) / max(1, sum(r['audit']['nodes'] for r in base)),
+              'transitionRatio': sum(r['audit']['transitions'] for r in candidate) / max(1, sum(r['audit']['transitions'] for r in base))}
+    result['mean'] = result['deltaPoints'] / max(1, len(paired))
+    return result
+
+
+def interval(base, candidate):
+    index = {key(r): r for r in base}
+    groups = {}
+    for r in candidate:
+        groups.setdefault(r['matchUrlId'], []).append(score(r) - score(index[key(r)]))
+    arrays = [(sum(a), len(a)) for a in groups.values()]
+    if not arrays:
+        return [0, 0]
+    state = 399120
+    means = []
+    for _ in range(6000):
+        total = count = 0
+        for _ in arrays:
+            state = (state * 1664525 + 1013904223) & 0xffffffff
+            a, n = arrays[int(state / 4294967296 * len(arrays))]
+            total += a
+            count += n
+        means.append(total / count)
+    means.sort()
+    return [means[int(6000 * (.05 / 60))], means[min(5999, int(6000 * (1 - .05 / 60)))]]
+
+
+def verify_comparisons(all_rows, summaries, role='validation', verify_intervals=False):
+    for mode, envs in summaries.items():
+        for env, expected in envs.items():
+            candidate = [r for r in all_rows if r['job']['mode'] == mode and r['job']['env'] == env and (role == 'all' or r['job']['role'] == role)]
+            keys = {key(r) for r in candidate}
+            base = [r for r in all_rows if r['job']['mode'] == 'baseline' and key(r) in keys]
+            actual = compare(base, candidate)
+            for k, value in actual.items():
+                assert abs(value - expected[k]) < 1e-12, (mode, env, k, value, expected[k])
+            if verify_intervals:
+                lo, hi = interval(base, candidate)
+                assert abs(lo - expected['lo']) < 1e-12
+                assert abs(hi - expected['hi']) < 1e-12
+
+
+manifest, protocol = read(OUT / 'manifest.json'), read(OUT / 'protocol.json')
+assert sha(OUT / 'protocol.json') == manifest['protocolHash']
+assert sha(OUT / 'scenarios.json.gz') == manifest['scenarioHash']
+for file, digest in manifest['sourceHashes'].items():
+    assert sha(ROOT / file) == digest
+    assert sha(OUT / 'sources' / file) == digest
+scenes = {s['matchUrlId']: s for s in json.loads(gzip.decompress((OUT / 'scenarios.json.gz').read_bytes()))}
+ids = [i for group in protocol['batchMaps'] for i in group]
+assert len(ids) == len(set(ids)) == 400
+terrain = [json.dumps(scenes[i]['map'], separators=(',', ':')) for i in ids]
+assert len(set(terrain)) == 400
+pre = rows(OUT / 'preflight/matches.ndjson.gz')
+assert len(pre) == 24
+assert read(OUT / 'preflight.json')['exactEquivalence']
+history, batch_rows, stages = [], [], []
+start = 121 + (BATCH - 1) * 10
+for number in range(121, 121 + BATCH * 10):
+    directory = OUT / ('R' + str(number))
+    execution = read(directory / 'execution.json')
+    assert sha(directory / 'matches.ndjson.gz') == execution['sha256']
+    rs, jobs = rows(directory / 'matches.ndjson.gz'), read(directory / 'jobs.json')
+    assert len(rs) == len(jobs) == execution['games']
+    checkpoints = [json.loads(s) for s in (directory / 'checkpoint.ndjson').read_text().splitlines()]
+    assert len(checkpoints) == len(rs)
+    assert {c['index'] for c in checkpoints} == set(range(len(rs)))
+    for c in checkpoints:
+        assert c['row'] == rs[c['index']]
+    plan = read(OUT / ('batch-' + str((number - 121) // 10 + 1) + '-plan.json'))
+    offset = (number - 121) % 10
+    expected_ids = set(plan['maps'][offset * 4:offset * 4 + 4])
+    assert len(rs) == len(plan['modes']) * 16
+    for i, r in enumerate(rs):
+        assert r['job'] == jobs[i]
+        assert r['matchUrlId'] in expected_ids
+        assert r['scenarioFingerprint'] == scenes[r['matchUrlId']]['fingerprint']
+        assert r['job']['role'] == ('discovery' if offset < plan['discoveryRounds'] else 'validation')
+        assert r['job']['mode'] in plan['modes']
+        for side in ('candidate', 'control'):
+            assert r[side]['errorCount'] == r[side]['timeoutCount'] == 0
+        assert r['candidateEngine']['rootRestoreFailures'] == r['candidateEngine']['hotAllocations'] == 0
+        score(r)
+    if number >= start:
+        verify_comparisons(rs, read(OUT / ('R' + str(number) + '.json'))['comparisons'], 'all')
+        batch_rows += rs
+    history += rs
+    stages.append(execution)
+evaluation = read(OUT / ('batch-' + str(BATCH) + '-evaluation.json'))
+assert evaluation['completedRounds'] == BATCH * 10
+assert evaluation['completedGames'] == len(history) + 24
+verify_comparisons(batch_rows, evaluation['batchValidation'])
+verify_comparisons(history, evaluation['cumulativeValidation'])
+for mode, ev in evaluation['evidence'].items():
+    a, b = [evaluation['cumulativeValidation'][mode][env] for env in ('original', 'event')]
+    assert ev['rngConflict'] == (a['mean'] * b['mean'] < 0 and abs(a['mean'] - b['mean']) >= .04)
+    assert ev['strong'] == (min(a['maps'], b['maps']) >= 48 and all(x['lo'] > 0 and x['deathDelta'] <= 0 and x['doubleLossDelta'] <= 0 and x['nodeRatio'] <= 2 and x['transitionRatio'] <= 2 for x in (a, b)))
+    if ev['retire']:
+        assert mode in evaluation['retired']
+assert evaluation['productionChampion'] == 'baseline'
+if BATCH >= 8:
+    frozen = read(OUT / 'batch-7-evaluation.json')['nextActive']
+    assert read(OUT / ('batch-' + str(BATCH) + '-plan.json'))['stateBefore']['active'] == frozen
+    assert evaluation['nextActive'] == frozen
+if BATCH > 1:
+    plan = read(OUT / ('batch-' + str(BATCH) + '-plan.json'))
+    assert plan['priorEvaluationHash'] == sha(OUT / ('batch-' + str(BATCH - 1) + '-evaluation.json'))
+    assert plan['stateBefore'] == read(OUT / ('batch-' + str(BATCH - 1) + '-evaluation.json'))['stateAfter']
+result = {'status': 'INDEPENDENT_BATCH_AUDIT_PASS', 'batch': BATCH, 'rounds': BATCH * 10,
+          'games': len(history) + 24, 'decision': evaluation['decision'],
+          'verified': ['source/archive hashes', '400 unique terrains', 'checkpoint rows', 'score reconstruction', 'paired comparisons', 'work counters', 'decision evidence', 'state chain', 'frozen final confirmation'],
+          'scriptSha256': sha(pathlib.Path(__file__))}
+if FINAL:
+    summary = read(OUT / 'summary.json')
+    assert summary['rounds'] == 100 and summary['executedGames'] == len(history) + 24
+    assert summary['executedGames'] <= protocol['budget']['maximumGames']
+    confirmation = [r for r in history if r['job']['batch'] >= 8]
+    verify_comparisons(confirmation, summary['finalComparisons'], verify_intervals=True)
+    versus_old = {}
+    for mode in summary['finalModes']:
+        versus_old[mode] = {}
+        for env in ('original', 'event'):
+            candidate = [r for r in confirmation if r['job']['mode'] == mode and r['job']['env'] == env]
+            base = [r for r in confirmation if r['job']['mode'] == 'R29' and r['job']['env'] == env]
+            report = compare(base, candidate)
+            report['adjustedDescriptiveInterval'] = interval(base, candidate)
+            versus_old[mode][env] = report
+    result.update(status='INDEPENDENT_100_ROUND_AUDIT_PASS', decisions=[read(OUT / ('batch-' + str(b) + '-evaluation.json'))['decision'] for b in range(1, 11)],
+                  finalModes=summary['finalModes'], finalQualifiedDiagnostic=summary['finalQualifiedDiagnostic'], finalComparisons=summary['finalComparisons'],
+                  confirmationVersusOldR29=versus_old, stageSeconds=summary['stageSeconds'], productionUnchanged=summary['productionUnchanged'], productionAdoption=False,
+                  workflowSuperiority='Not established by an equal-budget optimizer comparison; candidate performance and process decisions are separately recorded.')
+target = OUT / ('independent-audit.json' if FINAL else 'batch-' + str(BATCH) + '-audit.json')
+encoded = json.dumps(result, indent=2, ensure_ascii=False) + '\n'
+if target.exists():
+    assert target.read_text() == encoded
+else:
+    target.write_text(encoded)
+print(json.dumps({'status': result['status'], 'rounds': result['rounds'], 'games': result['games'], 'decision': evaluation['decision']}))

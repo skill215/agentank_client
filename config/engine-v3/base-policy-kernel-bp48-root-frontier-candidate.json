@@ -1,0 +1,88 @@
+{
+  "objectKind": "BP48_ROOT_FRONTIER_CANDIDATE_V1",
+  "status": "NEUTRAL_NOT_ACCEPTED_AS_GENERIC_ACTION_OWNER",
+  "candidate": {
+    "proposal": "MINIMAX_ROOT_VALUE_ARGMAX",
+    "proposalMode": "root-value",
+    "ownershipMode": "value-active",
+    "requiredResponseRelation": "CANDIDATE_DOMINATES",
+    "requiredRootValueRelation": "CANDIDATE_HIGHER",
+    "firstActionOnly": true,
+    "sharedHostContinuation": true,
+    "finalGateClosure": true,
+    "maximumFrames": 6,
+    "nodeBudget": 2048,
+    "enemyPortfolio": ["ATTACK", "POSITION", "DEFENSE"],
+    "enemyPortfolioWeights": [4000, 3500, 2500],
+    "primitivePrefixDepth": 1
+  },
+  "knownTacticalHoldout": {
+    "role": "TACTICAL_HOLDOUT",
+    "scenarioLimit": 64,
+    "matches": 128,
+    "guardedShadow": {
+      "wins": 63,
+      "losses": 53,
+      "draws": 12,
+      "scoreBasisPoints": 5391,
+      "avoidableHardReject": 0,
+      "overviewSha256": "cb198e1a91d8f2757197750bba397ebfcafd7c7c2fbce5f6c0714fcfe773da68"
+    },
+    "valueActive": {
+      "wins": 68,
+      "losses": 45,
+      "draws": 15,
+      "scoreBasisPoints": 5898,
+      "avoidableHardReject": 0,
+      "overviewSha256": "d8fb059ac911624fe0aa5a51b4814b56eca1b1fd93fd6f1e5137dfbbc8d59cdb"
+    },
+    "pairedDelta": {
+      "scoreBasisPoints": 508,
+      "lossToWin": 9,
+      "lossToDraw": 1,
+      "drawToWin": 1,
+      "winToLoss": 2,
+      "winToDraw": 3,
+      "fireActions": 34,
+      "candidateCrashes": -2,
+      "scenarioSignP": 0.210113525390625
+    }
+  },
+  "independentValidation": {
+    "role": "EO_HOLDOUT",
+    "scenarioLimit": 64,
+    "baselineMode": "guarded-shadow",
+    "candidateMode": "value-active",
+    "parameterChangesAfterFreeze": 0,
+    "result": {
+      "guardedShadow": {
+        "wins": 53,
+        "losses": 69,
+        "draws": 6,
+        "scoreBasisPoints": 4375,
+        "overviewSha256": "bbd0ad81e605248c13c0ed5c9ece75d435ce61f59d9ce48502c73d96fba3a0c5"
+      },
+      "valueActive": {
+        "wins": 55,
+        "losses": 67,
+        "draws": 6,
+        "scoreBasisPoints": 4531,
+        "overviewSha256": "31a30cde05e24d1e82745b5e7ad22dd67b3c17b7c0247dd1ce9775f7642f51f9"
+      },
+      "scoreBasisPointDelta": 156,
+      "scenarioSignP": 0.548828125,
+      "hardInvariantFailures": 0,
+      "accepted": false,
+      "reason": "POSITIVE_DIRECTION_BUT_BELOW_3PP_AND_NOT_SIGNIFICANT"
+    }
+  },
+  "sourceSha256": {
+    "productionRoot": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7",
+    "responseMass": "f456bbd756327cdbf90e191d1a67de3d544073ed6e0cb513f0e8fa9bcfa1662f",
+    "selectiveVerifier": "8bfa53be60a8cfeb9113aa58a44cd1423f1262e22b4c37c595f017914d89acfe",
+    "arena": "25960d76465eb38589f3880363bca6038a7a630c98099d7fb0c151f73c5a9c68",
+    "bp42Runner": "3097323291d7a92ca25de6b3e421e83ad23724a1f0c3a837479f0b236e6b8e98",
+    "bp43Runner": "c8c23fe48ff79cf6f11541831909ddcbc80e0d87f5da1d3c1761e31d42b23e9a",
+    "contractTest": "57454d944e320320f18e4cf23658e4b9c1572fadf2428d71ae22664122d0205e"
+  }
+}

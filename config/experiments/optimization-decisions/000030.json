@@ -1,0 +1,94 @@
+{
+  "seq": 30,
+  "previous": "dc85caa01bc146513eca603074613f191bafc2c005a1a9a3939b10f484e41ec9",
+  "record": {
+    "version": 1,
+    "type": "review",
+    "id": "OPT-D-0014",
+    "reviewId": "OPT-R-0014",
+    "at": "2026-10-09T03:22:03.653Z",
+    "stage": "independent",
+    "disposition": "retain",
+    "outcome": "passed",
+    "primaryCause": "NONE",
+    "secondaryCauses": [],
+    "reason": "Only eligible candidate; retain for broader validation.",
+    "nextStep": "Validate reward against broader opponents and runtime limits; no production adoption.",
+    "limitations": "Exploratory comparison of concrete proposals;12 maps against one opponent. Not universal superiority of selection methods, not production performance; transition count is work proxy. Pairwise interval is conservative, not simultaneous selection correction.",
+    "experiments": [
+      "BP421_REWARD"
+    ],
+    "assessments": [
+      {
+        "criterion": "integrity",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp421-method-comparison/summary.json"
+      },
+      {
+        "criterion": "eligible",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp421-method-comparison/summary.json"
+      },
+      {
+        "criterion": "release",
+        "status": "unknown",
+        "evidencePath": "artifacts/native-causal-audit/bp421-method-comparison/summary.json"
+      }
+    ],
+    "cost": {
+      "attemptedGames": 12,
+      "completedGames": 12,
+      "independentUnits": 12,
+      "executionSeconds": 27.161195793,
+      "analysisSeconds": null
+    },
+    "metrics": [
+      {
+        "name": "score",
+        "value": 9,
+        "unit": "total over12",
+        "source": "artifacts/native-causal-audit/bp421-method-comparison/summary.json"
+      },
+      {
+        "name": "deaths",
+        "value": 3,
+        "unit": "count over12",
+        "source": "artifacts/native-causal-audit/bp421-method-comparison/summary.json"
+      },
+      {
+        "name": "transitions",
+        "value": 106620,
+        "unit": "count",
+        "source": "artifacts/native-causal-audit/bp421-method-comparison/summary.json"
+      }
+    ],
+    "productionAdoption": false,
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp421-method-comparison/summary.json",
+        "sha256": "8494ec1aae7af1ed4321edb1245a5bfe3e1cfaf998b9546460868f32c142a8e6"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp421-method-comparison/per-game-metrics.json",
+        "sha256": "a38b3224ac56d0c686465eb3ee8e5f01e952067e4184bf7c8f4ce4c6edfab426"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp421-method-comparison/reward-review.json",
+        "sha256": "75434f828237be509b4985482453c2fff6889ace92a285d536b22c15dabd19cf"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp421-method-comparison/reward-run/state.json",
+        "sha256": "ae85443833538d3290ddc1e668aa15a54195ce37ff7119b7355a7222001333f1"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp421-method-comparison/core-tests.txt",
+        "sha256": "2bd207f0c14808334d20fb2cc3d1f8634875033721269fe1258548db59e41c0f"
+      },
+      {
+        "path": "docs/implementation/optimization-decisions/bp421-method-review.md",
+        "sha256": "1f7d7a9717b8ae1215aaeb5ce9f90dd8a6ca69357b1d6bcc26860921ef31ba09"
+      }
+    ]
+  },
+  "sha256": "92cb1a622895f425be8725eb6a130321a5df4bd1b4f77ea0ec374645fc352ad8"
+}

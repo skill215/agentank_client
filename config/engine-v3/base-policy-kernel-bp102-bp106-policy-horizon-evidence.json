@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_BP102_BP106_POLICY_HORIZON_EVIDENCE_V1",
+  "productionBehaviorChanged": false,
+  "cohort": {
+    "role": "DISCOVERY",
+    "scenarios": 16,
+    "matchesPerMode": 32,
+    "skillMode": "STUN",
+    "nodeBudget": 128,
+    "targetDepth": 4
+  },
+  "source": {
+    "nativeBoundedPolicySearchSha256": "927d4d2d8c5d5664e49226eb5182d15d35643430346437a05359285f62149257",
+    "nativeDualPolicyContinuationSha256": "aab4ec76a1ea5d650581beb9c8ef8c03aa6e5aa11b7bedd38e67ad7d7ce74eb6",
+    "arenaSha256": "681a882e1f0f1c7defd30e87fe4ce39981191ac22d38986487a29d13fa3cd64a",
+    "runnerSha256": "197a46e2aef1f4f095a0601e3c728865a7552306d2a7cf35f2dda7846d8d2d86",
+    "testSha256": "2c6f40347fc066bb0fdb2f14833697c6c771ac427d3e34b8d8c6c14c207d6bd8"
+  },
+  "modes": {
+    "currentMixed": { "wins": 22, "losses": 10, "draws": 0, "scoreBasisPoints": 6875, "nodes": 315030, "fire": 172, "kills": 14 },
+    "iterativeCommon": { "wins": 16, "losses": 14, "draws": 2, "scoreBasisPoints": 5313, "nodes": 220158, "fire": 168, "kills": 9 },
+    "basePolicy": { "wins": 16, "losses": 15, "draws": 1, "scoreBasisPoints": 5156, "nodes": 240010, "fire": 153, "kills": 13, "overviewSha256": "dbeab1209b284913bbfeb687b100aa4bf54f6d46f5f591e5a965a0ae13fa0df1" },
+    "combatFirst": { "wins": 10, "losses": 17, "draws": 5, "scoreBasisPoints": 3906, "nodes": 268049, "fire": 172, "kills": 7, "overviewSha256": "9203c232818a2ebed8cb9a6e3e459b9cb2931e4078799dd1da58d0e45c7944ed" },
+    "perNodePortfolio": { "wins": 10, "losses": 18, "draws": 4, "scoreBasisPoints": 3750, "nodes": 245259, "fire": 188, "kills": 7, "overviewSha256": "8d37618306ee9611f1975c589b78f319e844dac4f2ef0226990b74080ad033b0" },
+    "rootPolicy": { "wins": 13, "losses": 16, "draws": 3, "scoreBasisPoints": 4531, "nodes": 247849, "fire": 167, "kills": 7, "overviewSha256": "d3d8f7017babe81e4ea73a21154adc920f52537b9a77f291968099acdd670c98" },
+    "rootPolicyComponentClamp": { "wins": 13, "losses": 16, "draws": 3, "scoreBasisPoints": 4531, "nodes": 239692, "fire": 166, "kills": 7, "overviewSha256": "42846a65ec05338e8448a4ee777166fbc35ea1ab17dbba51f28a55c5a891a46e" },
+    "rootPolicyNoAttackLeaf": { "wins": 12, "losses": 17, "draws": 3, "scoreBasisPoints": 4219, "nodes": 191746, "fire": 143, "kills": 9, "overviewSha256": "05cee1a0ec2953c8da74c186736dc630a81d7ca70e8d9b7d649eab0a23c6b54a" },
+    "rootPolicyDirect": { "wins": 16, "losses": 15, "draws": 1, "scoreBasisPoints": 5156, "nodes": 240010, "fire": 153, "kills": 13, "overviewSha256": "e6e41779217db8a8366402dadc0612f35c1d381306bd1539fadeb13942fe4833" }
+  },
+  "invariants": {
+    "hotAllocationCount": 0,
+    "rootRestoreFailureCount": 0,
+    "timeoutError": 0,
+    "focusedTestsPassed": 56,
+    "focusedTestsFailed": 0
+  },
+  "decision": "KEEP_BASE_POLICY_COMPRESSION_AND_ROOT_OPTION_IDENTITY; REJECT_PER_NODE_POLICY_SWITCHING_AND_UNCLOSED_ATTACK_SETUP; BUILD_TERMINAL_COUNTERFACTUAL_BOOTSTRAP_NEXT"
+}
+

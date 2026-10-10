@@ -10,11 +10,35 @@ const EFFECT_ARRAYS = Object.freeze([ARRAY.TANK_SHIELD_UNTIL, ARRAY.TANK_FROZEN_
   ARRAY.TANK_STUN_UNTIL, ARRAY.TANK_OVERLOAD_UNTIL, ARRAY.TANK_CLOAK_UNTIL,
   ARRAY.TANK_POISON_UNTIL, ARRAY.TANK_BOOST_UNTIL, ARRAY.TANK_REVEAL_UNTIL]);
 
+const FAST_UNSUPPORTED_REASON = Object.freeze({ NONE: 0, MULTIPLE_DUE_BOMBS: 1,
+  CONVERGING_PROJECTILES: 2, JOINT_TANK_RELOCATION: 3,
+  COOLDOWN_NON_POISON_SKILL: 4, TELEPORT_ON_STAR: 5,
+  INACTIVE_BOOST_COMPOUND: 6, MULTIPLE_STAR_COLLECTORS: 7,
+  TERMINAL_RUNTIME_TIE: 8 });
+const JOINT_RELOCATION_DETAIL = Object.freeze({ NONE: 0, DIRECT_SWAP: 1,
+  OCCUPIED_AFTER_EARLIER_MOVE: 2, VACATE_NOT_STRICTLY_SUPPORTED: 3, OTHER: 4 });
+
+function actionMayRelocate(action) {
+  return action === ACTION.GO || action === ACTION.CAST_TELEPORT ||
+    action === ACTION.BOOST_LEFT_GO || action === ACTION.BOOST_RIGHT_GO;
+}
+
 class FastKernel {
-  constructor(state) { this.state = state; this.failure = 0; this.lastMark = 0;
+  constructor(state, options = null) { this.state = state; this.failure = 0;
+    this.failureReason = FAST_UNSUPPORTED_REASON.NONE; this.lastMark = 0;
+    this.failureAction0 = ACTION.NONE; this.failureAction1 = ACTION.NONE;
+    this.failureDetail = JOINT_RELOCATION_DETAIL.NONE;
+    this.frameStartCell0 = NONE_CELL; this.frameStartCell1 = NONE_CELL;
+    this.preparedTarget0 = NONE_CELL; this.preparedTarget1 = NONE_CELL;
+    this.confirmedVacatingMask = 0;
+    this.stationaryOccupiedBlockEnabled = !options ||
+      options.stationaryOccupiedBlock !== false ? 1 : 0;
     this.appliedActionCount = 0; this.hardCheckedActionCount = 0; }
 
-  fail(status) { if (!this.failure) this.failure = status; return 0; }
+  fail(status, reason = FAST_UNSUPPORTED_REASON.NONE) {
+    if (!this.failure) { this.failure = status; this.failureReason = reason; }
+    return 0;
+  }
   set(arrayId, index, value) {
     return this.state.write(arrayId, index, value) || this.fail(FAST_STATUS.INCOMPLETE_DELTA_CAPACITY);
   }
@@ -64,18 +88,52 @@ class FastKernel {
       this.state.cell(x, y);
   }
 
+  plainGoDestination(seat, action, chance) {
+    const a = this.state.arrays; const frame = this.frame();
+    if (action !== ACTION.GO || chance !== CHANCE.NORMAL || a[ARRAY.TANK_CRASH][seat] ||
+        this.active(a[ARRAY.TANK_FROZEN_UNTIL][seat]) ||
+        this.active(a[ARRAY.TANK_STUN_UNTIL][seat]) ||
+        this.active(a[ARRAY.TANK_POISON_UNTIL][seat]) ||
+        this.active(a[ARRAY.TANK_BOOST_UNTIL][seat])) return NONE_CELL;
+    const before = a[ARRAY.TANK_CELL][seat];
+    const target = this.targetCell(before, a[ARRAY.TANK_DIR][seat]);
+    if (target === NONE_CELL) return NONE_CELL;
+    const tile = a[ARRAY.TERRAIN][target];
+    return tile === TERRAIN.WALL || tile === TERRAIN.DIRT ? NONE_CELL : target;
+  }
+
+  prepareConfirmedJointMovement(action0, action1, chance0, chance1) {
+    const a = this.state.arrays;
+    this.frameStartCell0 = a[ARRAY.TANK_CELL][0];
+    this.frameStartCell1 = a[ARRAY.TANK_CELL][1];
+    this.confirmedVacatingMask = 0;
+    const target0 = this.plainGoDestination(0, action0, chance0);
+    const target1 = this.plainGoDestination(1, action1, chance1);
+    this.preparedTarget0 = target0; this.preparedTarget1 = target1;
+    if (target0 !== NONE_CELL && target1 !== NONE_CELL)
+      this.confirmedVacatingMask = 3;
+    // Official histories prove following into a start cell that the other tank
+    // vacates in the same record.  No official swap sample exists, so a direct
+    // exchange remains unsupported rather than borrowing simulator semantics.
+    if (target0 === this.frameStartCell1 && target1 === this.frameStartCell0)
+      this.confirmedVacatingMask = 0;
+    return 1;
+  }
+
   preflightSharedResources() {
     const a = this.state.arrays; const frame = this.frame(); let dueBombs = 0;
     for (let slot = 0; slot < CAPACITY.MAX_BOMBS; slot += 1)
       if (a[ARRAY.BOMB_ACTIVE][slot] && a[ARRAY.BOMB_EXPLODE][slot] <= frame) dueBombs += 1;
-    if (dueBombs > 1) return this.fail(FAST_STATUS.UNSUPPORTED_RULE);
+    if (dueBombs > 1) return this.fail(FAST_STATUS.UNSUPPORTED_RULE,
+      FAST_UNSUPPORTED_REASON.MULTIPLE_DUE_BOMBS);
     for (let left = 0; left < CAPACITY.MAX_PROJECTILES; left += 1) if (a[ARRAY.PROJECTILE_ACTIVE][left]) {
       const leftTarget = this.targetCell(a[ARRAY.PROJECTILE_CELL][left], a[ARRAY.PROJECTILE_DIR][left]);
       for (let right = left + 1; right < CAPACITY.MAX_PROJECTILES; right += 1)
         if (a[ARRAY.PROJECTILE_ACTIVE][right] && leftTarget !== NONE_CELL && leftTarget ===
             this.targetCell(a[ARRAY.PROJECTILE_CELL][right], a[ARRAY.PROJECTILE_DIR][right]) &&
             (a[ARRAY.TERRAIN][leftTarget] === TERRAIN.DIRT || this.tankAt(leftTarget) !== 2))
-          return this.fail(FAST_STATUS.UNSUPPORTED_RULE);
+          return this.fail(FAST_STATUS.UNSUPPORTED_RULE,
+            FAST_UNSUPPORTED_REASON.CONVERGING_PROJECTILES);
     }
     return 1;
   }
@@ -122,14 +180,36 @@ class FastKernel {
     return 1;
   }
 
-  move(seat, reversed) {
+  move(seat, reversed, opposingAction) {
     const a = this.state.arrays; const before = a[ARRAY.TANK_CELL][seat];
     const original = a[ARRAY.TANK_DIR][seat]; const direction = reversed ? (original + 2) & 3 : original;
     const steps = this.active(a[ARRAY.TANK_BOOST_UNTIL][seat]) ? 2 : 1; let cell = before; let moved = 0;
     for (let step = 0; step < steps; step += 1) {
       const target = this.targetCell(cell, direction); if (target === NONE_CELL) break;
       const tile = a[ARRAY.TERRAIN][target]; if (tile === TERRAIN.WALL || tile === TERRAIN.DIRT) break;
-      if (this.tankAt(target, seat) !== 2) return this.fail(FAST_STATUS.UNSUPPORTED_RULE);
+      const occupied = this.tankAt(target, seat);
+      if (occupied !== 2) {
+        // The official P2-MOVE-CONTEST replay contains 22 repeated attempts to
+        // GO into a tank that stays in place while firing.  Every attempt is a
+        // no-effect block, never a crash.  Joint relocation (GO/teleport),
+        // same-target and swap semantics remain unresolved and fail closed.
+        const occupiedStart = occupied === 0 ? this.frameStartCell0 : this.frameStartCell1;
+        const confirmedVacatedEntry = target === occupiedStart &&
+          (this.confirmedVacatingMask & (1 << occupied));
+        if (confirmedVacatedEntry) { cell = target; moved += 1; continue; }
+        if (!this.stationaryOccupiedBlockEnabled || actionMayRelocate(opposingAction)) {
+          const directSwap = this.preparedTarget0 === this.frameStartCell1 &&
+            this.preparedTarget1 === this.frameStartCell0;
+          this.failureDetail = directSwap ? JOINT_RELOCATION_DETAIL.DIRECT_SWAP :
+            target !== occupiedStart ? JOINT_RELOCATION_DETAIL.OCCUPIED_AFTER_EARLIER_MOVE :
+              (occupied === 0 ? this.preparedTarget0 : this.preparedTarget1) === NONE_CELL ?
+                JOINT_RELOCATION_DETAIL.VACATE_NOT_STRICTLY_SUPPORTED :
+                JOINT_RELOCATION_DETAIL.OTHER;
+          return this.fail(FAST_STATUS.UNSUPPORTED_RULE,
+            FAST_UNSUPPORTED_REASON.JOINT_TANK_RELOCATION);
+        }
+        break;
+      }
       cell = target; moved += 1;
     }
     if (moved && (!this.set(ARRAY.TANK_CELL, seat, cell) ||
@@ -162,7 +242,8 @@ class FastKernel {
     if (a[ARRAY.TANK_SKILL][seat] !== skill) return 1;
     const frame = this.frame();
     if (a[ARRAY.TANK_SKILL_READY][seat] > frame) {
-      if (skill !== SKILL.POISON) return this.fail(FAST_STATUS.UNSUPPORTED_RULE);
+      if (skill !== SKILL.POISON) return this.fail(FAST_STATUS.UNSUPPORTED_RULE,
+        FAST_UNSUPPORTED_REASON.COOLDOWN_NON_POISON_SKILL);
       return this.event(this.actionPhase(seat), EVENT.COMMAND_FAILED, seat + 1,
         0, NONE_CELL, NONE_CELL, 0, 0, 1);
     }
@@ -170,7 +251,8 @@ class FastKernel {
     if (skill === SKILL.TELEPORT) {
       if (a[ARRAY.SCALAR][SCALAR.STAR_CELL] !== NONE_CELL &&
           targetCell === a[ARRAY.SCALAR][SCALAR.STAR_CELL])
-        return this.fail(FAST_STATUS.UNSUPPORTED_RULE);
+        return this.fail(FAST_STATUS.UNSUPPORTED_RULE,
+          FAST_UNSUPPORTED_REASON.TELEPORT_ON_STAR);
       if (targetCell === NONE_CELL || targetCell >= this.state.cells ||
           (a[ARRAY.TERRAIN][targetCell] !== TERRAIN.OPEN &&
            a[ARRAY.TERRAIN][targetCell] !== TERRAIN.GRASS) || this.tankAt(targetCell, seat) !== 2) {
@@ -220,14 +302,16 @@ class FastKernel {
       NONE_CELL, NONE_CELL, 0, duration, skill);
   }
 
-  executePrimitive(seat, action, argument, reversed) {
+  executePrimitive(seat, action, argument, reversed, opposingAction) {
     let actual = action; let reversedMove = 0;
     if (reversed) {
       if (action === ACTION.GO) reversedMove = 1;
       else if (action === ACTION.TURN_LEFT) actual = ACTION.TURN_RIGHT;
       else if (action === ACTION.TURN_RIGHT) actual = ACTION.TURN_LEFT;
     }
-    if (actual === ACTION.GO) { if (!this.move(seat, reversedMove)) return 0; }
+    if (actual === ACTION.GO) {
+      if (!this.move(seat, reversedMove, opposingAction)) return 0;
+    }
     else if (actual === ACTION.TURN_LEFT || actual === ACTION.TURN_RIGHT) {
       const a = this.state.arrays; const before = a[ARRAY.TANK_DIR][seat]; const after = (before +
         (actual === ACTION.TURN_LEFT ? 3 : 1)) & 3;
@@ -244,7 +328,7 @@ class FastKernel {
       0, NONE_CELL, NONE_CELL, action, actual, 0);
   }
 
-  executeSeat(seat, action, argument, chance) {
+  executeSeat(seat, action, argument, chance, opposingAction) {
     const a = this.state.arrays; const frame = this.frame();
     if (a[ARRAY.TANK_CRASH][seat]) return 1;
     // A held command is not executed or dequeued. ACTION.NONE is also a valid
@@ -260,17 +344,20 @@ class FastKernel {
     if (stunned && chance === CHANCE.MISSING) return this.fail(FAST_STATUS.INCOMPLETE_STATE);
     if (action >= BOOST_COMPOUND_BASE && action <= BOOST_COMPOUND_END) {
       if (!this.active(a[ARRAY.TANK_BOOST_UNTIL][seat]))
-        return this.fail(FAST_STATUS.UNSUPPORTED_RULE);
+        return this.fail(FAST_STATUS.UNSUPPORTED_RULE,
+          FAST_UNSUPPORTED_REASON.INACTIVE_BOOST_COMPOUND);
       const offset = action - BOOST_COMPOUND_BASE;
       const preTurn = offset < BOOST_COMPOUND_STRIDE ? ACTION.TURN_LEFT : ACTION.TURN_RIGHT;
       const mainIndex = offset % BOOST_COMPOUND_STRIDE;
       const main = mainIndex === 0 ? ACTION.GO : mainIndex === 1 ? ACTION.TURN_LEFT :
         mainIndex === 2 ? ACTION.TURN_RIGHT : mainIndex === 3 ? ACTION.FIRE : ACTION.THROW_BOMB;
-      if (!this.executePrimitive(seat, preTurn, NONE_CELL, stunned && (chance & 1))) return 0;
-      return this.executePrimitive(seat, main, argument, stunned && (chance & 2));
+      if (!this.executePrimitive(seat, preTurn, NONE_CELL,
+          stunned && (chance & 1), opposingAction)) return 0;
+      return this.executePrimitive(seat, main, argument,
+        stunned && (chance & 2), opposingAction);
     }
     const reversed = stunned && chance === CHANCE.REVERSED;
-    return this.executePrimitive(seat, action, argument, reversed);
+    return this.executePrimitive(seat, action, argument, reversed, opposingAction);
   }
 
   collectStar() {
@@ -278,7 +365,8 @@ class FastKernel {
     if (star === NONE_CELL) return 1; let collector = 2;
     for (let seat = 0; seat < 2; seat += 1) if (!a[ARRAY.TANK_CRASH][seat] &&
         a[ARRAY.TANK_CELL][seat] === star && !this.active(a[ARRAY.TANK_PICKUP_LOCK][seat])) {
-      if (collector !== 2) return this.fail(FAST_STATUS.UNSUPPORTED_RULE); collector = seat;
+      if (collector !== 2) return this.fail(FAST_STATUS.UNSUPPORTED_RULE,
+        FAST_UNSUPPORTED_REASON.MULTIPLE_STAR_COLLECTORS); collector = seat;
     }
     if (collector === 2) return 1;
     const stars = a[ARRAY.TANK_STARS][collector];
@@ -410,7 +498,8 @@ class FastKernel {
             a[ARRAY.TANK_RUNTIME][1] === UNKNOWN_RUNTIME) return this.fail(FAST_STATUS.INCOMPLETE_STATE);
         else if (a[ARRAY.TANK_RUNTIME][0] !== a[ARRAY.TANK_RUNTIME][1])
           winner = a[ARRAY.TANK_RUNTIME][0] < a[ARRAY.TANK_RUNTIME][1] ? 0 : 1;
-        else return this.fail(FAST_STATUS.UNSUPPORTED_RULE);
+        else return this.fail(FAST_STATUS.UNSUPPORTED_RULE,
+          FAST_UNSUPPORTED_REASON.TERMINAL_RUNTIME_TIE);
       }
     }
     if (!trigger) return 1;
@@ -423,16 +512,22 @@ class FastKernel {
 
   applyFrame(action0 = ACTION.NONE, arg0 = NONE_CELL, action1 = ACTION.NONE,
       arg1 = NONE_CELL, chance0 = CHANCE.NORMAL, chance1 = CHANCE.NORMAL) {
-    const state = this.state; const mark = state.beginTransition(); this.lastMark = mark; this.failure = 0;
+    const state = this.state; const mark = state.beginTransition(); this.lastMark = mark;
+    this.failure = 0; this.failureReason = FAST_UNSUPPORTED_REASON.NONE;
+    this.failureAction0 = ACTION.NONE; this.failureAction1 = ACTION.NONE;
+    this.failureDetail = JOINT_RELOCATION_DETAIL.NONE;
     if (state.deltaArray.length - state.deltaUsed < CAPACITY.MAX_DELTAS_PER_TRANSITION) this.failure =
       FAST_STATUS.INCOMPLETE_DELTA_CAPACITY;
     else if (state.eventPhase.length - state.eventUsed < CAPACITY.MAX_EVENTS_PER_TRANSITION) this.failure =
       FAST_STATUS.INCOMPLETE_EVENT_CAPACITY;
     else if (!this.preflightSharedResources() || !this.expireEffects() ||
-        !this.executeSeat(0, action0, arg0, chance0) || !this.executeSeat(1, action1, arg1, chance1) ||
+        !this.prepareConfirmedJointMovement(action0, action1, chance0, chance1) ||
+        !this.executeSeat(0, action0, arg0, chance0, action1) ||
+        !this.executeSeat(1, action1, arg1, chance1, action0) ||
         !this.collectStar() || !this.advanceProjectiles() || !this.resolveBombs() ||
         !this.resolveTerminal()) { /* failure already classified */ }
-    if (this.failure) { state.undoTo(mark); return this.failure; }
+    if (this.failure) { this.failureAction0 = action0; this.failureAction1 = action1;
+      state.undoTo(mark); return this.failure; }
     const terminal = state.arrays[ARRAY.SCALAR][SCALAR.TERMINAL_CODE];
     if (!terminal && (!this.set(ARRAY.SCALAR, SCALAR.FRAME, this.frame() + 1) ||
         !this.set(ARRAY.SCALAR, SCALAR.RECORD,
@@ -448,4 +543,5 @@ class FastKernel {
   undoLast() { return this.state.undoTo(this.lastMark); }
 }
 
-module.exports = { FastKernel };
+module.exports = { FAST_UNSUPPORTED_REASON, JOINT_RELOCATION_DETAIL, FastKernel,
+  actionMayRelocate };

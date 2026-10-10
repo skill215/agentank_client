@@ -1,0 +1,647 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "V2_COMPONENT_TRANSPLANT_CTR0_CTR8_REPORT_V1",
+  "identityFingerprint": "7c3583a17b88ca6beba9dcf96c6c3a5c80a8f64bcbd83bc63f1a83957169ad19",
+  "realV2Base": {
+    "sourceSha256": "0a648d8342bf0bffdf67cf339ce559db682e1bcd33f843d29aaa2f90b05cf4f4",
+    "minifiedSha256": "efc5491b0c6b17be28ace84ab9eb7e1c1f636661d1258bb18ffcf57a5dc89e96",
+    "discovery": {
+      "identities": {
+        "challenger": "V2_BASE",
+        "control": "V3_BASE"
+      },
+      "matches": 128,
+      "scenarios": 64,
+      "analysis": {
+        "v2Wins": 12,
+        "v3Wins": 116,
+        "draws": 0,
+        "scoreBasisPoints": 938,
+        "scorePercent": "9.38"
+      },
+      "pairs": {
+        "v2Sweep": 1,
+        "v3Sweep": 53,
+        "split": 10,
+        "drawAffected": 0
+      },
+      "stars": {
+        "v2": 33,
+        "v3": 135
+      },
+      "crashes": {
+        "v2": 116,
+        "v3": 19
+      },
+      "projectiles": {
+        "v2": 266,
+        "v3": 387
+      },
+      "actions": {
+        "v2": {
+          "turn": 2601,
+          "go": 3451,
+          "fire": 266,
+          "throwBomb": 158,
+          "none": 32
+        },
+        "v3": {
+          "turn": 2397,
+          "go": 3493,
+          "fire": 388,
+          "stun": 211,
+          "throwBomb": 19
+        }
+      },
+      "runtime": {
+        "elapsedMs": 38930,
+        "v2TotalMicros": 15975381,
+        "v3TotalMicros": 21479397
+      },
+      "timeoutError": {
+        "v2": 0,
+        "v3": 0
+      }
+    }
+  },
+  "v3Base": {
+    "behaviorSourceSha256": "8da68843a292c6a6230a32baf60392916f9fb85aaa5d9a94feac7085ddc9e82e",
+    "role": "EXPERIMENT_CONTROL_ONLY",
+    "includedInV2Bundle": false
+  },
+  "components": [
+    {
+      "id": "OBSERVATION_PROJECTILE_TRACKING",
+      "stage": "CTR1",
+      "classification": "CORRECT_NEUTRAL",
+      "score": 40,
+      "evidence": {
+        "id": "ctr1-shadow",
+        "directory": "artifacts/v3-components/ctr1-shadow-discovery-cb66a2c4fcaf875d",
+        "manifestFingerprint": "6ecb745f74c8e1d1771f5429a508ce75a39f54d19ce55ea7f1d500361cbc1304",
+        "hashes": {
+          "manifest": "73013dd4326b5af73870798977d052921a3c95210c9d9983fb3919cf1f1e3c66",
+          "overview": "9fef44e28a4d2a577cf42914e87ce8e63dae9ce1147818205660723dcccb54ee",
+          "matches": "b82b36883f3a6e75c6d904b34505139541e06662663e61ef6dc8a560cbca7978"
+        },
+        "analysis": {
+          "challengerWins": 16,
+          "controlWins": 16,
+          "draws": 0,
+          "scoreBasisPoints": 5000
+        }
+      },
+      "rationale": "8/8 projectile lifecycle tests pass and actions are identical, but neither total nor P95 improves by 5%.",
+      "actionEquivalent": true,
+      "runtimeRatio": {
+        "totalBasisPoints": 10303,
+        "p95BasisPoints": 9911
+      },
+      "hotAllocations": 0
+    },
+    {
+      "id": "PHYSICAL_HARD_FINAL",
+      "stage": "CTR2",
+      "classification": "CORRECT_NEUTRAL",
+      "score": 45,
+      "evidence": {
+        "id": "ctr2-hard",
+        "directory": "artifacts/v3-components/ctr2-hard-discovery-017766d50a6d87ad",
+        "manifestFingerprint": "1f514061453e7fd0fea746836f030ba191060c4c84879c2ac75bae12e583938a",
+        "hashes": {
+          "manifest": "f2d78a51339f923b77ac5fed1e5b09f276143a3c52e24e152f132e1ce4d26ac1",
+          "overview": "8f652b6ac9cce66dc7a228f42dd3dfa237a02c710319e629e977e098ff4c79f9",
+          "matches": "093640e6e4ef1eeb22fc091a53214eafa4851fa0ec810f3d6c0cc47b55a2a7f7"
+        },
+        "analysis": {
+          "challengerWins": 16,
+          "controlWins": 16,
+          "draws": 0,
+          "scoreBasisPoints": 5000
+        }
+      },
+      "rationale": "Complete physical checks are correct, but the Discovery set has zero safe overrides.",
+      "ports": {
+        "callCount": 1804,
+        "completeCount": 206,
+        "incompleteCount": 1598,
+        "preferredRejectedCount": 1,
+        "overrideCount": 0,
+        "noSafeActionCount": 1,
+        "proposalSelectionCount": 0,
+        "proposalOverrideCount": 0,
+        "committedRescueSelections": 0,
+        "forcedWinSelections": 0,
+        "exactValueSelections": 0,
+        "verifiedAttackSelections": 0,
+        "strategicSelections": 0
+      }
+    },
+    {
+      "id": "DEADLINE_KERNEL",
+      "stage": "CTR2",
+      "classification": "CORRECT_NEUTRAL",
+      "score": 45,
+      "evidence": null,
+      "rationale": "Committed closure fixtures pass; it remains a safety evidence service."
+    },
+    {
+      "id": "FINAL_ONLY_ESCAPE_OBLIGATION",
+      "stage": "CTR2",
+      "classification": "CORRECT_NEUTRAL",
+      "score": 40,
+      "evidence": {
+        "id": "ctr2-eo-final",
+        "directory": "artifacts/v3-components/ctr2-eo-final-discovery-bd8b74839533f3a9",
+        "manifestFingerprint": "7d426c2d36063cd61fbaed1a8dda37220ee1a434e283eaa873000dea04e467bb",
+        "hashes": {
+          "manifest": "f58121872d35d076b9f31ca1fe1f9c3badd2607f4177f6c3b6c14782114b8ddb",
+          "overview": "7546510868eac1d81b475714b1469188bf318d237bdf538644e9cd52830dab40",
+          "matches": "e0876a741265cfe58ac7d8e842b826e9777baf95b451a5b74775f1ca81c77ee7"
+        },
+        "analysis": {
+          "challengerWins": 16,
+          "controlWins": 16,
+          "draws": 0,
+          "scoreBasisPoints": 5000
+        }
+      },
+      "rationale": "Final-only EO has zero DIE-to-SURVIVE and zero SURVIVE-to-DIE transitions.",
+      "ports": {
+        "callCount": 1804,
+        "completeCount": 206,
+        "incompleteCount": 1598,
+        "preferredRejectedCount": 1,
+        "overrideCount": 0,
+        "noSafeActionCount": 1,
+        "proposalSelectionCount": 0,
+        "proposalOverrideCount": 0,
+        "committedRescueSelections": 0,
+        "forcedWinSelections": 0,
+        "exactValueSelections": 0,
+        "verifiedAttackSelections": 0,
+        "strategicSelections": 0
+      }
+    },
+    {
+      "id": "EARLY_ESCAPE_OBLIGATION",
+      "stage": "CTR2",
+      "classification": "NEGATIVE",
+      "score": 10,
+      "evidence": {
+        "id": "vc3-all",
+        "directory": "artifacts/v3-components/vc3-all-612945f9ce0e81ca",
+        "manifestFingerprint": "45b1046f33e9dd319f29ee21ed14419ff90c643d380ac5edc44b7c311d0a52e8",
+        "hashes": {
+          "manifest": "e0ea097effa331b0f162ce3df249dd15ad78f429dba4325221779923510e056c",
+          "overview": "96d2246e74f03437a0e53998db14fce4d011a4cd7cd9fb77602e431f6dd3753c",
+          "matches": "06babba7e0a85b93f44928f7324b32a276e6d9e1ea05321f2930564ea3cf1e40"
+        },
+        "analysis": {
+          "challengerWins": 41,
+          "controlWins": 70,
+          "draws": 17,
+          "scoreBasisPoints": 3867
+        }
+      },
+      "rationale": "Early ownership fell to 38.67% and is permanently excluded."
+    },
+    {
+      "id": "STRICT_FORCED_WIN",
+      "stage": "CTR3",
+      "classification": "CORRECT_NEUTRAL",
+      "score": 45,
+      "evidence": {
+        "id": "ctr3-forced-win",
+        "directory": "artifacts/v3-components/ctr3-forced-win-discovery-62f403bc4be56387",
+        "manifestFingerprint": "1e81ac34c182fb9ad4160794441f5047a2a99492e2ee0d2a3210d63243f3f62a",
+        "hashes": {
+          "manifest": "dcd36adbf10f45e154af6a669bc6c6c1e8cafcaacb9287c529f5ba13efd20971",
+          "overview": "21fd65681962175fddb9316354fdaff16e92d2b8ef424e93e8a7a0169fc2fecf",
+          "matches": "fa1daf63e02f0e08f9f079ba4994b37aaeb105bd90e5c4ae033b6dd0da632685"
+        },
+        "analysis": {
+          "challengerWins": 16,
+          "controlWins": 16,
+          "draws": 0,
+          "scoreBasisPoints": 5000
+        }
+      },
+      "rationale": "Proof oracle is sound, but the current Discovery produced no outcome conversion."
+    },
+    {
+      "id": "EXACT_VALUE_DOMINANCE",
+      "stage": "CTR3",
+      "classification": "CORRECT_NEUTRAL",
+      "score": 35,
+      "evidence": {
+        "id": "ctr3-exact-search",
+        "directory": "artifacts/v3-components/ctr3-exact-search-discovery-f21b5bfecf039fc3",
+        "manifestFingerprint": "8238225857f43b6fa4ab62f8e51c6bd51cf81d2c465a01a476d8f69a5611a515",
+        "hashes": {
+          "manifest": "78b17d06c993eebf42291b568bba5eeb5a9cf69beb44257c5d982072f1a2a6c3",
+          "overview": "975a81b340eedadd82c151cb9aa5ebf25883cf9a5a5bbee6ee4a2b1b41e94e65",
+          "matches": "1dcf206f89c0b6fca489c0dff096843b3712bc8bb0319be3cd97274cc04ef5eb"
+        },
+        "analysis": {
+          "challengerWins": 16,
+          "controlWins": 16,
+          "draws": 0,
+          "scoreBasisPoints": 5000
+        }
+      },
+      "rationale": "No exact dominance ownership occurred and runtime materially increased.",
+      "runtimeRatio": {
+        "totalBasisPoints": 13249,
+        "p95BasisPoints": 14384
+      },
+      "ports": {
+        "callCount": 1179,
+        "completeCount": 1177,
+        "incompleteCount": 2,
+        "overrideCount": 0,
+        "exceptionCount": 0,
+        "physicalSearchCount": 28,
+        "informationSearchCount": 442,
+        "stageMatrixCount": 457,
+        "supportExactCount": 0,
+        "exactDominanceCount": 0,
+        "sameActionCount": 241,
+        "depthRootRestoreFailures": 0,
+        "informationRootRestoreFailures": 0,
+        "proofRootRestoreFailures": 0
+      }
+    },
+    {
+      "id": "TACTICAL_CORE_AS_OWNER",
+      "stage": "CTR3",
+      "classification": "NEGATIVE",
+      "score": 0,
+      "evidence": {
+        "id": "vc6-full",
+        "directory": "artifacts/v3-components/vc6-full-discovery-9559753144bb2fc6",
+        "manifestFingerprint": "5ba48cd6854e6842c7ca739f1b56f6b3f3a9aa3155f321a8977798c74e35cff8",
+        "hashes": {
+          "manifest": "f0d0fb801490e691e3fc7c8ed73746ec6b040a6ec4523aba2f3c496fd022ed73",
+          "overview": "d19bba19c856eb5c105c934a6b0fbbb6ff423f57b16433f0fc6e5467622dcc2e",
+          "matches": "374e985b0633a93422ef886ee779a7f66ca2fce02cebd607325a370832826a04"
+        },
+        "analysis": {
+          "challengerWins": 2,
+          "controlWins": 30,
+          "draws": 0,
+          "scoreBasisPoints": 625
+        }
+      },
+      "rationale": "Whole-core ownership scored 6.25%; search remains evidence-only."
+    },
+    {
+      "id": "PHYSICAL_INFORMATION_RISK_MATRIX",
+      "stage": "CTR3",
+      "classification": "CORRECT_NEUTRAL",
+      "score": 40,
+      "evidence": null,
+      "rationale": "91/91 Minimax, Information, robust backup, cache and StageMatrix tests pass; none independently earned action ownership."
+    },
+    {
+      "id": "DIRECT_KILL",
+      "stage": "CTR4",
+      "classification": "CORRECT_NEUTRAL",
+      "score": 45,
+      "evidence": {
+        "id": "ctr4-direct",
+        "directory": "artifacts/v3-components/ctr4-direct-discovery-92a8987daad8cea3",
+        "manifestFingerprint": "fe0060698f9956b478ab6453eec403328dac561354932ec79332722d4a6219fe",
+        "hashes": {
+          "manifest": "cf30be7790673acc045cbd457dc9974912c0f97fdfabc1fc7817249730b622af",
+          "overview": "30b2d58f98c9eb01619f59204f47a24d4998896bf8f518a554bae20cb0de366b",
+          "matches": "9e1894a1d7b70c3e98971aec85e184fbff0d624652ebee7b3b2d923b47f87b1e"
+        },
+        "analysis": {
+          "challengerWins": 16,
+          "controlWins": 16,
+          "draws": 0,
+          "scoreBasisPoints": 5000
+        }
+      },
+      "rationale": "V1 already takes the same verified direct shots; no action or outcome conversion."
+    },
+    {
+      "id": "AIM_SETUP",
+      "stage": "CTR4",
+      "classification": "INTERFACE_BLOCKED",
+      "score": 25,
+      "evidence": {
+        "id": "ctr4-aim",
+        "directory": "artifacts/v3-components/ctr4-aim-discovery-8c6cc6de549df2ee",
+        "manifestFingerprint": "f8278cc3512286d358a67c7a636dc98f165798129fdcfe7de546041aeef7fcf9",
+        "hashes": {
+          "manifest": "d2c559f2651d2bf3c6ae335d95d6e14b2239e41b7159ce04b662e72e2d89471f",
+          "overview": "f4690be43413feb425e96c23be0ede1a1549d1a80ed119990b63e1b811fb872c",
+          "matches": "ba9d9c49aadc94de9bb01b2bce5a37754f4991aebfe3e7e389463e2b5b8cfc99"
+        },
+        "analysis": {
+          "challengerWins": 16,
+          "controlWins": 16,
+          "draws": 0,
+          "scoreBasisPoints": 5000
+        }
+      },
+      "rationale": "Aim setup is a move/turn purpose, while verified attack ownership currently requires FIRE."
+    },
+    {
+      "id": "INTERCEPT",
+      "stage": "CTR4",
+      "classification": "CORRECT_NEUTRAL",
+      "score": 40,
+      "evidence": {
+        "id": "ctr4-intercept-primary",
+        "directory": "artifacts/v3-components/ctr4-intercept-primary-discovery-c47cbfdb3fffb712",
+        "manifestFingerprint": "83809274c28c9b0fc70aa5ae197825bfc617099d8c493f8078adc2d0cab88385",
+        "hashes": {
+          "manifest": "ab945aea42508921635c79373f43b79c382eed3d2785dab93b99578a9a2807b6",
+          "overview": "cb5410a5f1e4b26df518a149d65c438b29385937c38efbb425238b3aaeacc4f2",
+          "matches": "6a15433c71b2f802d6427b5cfe18e39075f6e1f73e27dbee802e33d14aca4aee"
+        },
+        "analysis": {
+          "challengerWins": 16,
+          "controlWins": 16,
+          "draws": 0,
+          "scoreBasisPoints": 5000
+        }
+      },
+      "rationale": "Primary-purpose isolation produced no action or outcome conversion."
+    },
+    {
+      "id": "ESCAPE_DENIAL_PAC",
+      "stage": "CTR4",
+      "classification": "CORRECT_NEUTRAL",
+      "score": 48,
+      "evidence": {
+        "id": "ctr4-escape-primary",
+        "directory": "artifacts/v3-components/ctr4-escape-primary-discovery-99b266ded4499ae4",
+        "manifestFingerprint": "e73e497df27969be3dcc6bef9bd3dd8e9be0299a89cb97514e2490c3f71e42b1",
+        "hashes": {
+          "manifest": "6954f7b011716d69392771f9e3eb6559cf96ce4cefe772ef9b58f0de38df4975",
+          "overview": "f550231ce23c5d8342944e368dfbb408fcb9adba74f55122f4bfe8d8392936dd",
+          "matches": "aa7e101e7a0dcc5bd87bed1701c4cfe8dc53eae859f72445ec67df78dcaa0335"
+        },
+        "analysis": {
+          "challengerWins": 16,
+          "controlWins": 16,
+          "draws": 0,
+          "scoreBasisPoints": 5000
+        }
+      },
+      "rationale": "It changed actions and reduced crashes by one, but produced zero paired outcome gain.",
+      "ports": {
+        "callCount": 3033,
+        "evaluationCount": 209,
+        "proposalCount": 18,
+        "overrideCount": 0,
+        "directKillCount": 0,
+        "possibleHitCount": 16,
+        "purposeMissingCount": 89,
+        "riskBlockedCount": 0,
+        "selfEscapeBlockedCount": 0,
+        "counterExposureBlockedCount": 0,
+        "noEnemyReductionCount": 27,
+        "verifiedCount": 6,
+        "purposeMask": 256,
+        "primaryPurpose": 256,
+        "requireFrontier": 0,
+        "projectileRootRestoreFailures": 0
+      }
+    },
+    {
+      "id": "SHIELD_BREAK",
+      "stage": "CTR4",
+      "classification": "NO_COVERAGE",
+      "score": 30,
+      "evidence": {
+        "id": "ctr4-shield-break",
+        "directory": "artifacts/v3-components/ctr4-shield-break-discovery-78a59fd9da1e7368",
+        "manifestFingerprint": "3f73ad7c272a881633d22bd862a575b3f746d75ef53941d0e9a04adafc3eac56",
+        "hashes": {
+          "manifest": "a1c39e368db22a3e9d999481739461080013db93b4d0fcb8149c9687d322b0bb",
+          "overview": "23517f3fbde968bb84d283b18d1b91a418eba4b7b8f34ddcef930b9fff2b7508",
+          "matches": "692ed41218c274433bfbf3d8f7e4aa0462bec72506fc77230f2d4f04b3c08c32"
+        },
+        "analysis": {
+          "challengerWins": 16,
+          "controlWins": 16,
+          "draws": 0,
+          "scoreBasisPoints": 5000
+        }
+      },
+      "rationale": "The stun/stun Discovery contains no shield-break ownership opportunity."
+    },
+    {
+      "id": "ZONE_DENIAL",
+      "stage": "CTR4",
+      "classification": "INTERFACE_BLOCKED",
+      "score": 25,
+      "evidence": {
+        "id": "ctr4-zone-denial",
+        "directory": "artifacts/v3-components/ctr4-zone-denial-discovery-5a6023829c2e27c1",
+        "manifestFingerprint": "488e4b90136555607517c1375d76c4be8ff67f77c1f0cde211ddaaf7afc5ed3d",
+        "hashes": {
+          "manifest": "38b62e802db7cf0a6d16c0ae9f73d45f3f0e3c0cf391e2663cff2c4ae78fbe24",
+          "overview": "8458de4ff5ea4ad82e97b454e729f239bbb3b7e73b9bef88fa25d76fad1c09b4",
+          "matches": "dd67e01b14759b728e42915a84c0a297c2d65f27ff2bbbc11308228b431ad424"
+        },
+        "analysis": {
+          "challengerWins": 16,
+          "controlWins": 16,
+          "draws": 0,
+          "scoreBasisPoints": 5000
+        }
+      },
+      "rationale": "Bomb zone denial lacks a complete post-bomb self-escape certificate."
+    },
+    {
+      "id": "SURVIVOR_FRONTIER",
+      "stage": "CTR4",
+      "classification": "CORRECT_NEUTRAL",
+      "score": 40,
+      "evidence": {
+        "id": "ctr4-survivor-primary",
+        "directory": "artifacts/v3-components/ctr4-survivor-primary-discovery-50e3b66686e4e4a5",
+        "manifestFingerprint": "49af158fda30c16eee8a45f1e8ad4af5bd3a0cd6e05ffe6784a39240682201b2",
+        "hashes": {
+          "manifest": "f6b30f2ecfbaf5dcffd84632fba88b26039291995f4d45be41dd30e907f34af7",
+          "overview": "5cf22cfaf32836cf76ee2a4e7445c19ed0b1760e641ab2e33a4e0411ce79faea",
+          "matches": "45ac3e4337680985a59d24fbbd022b88ddd769e45b20ad7340e4748674075b72"
+        },
+        "analysis": {
+          "challengerWins": 16,
+          "controlWins": 16,
+          "draws": 0,
+          "scoreBasisPoints": 5000
+        }
+      },
+      "rationale": "PAC2 fixtures are correct but no frontier-qualified action changed the match."
+    },
+    {
+      "id": "TARGET_GENERATION_STRATEGIC_ARBITER",
+      "stage": "CTR5",
+      "classification": "NEGATIVE",
+      "score": 0,
+      "evidence": {
+        "id": "ctr5-target-fixed",
+        "directory": "artifacts/v3-components/ctr5-target-fixed-discovery-fc75a933e2ddb27f",
+        "manifestFingerprint": "bc0d32c9064dbc169169389c71bc1bb6932667d627a2d7787e9a034b772327bf",
+        "hashes": {
+          "manifest": "467c0fbe40fc73e245618f9eb17ed0cdbdde57614520ed04bee1f5496b824e1e",
+          "overview": "95ccebb523ad8d3baa9d2465c3a577c7eaafd522dbc97ec10b5163bf018ed368",
+          "matches": "e583b759ed68955f4d2080eade2766736001389dc34dd0d30dd920deb593f820"
+        },
+        "analysis": {
+          "challengerWins": 7,
+          "controlWins": 23,
+          "draws": 2,
+          "scoreBasisPoints": 2500
+        }
+      },
+      "rationale": "After fixing the NAVIGATION port order, 467 qualified overrides reduced score to 25.00% with p=0.003906.",
+      "ports": {
+        "callCount": 497,
+        "completeCount": 496,
+        "incompleteCount": 1,
+        "overrideCount": 467,
+        "contactFallbackCount": 0,
+        "searchViolationCount": 1,
+        "exceptionCount": 0,
+        "invalidPurposeCount": 0,
+        "invalidTargetCount": 0,
+        "noProgressCount": 0,
+        "riskWorseCount": 29,
+        "qualifiedCount": 467,
+        "failureNone": 0,
+        "failureNotPrepared": 0,
+        "failureTacticalContact": 0,
+        "failureControlModeOrSearch": 1,
+        "failureNoSelection": 0,
+        "failureSelectionRange": 0,
+        "failureHardRejected": 0,
+        "failureFinalRejected": 0,
+        "planSketches": 154,
+        "planCommits": 254,
+        "planActivations": 0,
+        "planCompletions": 0,
+        "planInvalidations": 0,
+        "strategicSelections": 496
+      },
+      "starDelta": -33,
+      "crashDelta": 4,
+      "scoreBasisPoints": 2500
+    },
+    {
+      "id": "PLAN_SKETCH_PERSISTENT_PLAN_PVA",
+      "stage": "CTR5",
+      "classification": "DEPENDENCY_BLOCKED",
+      "score": 0,
+      "evidence": null,
+      "rationale": "Plan and PVA cannot be evaluated as owners because target/strategy failed Discovery."
+    }
+  ],
+  "best": {
+    "behaviorPositive": [],
+    "performancePositive": [],
+    "enabledInV3ComponentBest": [],
+    "v3ComponentBest": "V3_BASE",
+    "v2RepairedCreated": false
+  },
+  "data": {
+    "exposedScenarios": 896,
+    "freshScenarios": 347,
+    "requiredFreshScenarios": 368,
+    "missingFreshScenarios": 21,
+    "blindHoldoutRead": false
+  },
+  "tests": {
+    "v1V3Equivalence": {
+      "matches": 128,
+      "comparedFrames": 9080,
+      "divergences": 0
+    },
+    "projectileLifecycle": {
+      "passed": 8,
+      "failed": 0
+    },
+    "deadlineEscapeProof": {
+      "passed": 24,
+      "failed": 0
+    },
+    "minimaxCore": {
+      "passed": 91,
+      "failed": 0
+    },
+    "combatPac": {
+      "passed": 41,
+      "failed": 0
+    },
+    "v3Ctr": {
+      "passed": 29,
+      "failed": 0
+    }
+  },
+  "stages": [
+    {
+      "stage": "CTR0",
+      "status": "ACCEPTED",
+      "classification": "IDENTITY_ACCEPTED",
+      "fingerprint": "af946bfb3c72a955dc60455813ec60744ddb9f55e0265a19762f7367475b5c3c"
+    },
+    {
+      "stage": "CTR1",
+      "status": "ACCEPTED",
+      "classification": "NO_TRANSPLANT_CANDIDATE",
+      "fingerprint": "904a3896ad2a7f899308783bd21e89706d0f0ef8215361fc90daa83f7fd2c776"
+    },
+    {
+      "stage": "CTR2",
+      "status": "ACCEPTED",
+      "classification": "NO_POSITIVE_RESCUE",
+      "fingerprint": "d51799e0fc1010c3e6f1dc8a05bc90230d6025c2c469c3ec8d4dea06742d670f"
+    },
+    {
+      "stage": "CTR3",
+      "status": "ACCEPTED",
+      "classification": "SEARCH_EVIDENCE_ONLY",
+      "fingerprint": "b0da95a51ee0b926ed5ef36661cd20ef9c9e680fa60bec71742978517359e694"
+    },
+    {
+      "stage": "CTR4",
+      "status": "ACCEPTED",
+      "classification": "NO_COMBAT_HOLDOUT_CANDIDATE",
+      "fingerprint": "2e081dd814b2c0d71ae190256e534ac41ecd175c662e944fe9789f15d5b90269"
+    },
+    {
+      "stage": "CTR5",
+      "status": "ACCEPTED",
+      "classification": "STRATEGY_NEGATIVE",
+      "fingerprint": "ff32387e194a27c38613954d1c0cf3dd8685afb8ef6aaaa018dbd143ed9b8f84"
+    },
+    {
+      "stage": "CTR6",
+      "status": "ACCEPTED",
+      "classification": "EMPTY_COMPONENT_BEST",
+      "fingerprint": "fe64a0569b24062f47e321b6cdecea76f5fe5d43e9563b7c582fac01ba004b25"
+    },
+    {
+      "stage": "CTR7",
+      "status": "BLOCKED",
+      "classification": "NO_NATIVE_TRANSPLANT",
+      "fingerprint": "c5e8759e6fd848adbd4e27615d23d1cb4929519b8478d27cc950dcb047725faf"
+    },
+    {
+      "stage": "CTR8",
+      "status": "BLOCKED",
+      "classification": "FINAL_HOLDOUT_NOT_READ",
+      "fingerprint": "73b273701ddccbe5d4d5dd82efbb64ac736a0a75e79cd200f047d7dd26093cc8"
+    }
+  ],
+  "officialPlatformOperationPerformed": false,
+  "fingerprint": "0fa0d0edcc2503cc2023856edc9cbdb8fa2816114c57f80ac8bee39265663153"
+}

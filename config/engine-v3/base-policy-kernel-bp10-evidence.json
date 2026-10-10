@@ -1,0 +1,93 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP10_EVIDENCE_V1",
+  "status": "ACCEPTED_SHADOW_REJECTED_ACTIVE",
+  "createdAt": "2026-08-25",
+  "scope": "RESPONSE_CONDITIONED_FIRE_APPLIED_TRANSITION_UTILITY",
+  "productionBehaviorChanged": false,
+  "productionDefaultEnabled": false,
+  "productionRootSha256": "c4443ddbd2a7a651d77f1582e5b68ce3715dfc87af7cf40ac7432396def39c48",
+  "diagnosticSource": {
+    "nativeV1PathUtilityPocSha256": "43da0d20a577c2aa97b4571d46a501a695d8cacb4440f62c90bb68428446b509",
+    "nativeBoundedPolicySearchPocRunSha256": "91f6c5df1cc8795bfb83d3cc3dea84fc1f8e972d393d3e8525b80eeffce0f265",
+    "nativeTacticalActionOwnerPocSha256": "12fe9544ad4efb060a9f1cf32a6b6fcfa74ba7453d8939dbb2170b92902cab7d",
+    "v1PolicyValueInstrumentationSha256": "71bd56c21812e84c03f7e8a19e1cf81c0c7346500a59885e4f90601f2dda67cf"
+  },
+  "cohort": {
+    "fingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667",
+    "scenarios": 16,
+    "candidateMatches": 32,
+    "skill": "STUN",
+    "tacticalTriggerMask": 1
+  },
+  "shadowSameTrajectory": {
+    "offOverviewSha256": "b4dc149be5fcc600102a0027eb0358b1895195eddc5519f823668222225eb8ed",
+    "onOverviewSha256": "eb9b4735c3202b7164f10c9637f7cf1738116615aa968e70d5efaec0caf84f24",
+    "wins": 13,
+    "losses": 16,
+    "draws": 3,
+    "fire": 217,
+    "rootPairCompared": 3655,
+    "rootPairAgreementOff": 3329,
+    "rootPairAgreementOn": 3344,
+    "rootBestCompared": 1261,
+    "rootBestAgreementOff": 1092,
+    "rootBestAgreementOn": 1101,
+    "oracleReverseRankDefectsOff": 11,
+    "oracleReverseRankDefectsOn": 1,
+    "actionAbsoluteError": {
+      "oneStepOff": 1439978,
+      "oneStepOn": 1343723,
+      "ply2Off": 932401,
+      "ply2On": 884471,
+      "ply3Off": 1003353,
+      "ply3On": 954381
+    },
+    "responseAppliedCount": 16172,
+    "responsePositiveCount": 13736,
+    "responseDeltaTotal": 1276680,
+    "physicalMismatchDelta": 0,
+    "hotAllocationCount": 0
+  },
+  "activePoc": {
+    "overviewSha256": "91cd66ece55d5ced04b9128043f715edba28de830e6ed02a859d38c8b856317a",
+    "baseline": {
+      "wins": 16,
+      "losses": 14,
+      "draws": 2,
+      "scoreBasisPoints": 5313,
+      "stars": 16,
+      "crashes": 11,
+      "fire": 186
+    },
+    "candidate": {
+      "wins": 12,
+      "losses": 19,
+      "draws": 1,
+      "scoreBasisPoints": 3906,
+      "stars": 14,
+      "crashes": 15,
+      "fire": 170
+    },
+    "actionStreamSame": 19,
+    "actionStreamDifferent": 13,
+    "transitions": {
+      "V2_WIN_TO_V1_WIN": 5,
+      "DRAW_TO_V1_WIN": 1,
+      "V1_WIN_TO_V2_WIN": 1
+    },
+    "fireAddedAcrossMatches": 13,
+    "fireRemovedAcrossMatches": 29,
+    "timeoutError": 0,
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0
+  },
+  "conclusion": {
+    "shadowFidelityAccepted": true,
+    "activeOwnershipAccepted": false,
+    "productionEnable": false,
+    "fireConstantAllowed": false,
+    "repetitionChangeAuthorized": false,
+    "nextTarget": "Audit first-divergence value-component changes against realized outcome; retain only complete positive causal certificates instead of matching V1 components globally."
+  }
+}

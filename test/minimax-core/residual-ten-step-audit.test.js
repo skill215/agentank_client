@@ -1,0 +1,7 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict');
+const {aggregate}=require('../../tools/agentank/diagnostics/residual-ten-step-audit');
+function root(){return {selected:-1,proposal:-1,incumbent:-1,searchEntryReason:'NONE',escapeSupport:3,searchEvidenceCurrent:false,basePolicyNodes:0,basePolicyBudgetLeaves:0,candidates:[],counterfactual:{rows:[]}};}
+test('no selected row is not a proposal owner',()=>{const a=aggregate([root()]);assert.equal(a.owners.NO_SELECTED_ROW,1);assert.equal(a.owners.BASE_PROPOSAL,undefined);});
+test('incomplete alternative is never counted as zero-loss complete',()=>{const r=root();r.selected=0;r.incumbent=0;r.candidates=[{row:0,action:4,hard:0,acceptable:0,dominated:0},{row:1,action:1,hard:0,acceptable:1,dominated:0}];r.counterfactual.rows=[{row:0,loss:1,incomplete:0},{row:1,loss:0,incomplete:1}];const a=aggregate([r]);assert.equal(a.conditional.selectedHasLoss,1);assert.equal(a.conditional.hasZeroLossCompleteAlternative,0);assert.equal(a.conditional.incompleteRoots,1);});
+test('conditional zero-loss alternative classification does not claim proof',()=>{const r=root();r.selected=0;r.incumbent=0;r.candidates=[{row:0,action:4,hard:0,acceptable:1,dominated:0},{row:1,action:1,hard:0,acceptable:0,dominated:0}];r.counterfactual.rows=[{row:0,loss:1,incomplete:0},{row:1,loss:0,incomplete:0}];const a=aggregate([r]);assert.equal(a.conditional.hasZeroLossCompleteAlternative,1);assert.equal(a.conditional.alternativeRiskRejected,1);assert.equal(a.conditional.alternativeAllowed,0);});

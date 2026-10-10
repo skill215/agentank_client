@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "HP19_DEPTH_TWO_PREFLIGHT_EVIDENCE_V1",
+  "status": "SHADOW_ACCEPTED",
+  "productionDefaultEnabled": false,
+  "sourceFingerprint": "3b664292f8fe176bc00acdd982fb7e74cf4f03bbc67df66b004bc5da2c11f11b",
+  "cohort": {
+    "role": "DISCOVERY",
+    "scenarios": 16,
+    "matchesPerProfile": 32,
+    "reportFingerprint": "40bed35205520585852b13a164595923dbd6993a30418549a223c0a4b39c9c63",
+    "reportSha256": "d82ab8011147a62e02f4733c3ffe9b30f7cc58109e7a21a5f10c29c16d3b91f5"
+  },
+  "semanticEquivalence": {
+    "outcomeDifferences": 0,
+    "actionStreamDifferences": 0,
+    "frameDifferences": 0,
+    "starDifferences": 0,
+    "nodeDifference": 0,
+    "workUnitDifference": 0
+  },
+  "physicalSearch": {
+    "frames": 73,
+    "nodes": 24366,
+    "completedDepthHistogram": [0, 19, 49, 1, 4, 0, 0, 0]
+  },
+  "preflight": {
+    "scheduleEligible": 46,
+    "scheduleBudgetBlocked": 14,
+    "scheduleStunBlocked": 12,
+    "scheduleFireContactBlocked": 1,
+    "projectedStates": 1104,
+    "projectedNodes": 6272,
+    "availableNodes": 20638,
+    "strictlyImpossibleByNodeLowerBound": 0,
+    "p2Attempts": 46,
+    "p2Completed": 43,
+    "p2SupportAborted": 3,
+    "p2BudgetInterrupted": 0,
+    "p2TransitionIncomplete": 0,
+    "p2OtherFailure": 0
+  },
+  "invariants": {
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "hotAllocation": 0
+  },
+  "decision": {
+    "reject": "ROUTE_SELECTIVE_P2_BY_PROJECTED_NODE_LOWER_BOUND",
+    "reason": "No eligible root was mathematically unable to fit P2 by the projected node lower bound.",
+    "next": "CALIBRATE_LOW_BUDGET_FULL_WIDTH_P1",
+    "dominantBlockers": ["LOW_NODE_BUDGET", "STUN"]
+  }
+}

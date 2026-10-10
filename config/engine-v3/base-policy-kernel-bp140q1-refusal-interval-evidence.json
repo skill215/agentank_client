@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_REFUSAL_INTERVAL_EVIDENCE_V1",
+  "stage": "BP140-Q1",
+  "status": "ACCEPT_LOCAL_REFUSAL_CLASSIFIED",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "contract": {
+    "rootCount": 35,
+    "movementWorldCount": 3,
+    "variantInstanceCount": 105,
+    "completeVariantInstanceCount": 105,
+    "maximumDepth": 4,
+    "nodeBudgetPerSideWorld": 4096,
+    "ownContinuation": "FIXED_REPLANNING_ATTACK_POLICY",
+    "enemyContinuation": "ALL_GENERATED_ACTIONS",
+    "chanceContinuation": "ALL_GENERATED_OUTCOMES",
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0,
+    "actionOwnership": false
+  },
+  "value": {
+    "semantics": "EXACT_MIXED_RADIX_LEXICOGRAPHIC_VECTOR",
+    "order": [
+      "terminal",
+      "committedSafety",
+      "settledAttack",
+      "counterSafety",
+      "lineControl",
+      "enemyMobilityCompression",
+      "contactDistance",
+      "starDelta",
+      "starRace",
+      "resourceBalance"
+    ],
+    "ownerQualification": "Every movement world must have a strictly higher worst value and pointwise same-column dominance.",
+    "classifications": {
+      "LOCAL_EQUAL": 25,
+      "LOCAL_TRADEOFF": 8,
+      "LOCAL_ROBUST_INCUMBENT": 2,
+      "LOCAL_ROBUST_CANDIDATE": 0,
+      "INCOMPLETE": 0,
+      "RULE_WORLD_DISAGREEMENT": 0
+    }
+  },
+  "performance": {
+    "initialNodes": 715852,
+    "initialIncompleteRoots": 24,
+    "absoluteLowerBoundNodes": 464618,
+    "absoluteLowerBoundIncompleteRoots": 8,
+    "finalNodes": 333717,
+    "finalIncompleteRoots": 0,
+    "finalMaximumNodes": 3265,
+    "nodeReductionBasisPointsVsInitial": 5338,
+    "absoluteLowerBoundCutoffs": 4118,
+    "transpositionHits": 10594,
+    "optimizations": [
+      "exact value-zero lower-bound cutoff",
+      "fixed-capacity hashLo/hashHi/depth transposition table"
+    ]
+  },
+  "historicalAudit": {
+    "EQUAL/LOCAL_EQUAL": 22,
+    "EQUAL/LOCAL_TRADEOFF": 7,
+    "EQUAL/LOCAL_ROBUST_INCUMBENT": 2,
+    "INCUMBENT_BETTER/LOCAL_EQUAL": 2,
+    "CANDIDATE_BETTER/LOCAL_EQUAL": 1,
+    "CANDIDATE_BETTER/LOCAL_TRADEOFF": 1,
+    "interpretation": "Historical outcomes are audit columns only. The local vector is deliberately not tuned to reproduce them."
+  },
+  "artifacts": {
+    "directory": "artifacts/v2-native-initiative/bp140q1-semantic-attack-refusal-interval",
+    "manifestSha256": "d857bbc8290ce7a96fcb79fd18543f5a160196528bd189442f7c115c949dd8b0",
+    "overviewSha256": "a1e572804cdf3d06b4a65beaea1a6028546e74171de223a64bf5854f54d29ba4",
+    "rootsSha256": "baf5b105763d1731138a5c169c13288406e7d2076181aa45694305cfd608672e",
+    "fingerprint": "1ca62a60751e542fbebdcab80757894710aeeaa287c4fc0b5cc7cb8134bc9e7d",
+    "totalBytes": 9810
+  },
+  "source": {
+    "valueSearchSha256": "69b4a5e9a4843f11ec13134830a30bcb7299e9f7b8a74a20b92495a57f013f86",
+    "corpusSha256": "34341c0d4ddc4697fc8d5ec020e8cb6068e7550140877e6720ed2f15c98bdadc",
+    "valueSearchTestSha256": "22ca5dafb04c9bfd43589aa9f3d56a2cb1e837cf3c2143642d5d1645359491c1",
+    "corpusTestSha256": "c28ae8575ca7c8bf9b2a9eb5af7e391ce460feb798e991d81ddda0356d329be2"
+  },
+  "decision": {
+    "retain": [
+      "refusal-aware finite-horizon vector contract",
+      "exact mixed-radix comparison with per-dimension audit",
+      "absolute lower-bound cutoff",
+      "fixed-capacity semantic transposition table",
+      "two incumbent-preservation certificates as negative verifier evidence"
+    ],
+    "reject": [
+      "Q1 as a positive action owner",
+      "raising the node budget",
+      "dropping pointwise dominance to promote eight tradeoffs",
+      "using full-game historical labels to tune vector order"
+    ],
+    "next": "Keep the Q1 verifier and performance kernel, then test a small persistent policy portfolio. Evaluate each named policy independently with the same complete enemy/chance quantifiers and choose among complete policy intervals, rather than branching primitive own actions at every ply."
+  }
+}

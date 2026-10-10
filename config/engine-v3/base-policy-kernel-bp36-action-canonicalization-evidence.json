@@ -1,0 +1,118 @@
+{
+  "objectKind": "BasePolicyKernelActionCanonicalizationEvidenceV1",
+  "stage": "BP36",
+  "status": "ACCEPTED_DIAGNOSTIC",
+  "actionOwnership": false,
+  "productionDefaultChanged": false,
+  "semanticIdentity": {
+    "winsLossesDraws": true,
+    "pairCompleteness": true,
+    "relations": true,
+    "massVectors": true,
+    "nodeCounts": true,
+    "logicalTransitionCounts": true,
+    "budgetStops": true,
+    "fastAndHardIncomplete": true,
+    "rootRestoreFailureCount": 0,
+    "capacityFailureCount": 0,
+    "hotAllocationCount": 0
+  },
+  "census": {
+    "physicalTransitionRequests": 535138,
+    "crossRequestSameSuccessor": 44601,
+    "canonicalEquivalentSameSuccessor": 44601,
+    "unexplainedSameSuccessor": 0,
+    "dominantReason": "STUN_REVERSAL_NORMALIZED",
+    "stunReasonCount": 44601,
+    "ignoredArgumentReasonCount": 44084
+  },
+  "generalCanonicalMemo": {
+    "fixed16": {
+      "lookups": 535138,
+      "hits": 44596,
+      "stores": 490542,
+      "chargedNodes": 39360,
+      "chargedMergeHits": 22139,
+      "wins": 16,
+      "losses": 14,
+      "draws": 2,
+      "completePairs": 293,
+      "incompletePairs": 313,
+      "candidateTotalMicros": 22284945,
+      "baselineCandidateTotalMicros": 25466270
+    },
+    "fiveBatchFixed8": {
+      "batchesPerArm": 5,
+      "order": "ALTERNATING",
+      "baseline": {
+        "elapsedMs": 111950,
+        "candidateTotalMicros": 56180053,
+        "controlTotalMicros": 26141618,
+        "meanCandidateControlRatio": 2.148358275852537,
+        "meanP95Ratio": 2.289667689515488,
+        "completePairs": 615,
+        "incompletePairs": 680
+      },
+      "canonicalMemo": {
+        "elapsedMs": 111494,
+        "candidateTotalMicros": 55954599,
+        "controlTotalMicros": 26239237,
+        "meanCandidateControlRatio": 2.1324450409500684,
+        "meanP95Ratio": 2.259392951248003,
+        "completePairs": 615,
+        "incompletePairs": 680,
+        "canonicalHits": 97670
+      },
+      "deltaBasisPoints": {
+        "elapsedMs": -41,
+        "candidateTotalMicros": -40,
+        "meanCandidateControlRatio": -74,
+        "meanP95Ratio": -132
+      },
+      "summarySha256": "cc0b36333b6479a916ade77f6de740c8ab75fcbafd6b5a41828dfaa4ecf1135a",
+      "aggregateSha256": "9872ef11a06c51948186d694c0300c4b9e4b8b5dc13285c1626555b6f5a9172a"
+    }
+  },
+  "leanStunAblation": {
+    "status": "REJECTED",
+    "fixed16SemanticIdentity": true,
+    "fixed16CanonicalHits": 44596,
+    "fiveBatchFixed8": {
+      "general": {
+        "elapsedMs": 165789,
+        "candidateTotalMicros": 81438778,
+        "controlTotalMicros": 38456359,
+        "meanCandidateControlRatio": 2.1178830959907105,
+        "meanP95Ratio": 2.2881363600125977,
+        "canonicalHits": 97670
+      },
+      "leanStun": {
+        "elapsedMs": 168253,
+        "candidateTotalMicros": 84160478,
+        "controlTotalMicros": 39516963,
+        "meanCandidateControlRatio": 2.1297472557637334,
+        "meanP95Ratio": 2.0059922829913863,
+        "canonicalHits": 97670
+      },
+      "deltaBasisPoints": {
+        "elapsedMs": 149,
+        "candidateTotalMicros": 334,
+        "meanCandidateControlRatio": 56,
+        "meanP95Ratio": -1233
+      },
+      "summarySha256": "4e4cb122e056aefe5742c8cbef0aae9c6acc811481816ad7441d712ac0ba7ffa",
+      "aggregateSha256": "7c30823ff83d0680f059019516f18177cad1a1f8f70e544e79e8815691a323fe"
+    },
+    "runtimeCodeRetained": false,
+    "reason": "The lean key preserves all hits and semantics but regresses aggregate candidate time by 3.34 percent and normalized candidate cost by 0.56 percent."
+  },
+  "decision": {
+    "generalDiagnosticRetained": true,
+    "leanRuntimeRetained": false,
+    "reason": "The general canonical branch memo is semantics-exact and produces a small repeatable throughput improvement. It remains diagnostic-only because the gain is modest and the search still dominates runtime.",
+    "nextTarget": "Reduce branch enumeration before transition execution; do not add another successor cache."
+  },
+  "fingerprints": {
+    "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7"
+  }
+}

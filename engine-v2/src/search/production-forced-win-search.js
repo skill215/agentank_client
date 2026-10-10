@@ -8,7 +8,8 @@ const { ACTION, SKILL, FAST_STATUS, TERMINAL, NONE_FRAME, NONE_CELL } =
 const { PROOF_STATUS } = require("../abi/search-codes");
 
 class ProductionForcedWinSearch {
-  constructor() {
+  constructor(rootTransitions = null) {
+    this.rootTransitions = rootTransitions;
     const frames = SEARCH_CAPACITY.MAX_DECISION_DEPTH + 1;
     this.ourActions = new Uint8Array(frames * SEARCH_CAPACITY.MAX_OUR_ACTIONS);
     this.ourArguments = new Uint16Array(frames * SEARCH_CAPACITY.MAX_OUR_ACTIONS);
@@ -19,10 +20,13 @@ class ProductionForcedWinSearch {
     this.lastStatus = PROOF_STATUS.UNKNOWN; this.winningRootRow = -1;
     this.incompleteCount = 0; this.budgetStopCount = 0; this.rootRestoreFailures = 0;
     this.hotAllocationCount = 0;
+    this.rootTransitionHits = 0; this.rootTransitionHitStart = 0;
   }
   resetRoot() {
     this.nodes = 0; this.completedDepth = 0; this.lastStatus = PROOF_STATUS.UNKNOWN;
     this.winningRootRow = -1; this.incompleteCount = 0; this.budgetStopCount = 0;
+    this.rootTransitionHits = 0; this.rootTransitionHitStart = this.rootTransitions ?
+      this.rootTransitions.replayHitCount : 0;
   }
   active(a, arrayId, seat, frame) {
     return a[arrayId][seat] !== NONE_FRAME && a[arrayId][seat] > frame;
@@ -94,10 +98,19 @@ class ProductionForcedWinSearch {
     return code === TERMINAL.WIN0 ? PROOF_STATUS.PROVEN : PROOF_STATUS.DISPROVEN;
   }
   proveOutcome(bundle, depth, top, action0, argument0, action1, argument1,
-      chance0, chance1) {
+      chance0, chance1, rootRow = -1, rootColumn = -1) {
     if (this.nodes >= this.nodeBudget) { this.budgetStopCount += 1; return PROOF_STATUS.UNKNOWN; }
-    const status = bundle.kernel.applyFrame(action0, argument0, action1, argument1,
-      chance0, chance1); this.nodes += 1;
+    let status = 0;
+    if (top === 0 && this.rootTransitions && rootRow >= 0 && rootColumn >= 0 &&
+        rootRow < this.rootTransitions.ourCount && rootColumn < this.rootTransitions.enemyCount &&
+        this.rootTransitions.ourActions[rootRow] === action0 &&
+        this.rootTransitions.ourArguments[rootRow] === argument0 &&
+        this.rootTransitions.enemyActions[rootColumn] === action1 &&
+        this.rootTransitions.enemyArguments[rootColumn] === argument1)
+      status = this.rootTransitions.apply(bundle, rootRow, rootColumn, chance0, chance1, 0);
+    if (!status) status = bundle.kernel.applyFrame(action0, argument0, action1, argument1,
+      chance0, chance1);
+    this.nodes += 1;
     if (status !== FAST_STATUS.APPLIED && status !== FAST_STATUS.APPLIED_TERMINAL) {
       this.incompleteCount += 1; return PROOF_STATUS.UNKNOWN;
     }
@@ -118,7 +131,7 @@ class ProductionForcedWinSearch {
       const enemyChance = bundle.hard.chanceAlternativeCount(1, action1);
       for (let chance = 0; chance < ownChance * enemyChance; chance += 1) {
         const result = this.proveOutcome(bundle, depth, top, action0, argument0,
-          action1, argument1, chance % ownChance, Math.floor(chance / ownChance));
+          action1, argument1, chance % ownChance, Math.floor(chance / ownChance), row, column);
         if (result === PROOF_STATUS.DISPROVEN) return PROOF_STATUS.DISPROVEN;
         if (result === PROOF_STATUS.UNKNOWN) unknown = 1;
       }
@@ -147,6 +160,8 @@ class ProductionForcedWinSearch {
         rootOurCount > SEARCH_CAPACITY.MAX_OUR_ACTIONS ||
         rootEnemyCount > SEARCH_CAPACITY.MAX_ENEMY_POLICIES) return this.lastStatus;
     this.nodeBudget = nodeBudget;
+    if (this.rootTransitions) this.rootTransitions.prepare(bundle, rootActions, rootArguments,
+      rootOurCount, rootEnemyActions, rootEnemyArguments, rootEnemyCount);
     this.ourCount[0] = rootOurCount; this.enemyCount[0] = rootEnemyCount;
     for (let index = 0; index < rootOurCount; index += 1) {
       this.ourActions[index] = rootActions[index]; this.ourArguments[index] = rootArguments[index];
@@ -175,6 +190,77 @@ class ProductionForcedWinSearch {
       this.rootRestoreFailures += 1; this.lastStatus = PROOF_STATUS.UNKNOWN;
       this.winningRootRow = -1; this.completedDepth = 0;
     }
+    this.rootTransitionHits = this.rootTransitions ? Math.max(0,
+      this.rootTransitions.replayHitCount - this.rootTransitionHitStart) : 0;
+    return this.lastStatus;
+  }
+
+  // Continue a root FIRE proof only across the enemy columns that PAC could
+  // not already prove doomed. This is a conjunction, not a score: every
+  // residual survivor column and every chance outcome must admit a forced-win
+  // continuation. Any unsupported relation stays UNKNOWN and can never grant
+  // action ownership.
+  searchResidual(bundle, rootAction, rootArgument,
+      rootEnemyActions, rootEnemyArguments, rootEnemyCount,
+      relation, relationBase, relationStride, doomedCode, survivesCode,
+      depth, nodeBudget) {
+    this.resetRoot();
+    if (!bundle || !Number.isInteger(rootAction) || !Number.isInteger(rootArgument) ||
+        !rootEnemyActions || !rootEnemyArguments || !relation ||
+        !Number.isInteger(rootEnemyCount) || !Number.isInteger(relationBase) ||
+        !Number.isInteger(relationStride) || !Number.isInteger(doomedCode) ||
+        !Number.isInteger(survivesCode) || !Number.isInteger(depth) ||
+        !Number.isInteger(nodeBudget) || nodeBudget < 1 || rootEnemyCount < 1 ||
+        rootEnemyCount > SEARCH_CAPACITY.MAX_ENEMY_POLICIES || relationBase < 0 ||
+        relationStride < rootEnemyCount || relationBase + rootEnemyCount > relation.length ||
+        depth < 1 || depth > SEARCH_CAPACITY.MAX_DECISION_DEPTH)
+      return this.lastStatus;
+    this.nodeBudget = nodeBudget;
+    const state = bundle.state; const rootLo = state.hashLo; const rootHi = state.hashHi;
+    const rootMark = state.deltaUsed * 1024 + state.eventUsed;
+    let residualCount = 0;
+    for (let column = 0; column < rootEnemyCount; column += 1)
+      if (relation[relationBase + column] === survivesCode) residualCount += 1;
+    if (residualCount < 1) return this.lastStatus;
+    let rootRow = -1;
+    if (this.rootTransitions && this.rootTransitions.currentRoot(state))
+      for (let row = 0; row < this.rootTransitions.ourCount; row += 1)
+        if (this.rootTransitions.ourActions[row] === rootAction &&
+            this.rootTransitions.ourArguments[row] === rootArgument) { rootRow = row; break; }
+    for (let horizon = 1; horizon <= depth && this.nodes < this.nodeBudget; horizon += 1) {
+      let unknown = 0; let refuted = 0;
+      for (let column = 0; column < rootEnemyCount; column += 1) {
+        const relationCode = relation[relationBase + column];
+        if (relationCode === doomedCode) continue;
+        if (relationCode !== survivesCode) { unknown = 1; continue; }
+        const action1 = rootEnemyActions[column]; const argument1 = rootEnemyArguments[column];
+        const ownChance = bundle.hard.chanceAlternativeCount(0, rootAction);
+        const enemyChance = bundle.hard.chanceAlternativeCount(1, action1);
+        for (let chance = 0; chance < ownChance * enemyChance; chance += 1) {
+          const result = this.proveOutcome(bundle, horizon, 0, rootAction, rootArgument,
+            action1, argument1, chance % ownChance, Math.floor(chance / ownChance),
+            rootRow, column);
+          if (result === PROOF_STATUS.DISPROVEN) { refuted = 1; break; }
+          if (result === PROOF_STATUS.UNKNOWN) unknown = 1;
+        }
+        if (refuted) break;
+      }
+      if (!refuted && !unknown) {
+        this.lastStatus = PROOF_STATUS.PROVEN; this.completedDepth = horizon; break;
+      }
+      // One concrete enemy refutation is sufficient even if another relation
+      // is unknown. This keeps the AND result invariant under column order.
+      this.lastStatus = refuted ? PROOF_STATUS.DISPROVEN : PROOF_STATUS.UNKNOWN;
+      if (refuted) this.completedDepth = horizon;
+    }
+    state.undoTo(rootMark);
+    if (state.hashLo !== rootLo || state.hashHi !== rootHi ||
+        state.deltaUsed * 1024 + state.eventUsed !== rootMark) {
+      this.rootRestoreFailures += 1; this.lastStatus = PROOF_STATUS.UNKNOWN;
+      this.completedDepth = 0;
+    }
+    this.rootTransitionHits = this.rootTransitions ? Math.max(0,
+      this.rootTransitions.replayHitCount - this.rootTransitionHitStart) : 0;
     return this.lastStatus;
   }
 

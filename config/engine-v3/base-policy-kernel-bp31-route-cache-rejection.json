@@ -1,0 +1,18 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP31_ROUTE_CACHE_REJECTION_V1",
+  "status": "REJECTED",
+  "scenarios": 8,
+  "matches": 16,
+  "semanticIdentity": true,
+  "routeCalls": 38424,
+  "cacheHits": 296,
+  "cacheHitBasisPoints": 77,
+  "uncached": { "elapsedMs": 21190, "candidateMicros": 10758823, "p95Micros": 31676 },
+  "cached": { "elapsedMs": 23050, "candidateMicros": 11756903, "p95Micros": 35386 },
+  "deltaBasisPoints": { "elapsed": 878, "candidateMicros": 928, "p95": 1171 },
+  "reason": "The search TT already removes repeated states; a second action cache duplicates hashing and memory traffic for a 0.77% hit rate.",
+  "artifacts": {
+    "off": "/tmp/agentank-bp31-cache-off",
+    "on": "/tmp/agentank-bp31-cache-on"
+  }
+}

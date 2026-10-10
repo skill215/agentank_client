@@ -1,0 +1,613 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "STRATEGIC_ATTACK_TARGET_EVIDENCE_V1",
+  "status": "LONG_RANGE_AIM_DIRECTIONAL_POSITIVE_NOT_QUALIFIED; LOCAL_FIRE_AND_ALIGNMENT_OWNERS_REJECTED; ARCHITECTURE_GEOMETRY_DEFICIT_CONFIRMED_ACROSS_SKILL_MODES",
+  "productionDefault": false,
+  "productionChanged": false,
+  "holdoutRead": false,
+  "decision": "keep production ownership unchanged; retain fast long-range aim as diagnostic evidence only; reject isolated direct-fire and one-frame alignment owners; next test target-continuous contact construction rather than another local action heuristic",
+  "source": {
+    "productionRootSha256": "deec4848d8595969682ba3033f44a37c3edaa4cc1ec8cc1f3b65b703f753fb79",
+    "riskAcceptanceControllerSha256": "04a7233b41ed9c03a15e5b9c405fbb5e537a444c94bff3fa148686db220f53b4",
+    "strategicConflictArbiterSha256": "24ead475e58c4c8168e8eb9198f18e54672b6adcd26553dd85878504f43a1910",
+    "strategicTargetExecutionSha256": "70702de27e90149303ce85ade9da6386e886523e0b705b4dbe06a88bef1eac33",
+    "strategicAttackProposalSha256": "b5c2ac333eab56386ade50d6d0139ea25f5b73d27b863277685ce9d4cf8b5759",
+    "persistentAttackTargetSha256": "94a38cfe9fad9265ab00b2e6aa4974655f210ac6ccdb2202e78b5d717a54a9a3",
+    "optionScopedContinuationSearchSha256": "de40e2c2a1b5278c7b20a56bd8972ac0436d99a845118d0ac7c418c7fcbf90c4",
+    "responseConditionedPolicySha256": "397a45e8c4ee4091025a98d5978746c89df6cf778c338b80554ca20337d0240b",
+    "statefulOptionRolloutSha256": "f9243758c87562657a7f457730922f8bb0044f9d8e46950e3a5d943f3d2d7de9",
+    "moveContestVariantKernelSha256": "b4109af4ad62c7a67bc692ff9aeaa7c97a41c56beea1f06a3c9c94d9298fd925",
+    "nativeInitiativeArenaSha256": "17acfc9cbeea567b94fd8404724c30bc03ea77131ebde96998c60b33d328df6b",
+    "shotQualityCounterExposureCensusSha256": "f646e99cbeffbc57f769a9d393f558c5469f5a2db448f5d041701dc128016bae",
+    "aimSetupPostFireClosureSha256": "81afa12137561bffb1fe1ab07377418162622a16588382ec94f4b5cb1494ff6b",
+    "directClearSafeFirePocSha256": "1d82d9409bbfeab599bfc39296f957c302b58e5956d4fb544d97771baa700aaa",
+    "visibleRayAlignmentPocSha256": "2b26f115356b3ce119e0fe3fe46bbd2ef70829736a41c5c32ba3aedb1fa3584f",
+    "nativeInitiativeArenaSha256": "eebb5f9a2bfe45d250c67f12899a19d4d23af027e9601d07ddbbebf4eb575e40",
+    "productionDiagnosticBotSha256": "0b6f0db833df55b37f529b5abeb64dd7e260e11ff7ee596055a24abbf0b0a988"
+  },
+  "contract": {
+    "proposalUnit": "FIRE_OVER_STAR_AT_ONE_ROOT",
+    "hardAndRiskRevalidated": true,
+    "committedEscapeMayNotBeOverridden": true,
+    "responseConditionedSafetyRequired": true,
+    "semanticAttackDeadlineMustNotExceedStarDeadline": true,
+    "leadingScoreBandBlocked": true,
+    "tiedScoreBandRequiresStarPreservation": true,
+    "eventDrivenEvaluation": true,
+    "steadyConflictSearchSkipped": true,
+    "thresholdTuningAllowed": false
+  },
+  "fixed32Poc": {
+    "cohortFingerprint": "c992c61113c8913c47699b6b084c06f8c7ff37b90520a5282806554999b717db",
+    "scenarios": 32,
+    "matchesPerImplementation": 64,
+    "baseline": {
+      "wins": 9,
+      "losses": 52,
+      "draws": 3,
+      "scoreBasisPoints": 1641,
+      "candidateStars": 19,
+      "candidateCrashes": 19,
+      "candidateFire": 327,
+      "candidateTotalMicros": 2586248
+    },
+    "active": {
+      "wins": 10,
+      "losses": 51,
+      "draws": 3,
+      "scoreBasisPoints": 1797,
+      "candidateStars": 20,
+      "candidateCrashes": 18,
+      "candidateFire": 332,
+      "candidateTotalMicros": 2590960,
+      "proposals": 4,
+      "overrides": 4
+    },
+    "delta": {
+      "scoreBasisPoints": 156,
+      "wins": 1,
+      "losses": -1,
+      "candidateStars": 1,
+      "candidateCrashes": -1,
+      "candidateFire": 5,
+      "candidateTotalMicros": 4712
+    },
+    "invariantFailures": 0,
+    "overviewSha256": "b2d9f8d84657c5b0126f30f73c86c0340c2a11ff2aa5426644c9894a9cb50fe8"
+  },
+  "blindDiscovery": {
+    "cohortManifest": "config/engine-v2/strategic-attack-cohort.json",
+    "cohortManifestSha256": "328cedb27b8dbd162cc5b0cbd858719ae31f9430a4b2a4ad77c0e66a716de458",
+    "cohortFingerprint": "2da3271734ca69fdca527a01ff92b025922550a0dbe3c78c7eb0a821916c5f59",
+    "scenarios": 96,
+    "matchesPerImplementation": 192,
+    "sealedHoldoutScenarios": 128,
+    "sealedHoldoutRead": false,
+    "baseline": {
+      "wins": 16,
+      "losses": 169,
+      "draws": 7,
+      "scoreBasisPoints": 1016,
+      "candidateStars": 35,
+      "candidateCrashes": 71,
+      "candidateFire": 918,
+      "candidateTotalMicros": 7505057,
+      "candidateP95MaxMicros": 3487
+    },
+    "active": {
+      "wins": 17,
+      "losses": 168,
+      "draws": 7,
+      "scoreBasisPoints": 1068,
+      "candidateStars": 35,
+      "candidateCrashes": 71,
+      "candidateFire": 918,
+      "candidateTotalMicros": 7710039,
+      "candidateP95MaxMicros": 3824,
+      "checks": 19581,
+      "conflicts": 519,
+      "eventTriggers": 276,
+      "steadyConflictSkips": 243,
+      "responseIncomplete": 65,
+      "safetyBlocked": 11,
+      "deadlineBlocked": 3,
+      "combatBlocked": 181,
+      "scoreBlocked": 10,
+      "proposals": 6,
+      "overrides": 6,
+      "proposalByScoreBand": {
+        "TIED": 1,
+        "LEADING": 0,
+        "TRAILING": 5
+      }
+    },
+    "delta": {
+      "scoreBasisPoints": 52,
+      "percentagePoints": 0.52,
+      "wins": 1,
+      "losses": -1,
+      "candidateStars": 0,
+      "opponentStars": -1,
+      "candidateCrashes": 0,
+      "candidateFire": 0,
+      "candidateTotalMicros": 204982,
+      "candidateP95MaxMicros": 337
+    },
+    "pairedOutcomeTransitions": {
+      "LOSS_TO_WIN": 1,
+      "WIN_TO_LOSS": 0,
+      "otherResultChanges": 0,
+      "discordantPairs": 1,
+      "statisticallySignificant": false
+    },
+    "proposalAffectedMatches": {
+      "count": 6,
+      "resultImproved": 1,
+      "resultRegressed": 0,
+      "survivedLongerOrAvoidedCrashWithoutResultChange": 2,
+      "localRegressionWithoutResultChange": 2,
+      "increasedAttackWithoutTerminalChange": 1
+    },
+    "invariantFailures": 0,
+    "actionOwnerGateBasisPoints": 300,
+    "gatePassed": false,
+    "overviewSha256": "bbac3cdf0b5a32de69b362d475d81609bd2966a26d8280cc7781e74ff09e2de0"
+  },
+  "persistentAttackTarget": {
+    "status": "STATE_INTERFACE_ACCEPTED_GEOMETRIC_ACTION_OWNER_REJECTED",
+    "productionDefault": false,
+    "sealedHoldoutRead": false,
+    "fixed32": {
+      "wins": 10,
+      "losses": 51,
+      "draws": 3,
+      "scoreBasisPoints": 1797,
+      "adoptions": 4,
+      "targetFrames": 13,
+      "movementCandidates": 2,
+      "continuationOverrides": 0,
+      "overviewSha256": "d4a3a0c57d72ea0378a1735e6eff9d5694071dff07b56cc085b9a596c8746893"
+    },
+    "blindDiscovery": {
+      "wins": 17,
+      "losses": 168,
+      "draws": 7,
+      "scoreBasisPoints": 1068,
+      "adoptions": 6,
+      "targetFrames": 24,
+      "movementCandidates": 10,
+      "strategicOwnerYields": 3,
+      "safetyYields": 3,
+      "exactValueChecks": 5,
+      "exactValueBlocked": 5,
+      "continuationOverrides": 0,
+      "overviewSha256": "552137d111431e9f8f0015692ec4b5a04448ffd0596d5c3c7a6df49dd127fada"
+    },
+    "causalFinding": "resource ownership and exact value qualification are required; geometric target progress alone erased the only blind LOSS_TO_WIN"
+  },
+  "optionScopedContinuationMinimax": {
+    "status": "COMPLETE_CHEAP_ZERO_DOMINANCE_KEEP_SHADOW",
+    "productionDefault": false,
+    "depth": 2,
+    "nodeBudget": 768,
+    "fullEnemyColumns": true,
+    "holdoutRead": false,
+    "fixed32": {
+      "attempts": 1,
+      "completed": 1,
+      "runtimeSkips": 0,
+      "strictDominance": 0,
+      "nodes": 10,
+      "maximumNodes": 10,
+      "actionDelta": 0,
+      "overviewSha256": "8abe0a433daf67ee987ef7b9a79c27f63846bcb096ee56691ebc7f35ee562c01"
+    },
+    "blindDiscovery": {
+      "attempts": 5,
+      "completed": 2,
+      "runtimeSkips": 3,
+      "strictDominance": 0,
+      "nodes": 38,
+      "maximumNodes": 29,
+      "actionDelta": 0,
+      "lastCompleteSelectedValue": 22350,
+      "lastCompleteAttackValue": 3800,
+      "overviewSha256": "e115b59546af36883e7e95ba70989695613c2d0ba3912ae51ea81ea3dbe491f6"
+    },
+    "invariants": {
+      "avoidableHardReject": 0,
+      "riskDominatedSelection": 0,
+      "rootRestoreFailure": 0,
+      "timeoutError": 0,
+      "hotAllocation": 0
+    }
+  },
+  "responseCoverageCensus": {
+    "eventTriggers": 276,
+    "complete": 211,
+    "possibleProjectileIncomplete": 42,
+    "rolloutIncomplete": 23,
+    "combatBlocked": 181,
+    "currentRiskCombatPositive": 33,
+    "attackDominates": 1,
+    "starDominates": 99,
+    "tradeoff": 110,
+    "equal": 1
+  },
+  "possibleProjectileResponseCoverage": {
+    "status": "SHADOW_SUPPORT_ACCEPTED_ACTIVE_DELTA_ZERO",
+    "productionDefault": false,
+    "commonOwnPolicyAcrossWorlds": true,
+    "hiddenWorldBackup": "COMPONENTWISE_WORST_OF_ABSENCE_AND_PRESENCE",
+    "multiTrackSupport": "INCOMPLETE",
+    "fixed32": {
+      "possibleRoots": 19,
+      "singletonAttempts": 12,
+      "singletonComplete": 10,
+      "singletonIncomplete": 2,
+      "multiTrackUnsupported": 7,
+      "responseIncompleteBefore": 24,
+      "responseIncompleteAfter": 14,
+      "activeBaselineScoreBasisPoints": 1797,
+      "activeCandidateScoreBasisPoints": 1797,
+      "activeActionDelta": 0,
+      "shadowOverviewSha256": "2e161bd348c242d308fc134dbe541bd3c85e70d7c0f5cbe686d47ea854e66e78",
+      "activeOverviewSha256": "f8ba25a8d4ce7ca6a143b46c7c86f1345da159d6f792a4b7795ecc09844826b4"
+    },
+    "blindDiscovery": {
+      "possibleRoots": 43,
+      "singletonAttempts": 35,
+      "singletonComplete": 32,
+      "singletonIncomplete": 3,
+      "multiTrackUnsupported": 8,
+      "cadenceRephasedWorlds": 3,
+      "commonPolicySequences": 418,
+      "conservativelyReducedDimensions": 19,
+      "responseIncompleteBefore": 65,
+      "responseIncompleteAfter": 33,
+      "proposalsBefore": 7,
+      "proposalsAfter": 13,
+      "actionDelta": 0,
+      "overviewSha256": "22e5d994a7b81a59a3ca5149e3dc129b394219295c3447f7ea39f2fb4ffb2b62"
+    },
+    "invariants": {
+      "avoidableHardReject": 0,
+      "riskDominatedSelection": 0,
+      "rootRestoreFailure": 0,
+      "timeoutError": 0,
+      "hotAllocation": 0
+    }
+  },
+  "rolloutIncompleteReasonCensus": {
+    "status": "SINGLE_CAUSE_CONFIRMED",
+    "productionDefault": false,
+    "holdoutRead": false,
+    "classification": {
+      "reason": "APPLY_UNSUPPORTED_RULE",
+      "fastKernelSite": "MOVE_CONTEST",
+      "appliedActionPair": "GO/GO",
+      "hardIncomplete": 0,
+      "capacityFailure": 0,
+      "executionError": 0,
+      "rootRestoreFailure": 0
+    },
+    "fixed32": {
+      "physicalIncompleteRoots": 5,
+      "possibleAbsenceIncompleteRoots": 2,
+      "possiblePresenceIncompleteRoots": 0,
+      "failedInvocations": 24,
+      "failedInvocationsByPhase": {
+        "PHYSICAL": 17,
+        "POSSIBLE_ABSENCE": 7,
+        "POSSIBLE_PRESENCE": 0
+      },
+      "failedInvocationsByOption": {
+        "STAR": 17,
+        "ATTACK": 7
+      },
+      "failedInvocationsByStep": [0, 4, 14, 6],
+      "moveContestInvocations": 24,
+      "goGoInvocations": 24,
+      "actionAndOutcomeDelta": 0,
+      "overviewSha256": "a71aaddba151854279967ef5d6e9799a0ebea68c7e38b16f352d635ae8d76794"
+    },
+    "blindDiscovery": {
+      "physicalIncompleteRoots": 22,
+      "possibleAbsenceIncompleteRoots": 2,
+      "possiblePresenceIncompleteRoots": 1,
+      "failedInvocations": 67,
+      "failedInvocationsByPhase": {
+        "PHYSICAL": 60,
+        "POSSIBLE_ABSENCE": 6,
+        "POSSIBLE_PRESENCE": 1
+      },
+      "failedInvocationsByOption": {
+        "STAR": 55,
+        "ATTACK": 12
+      },
+      "failedInvocationsByStep": [0, 1, 42, 24],
+      "moveContestInvocations": 67,
+      "goGoInvocations": 67,
+      "actionAndOutcomeDelta": 0,
+      "overviewSha256": "9831ca5aef5873761bdd980e3fc05bbc548fa8f0bd47b0ed21faa5ef03a887ff"
+    },
+    "interpretation": [
+      "The rollout failures are not caused by search depth, Hard, entity capacity, possible-projectile injection, terminal resolution or root restore.",
+      "Root enemy-action marginals were misleading because the actual unsupported pair appears at continuation step 1-3 after both policies select GO.",
+      "Static occupied blocking is already proven by official replay evidence, but GO/GO same-target, swap and vacated-cell semantics remain unresolved.",
+      "Skipping the unsupported column would turn an unknown physical branch into false exact support and is forbidden.",
+      "The next POC must evaluate SEQUENTIAL_BLOCK, INTENT_BLOCK and COLLISION_CRASH as finite RuleVariants and publish evidence only when the common own policy survives their componentwise worst envelope."
+    ]
+  },
+  "moveContestRuleVariantEnvelope": {
+    "status": "SUPPORT_COMPLETE_ACTION_OWNER_NEGATIVE",
+    "productionDefault": false,
+    "actionOwnership": false,
+    "holdoutRead": false,
+    "variants": [
+      "SEQUENTIAL_BLOCK",
+      "INTENT_BLOCK",
+      "COLLISION_CRASH"
+    ],
+    "policyContract": {
+      "canonicalPolicyWorld": "SEQUENTIAL_BLOCK",
+      "sameOwnSequenceReplayedAcrossVariants": true,
+      "enemyContinuationStateConditioned": true,
+      "backup": "COMPONENTWISE_WORST_THEN_EPSILON_CONTAMINATION",
+      "incompleteNeverOwns": true,
+      "platformRuleClaimed": false
+    },
+    "fixed32": {
+      "attemptedRoots": 7,
+      "completeRoots": 7,
+      "completeByVariant": [0, 7, 7, 7],
+      "relationAgreementRoots": 3,
+      "relationDisagreementRoots": 4,
+      "risk65Envelope": {
+        "EQUAL": 0,
+        "ATTACK_DOMINATES": 0,
+        "STAR_DOMINATES": 3,
+        "TRADEOFF": 4
+      },
+      "reducedDimensions": 283,
+      "commonSequenceReplays": 172,
+      "transitions": 1222,
+      "rootRestoreFailure": 0,
+      "actionAndOutcomeDelta": 0,
+      "overviewSha256": "c146a970b2326cfee4e2ab3c34dd39b218183ba41fa1a081fdb4c816a605b367"
+    },
+    "blindDiscovery": {
+      "attemptedRoots": 25,
+      "completeRoots": 25,
+      "completeByVariant": [0, 25, 25, 25],
+      "relationAgreementRoots": 21,
+      "relationDisagreementRoots": 4,
+      "risk65Envelope": {
+        "EQUAL": 0,
+        "ATTACK_DOMINATES": 0,
+        "STAR_DOMINATES": 7,
+        "TRADEOFF": 18
+      },
+      "reducedDimensions": 1024,
+      "commonSequenceReplays": 616,
+      "transitions": 3913,
+      "rootRestoreFailure": 0,
+      "actionAndOutcomeDelta": 0,
+      "overviewSha256": "6c7ecce8f402de55c6a4875935f26934c47794956053a83577aa17d0b820e7cf"
+    },
+    "interpretation": [
+      "The finite RuleVariant envelope closes every observed GO/GO rollout support hole in both Discovery cohorts without guessing one platform rule.",
+      "The componentwise-worst envelope produces zero ATTACK_DOMINATES roots at risk 65, so GO/GO uncertainty is not the causal explanation for missing attack ownership.",
+      "Rule disagreement is material in 4 roots per cohort and forbids promoting any single diagnostic movement variant to production truth.",
+      "The parent evaluator remains incomplete and behavior-neutral; recovered values are evidence only and cannot qualify an action.",
+      "The next diagnostic should decompose the already-complete durable-combat blocks instead of expanding movement variants or weakening safety."
+    ]
+  },
+  "durableCombatBlockVectorCensus": {
+    "status": "ENDPOINT_AND_TEMPORAL_VALUE_NOT_THE_PRIMARY_MISSING_SIGNAL",
+    "productionDefault": false,
+    "actionOwnership": false,
+    "holdoutRead": false,
+    "fixed32": {
+      "blockedRoots": 67,
+      "endpointNoPositiveDimension": 51,
+      "physicalSignalWithoutEndpointValue": 51,
+      "temporalRecovery": 1,
+      "relation": { "STAR_DOMINATES": 51, "TRADEOFF": 16, "ATTACK_DOMINATES": 0 },
+      "overviewSha256": "b203842aa05d8bf7d9892df233ae895e770eab640e3563d39610cf439efd5258"
+    },
+    "blindDiscovery": {
+      "blockedRoots": 202,
+      "endpointNoPositiveDimension": 115,
+      "physicalSignalWithoutEndpointValue": 115,
+      "temporalRecovery": 4,
+      "relation": { "EQUAL": 1, "STAR_DOMINATES": 110, "TRADEOFF": 91, "ATTACK_DOMINATES": 0 },
+      "starPathCostRoots": 168,
+      "overviewSha256": "794c10b37f9e24e8f39724b21b88e8a8c1e52f2943517b4bcc74d0f331ffe0b9"
+    },
+    "interpretation": [
+      "Transient four-frame pressure recovers only 1 of 51 fixed roots and 4 of 115 blind roots that had physical attack hints but no endpoint combat gain.",
+      "The STAR continuation can itself fire later and the opponent can avoid weak shots, so physical possible-hit is not durable attack value.",
+      "Adding more endpoint or temporal FIRE bonuses would mostly promote unverifiable attacks and is rejected."
+    ]
+  },
+  "projectileConversionFunnel": {
+    "status": "SHOT_QUALITY_AND_POST_FIRE_SURVIVAL_DEFICIT_CONFIRMED",
+    "productionDefault": false,
+    "productionChanged": false,
+    "holdoutRead": false,
+    "attributionContract": {
+      "source": "LOCAL_SIMULATOR_EVENT_STREAM",
+      "tankKill": "bullet_go_then_tank_crash_then_same_bullet_crash_in_one_frame",
+      "counterExposure": "projectile_owner_crashes_within_four_frames_of_projectile_creation",
+      "shieldBreak": "only_final_shield_expiry_is_observable",
+      "claimScope": "LOCAL_COMPARATIVE_EVIDENCE_NOT_PLATFORM_RULE_PROOF"
+    },
+    "fixed32": {
+      "matches": 64,
+      "v2": { "projectiles": 327, "tankKills": 7, "killsPer10000": 214, "counterCrashWithin4": 13, "counterCrashPer10000": 398 },
+      "v1": { "projectiles": 354, "tankKills": 15, "killsPer10000": 424, "counterCrashWithin4": 2, "counterCrashPer10000": 56 },
+      "v2KillConversionRelativeToV1BasisPoints": 5052,
+      "v2CounterExposureRelativeToV1BasisPoints": 70367,
+      "overviewSha256": "c72b7db041734338db4d1863787590074fc5c666d6e3bdaa37b769c448ab044"
+    },
+    "blindDiscovery": {
+      "matches": 192,
+      "v2": { "projectiles": 918, "tankKills": 14, "killsPer10000": 153, "counterCrashWithin4": 24, "counterCrashPer10000": 261, "averageLifetimeMilliFrames": 4172 },
+      "v1": { "projectiles": 932, "tankKills": 65, "killsPer10000": 697, "counterCrashWithin4": 3, "counterCrashPer10000": 32, "averageLifetimeMilliFrames": 3389 },
+      "v2KillConversionRelativeToV1BasisPoints": 2187,
+      "v2CounterExposureRelativeToV1BasisPoints": 81220,
+      "v2Crashes": 71,
+      "v1Crashes": 15,
+      "invariantFailures": 0,
+      "overviewSha256": "c37df3c8139ed00ae658f6d68d19302229539fde953cbe5d7162c45fb9b1649d"
+    },
+    "interpretation": [
+      "V2 does not have a FIRE-volume shortage in the blind Discovery: it emits 918 projectiles versus V1's 932.",
+      "V2 converts projectiles to tank kills at 1.53 percent versus V1's 6.97 percent, only 21.9 percent of V1's conversion rate.",
+      "V2 projectile owners crash within four frames at 2.61 percent versus V1's 0.32 percent, about 8.1 times the local counter-exposure rate.",
+      "The next improvement target is verified shot selection and post-fire escape, not more permissive attack ownership or more FIRE."
+    ]
+  },
+  "shotQualityCounterExposureCensus": {
+    "status": "GEOMETRIC_SHOT_SELECTION_AND_RESPONSE_CONDITIONED_ESCAPE_BOTH_DEFICIENT",
+    "productionDefault": false,
+    "productionChanged": false,
+    "holdoutRead": false,
+    "attributionContract": {
+      "commandToProjectile": "same-frame first, otherwise latest unmatched FIRE within two frames; overload members remain independent",
+      "tankKill": "bullet_go_then_opponent_tank_crash_then_same_bullet_crash",
+      "counterKilled": "owner projectile crashes within four frames after the shot projectile is emitted",
+      "continuation": "first observed owner action in the next four frames",
+      "hotAllocationCount": 0,
+      "unpairedProjectiles": 0
+    },
+    "fixed32": {
+      "matches": 64,
+      "v2": { "shots": 327, "kills": 7, "directClear": 20, "directClearKills": 2, "offAxis": 262, "noCombatSignal": 54, "noCombatSignalKills": 0, "counterCrashWithin4": 13, "counterKilledWithin4": 10 },
+      "v1": { "shots": 354, "kills": 15, "directClear": 126, "directClearKills": 14, "offAxis": 220, "counterCrashWithin4": 2, "counterKilledWithin4": 2 },
+      "overviewSha256": "a7acd6db1f870ba90564bdac6b0069d20a96bdcd2a5872017511f573140aae26"
+    },
+    "blindDiscovery": {
+      "matches": 192,
+      "v2": { "shots": 918, "kills": 14, "directClear": 42, "directClearKills": 2, "offAxis": 675, "distance0To2": 89, "distance0To2Kills": 1, "noCombatSignal": 224, "noCombatSignalKills": 0, "noCombatSignalCounterKilled": 10, "possibleHit": 596, "possibleHitKills": 10, "enemySurvivorsTwoPlus": 664, "postFireEscapeTwoPlus": 901, "postFireEscapeTwoPlusCounterKilled": 20, "staticCounterExposureZero": 821, "staticCounterExposureZeroCounterKilled": 16, "counterCrashWithin4": 24, "counterKilledWithin4": 21 },
+      "v1": { "shots": 932, "kills": 65, "directClear": 372, "directClearKills": 63, "offAxis": 539, "distance0To2": 164, "distance0To2Kills": 43, "counterCrashWithin4": 3, "counterKilledWithin4": 3 },
+      "firstContinuationCounterKilled": {
+        "v2": { "MISSING_OR_NONE": 4, "GO": 7, "TURN": 8, "FIRE": 2, "BOMB": 0, "SKILL": 0 },
+        "v1": { "MISSING_OR_NONE": 2, "GO": 0, "TURN": 0, "FIRE": 0, "BOMB": 0, "SKILL": 1 }
+      },
+      "overviewSha256": "b1191bb778c00a419c5e4c6f1bf580696ead897f0166b04947fc47d3653e5c94"
+    },
+    "interpretation": [
+      "FIRE volume is not the deficit: V2 fires 918 times versus V1's 932 in blind Discovery.",
+      "V1 constructs a direct-clear shot in 39.9 percent of FIRE roots, while V2 does so in only 4.6 percent.",
+      "V2 spends 224 shots with no Combat/PAC evidence; they produce zero kills and ten exact four-frame counter-kills.",
+      "V2's possible-hit signal is weak: 596 shots produce ten kills while most modeled enemy first-action branches remain viable.",
+      "The current static postFireEscape and ownCounterExposure dimensions are invalid proxies for dynamic survival: they classify nearly every shot as safe yet contain most exact counter-kills.",
+      "The next causal unit is an aim-setup plus response-conditioned post-fire policy, not an isolated FIRE score or a global FIRE bonus."
+    ]
+  },
+  "aimSetupAndGeometryCausalPocs": {
+    "status": "FAST_LONG_RANGE_DIRECTIONALLY_POSITIVE_BUT_BELOW_OWNER_GATE; LOCAL_FIRE_NEUTRAL; ONE_FRAME_ALIGNMENT_NEGATIVE",
+    "productionDefault": false,
+    "productionChanged": false,
+    "holdoutRead": false,
+    "stateConsistency": "diagnostic overrides are applied before ProductionRoot emit so tracker, pending command, lastAction and Plan state observe the emitted action",
+    "longRangeQualityFast": {
+      "contract": "only zero-signal distant FIRE roots; O(1) distance/ray prefilter; candidate depth-two safety; no full post-FIRE depth-four closure",
+      "fixed32": {
+        "matchesPerImplementation": 64,
+        "baseline": { "wins": 5, "losses": 57, "draws": 2, "scoreBasisPoints": 938, "projectiles": 285, "kills": 5, "killsPer10000Projectiles": 175, "candidateCrashes": 28 },
+        "candidate": { "wins": 6, "losses": 56, "draws": 2, "scoreBasisPoints": 1094, "projectiles": 280, "kills": 6, "killsPer10000Projectiles": 214, "candidateCrashes": 27 },
+        "deltaBasisPoints": 156,
+        "postFireNodes": 0,
+        "setupNodes": 228,
+        "overviewSha256": "c06541edd4f13a85fa41ae7fb454e85399302ddfefafc5b3c93f4671d594fddd"
+      },
+      "open96": {
+        "matchesPerImplementation": 192,
+        "baseline": { "wins": 16, "losses": 169, "draws": 7, "scoreBasisPoints": 1016, "projectiles": 918, "kills": 14, "killsPer10000Projectiles": 153 },
+        "candidate": { "wins": 17, "losses": 168, "draws": 7, "scoreBasisPoints": 1068, "projectiles": 907, "kills": 15, "killsPer10000Projectiles": 165 },
+        "deltaBasisPoints": 52,
+        "lossToWin": 1,
+        "winToLoss": 0,
+        "activeOverrides": 14,
+        "setupNodes": 790,
+        "overviewSha256": "5ba8b00d907ed0b14f1107955d7dc4e85bbbe9e334ca6e9ae9fdc918aa6c4309"
+      },
+      "decision": "retain as a default-off diagnostic primitive; 0.52 percentage-point open-Discovery gain is below the 3-point action-owner gate"
+    },
+    "directClearSafeFire": {
+      "fixed32": { "matchesPerImplementation": 64, "overrides": 5, "scoreBasisPointDelta": 0, "fireDelta": 2, "killDelta": 0, "overviewSha256": "aac8082dd0236d979520c58e5ab43d30406d33e94c35e1053bb76003eb1582c6" },
+      "decision": "REJECTED_AS_ACTION_OWNER; a distant clear ray without response-conditioned hit pressure is not a useful shot certificate"
+    },
+    "visibleRayAlignment": {
+      "fixed32": { "matchesPerImplementation": 64, "overrides": 4, "baselineScoreBasisPoints": 938, "candidateScoreBasisPoints": 859, "winDelta": -1, "drawDelta": 1, "killDelta": -1, "directEntryDelta": 7, "overviewSha256": "1332c5e45de2d3ceae3b86e7d47583dc98738b7c8c752e5d048e39fa36e4e415" },
+      "decision": "REJECTED_AS_ACTION_OWNER; one-frame alignment can improve local geometry while breaking a winning continuation"
+    }
+  },
+  "crossSkillAttackGeometry": {
+    "status": "ARCHITECTURE_DEFICIT_PERSISTS_ACROSS_TESTED_SKILL_ASSIGNMENTS",
+    "productionChanged": false,
+    "warning": "the V2 STUN run is control-structure stress evidence only because ProductionRoot does not yet implement native stun emission; it is not a skill qualification",
+    "asymmetricPoisonVsStun": {
+      "v2": { "visible": 5785, "directClear": 86, "directEntries": 53, "directFire": 17, "wrongFacingToDirect": 33, "distance3To4Entries": 10, "maximumDirectRun": 3 },
+      "v1Style": { "visible": 5505, "directClear": 249, "directEntries": 151, "directFire": 119, "wrongFacingToDirect": 98, "distance3To4Entries": 59, "maximumDirectRun": 5 },
+      "overviewSha256": "b8357a62cf3495515a6109e5cbb71fb0d6c21984559498d78cd852a76ef1645c"
+    },
+    "bothPoison": {
+      "v2": { "directClear": 89, "directEntries": 62, "directFire": 18, "wrongFacingToDirect": 40, "distance3To4Entries": 9 },
+      "v1Style": { "directClear": 229, "directEntries": 140, "directFire": 110, "wrongFacingToDirect": 83, "distance3To4Entries": 44 },
+      "overviewSha256": "32bec7517c060b41f0038a3514b6e731874ad140b56649d12151a79f87b7c25d"
+    },
+    "bothStun": {
+      "v2": { "directClear": 79, "directEntries": 60, "directFire": 14, "wrongFacingToDirect": 37, "distance3To4Entries": 9 },
+      "v1Style": { "directClear": 240, "directEntries": 140, "directFire": 115, "wrongFacingToDirect": 101, "distance3To4Entries": 50 },
+      "overviewSha256": "360fb65aa33abfc50222d32d743a69f9505e4c5d1d1a836601890ea7d6014f8e"
+    },
+    "interpretation": "skill selection changes the absolute result but does not remove the roughly 2.6-to-3x direct-position deficit or 6-to-8x direct-FIRE deficit; the missing capability is sustained contact construction and execution ownership"
+  },
+  "interpretation": [
+    "The ownership direction is weakly positive on both known and blind Discovery cohorts.",
+    "The effect is too sparse and too small to qualify a primitive FIRE action owner.",
+    "The six blind proposals change only one terminal outcome and do not increase aggregate FIRE count.",
+    "The next unit of ownership must be a persistent target generation, not a lower FIRE threshold.",
+    "Turn, position and fire are replaceable per-frame implementations of one deadline-bounded ATTACK target.",
+    "Every continuation frame must revalidate Hard, committed EscapeObligation, Risk and target support.",
+    "A temporary execution gap falls back for that frame but does not silently complete the target.",
+    "Persistent target state is valid, but geometric target progress is not an action certificate.",
+    "The option-scoped depth-two Minimax is sparse and cheap, but produced zero continuation dominance certificates.",
+    "The next coverage problem was upstream: 42 possible-projectile and 23 rollout-incomplete response roots, not more depth on the rejected continuation.",
+    "The singleton possible-projectile closure recovers 32 of 35 blind roots under one common own-policy sequence and preserves poison cadence, but it creates no fixed32 action or outcome delta.",
+    "Eight multi-track roots remain incomplete by design and must not be greedily collapsed.",
+    "All observed ordinary GO/GO rollout roots are closed by a three-RuleVariant common-policy envelope, but none yields ATTACK dominance at risk 65.",
+    "The dominant remaining question is why complete response evaluations classify combat benefit as absent or only a tradeoff, not how to lower another support gate.",
+    "Temporal pressure recovers only 4 of 115 blind physical-signal roots, so endpoint loss is not the main explanation.",
+    "V2 fires almost as many projectiles as V1 but converts only 21.9 percent as efficiently and has about 8.1 times the four-frame counter-exposure rate.",
+    "Future work must improve verified shot quality and post-fire survival before increasing attack volume.",
+    "Only 4.6 percent of blind V2 shots have a direct clear ray versus 39.9 percent for V1, confirming a target-construction deficit rather than a FIRE-count deficit.",
+    "Static post-fire escape and counter-exposure labels miss most exact counter-kills and must be replaced by response-conditioned continuation closure.",
+    "Fast long-range aim substitution is directionally positive in both fixed32 and open96, but the open gain is only 0.52 percentage points and does not qualify production ownership.",
+    "Direct-clear FIRE is outcome-neutral and one-frame ray alignment is negative even while improving geometry, proving that local geometry cannot own an action without target-continuous execution.",
+    "The direct-position and direct-FIRE deficit persists under asymmetric, both-poison and both-stun simulator assignments, so it is primarily architectural rather than a poison-versus-stun artifact."
+  ],
+  "nextExperiment": {
+    "name": "TARGET_CONTINUOUS_CONTACT_EXECUTION_CENSUS_THEN_BOUNDED_OPTION_POC",
+    "defaultMode": "SHADOW",
+    "reuseDiscovery": true,
+    "readSealedHoldout": false,
+    "acceptance": {
+      "shadowActionDelta": 0,
+      "preserveExistingQualifiedShots": true,
+      "stableTargetGenerationRequired": true,
+      "eventBoundedCommitment": true,
+      "alignmentAloneCannotOwn": true,
+      "directRayAloneCannotOwnFire": true,
+      "wholeChainOpportunityCostRequired": true,
+      "hardRiskAndCommittedEscapeRevalidatedEveryFrame": true,
+      "noGlobalFireOrTurnBonus": true,
+      "rootRestoreFailure": 0,
+      "hotAllocationCount": 0
+    }
+  }
+}

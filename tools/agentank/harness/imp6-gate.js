@@ -91,14 +91,18 @@ function runtimeAudit() {
     ambiguousGeneration && controller.accumulatedWorkUnits === fallbackAt ? 0 : 1;
   const reserve = new EmergencyReserve(); const emergency = new RuntimeController({ emergencyReserve: reserve });
   emergency.beginCallback(0, 3, 4, true); emergency.chargeUnits(59000, WORK_KIND.VALUE_NODE);
-  const batchAllowed = emergency.canStartBatch(WORK_KIND.VALUE_NODE, 20); const reserveIndependent =
+  const reserveProbeCount = Math.ceil((RUNTIME_CONFIG.PER_CALLBACK_WORK_UNIT_LIMIT - 59000) /
+    RUNTIME_CONFIG.WORK_CHARGES[WORK_KIND.VALUE_NODE]);
+  const batchAllowed = emergency.canStartBatch(WORK_KIND.VALUE_NODE, reserveProbeCount);
+  const reserveIndependent =
     reserve.bytes() === 2688 && batchAllowed === 0 && emergency.runtimeMode === RUNTIME_MODE.EMERGENCY;
   return finalized({ schemaVersion: 1, status: fallbackAt === RUNTIME_CONFIG.FALLBACK_ENTER_WORK_UNITS &&
     fallbackLatched === 1 && fallbackOptions.decisionDepth === 3 && fallbackOptions.nodeBudget > 0 &&
     strictMismatchCount === 0 && ambiguousResetCount === 0 && reserveIndependent ? "PASS" : "FAIL",
   fallbackAt, fallbackLatched, fallbackDepth: fallbackOptions.decisionDepth,
   fallbackNodeBudget: fallbackOptions.nodeBudget, fallbackProofBudget: fallbackOptions.proofBudget,
-  strictMismatchCount, ambiguousResetCount, reserveBytes: reserve.bytes(), reserveIndependent,
+  strictMismatchCount, ambiguousResetCount, reserveBytes: reserve.bytes(), reserveProbeCount,
+  reserveIndependent,
   emergencyMode: emergency.runtimeMode, minimaxEnabled: fallbackOptions.nodeBudget > 0, mctsEnabled: false });
 }
 

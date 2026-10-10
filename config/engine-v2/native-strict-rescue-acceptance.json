@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "V2_NATIVE_STRICT_RESCUE_ACCEPTANCE_V1",
+  "status": "ACCEPTED_NEUTRAL_SAFETY_BACKSTOP",
+  "asOf": "2026-08-03",
+  "scope": {
+    "productionSourceChanged": true,
+    "candidateBuilt": false,
+    "officialPlatformOperationPerformed": false
+  },
+  "productionContract": {
+    "earlyCommittedMembershipEnabled": true,
+    "strictFinalCommittedRescueEnabled": true,
+    "possibleProjectileCanTrigger": false,
+    "futureFireCanTrigger": false,
+    "unknownSupportCanTrigger": false,
+    "rescuePlanCommitAllowed": false
+  },
+  "strictFinalCertificate": [
+    "COMMITTED_SUPPORT_COMPLETE",
+    "SELECTED_ACTION_PROVEN_DEAD",
+    "REPLACEMENT_PROVEN_VIABLE",
+    "REPLACEMENT_FINAL_PHYSICAL_HARD_ALLOW"
+  ],
+  "source": {
+    "productionRootSha256": "aaf2d2fc613d414155bc50bf03d6e0c0bbcef53a50d4ca829ef0c78d3b7ef9fb",
+    "escapeObligationSha256": "e2f889c6b6760608610dcd781e163cf7606b3176297966386bfc0b9fa7cb0740",
+    "arenaRunnerSha256": "1c522292f9e6e74404d12d21120e69900b822d852c26a1fbd70665a759d8a7f4",
+    "diagnosticBotSha256": "4029db5ca9aadab718f5d0e40a7f2c0a8e2bfdce0954118fcb67af6ec2feb92e"
+  },
+  "cohort": {
+    "fingerprint": "bcfc3a2de8675abefb04f531cc8c9e3c77fdd4cd600e65590ff50073321a6d70",
+    "discoveryScenarios": 16,
+    "holdoutScenarios": 48,
+    "seatSwapsPerScenario": 2,
+    "opponent": "V3_BASE_FROZEN_V1_BEHAVIOR",
+    "skills": [
+      "poison",
+      "stun"
+    ]
+  },
+  "experiments": {
+    "finalOnlyReplacement": {
+      "classification": "REJECTED_NATIVE_INTERACTION",
+      "artifactFingerprint": "b0f0bf0937c173432d1d6bfa0578caccf12be9b2bbb34da83b5df7760081e8eb",
+      "artifactManifestSha256": "abcf5191bcb37f96f0029c2c0ddd67c873855b7499bf5a8fa1577e8898b500ae",
+      "baseline": {
+        "wins": 6,
+        "losses": 24,
+        "draws": 2,
+        "scoreBasisPoints": 2188
+      },
+      "candidate": {
+        "wins": 5,
+        "losses": 25,
+        "draws": 2,
+        "scoreBasisPoints": 1875
+      },
+      "starDifferentialDelta": -2,
+      "crashDelta": 0,
+      "firstOutcomeRegression": {
+        "historicalMatchUrlId": "mat_FvgkFgwRgF217xan3",
+        "candidateSeat": 1,
+        "firstDivergenceFrame": 112,
+        "legacyAction": "TURN_RIGHT",
+        "finalOnlyAction": "TURN_LEFT",
+        "legacyTerminal": "FRAME_LIMIT_STARS_WIN_2_TO_1",
+        "finalOnlyTerminal": "FRAME_LIMIT_STARS_LOSS_1_TO_2",
+        "cause": "EARLY_EO_RESTORED_COMMITTED_VIABLE_SET_WHEN_RISK_ACCEPTABLE_SET_WAS_EMPTY"
+      }
+    },
+    "additiveStrictBackstopDiscovery": {
+      "classification": "NEUTRAL_ZERO_REGRESSION",
+      "artifactFingerprint": "b3e51d70f3dbf5666e6336cf3e0c7ce4ff5f62f639fb7daac0148ab7d122d5dc",
+      "artifactManifestSha256": "4020e0fc358b160643acc21bfb5fd3013df63c440d9fefecea380b852f7ae59a",
+      "baselineAndCandidate": {
+        "wins": 6,
+        "losses": 24,
+        "draws": 2,
+        "scoreBasisPoints": 2188
+      },
+      "completeCommittedChecks": 611,
+      "rescueCandidates": 0,
+      "rescueOverrides": 0
+    },
+    "additiveStrictBackstopHoldout": {
+      "classification": "NEUTRAL_ZERO_REGRESSION",
+      "artifactFingerprint": "e2a3c39c19a1d1d61fa2ccdffdd9c06b454935d7c5b80f56571ac76cd0dad314",
+      "artifactManifestSha256": "9c1244bbd1f0e866248bc2a9c90e31cdeed225e095493ce41dd1f456e32205ed",
+      "baselineAndCandidate": {
+        "wins": 12,
+        "losses": 77,
+        "draws": 7,
+        "scoreBasisPoints": 1615
+      },
+      "completeCommittedChecks": 1757,
+      "rescueCandidates": 0,
+      "rescueOverrides": 0
+    }
+  },
+  "invariants": {
+    "timeoutError": 0,
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "strictProofRescueConflict": 0,
+    "hotAllocationAdded": 0
+  },
+  "performance": {
+    "allocationClassification": "ZERO_NEW_HOT_ALLOCATION",
+    "runtimeClassification": "WITHIN_120_PERCENT_GUARD_NOT_CLAIMED_AS_IMPROVEMENT"
+  },
+  "conclusion": {
+    "earlyCommittedMembership": "KEEP",
+    "strictFinalRescue": "KEEP_AS_CORRECTNESS_BACKSTOP",
+    "winRateImprovementClaimed": false,
+    "holdoutMayBeRetuned": false
+  }
+}

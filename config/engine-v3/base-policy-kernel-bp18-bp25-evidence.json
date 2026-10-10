@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_RESPONSE_ENVELOPE_EVIDENCE_V1",
+  "stage": "BP18_BP25",
+  "date": "2026-08-26",
+  "productionChanged": false,
+  "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7",
+  "diagnosticSource": {
+    "boundedPolicySearchSha256": "457b3b045ca825339b90027c34227419cb9437c0fc985fad76ef7ef83d31e4b0",
+    "policyResponseEnvelopeSha256": "b32a5062ebdbaea25236443af5706c87480c4f939ec838302d1638d11b979c46"
+  },
+  "cohort": {
+    "scenarios": 16,
+    "candidateMatches": 32,
+    "skill": "stun",
+    "seatSwap": true
+  },
+  "bp20BellmanConsistent": {
+    "shadow": {
+      "wins": 16, "losses": 14, "draws": 2,
+      "scoreBasisPoints": 5313, "completeEnvelopes": 489,
+      "candidateDominance": 25, "wouldOverride": 24,
+      "nodes": 54651,
+      "overviewSha256": "bfc76209bcfb473ee7e0eadb5ca1eaf9b4979d8722fd51da865310c46caa9194"
+    },
+    "active": {
+      "wins": 13, "losses": 17, "draws": 2,
+      "scoreBasisPoints": 4375, "overrides": 28,
+      "candidateCrashes": 17, "scoreDeltaBasisPoints": -938,
+      "improvedMatches": 3, "regressedMatches": 6,
+      "overviewSha256": "006048c9cb2bcd937862a9f1df59e3a8b81f2e74e84c3f4b3b903896463e1c21",
+      "causalReportSha256": "324c49ef17664353ffdf05cace0a56b20427f54f1e6ba0919686654a32c2aec8"
+    }
+  },
+  "bp21EventClosure": {
+    "candidateDominance": 25,
+    "eventQualifiedDominance": 3,
+    "eventRejectedDominance": 22,
+    "wouldOverride": 2,
+    "eventLeaves": 1070,
+    "noEventLeaves": 7385,
+    "abortLeaves": 5384,
+    "rescueLeaves": 2496,
+    "activeScoreBasisPoints": 5313,
+    "scoreDeltaBasisPoints": 0,
+    "improvedMatches": 1,
+    "regressedMatches": 1,
+    "causalReportSha256": "beef415d8d4c7eef9efb8b6df1fccd53c54f7e6bbfc38d1d89fa5d46902c668f"
+  },
+  "bp22EventHandoff": {
+    "completionFallbacks": 18,
+    "activeScoreBasisPoints": 5313,
+    "scoreDeltaBasisPoints": 0,
+    "decision": "SEMANTIC_REPAIR_RETAINED_NO_OWNER_LIFT"
+  },
+  "bp23DepthCalibration": {
+    "depth2": {
+      "budget": 384, "completeEnvelopes": 489,
+      "eventQualifiedDominance": 3, "nodes": 54739,
+      "p95MaxMicros": 26120
+    },
+    "depth3": {
+      "budget": 1024, "completeEnvelopes": 262,
+      "eventQualifiedDominance": 2, "nodes": 480428,
+      "p95MaxMicros": 43958,
+      "overviewSha256": "6a93987891bdf391329f59f8954d0cedcc764857160c0d5ee97cf63abc5d0666"
+    },
+    "nodeRatioBasisPoints": 8777,
+    "decision": "REJECT_UNIFORM_DEPTH_INCREASE"
+  },
+  "bp24PreparedBaseReuse": {
+    "checks": 613, "reused": 14, "blocked": 598,
+    "depthMismatch": 0, "additionalNodes": 187,
+    "eventQualifiedDominance": 0,
+    "overviewSha256": "444c612e83c57d5f2939ac8df6dc0e60ee5984c880ece6fae3f7f0c5ae52eca7",
+    "decision": "RETAIN_AS_SPARSE_CACHE_PATH_NOT_PRIMARY_OWNER"
+  },
+  "bp25RootEventSchedule": {
+    "checks": 2557, "rootEventChecks": 7,
+    "deferredLongOptions": 606, "completeEnvelopes": 7,
+    "candidateDominance": 3, "wouldOverride": 2,
+    "additionalNodes": 371, "priorAdditionalNodes": 54739,
+    "nodeReductionBasisPoints": 9932,
+    "overviewSha256": "64b57b6b67172712114e672dcc07e13504c88eeff5ce948aea870cc3ecd7bf7b",
+    "decision": "ACCEPT_DIAGNOSTIC_SCHEDULING_BOUNDARY"
+  },
+  "invariants": {
+    "rootRestoreFailure": 0,
+    "timeoutError": 0,
+    "hotAllocation": 0,
+    "productionActionChange": 0
+  },
+  "next": "Build an event-bounded long-option evaluator for the 606 deferred route actions; do not restore shallow scalar ownership or uniformly increase depth."
+}

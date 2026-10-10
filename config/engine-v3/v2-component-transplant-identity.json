@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "V2_COMPONENT_TRANSPLANT_IDENTITY_V1",
+  "frozenAt": "2026-07-31T02:10:20.876Z",
+  "implementations": {
+    "V1_ORACLE": {
+      "kind": "FROZEN_V1_SCRIPT",
+      "sourceRelativePath": "artifacts/imp8/frozen/candidates/imp8-v2-a5ce6f8ef59abb61/inputs/v1-baseline-8da68843a292c6a6230a32baf60392916f9fb85aaa5d9a94feac7085ddc9e82e.js",
+      "sourceSha256": "8da68843a292c6a6230a32baf60392916f9fb85aaa5d9a94feac7085ddc9e82e"
+    },
+    "V3_BASE": {
+      "kind": "MODULAR_V1_EXPERIMENT_HOST",
+      "behaviorSourceSha256": "8da68843a292c6a6230a32baf60392916f9fb85aaa5d9a94feac7085ddc9e82e",
+      "interfaceFingerprint": "17de84f34b71f26c0adfe61a078f10671c305ac4af119dc31de9e57c65088437",
+      "interfaceFiles": [
+        "engine-v3/src/contracts.js",
+        "engine-v3/src/component-registry.js",
+        "engine-v3/src/component-result.js",
+        "engine-v3/src/controller.js",
+        "engine-v3/src/diagnostic-bot.js",
+        "engine-v3/src/legacy/default-source.js",
+        "engine-v3/src/legacy/v1-runtime.js"
+      ],
+      "isV2": false
+    },
+    "V2_BASE": {
+      "kind": "REAL_V2_PRODUCTION_ROOT",
+      "sourceRelativePath": "artifacts/v2-component-transplant/baseline/v2-base-source-0a648d8342bf0bffdf67cf339ce559db682e1bcd33f843d29aaa2f90b05cf4f4.js",
+      "minifiedRelativePath": "artifacts/v2-component-transplant/baseline/v2-base-minified-efc5491b0c6b17be28ace84ab9eb7e1c1f636661d1258bb18ffcf57a5dc89e96.js",
+      "sourceSha256": "0a648d8342bf0bffdf67cf339ce559db682e1bcd33f843d29aaa2f90b05cf4f4",
+      "minifiedSha256": "efc5491b0c6b17be28ace84ab9eb7e1c1f636661d1258bb18ffcf57a5dc89e96",
+      "sourceBytes": 534367,
+      "minifiedBytes": 515275,
+      "buildFingerprint": "7da7f838bf8aae096dfce9d22ac896e4a9b68f19b7ea2a1ab434055385f51115",
+      "isV2": true
+    },
+    "V3_NATIVE_BASELINE": {
+      "kind": "VM_FREE_MODULAR_V1_EXPERIMENT_HOST",
+      "isV2": false
+    }
+  },
+  "runnerContract": {
+    "V3_BASE": "V3_BASE",
+    "V3_COMPONENT_EXAMPLE": "V3_PLUS_VC2_HARD_ACTIVE",
+    "nativeV3": "V3_NATIVE_BASELINE",
+    "forbiddenV2Aliases": [
+      "candidate",
+      "NATIVE_REPAIRED"
+    ]
+  },
+  "cohort": {
+    "inventoryFingerprint": "b772f576a638d91acd643499a6b59e7ef4da4949141ddfce65780d14a7d150f4",
+    "blindCohortFingerprint": null,
+    "readiness": "BLOCKED_NEEDS_21_FRESH_SCENARIOS"
+  },
+  "legacyEvidenceRelabel": {
+    "available": true,
+    "relativePath": "artifacts/v3-repair/v3r8-final-recovery-c96a557cfa99/overview.json",
+    "sha256": "60212060baf4e9015d5ae2c1fa87a09815615a5a4f8d169692cdcc1fb536bb82",
+    "oldLabel": "NATIVE_REPAIRED",
+    "correctedLabel": "V3_NATIVE_BASELINE_EQUIVALENCE",
+    "interpretation": "V3_OR_V1_COMPATIBLE_BASELINE_NOT_A_V2_IMPLEMENTATION",
+    "oldScoreBasisPoints": 5000,
+    "frozenV2ScoreBasisPoints": 674
+  },
+  "fingerprint": "7c3583a17b88ca6beba9dcf96c6c3a5c80a8f64bcbd83bc63f1a83957169ad19"
+}

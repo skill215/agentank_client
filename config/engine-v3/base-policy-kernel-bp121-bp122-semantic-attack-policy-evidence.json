@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_SEMANTIC_ATTACK_POLICY_EVIDENCE_V1",
+  "stages": ["BP121", "BP122"],
+  "status": "REJECT_DEPTH_TWO_ATTACK_POLICY_OWNER",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "source": {
+    "policyIntervalShadowSha256": "0e149e676c834dd8f8fc39023232eca47e88e08cdc8511ab313b8a9d43e9c722",
+    "policyIntervalActivePocSha256": "c8371e4dd8962fd4fe09d04d13b254aaabdd559d91de463bd5763c43d9978f1b",
+    "arenaSha256": "cf7727641d1654b4183e06725d606fdc02dc9694868658e29eba66a87e804642",
+    "shadowTestSha256": "9ba52011641c3c5797dd35e4d3dece989e1735b597ab619c68f228a09099ac52",
+    "activeTestSha256": "66eb40c9ec0057b5e0619bf9f8be4f9e12e5ad2b5d29751714677a4e4ecbdc6a"
+  },
+  "cohort": {
+    "role": "DISCOVERY",
+    "scenarioCount": 16,
+    "candidateMatches": 32,
+    "physicalMatches": 64,
+    "skillMode": "STUN",
+    "cohortFingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667"
+  },
+  "bp121Shadow": {
+    "decisions": 3030,
+    "semanticAttackEpochFrames": 1851,
+    "strictExecutionSupport": 132,
+    "policyAttempts": 465,
+    "noPolicyDomain": 218,
+    "complete": 213,
+    "incomplete": 34,
+    "refuted": 159,
+    "equal": 22,
+    "strictDominance": 32,
+    "dominanceByAction": {
+      "GO": 2,
+      "TURN_LEFT": 17,
+      "TURN_RIGHT": 13,
+      "FIRE": 0
+    },
+    "baselineNodes": 11041,
+    "attackPolicyNodes": 8114,
+    "maximumNodes": 256,
+    "rootRestoreFailures": 0,
+    "hotAllocationCount": 0,
+    "scoreBasisPointDelta": 0,
+    "overviewSha256": "58c1cb4e2d7c9ccc40b282ee4d8952f9378f9d5c2f9e2b8926798a85425a21b7",
+    "matchesSha256": "0c42f85deea3ddc7e1055199f0738dd20cac770ae54204c538ed464b7924a9b1"
+  },
+  "bp122Active": {
+    "baseline": {
+      "wins": 2,
+      "losses": 28,
+      "draws": 2,
+      "scoreBasisPoints": 938
+    },
+    "candidate": {
+      "wins": 2,
+      "losses": 29,
+      "draws": 1,
+      "scoreBasisPoints": 781
+    },
+    "certificates": 19,
+    "overrides": 19,
+    "sameAction": 0,
+    "finalRejects": 0,
+    "transition": {
+      "V1_WIN_TO_V1_WIN": 28,
+      "V2_WIN_TO_V2_WIN": 2,
+      "DRAW_TO_DRAW": 1,
+      "DRAW_TO_V1_WIN": 1
+    },
+    "scoreBasisPointDelta": -157,
+    "starDelta": -2,
+    "crashDelta": 2,
+    "fireDelta": 6,
+    "bombDelta": 1,
+    "terminalShapeChanges": {
+      "singleCrashToFrameLimitLoss": 2,
+      "frameLimitLossToSingleCrashLoss": 3,
+      "equalStarFrameLimitDrawToBombCrashLoss": 1
+    },
+    "timeoutError": 0,
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "hotAllocationCount": 0,
+    "overviewSha256": "496235520cebdb9f1363746a8816cb905c06f5936cf2d2d16582d70706e0a4d9",
+    "matchesSha256": "3c1ca26e382c00e143a92583380414c15909841549f94cc6ae596f713dc0d237"
+  },
+  "diagnosis": {
+    "positive": "Branch-local policy identity converts BP120's zero primitive dominances into 32 complete depth-two policy dominances in behavior-neutral Shadow.",
+    "negative": "After trajectory feedback only 19 certificates remain; ACTIVE adds fire but loses one draw and creates more crash terminals. A finite tactical leaf-value margin is not a terminal nonloss or committed-hazard certificate.",
+    "causalCounterexample": "mat_I52zYeSqz1RCC3Vqs seat 0 changes frame 23 GO to TURN_RIGHT on a 147-point depth-two value margin, then changes an equal-star frame-limit draw into a frame-94 bomb crash loss.",
+    "interpretation": "Policy identity was necessary, but depth-two scalar dominance is insufficient for action ownership. FinalGate proves only the immediate emitted action, not the long policy continuation."
+  },
+  "decision": {
+    "retain": [
+      "semantic ATTACK target identity",
+      "separate incumbent and ATTACK_APPROACH continuation identities",
+      "sparse paired policy search as a Shadow evidence service",
+      "Hard and FinalGate revalidation before any diagnostic override"
+    ],
+    "reject": [
+      "depth-two tactical scalar dominance as an ACTIVE action certificate",
+      "promoting the 19 BP122 overrides into production",
+      "increasing depth or value margin before closing event and terminal semantics"
+    ],
+    "next": "Add branch-local event settlement and terminal/nonloss interval semantics. A candidate may own only when its complete event/terminal lower bound is strictly above the incumbent upper bound, while committed bomb/projectile deadlines remain closed beyond the short decision horizon."
+  }
+}

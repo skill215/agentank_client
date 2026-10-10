@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_CERTIFICATE_ROOT_CORPUS_EVIDENCE_V1",
+  "stage": "BP125",
+  "status": "ACCEPT_CORPUS_REJECT_SCALAR_OWNER",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "source": {
+    "policyIntervalShadowSha256": "5f9f689493a315ebc282086c72b62f973a371db663b7da3495818d9a0980fc0f",
+    "rootCorpusToolSha256": "380df07dfe43ee161b7fc0fc30f47768606165c0d24744e6faacc15624a1ad3c",
+    "exactReplayToolSha256": "664983b5cf51149008edec8f804b6e754935363db0a5515123197750eee05b7a",
+    "shadowTestSha256": "db3aa44ed29f46417748fce498252b8613486cf49eb53d8b836a06935202a225",
+    "corpusTestSha256": "340299cd786753f5b8a9024f32c9be3ff323dcf88f799c69fc4f738550dc7a57"
+  },
+  "cohort": {
+    "role": "DISCOVERY",
+    "scenarioCount": 16,
+    "sourcePhysicalMatches": 64,
+    "candidateMatches": 32,
+    "skillMode": "STUN",
+    "cohortFingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667"
+  },
+  "capture": {
+    "strictDominanceCount": 64,
+    "certificateRootCount": 64,
+    "certificateOverflowCount": 0,
+    "missingScenarioCount": 0,
+    "exactIncumbentCount": 64,
+    "exactCandidateCount": 64,
+    "sourceTerminalReproductionCount": 64,
+    "hotPathRepresentation": "fixed TypedArray certificate slab; objects are materialized only in post-match summary"
+  },
+  "historicalCounterfactual": {
+    "quantifiers": {
+      "basePolicy": "V2_PRODUCTION_OBSERVABLE",
+      "enemyPolicy": "V3_HISTORICAL_CONTROLLER",
+      "chanceOutcome": "HISTORICAL",
+      "exactControllerHistory": true
+    },
+    "transitions": {
+      "V1_WIN_TO_V1_WIN": 56,
+      "V1_WIN_TO_V2_WIN": 1,
+      "DRAW_TO_DRAW": 3,
+      "DRAW_TO_V1_WIN": 2,
+      "DRAW_TO_V2_WIN": 1,
+      "V2_WIN_TO_V2_WIN": 1
+    },
+    "incumbent": { "nonloss": 7, "kill": 0, "death": 16, "starDiff": -114 },
+    "candidate": { "nonloss": 6, "kill": 2, "death": 16, "starDiff": -116 },
+    "delta": { "nonloss": -1, "kill": 2, "death": 0, "starDiff": -2 }
+  },
+  "artifacts": {
+    "shadowDirectory": "artifacts/v2-native-initiative/bp125-common-continuation-shadow",
+    "shadowOverviewSha256": "b6e6b01b465fbfcfb54d651a42bd02472389113e173258f61215e43cfebc1cd7",
+    "shadowMatchesSha256": "24591ec6702e2e94b9be6cff40d3827b4c473c3ea3a666b3eb62b8aa28e69c93",
+    "corpusDirectory": "artifacts/v2-native-initiative/bp125-semantic-attack-root-corpus",
+    "corpusManifestSha256": "6c7be36d71477aaf9e6fe02b5edce1673d70cfe204f8abd3444e0283aa4cebd4",
+    "corpusOverviewSha256": "2fa896eae7209170b1dd5e159f31c77598e542cc675cec201c6825ed37ad16b4",
+    "corpusRootsSha256": "0074321d40029e6857d301345990ffd6eba315c2ae33d1cb14bca69c21273fbb",
+    "totalApproximateKiB": 248
+  },
+  "decision": {
+    "retain": [
+      "common-continuation sparse Minimax as a behavior-neutral candidate verifier",
+      "the exact-prefix root corpus as reusable counterfactual evidence",
+      "nonloss, kill, death, star and failure type as separate outcome dimensions"
+    ],
+    "reject": [
+      "finite-depth scalar strict dominance as sufficient action ownership",
+      "treating the two historical kills as proof of overall improvement",
+      "mixing EnemyPolicy and ChanceOutcome into one unlabeled scenario group"
+    ],
+    "next": "BP126 expands the same 64 identities across independent ChanceOutcome first. Alternate EnemyPolicy suffixes remain separately labeled reset-history evidence. A candidate may qualify only through a multidimensional interval that does not trade away nonloss for kill or star score."
+  }
+}

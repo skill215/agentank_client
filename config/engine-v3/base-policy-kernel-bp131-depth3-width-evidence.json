@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_DEPTH3_WIDTH_EVIDENCE_V1",
+  "stage": "BP131",
+  "status": "ACCEPT_WIDTH3_SATURATION_REJECT_OWNER",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "contract": {
+    "fixedPairRootCount": 211,
+    "depth": 3,
+    "lanes": [
+      { "name": "D3_W2_B2048", "width": 2, "nodeBudget": 2048 },
+      { "name": "D3_W3_B2048", "width": 3, "nodeBudget": 2048 },
+      { "name": "D3_W4_B2048", "width": 4, "nodeBudget": 2048 },
+      { "name": "D3_W4_B4096", "width": 4, "nodeBudget": 4096 }
+    ],
+    "cacheGenerationIsolatedPerLane": true,
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0,
+    "behaviorNeutral": true
+  },
+  "laneResults": {
+    "D3_W2_B2048": {
+      "complete": 30,
+      "incomplete": 181,
+      "candidateHigher": 18,
+      "equal": 6,
+      "candidateLower": 6,
+      "combinedNodes": 24472,
+      "maximumCombinedNodes": 4096
+    },
+    "D3_W3_B2048": {
+      "complete": 175,
+      "incomplete": 36,
+      "candidateHigher": 55,
+      "equal": 92,
+      "candidateLower": 28,
+      "combinedNodes": 91945,
+      "maximumCombinedNodes": 3776
+    },
+    "D3_W4_B2048": {
+      "complete": 175,
+      "incomplete": 36,
+      "candidateHigher": 55,
+      "equal": 92,
+      "candidateLower": 28,
+      "combinedNodes": 93103,
+      "maximumCombinedNodes": 4004
+    },
+    "D3_W4_B4096": {
+      "complete": 175,
+      "incomplete": 36,
+      "candidateHigher": 55,
+      "equal": 92,
+      "candidateLower": 28,
+      "combinedNodes": 93118,
+      "maximumCombinedNodes": 4004
+    }
+  },
+  "stability": {
+    "widthTwoToThreeNewComplete": 145,
+    "widthThreeToFourStateChanged": 0,
+    "widthFourBudgetDoubleStateChanged": 0,
+    "widthThreeNodeRatioBasisPointsVersusWidthTwo": 37571,
+    "remainingTransitionSupportIncomplete": 35,
+    "remainingOtherIntervalIncomplete": 1
+  },
+  "historicalDirection": {
+    "widthThreeCandidateHigher": {
+      "count": 55,
+      "candidateBetter": 1,
+      "candidateWorse": 1,
+      "outcomeEqual": 53,
+      "candidateTerminalParetoDominance": 11,
+      "incumbentTerminalParetoDominance": 7
+    },
+    "widthThreeCandidateLower": {
+      "count": 28,
+      "candidateBetter": 0,
+      "candidateWorse": 4,
+      "outcomeEqual": 24,
+      "candidateTerminalParetoDominance": 2,
+      "incumbentTerminalParetoDominance": 5
+    }
+  },
+  "interpretation": {
+    "performance": "Width 3 is the saturation point for this representative generator. It raises exact depth-3 coverage from 14.22% to 82.94% at 3.7571 times the W2 node work. Width 4 adds work without coverage or verdict changes.",
+    "gameplay": "Additional completeness does not make positive scalar values directional. The 55 W3 positive roots contain one historical improvement and one historical regression.",
+    "separation": "Search coverage/performance and evaluator/backup gameplay quality are independent optimization dimensions."
+  },
+  "artifacts": {
+    "shadowDirectory": "artifacts/v2-native-initiative/bp131-depth3-width-stability-shadow",
+    "shadowManifestSha256": "8e91df4e1e4adaf06468ebea232968611c1ba390929c35c8f22db03c79bb5c75",
+    "shadowOverviewSha256": "497119797092d9cc4be674781ea31e45837d25f1dbb45f525b94875bc37b44dd",
+    "shadowMatchesSha256": "7e94f9ff65f6afaf3fc3346af9d909ac071414e8a44d4b5ccd5e992045cae7ca",
+    "reportDirectory": "artifacts/v2-native-initiative/bp131-semantic-attack-depth3-width",
+    "reportManifestSha256": "8b263d444af120444a32935debbd7317ea86e00214db00e1a19792bf75a145f3",
+    "reportOverviewSha256": "00f466ea522cf2f3548d9cd35877ea6790dcc45016a5ee2b879713182b463012",
+    "reportRootsSha256": "87ea338066e80dac66c6def6da6f39ffa501452325e0302883ec30f939201f36",
+    "reportFingerprint": "8f6d39b5e7eb175255b31ea1856100e7214e746504d00585db48d306969f355b",
+    "reportBytes": 20150
+  },
+  "source": {
+    "policySearchSha256": "23833a8635b71bedd7e13171f01ffc8d9980a1eb629b3bd6c9f63d534c99533c",
+    "widthShadowSha256": "bd03d1cc2226b9b123f93e44fd9086c5543966cd09b2d569dbe143c1a89a2fc3",
+    "policyIntervalShadowSha256": "b83eb4a92596b7f90b6a2124b74f1de65aaab51cef6fd17f149cb6c7b67e8499",
+    "widthReportSha256": "785c1196483fac20a3ccfe02f76ca3b24019a2b86f1d8c1a2fb4033dd76cee3e",
+    "diagnosticBotSha256": "64e4c6a80aefa95bc398f52cd74022ad8f41fa225d4d795b844d32654467bef9",
+    "arenaSha256": "253ccb428de4e1674b5704603931e240215e253a8648746503378ca670bda0a7",
+    "widthShadowTestSha256": "9464f29804a75802f81cfcdc22317c7acf59a952d0ce93a55e6252d7e05ddf07",
+    "widthReportTestSha256": "71eaa79cf2f13085b044c9491c30e3b592afd4d9463534f1345d4e09c9efd555"
+  },
+  "decision": {
+    "retain": [
+      "diagnostic width-3 exact coverage lane",
+      "fixed-pair width and budget calibration",
+      "fail-closed remaining transition-support roots"
+    ],
+    "reject": [
+      "width 4",
+      "doubling the W4 budget",
+      "using width-3 positive scalar as an action owner",
+      "conflating higher search completion with higher win rate"
+    ],
+    "next": "BP132 classifies the remaining 36 transition/interval support exits. In parallel, evaluator work must use the 175 complete W3 roots as evidence and preserve outcome dimensions instead of retuning a scalar margin."
+  }
+}

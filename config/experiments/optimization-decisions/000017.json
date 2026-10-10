@@ -1,0 +1,65 @@
+{
+  "seq": 17,
+  "previous": "ce46dfff0713f8dda44fe710536c5adac344f7b18327b14ab98dd77d57a18689",
+  "record": {
+    "version": 1,
+    "type": "register",
+    "at": "2026-10-09T03:03:46.811Z",
+    "process": "OPT-P-003",
+    "registration": "prospective",
+    "scope": "3 independent mechanisms, common8 historical maps,32games max; no combined candidate or production changes",
+    "baseline": "285f9863227d6af3638bed74e008f0260fd25440034d95eec5e3f8cac44d9120",
+    "falsifier": "modifier does not trigger, goal fails, or evidence integrity fails",
+    "nextStep": "Run common baseline plus3 candidate lines; compare goal qualification and Pareto tradeoffs.",
+    "alternatives": [
+      {
+        "name": "每轮只盯一个指标",
+        "benefit": "简单",
+        "risk": "难以看到代价和不同方向的价值",
+        "reason": "本轮不采用"
+      },
+      {
+        "name": "固定三目标独立消融",
+        "benefit": "同一数据上比较收益、风险、工作量",
+        "risk": "历史小样本且多重比较，只能筛选",
+        "reason": "按用户要求采用"
+      }
+    ],
+    "budget": {
+      "games": 8,
+      "seconds": 300
+    },
+    "id": "OPT-D-0009",
+    "category": "process",
+    "parent": "OPT-D-0008",
+    "title": "三目标预设与Pareto快速筛选",
+    "hypothesis": "同数据独立推进质量、风险和计算量，可以保留不同有效取舍并减少单目标盲试。",
+    "criteria": [
+      {
+        "id": "integrity",
+        "metric": "baseline and all branches",
+        "rule": "frozen common cohort, all hashes/health pass, no outcome selection",
+        "unit": "game",
+        "kind": "hard"
+      },
+      {
+        "id": "comparison",
+        "metric": "common objective table and dispositions",
+        "rule": "all3 lines reviewed with preregistered goals and Pareto comparison",
+        "unit": "candidate",
+        "kind": "hard"
+      }
+    ],
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp420-multi-objective/campaign.json",
+        "sha256": "d14dcc8fce41b0a92e9f4ccf4fa0abf89dd4532c408ac3ee7131eb7fd727246b"
+      },
+      {
+        "path": "tools/agentank/diagnostics/multi-objective-search-screen.js",
+        "sha256": "bf3af0d4b94b143e3bebb77765c0d331d2f8e6f191b12c032ab18e3150a003fe"
+      }
+    ]
+  },
+  "sha256": "4927113c85b53c23452caf06270762c7a390a8e4412deb8a05e3c64978b834ed"
+}

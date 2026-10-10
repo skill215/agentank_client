@@ -1,0 +1,255 @@
+{
+  "objectKind": "NativeBasePolicyRootAssemblyEvidenceV1",
+  "generatedAt": "2026-09-02T07:17:41.937Z",
+  "productionDefaultChanged": false,
+  "contract": {
+    "profile": {
+      "id": "BP68_EXACT_NATIVE_CACHE2",
+      "targetDepth": 3,
+      "nodeBudget": 128,
+      "starFieldCacheEntries": 2,
+      "geometry": "table",
+      "riskFrontier": "joint",
+      "riskSoftBand": "intent-known",
+      "intentValue": "bonus"
+    },
+    "worldStateOwnership": "EXISTING_PRODUCTION_FAST_STATE_ONLY",
+    "perDecisionAllocation": "ZERO",
+    "diagnosticDependency": "NONE",
+    "oracleAudit": "OFF",
+    "localTimeInterpretation": "CROSS_RUN_TIME_IS_INFORMATIONAL; BP171_SAME_PROCESS_CALIBRATION_IS_AUTHORITATIVE"
+  },
+  "fixed16": {
+    "semantic": {
+      "missing": 0,
+      "actionStream": 0,
+      "arguments": 0,
+      "result": 0,
+      "frames": 0,
+      "counts": 0,
+      "analysisOutcome": 0,
+      "terminalCategory": 0
+    },
+    "assembledFingerprint": {
+      "records": 32,
+      "sha256": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "rootFingerprint": {
+      "records": 32,
+      "sha256": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "assembledOutcome": {
+      "wins": 21,
+      "losses": 11,
+      "draws": 0,
+      "scoreBasisPoints": 6563,
+      "stars": {
+        "candidate": 21,
+        "control": 21
+      },
+      "crashes": {
+        "candidate": 8,
+        "control": 17
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 240,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 240,
+        "jointDominatedSelection": 0
+      }
+    },
+    "rootOutcome": {
+      "wins": 21,
+      "losses": 11,
+      "draws": 0,
+      "scoreBasisPoints": 6563,
+      "stars": {
+        "candidate": 21,
+        "control": 21
+      },
+      "crashes": {
+        "candidate": 8,
+        "control": 17
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 240,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 240,
+        "jointDominatedSelection": 0
+      }
+    }
+  },
+  "discovery64": {
+    "semantic": {
+      "missing": 0,
+      "actionStream": 0,
+      "arguments": 0,
+      "result": 0,
+      "frames": 0,
+      "counts": 0,
+      "analysisOutcome": 0,
+      "terminalCategory": 0
+    },
+    "assembledFingerprint": {
+      "records": 128,
+      "sha256": "d6db15f8815dc9243ef758778bbeb558b6492f801e73e2fc36e4bd35f1162555"
+    },
+    "rootFingerprint": {
+      "records": 128,
+      "sha256": "d6db15f8815dc9243ef758778bbeb558b6492f801e73e2fc36e4bd35f1162555"
+    },
+    "assembledOutcome": {
+      "wins": 67,
+      "losses": 48,
+      "draws": 13,
+      "scoreBasisPoints": 5742,
+      "stars": {
+        "candidate": 93,
+        "control": 101
+      },
+      "crashes": {
+        "candidate": 35,
+        "control": 52
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 1029,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 1029,
+        "jointDominatedSelection": 0
+      }
+    },
+    "rootOutcome": {
+      "wins": 67,
+      "losses": 48,
+      "draws": 13,
+      "scoreBasisPoints": 5742,
+      "stars": {
+        "candidate": 93,
+        "control": 101
+      },
+      "crashes": {
+        "candidate": 35,
+        "control": 52
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 1029,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 1029,
+        "jointDominatedSelection": 0
+      }
+    },
+    "assembledRuntime": {
+      "candidateTotalMicros": 23923383,
+      "candidateP95Max": 10330,
+      "controlTotalMicros": 61522696,
+      "controlP95Max": 27019
+    },
+    "rootRuntime": {
+      "candidateTotalMicros": 32605780,
+      "candidateP95Max": 30834,
+      "controlTotalMicros": 85709631,
+      "controlP95Max": 50291
+    }
+  },
+  "memory": {
+    "rootOwnTypedArrayBytes": 0,
+    "sharedComponentGraphTypedArrayBytes": 81879,
+    "duplicatedWorldStateBytes": 0
+  },
+  "source": {
+    "nativeRoot": {
+      "path": "engine-v2/src/base-policy/native-root.js",
+      "bytes": 4360,
+      "sha256": "22dc79ffb89d74c5176694e8445c23df7b2e1329142434b4e3f1d1ec93b193f5"
+    },
+    "components": {
+      "action-owner": {
+        "path": "engine-v2/src/base-policy/action-owner.js",
+        "bytes": 11247,
+        "sha256": "5b5351d0f37d681cc7ad2e357c6e2cd7190ccbf0ebc12bf2eb4d9e6fbda5cd4e"
+      },
+      "action-domain": {
+        "path": "engine-v2/src/base-policy/action-domain.js",
+        "bytes": 16496,
+        "sha256": "eb862e62ada16b1c62905fd913da952851622b73a29c443e53ab16b3dc30f13d"
+      },
+      "strategic-intent": {
+        "path": "engine-v2/src/base-policy/strategic-intent.js",
+        "bytes": 19013,
+        "sha256": "e6e465a2b8cb2fb1195f149c305990c6f54f63f7695402ad3bf241cb70db7b33"
+      },
+      "opponent-history": {
+        "path": "engine-v2/src/base-policy/opponent-history.js",
+        "bytes": 5959,
+        "sha256": "426ede1180feb8b69aea132a123c8203e5ac467edb0bf0cd875abc8aa614b9f6"
+      },
+      "policy-search": {
+        "path": "engine-v2/src/base-policy/policy-search.js",
+        "bytes": 82009,
+        "sha256": "e3d397a9013a3bbc869f74e4eccc798f82267325e22b381833733a0738715ee2"
+      },
+      "policy-leaf": {
+        "path": "engine-v2/src/base-policy/policy-leaf.js",
+        "bytes": 29454,
+        "sha256": "77cad5edc6469a9abfbf8cdfb0051abb779349fe67c1592bd66fd22baa5e7fb9"
+      },
+      "path-utility": {
+        "path": "engine-v2/src/base-policy/path-utility.js",
+        "bytes": 16007,
+        "sha256": "7bf2e51c2895efc182f87bb6620a319e1b24c4fb8ff5437404274948ca4fd38e"
+      }
+    },
+    "productionRoot": {
+      "path": "engine-v2/src/runtime/production-root.js",
+      "bytes": 197703,
+      "sha256": "73e08f1471a450967e26e931c639c88bf88d986870cb5b07a72e456ec2a8b551"
+    }
+  },
+  "artifacts": {
+    "fixedAssembled": {
+      "path": "/tmp/agentank-bp170-leaf-geometry-table-fixed16",
+      "manifestSha256": "d267d165a35b77b0dae340434e09fb4e2b6ab3acdb5c44ec0a55329a8485791d",
+      "overviewSha256": "4a31c80802bedffb77247783e8b39007742200a48d69383e3fbf3edfb0f8f1e9",
+      "matchesSha256": "5a91dcf6ce511d1578da6c8feeba99f7878522c4758363a98c0b26966589817a",
+      "candidateFingerprint": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "fixedRoot": {
+      "path": "/tmp/agentank-bp172-native-root-fixed16-r3",
+      "manifestSha256": "47ad704c55e408593fa37f0f106511e746e8f0e71ad8b65cddf9423ecb0c8251",
+      "overviewSha256": "7db696d826b1041df2192b3c815b8d1efa0a2b5cec7f6dfce7b1794759fcfff0",
+      "matchesSha256": "034cc20ee219e3f302e8bc491b746722aeb23ce6894ca0a2c685292a2febbc5a",
+      "candidateFingerprint": "e40ea471198b7eaea3dbb4b0591f86df973f0b43d49614f44a3e50da0574e998"
+    },
+    "discoveryAssembled": {
+      "path": "/tmp/agentank-bp170-thin-stack-discovery64",
+      "manifestSha256": "459583071641407d6e5b350874bdd8bf73098afc32abddf40b47e608c8379a63",
+      "overviewSha256": "5a965b9575c05e8bdfbbeeacfae392381dc911938eb3cf5a5830c381cc4c2d5a",
+      "matchesSha256": "b6d19c8a3c13c4a9b02fd8ab845a87c042a1906012d844f347513b0d52c17c83",
+      "candidateFingerprint": "d6db15f8815dc9243ef758778bbeb558b6492f801e73e2fc36e4bd35f1162555"
+    },
+    "discoveryRoot": {
+      "path": "/tmp/agentank-bp172-native-root-discovery64",
+      "manifestSha256": "e41eef2179927b98fed9b52411cbf93a492ddea58359fb084526a7200f434632",
+      "overviewSha256": "2b386ef49efa768d912e47181d8e83f78bbde07c658efc9fefadabd94cf78e7d",
+      "matchesSha256": "39cbd4e814d0ad69cc70b1eea80f7b1d77941b56143fe93a5933b24bb81b4e3e",
+      "candidateFingerprint": "d6db15f8815dc9243ef758778bbeb558b6492f801e73e2fc36e4bd35f1162555"
+    }
+  },
+  "verdicts": [
+    "NATIVE_ROOT_PRESERVES_FIXED16_ACTIONS_ARGUMENTS_AND_PHYSICS",
+    "NATIVE_ROOT_PRESERVES_DISCOVERY64_ACTIONS_ARGUMENTS_AND_PHYSICS",
+    "DISCOVERY64_REMAINS_67_48_13_AND_5742_BASIS_POINTS",
+    "NATIVE_ROOT_ADDS_NO_TYPED_ARRAY_OR_WORLD_STATE",
+    "NATIVE_ROOT_HAS_NO_V1_VM_OR_DIAGNOSTIC_CLASS_DEPENDENCY",
+    "PRODUCTION_DEFAULT_REMAINS_UNCHANGED"
+  ],
+  "fingerprint": "fab03b19967b5bd6ece25093ccc95e32ba235caa0bbbd83abd8e2f0a79e08f69"
+}

@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "HP25_MINIMAX_COST_CENSUS_EVIDENCE_V1",
+  "status": "ACCEPTED_DIAGNOSTIC_CALIBRATION_NO_PRODUCTION_BUDGET_CHANGE",
+  "productionSearchSemanticsChanged": false,
+  "productionNodeBudgetChanged": false,
+  "productionRuntimeProfileChanged": false,
+  "diagnosticNodeCapacityOverrideAdded": true,
+  "sourceFingerprint": "82076602c22715635a6b94dd9caa0fc565a6d7a4a6d1c78d9d3655408aad2e23",
+  "tool": {
+    "entry": "tools/minimax-cost-census.sh",
+    "implementation": "tools/agentank/diagnostics/minimax-cost-census.js",
+    "method": "EXTERNAL_METHOD_WRAPPERS_INFER_PLY_FROM_FAST_STATE_FRAME_WITHOUT_PRODUCTION_COUNTER_ARRAYS",
+    "measures": [
+      "FAST_APPLY_BY_PLY",
+      "HARD_CLASSIFY_AND_REVERSE_BUILD_BY_PLY",
+      "ROOT_SLAB_BUILD_AND_REPLAY",
+      "TT_PROBE_HIT_WRITE_BY_STATE_PLY",
+      "GENERATED_ACTION_AND_JOINT_WIDTH",
+      "ALPHA_BETA_PRUNED_CELLS",
+      "HEURISTIC_TERMINAL_AND_TRAP_WORK",
+      "FULL_MATRIX_AND_SELECTIVE_COMPLETION_DEPTH"
+    ],
+    "nodeAccountingContract": "FAST_APPLY_CALLS_PLUS_ROOT_SLAB_REPLAYS_EQUALS_SEARCH_NODES"
+  },
+  "fixedCostCensus": {
+    "scenarios": 16,
+    "profiles": ["P1", "P2", "P3", "P4", "P5", "P6"],
+    "nodeBudget": 512,
+    "reportFingerprint": "1573fb45443bdce2bf71bfe8d80325e3a9e4fa1527c11b2220fd345dd5e1c931",
+    "reportSha256": "a71e9ad5a5bf5c13f30480f849c7c8c9780dc9756c09cc10354cdb1c72578855",
+    "cold": {
+      "P1": { "nodes": 2904, "meanNodes": 181, "fullDepth": { "1": 16 } },
+      "P2": { "nodes": 4123, "meanNodes": 257, "fullDepth": { "1": 7, "2": 9 } },
+      "P3": {
+        "nodes": 6499,
+        "meanNodes": 406,
+        "fullDepth": { "1": 7, "2": 9 },
+        "selectiveDepth": { "0": 14, "3": 2 },
+        "valueSupportDepth": { "0": 1, "1": 7, "2": 8 },
+        "fastApplyByPly": [0, 840, 3741, 1252, 0, 0, 0, 0],
+        "rootSlabReplays": 666,
+        "hardClassifyByPly": [3, 1043, 3550, 1226, 0, 0, 0, 0],
+        "ttProbeByStatePly": [0, 658, 369, 0, 0, 0, 0, 0],
+        "ttHitByStatePly": [0, 72, 52, 0, 0, 0, 0, 0],
+        "alphaBetaPrunedCellsByStatePly": [0, 1499, 208, 0, 0, 0, 0, 0],
+        "trapProbeCalls": 5150,
+        "trapExpandedNodes": 128
+      },
+      "P4ToP6": {
+        "nodesEach": 6537,
+        "meanNodesEach": 408,
+        "fullDepthEach": { "1": 7, "2": 9 },
+        "selectiveDepthEach": { "0": 14, "3": 2 },
+        "finding": "THE_512_NODE_CAP_PREVENTS_MATERIAL_PROGRESS_BEYOND_THE_P3_ATTEMPT"
+      }
+    },
+    "warm": {
+      "P2Nodes": 2419,
+      "P3Nodes": 4096,
+      "P3SelectiveDepth": { "0": 8, "3": 8 },
+      "P4ToP6NodesEach": 5329,
+      "P4ToP6SelectiveDepthEach": { "0": 8, "3": 8 }
+    },
+    "invariants": {
+      "rootRestoreFailures": 0,
+      "semanticMismatches": 0,
+      "nodeAccountingMismatchCalls": 0
+    }
+  },
+  "p3ColdBudgetLadder": {
+    "eligibleRoots": 9,
+    "completedByBudget": {
+      "512": 2,
+      "576": 4,
+      "640": 8,
+      "768": 8,
+      "896": 9,
+      "1024": 9
+    },
+    "completedNodeRequirements": {
+      "scenario1": 583,
+      "scenario4": 822,
+      "scenario5": 476,
+      "scenario7": 572,
+      "scenario9": 592,
+      "scenario11": 510,
+      "scenario12": 547,
+      "scenario13": 599,
+      "scenario15": 592
+    },
+    "completedWorkUnitRange": [6504, 13571],
+    "target": "REDUCE_COLD_P3_EFFECTIVE_NODE_COST_BY_6_TO_15_PERCENT_FOR_EIGHT_OF_NINE_ROOTS_AND_TREAT_THE_822_NODE_ROOT_AS_A_SEPARATE_LONG_TAIL"
+  },
+  "p3WarmBudgetLadder": {
+    "eligibleRoots": 9,
+    "completedByBudget": { "512": 8, "576": 8, "640": 9, "768": 9, "896": 9, "1024": 9 },
+    "finding": "CACHE_REUSE_ALREADY_MOVES_EIGHT_OF_NINE_ROOTS_INSIDE_THE_CURRENT_CAP"
+  },
+  "p4Scale": {
+    "eligibleRoots": 9,
+    "cold": {
+      "512": { "P3": 2, "P4": 0 },
+      "1024": { "P3": 9, "P4": 0 },
+      "2048": { "P3": 3, "P4": 6 },
+      "4096": { "P3": 3, "P4": 6 }
+    },
+    "warm": {
+      "512": { "P3": 8, "P4": 0 },
+      "1024": { "P3": 7, "P4": 2 },
+      "2048": { "P3": 3, "P4": 6 },
+      "4096": { "P3": 3, "P4": 6 }
+    },
+    "decision": "P4_IS_NOT_THE_NEAR_TERM_OPTIMIZATION_TARGET"
+  },
+  "budgetLadderArtifacts": {
+    "P3": {
+      "512": { "fingerprint": "046419203931f92c2bb4f5a8283fafc7de11dc9bc7f43dea838661e32b5e980a", "sha256": "8673141f9b04b352d63206f8840f0c0f90f762e2dc450a761a03cfc0ab252131" },
+      "576": { "fingerprint": "917a81ce4c1368111942d7d3b744a341daa0f600a39acba83ab80febdf89ebe9", "sha256": "ee3877231ae4c90821a60304baada98e91e6984321df7765324ee852b7592437" },
+      "640": { "fingerprint": "372c256fe0f926c7bdea7513514761a994e24b6a9c8f16df7849d97ed095f40d", "sha256": "b5d4d268ed1f7f2362c35caa33cd2bad6e792d8519c86608f9197bfe28f7a7df" },
+      "768": { "fingerprint": "42e78efd444e1da557ea6cd506dfe91c9475c2d8011e059bdb972929889319ee", "sha256": "2de7397ba10d91727593658deef84467c8a60f580cbca0c84c512027f5f8094a" },
+      "896": { "fingerprint": "c1d76dd5fdd4c10840e2ceb083a0012773d8e020fcd57d9cf46e68a41a48169b", "sha256": "916051fa75b89d80206c1010fb5653f41e597f6c19f39ec3669d0c396df1da55" },
+      "1024": { "fingerprint": "2fd715959025a81c4ba468b495a332c61d8ea7813ee39b0efa907527f5892445", "sha256": "f2d129fd3a2350fd965ed144ceeb3b0cb6f3ae60e6b9503850c39b04e6e63a43" }
+    },
+    "P3P4": {
+      "512": { "fingerprint": "5cf514e34026d3ffa4766a8004fab63f82aa2cfc710d9d665c5b4999213fa553", "sha256": "0158a60b27e1b143071d5fe495e0e87b9b9e62a341fa3a1c567c2bd310e8c8ae" },
+      "1024": { "fingerprint": "933088e9e92314487a33713ea0655a851070e0d43011579c0247dc416e71a8a0", "sha256": "8a4180b287f19c311fd3448f2948ca38a233e2cd85255a5738c2a5bc25bf54e6" },
+      "2048": { "fingerprint": "1b06f0985f6d897a8a47fad12a4603c0152caf321b83ef8d9fd69c5291ae3633", "sha256": "c5498e4039a7ac05f42cc4cec8eaed49a2d6013298231fb862a654c775ff00f3" },
+      "4096": { "fingerprint": "c08e8a1827f28b87eac1da1438476e57df997c86d258f89b395829ffaadf79b9", "sha256": "9066894903fa1a59c4c291d01bad332701cc6a4c8162751fc01afa49e1f6c90f" }
+    }
+  },
+  "rejectedCrossWidthPrincipalPoc": {
+    "status": "REJECTED_NO_DEPTH_GAIN_AND_NO_NODE_REDUCTION",
+    "candidateSourceFingerprint": "558321b6d1419f4528dc3bc046c7cf3111f0de41d6c43958161e1c71e526ec4b",
+    "candidateReportFingerprint": "c011915465a1dd052f5c06e48b23268feb12eea7b1fecf7442295e4e06056f74",
+    "candidateReportSha256": "734e9f030223f6bb11655cc985a25ae732663918163779881f170248df7c771f",
+    "P3Cold": { "nodeDelta": -2, "workUnitDelta": 772 },
+    "P3Warm": { "nodeDelta": 10, "workUnitDelta": -98 },
+    "P4ToP6Cold": { "nodeDelta": 0, "workUnitDelta": 786 },
+    "depthOrSupportDifferences": 0,
+    "runtimeImplementationRetained": false
+  },
+  "standardCalibration": {
+    "status": "PASS",
+    "profileCount": 24,
+    "callsPerProfile": 80,
+    "reportFingerprint": "4a6737404cae5f6e265005163f41e999f15a15e9dab0b7c22adb02afd186a6d4",
+    "reportSha256": "b0f11e39f6ed2d280b1953a4cf3c54cec83ff76667e2caac112c69e841b5854e",
+    "comparisonFingerprint": "487a5d09744737656e27124ab772049a27f0babc0e0bc2b73eeae81ca57fad65",
+    "comparisonSha256": "28a56b806319bf03cf6cb3eb87cfbd8292f9cf79836bf0204d400817b345ad9f",
+    "baseline": "config/engine-v2/minimax-depth-baselines/after-hp25.json",
+    "baselineFingerprint": "3760fd5d243912695c1a39cc1e60554fca2744b3827f95350fb30b638db98cc4",
+    "baselineSha256": "c5574b1169eb4d847df3c3f73a94f435fa5d7891565979e3f89e52461308b7bc",
+    "semanticDepthNodeDifferencesVersusHP23": 0,
+    "wallClockClaim": "NONE_CROSS_RUN_WALL_CLOCK_DRIFT_IS_NOT_ATTRIBUTED_TO_THE_DIAGNOSTIC_OVERRIDE",
+    "invariants": {
+      "rootRestoreFailures": 0,
+      "rootTransitionReplayFailures": 0,
+      "rootRestoreMismatches": 0,
+      "hotAllocations": 0,
+      "warmColdSemanticMismatches": 0
+    }
+  },
+  "tests": {
+    "minimaxCore": { "passed": 159, "failed": 0 },
+    "diagnostics": { "passed": 111, "failed": 0 },
+    "gr0": { "passed": 293, "failed": 0 },
+    "imp2": { "passed": 53, "failed": 0 },
+    "imp3": { "passed": 28, "failed": 0 },
+    "imp5": { "passed": 14, "failed": 0 }
+  },
+  "decision": {
+    "classification": "POSITIVE_MEASUREMENT_ARCHITECTURE_WITH_ACTIONABLE_P3_TARGET",
+    "productionDefaultNodeCapacity": 512,
+    "reason": "The external census reconciles every node and separates exact value ownership from deeper selective action proofs. It proves that most cold P3 roots need only a 6-15 percent effective node reduction, while P4 is a roughly 2,000-node problem. No runtime budget is raised in HP25.",
+    "next": "OPTIMIZE_COLD_P3_PLY_TWO_TRANSITIONS_AND_TT_REUSE_AGAINST_THE_640_NODE_EQUIVALENT_TARGET_THEN_RECALIBRATE"
+  }
+}

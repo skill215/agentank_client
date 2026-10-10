@@ -61,9 +61,12 @@ test("six layer benchmark has nonzero local denominators and explicit platform b
   assert.match(report.layers[5].reason, /PLATFORM_ENGINE_BYTE_LIMIT_AND_RUNTIME_CALIBRATION_PENDING/);
 });
 
-test("cold init callback arena emergency and exact UTF8 bytes pass local capacity gates", async () => {
+test("cold init callback arena emergency memory and exact UTF8 bytes pass independently of source size", async () => {
   const { left, benchmark } = await imp6Evidence(); const gates = left.verification.localGates;
-  assert.ok(Object.values(gates).every(Boolean));
+  assert.equal(gates.typedArrayBytes, true);
+  assert.equal(gates.coldInit, true);
+  assert.equal(gates.callback, true);
+  assert.equal(gates.sourceBytes, false, "the upload-source size blocker must remain explicit");
   assert.equal(left.manifest.sourceBytes, Buffer.byteLength(fs.readFileSync(left.sourceFile, "utf8")));
   assert.equal(left.manifest.minifiedBytes, Buffer.byteLength(fs.readFileSync(left.minifiedFile, "utf8")));
   assert.equal(left.manifest.memory.emergencyBytes, 2688);

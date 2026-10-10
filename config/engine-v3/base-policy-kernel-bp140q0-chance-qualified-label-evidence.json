@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_CHANCE_QUALIFIED_LABEL_EVIDENCE_V1",
+  "stage": "BP140-Q0",
+  "status": "ACCEPT_CHANCE_LABELS_QUALIFIED",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "contract": {
+    "replaySourceRootCount": 211,
+    "directionRootCount": 35,
+    "chanceOutcomeCount": 8,
+    "sideCount": 2,
+    "cellCount": 560,
+    "exactCellCount": 560,
+    "missingScenarioCount": 0,
+    "exactPreRootActionStreams": true,
+    "actionOwnership": false
+  },
+  "qualification": {
+    "discoveryChance": [
+      "HISTORICAL",
+      "RANDOM0",
+      "RANDOM1",
+      "RANDOM2"
+    ],
+    "holdoutChance": [
+      "RANDOM3",
+      "RANDOM4",
+      "RANDOM5",
+      "RANDOM6"
+    ],
+    "rule": "A robust direction requires paired no-regression and strict full-vector dominance in both Discovery and independent Holdout.",
+    "classifications": {
+      "ROBUST_CANDIDATE": 0,
+      "ROBUST_INCUMBENT": 0,
+      "MIXED": 35,
+      "INCOMPLETE": 0
+    },
+    "candidate": {
+      "discoveryQualified": 1,
+      "holdoutQualified": 6,
+      "bothQualified": 0
+    },
+    "incumbent": {
+      "discoveryQualified": 1,
+      "holdoutQualified": 2,
+      "bothQualified": 0
+    }
+  },
+  "historicalLabels": {
+    "EQUAL": 31,
+    "INCUMBENT_BETTER": 2,
+    "CANDIDATE_BETTER": 2,
+    "crossClassification": {
+      "EQUAL/MIXED": 31,
+      "INCUMBENT_BETTER/MIXED": 2,
+      "CANDIDATE_BETTER/MIXED": 2
+    },
+    "interpretation": "The four historical direction labels are individual realized Chance outcomes. None is a robust Minimax label across the independent Chance split."
+  },
+  "artifacts": {
+    "directory": "artifacts/v2-native-initiative/bp140q0-semantic-attack-chance-qualified-labels",
+    "manifestSha256": "4370120b5664a1c3249b2ad89be1e5ac2f1a346ea4ba32db7e058902b36673c4",
+    "overviewSha256": "afa8d66eaa9ae31e7890c756394124ed408f1e4c48830c859348bf69819714fa",
+    "rootsSha256": "89031bbeaeba099a9c4152b931eebaa65341e837eafd1f639e3ccc7f111c2519",
+    "fingerprint": "f347eb356f338abdfc7555f229e763def6dbe2314d5c7498d758ebc2ccf9e0c0",
+    "totalBytes": 17861
+  },
+  "source": {
+    "diagnosticSha256": "1727378f962f70960b9afc4ac677dd1370889d71b5595551ba32c88cb5a6cefc",
+    "testSha256": "d8c83ff1fbff61d300b315a7277b4373a35f0b830f6399a239fc72ab6650c0cd"
+  },
+  "decision": {
+    "retain": [
+      "exact compact pre-root action replay",
+      "independent Chance Discovery and Holdout",
+      "bidirectional paired and interval qualification",
+      "historical outcome as one evidence cell rather than truth"
+    ],
+    "reject": [
+      "training BP140 against two historical improvements and two regressions",
+      "using full-game terminal outcome as a local root value target",
+      "promoting a one-sided Discovery or Holdout qualification",
+      "activating any action owner from this corpus"
+    ],
+    "next": "BP140 must compare finite event-horizon refusal-aware vectors. It should preserve terminal and committed safety first, then value measurable contact, objective progress and resource concession without requiring eventual FIRE or using full-game Chance luck as the label."
+  }
+}

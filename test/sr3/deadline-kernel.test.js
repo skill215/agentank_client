@@ -10,7 +10,7 @@ const { FastKernel } = require("../../engine-v2/src/fast/kernel");
 const { HazardKernel } = require("../../engine-v2/src/fast/hazard");
 const { HardGate } = require("../../engine-v2/src/fast/hard-gate");
 
-function openArena(width = 9, height = 9) {
+function openArena(width = 9, height = 9, hazardOptions = {}) {
   const state = new FastState(width, height);
   const terrain = state.arrays[ARRAY.TERRAIN];
   terrain.fill(TERRAIN.OPEN, 0, state.cells);
@@ -29,7 +29,7 @@ function openArena(width = 9, height = 9) {
   state.arrays[ARRAY.TANK_DIR][1] = 3;
   state.initializeHash();
   const kernel = new FastKernel(state);
-  const hazard = new HazardKernel(state);
+  const hazard = new HazardKernel(state, hazardOptions);
   const hard = new HardGate(kernel, hazard, 0);
   return { state, kernel, hazard, hard, bundle: { state, kernel, hazard, hard } };
 }
@@ -111,6 +111,62 @@ describe("DeadlineKernel committed closure", () => {
     assert.notEqual(quality.proofStatus, SUCCESSOR_PROOF.PROVEN_VIABLE);
   });
 
+  it("uses AND transitions for every supported stun outcome in the reverse lattice", () => {
+    const deterministic = openArena(); const robust = openArena();
+    for (const fixture of [deterministic, robust]) {
+      const { state } = fixture; const terrain = state.arrays[ARRAY.TERRAIN];
+      // One-way corridor: three normal GO commands leave a range-two bomb,
+      // while a reversed first GO is blocked and loses the only spare frame.
+      for (let x = 1; x < 8; x += 1) {
+        terrain[state.cell(x, 3)] = TERRAIN.WALL;
+        terrain[state.cell(x, 5)] = TERRAIN.WALL;
+      }
+      terrain[state.cell(3, 4)] = TERRAIN.WALL;
+      state.arrays[ARRAY.TANK_DIR][0] = 1;
+      state.arrays[ARRAY.TANK_STUN_UNTIL][0] =
+        state.arrays[ARRAY.SCALAR][SCALAR.FRAME] + 1;
+      placeBomb(state, state.cell(4, 4), 3);
+      state.initializeHash();
+    }
+    const legacy = new DeadlineKernel(); legacy.solve(deterministic.bundle, 0);
+    const chance = new DeadlineKernel({ chanceCompleteStun: true,
+      chanceSurvivalMass: true });
+    chance.solve(robust.bundle, 0);
+    assert.equal(legacy.rootViable, 1);
+    assert.equal(chance.rootViable, 0,
+      "an existential normal branch cannot certify a random reversed command");
+    assert.equal(chance.chancePrivateBuildCount, 1,
+      "the deterministic shared lattice must not serve a chance-AND proof");
+    assert.ok(chance.survivalA && chance.survivalTick1,
+      "the diagnostic mass DP must use fixed constructor-time slabs");
+    assert.equal(chance.hotAllocationCount, 0);
+  });
+
+  it("initializes chance survival mass for a one-tick committed horizon", () => {
+    const { state, bundle } = openArena();
+    placeBomb(state, state.cell(4, 4), 1);
+    state.initializeHash();
+    const deadline = new DeadlineKernel({ chanceCompleteStun: true,
+      chanceSurvivalMass: true });
+    assert.equal(bundle.hazard.rebuild(0), 1);
+    bundle.hazard.horizonTick = 1;
+    deadline.buildReverse(bundle.hazard, 0);
+    const safeCell = state.cell(7, 3);
+    assert.equal(deadline.survivalTick1[safeCell * 4], 10000,
+      "the terminal tick-one layer must not retain its reset zero mass");
+    const quality = new Uint16Array(1);
+    deadline.evaluateProjectedSuccessors(bundle, new Uint16Array([safeCell]),
+      new Uint8Array([0]), 1, {
+        proofStatus: new Uint8Array(1),
+        stillExposedAtDeadline: new Uint8Array(1),
+        slack: new Int8Array(1),
+        viableNextActionCount: new Uint8Array(1),
+        coverageComplete: new Uint8Array(1),
+        survivalMass: quality
+      });
+    assert.equal(quality[0], 10000);
+  });
+
   it("uses hostile projectile arrival in the committed deadline", () => {
     const { state, bundle } = openArena();
     state.arrays[ARRAY.TANK_DIR][0] = 0;
@@ -123,6 +179,32 @@ describe("DeadlineKernel committed closure", () => {
     const stay = deadline.evaluateSuccessor(bundle, state.cell(4, 4), 1);
     assert.ok(stay.proofStatus === SUCCESSOR_PROOF.PROVEN_DEAD ||
       stay.stillExposedAtDeadline === 1);
+  });
+
+  it("reuses cached tick layers without changing deadline or successor evidence", () => {
+    const cached = openArena(9, 9,
+      { reverseLatticeCacheEntries: 4, reverseLatticeLayerCache: true });
+    const control = openArena();
+    placeBomb(cached.state, cached.state.cell(4, 4), 5);
+    placeBomb(control.state, control.state.cell(4, 4), 5);
+    placeEnemyProjectile(cached.state, cached.state.cell(2, 4), 1);
+    placeEnemyProjectile(control.state, control.state.cell(2, 4), 1);
+    cached.state.initializeHash(); control.state.initializeHash();
+    assert.equal(cached.hazard.reverseViable(0), control.hazard.reverseViable(0));
+    const cachedDeadline = new DeadlineKernel(); const controlDeadline = new DeadlineKernel();
+    cachedDeadline.solve(cached.bundle, 0); controlDeadline.solve(control.bundle, 0);
+    assert.equal(cached.hazard.reverseLatticeLayerHitCount, 1);
+    assert.equal(cachedDeadline.proofStatus, controlDeadline.proofStatus);
+    assert.equal(cachedDeadline.rootViable, controlDeadline.rootViable);
+    assert.equal(cachedDeadline.deadlineTick, controlDeadline.deadlineTick);
+    assert.equal(cachedDeadline.slack, controlDeadline.slack);
+    assert.deepEqual(Array.from(cachedDeadline.actionEscape),
+      Array.from(controlDeadline.actionEscape));
+    const poses = cached.state.cells * 4;
+    assert.deepEqual(Array.from(cachedDeadline.viableTick1.slice(0, poses)),
+      Array.from(controlDeadline.viableTick1.slice(0, poses)));
+    assert.deepEqual(Array.from(cachedDeadline.viableTick2.slice(0, poses)),
+      Array.from(controlDeadline.viableTick2.slice(0, poses)));
   });
 
   it("fills independent per-row successor arrays for all action families", () => {

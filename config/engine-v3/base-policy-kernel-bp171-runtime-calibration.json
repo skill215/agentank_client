@@ -1,0 +1,294 @@
+{
+  "objectKind": "BasePolicyRuntimeCalibrationV1",
+  "generatedAt": "2026-09-02T06:54:43.674Z",
+  "productionDefaultChanged": false,
+  "contract": {
+    "process": "SAME_PROCESS",
+    "warmupRunsPerMode": 1,
+    "order": "ALTERNATING",
+    "batches": 5,
+    "scenarioLimit": 8,
+    "arithmetic": {
+      "starFieldCacheEntries": 0,
+      "geometry": "ARITHMETIC"
+    },
+    "optimized": {
+      "starFieldCacheEntries": 2,
+      "geometry": "PRECOMPUTED_TABLE"
+    },
+    "fullArtifactsRetained": false,
+    "interpretation": "LOCAL_RELATIVE_ONLY_NOT_PLATFORM_3000MS_EVIDENCE"
+  },
+  "semanticExact": true,
+  "batches": [
+    {
+      "batch": 1,
+      "order": [
+        "arithmetic",
+        "optimized"
+      ],
+      "semantic": {
+        "missing": 0,
+        "actionStream": 0,
+        "arguments": 0,
+        "result": 0,
+        "frames": 0,
+        "counts": 0,
+        "analysisOutcome": 0,
+        "terminalCategory": 0
+      },
+      "arithmeticFingerprint": {
+        "records": 16,
+        "sha256": "41450ea5557c2f2cce4fb5b948766c7608c2244c5d095afde1ff0b8340a7ae9c"
+      },
+      "optimizedFingerprint": {
+        "records": 16,
+        "sha256": "41450ea5557c2f2cce4fb5b948766c7608c2244c5d095afde1ff0b8340a7ae9c"
+      },
+      "arithmeticOutcome": {
+        "wins": 10,
+        "losses": 6,
+        "draws": 0,
+        "scoreBasisPoints": 6250
+      },
+      "optimizedOutcome": {
+        "wins": 10,
+        "losses": 6,
+        "draws": 0,
+        "scoreBasisPoints": 6250
+      },
+      "arithmetic": {
+        "candidateTotalMicros": 5866109,
+        "candidateP95Max": 16128,
+        "controlTotalMicros": 8648309,
+        "controlP95Max": 23360
+      },
+      "optimized": {
+        "candidateTotalMicros": 3408058,
+        "candidateP95Max": 8813,
+        "controlTotalMicros": 6742836,
+        "controlP95Max": 16234
+      },
+      "totalBasisPoints": 5809,
+      "p95BasisPoints": 5464
+    },
+    {
+      "batch": 2,
+      "order": [
+        "optimized",
+        "arithmetic"
+      ],
+      "semantic": {
+        "missing": 0,
+        "actionStream": 0,
+        "arguments": 0,
+        "result": 0,
+        "frames": 0,
+        "counts": 0,
+        "analysisOutcome": 0,
+        "terminalCategory": 0
+      },
+      "arithmeticFingerprint": {
+        "records": 16,
+        "sha256": "41450ea5557c2f2cce4fb5b948766c7608c2244c5d095afde1ff0b8340a7ae9c"
+      },
+      "optimizedFingerprint": {
+        "records": 16,
+        "sha256": "41450ea5557c2f2cce4fb5b948766c7608c2244c5d095afde1ff0b8340a7ae9c"
+      },
+      "arithmeticOutcome": {
+        "wins": 10,
+        "losses": 6,
+        "draws": 0,
+        "scoreBasisPoints": 6250
+      },
+      "optimizedOutcome": {
+        "wins": 10,
+        "losses": 6,
+        "draws": 0,
+        "scoreBasisPoints": 6250
+      },
+      "arithmetic": {
+        "candidateTotalMicros": 4783694,
+        "candidateP95Max": 12053,
+        "controlTotalMicros": 7391154,
+        "controlP95Max": 16706
+      },
+      "optimized": {
+        "candidateTotalMicros": 3498778,
+        "candidateP95Max": 9197,
+        "controlTotalMicros": 6938635,
+        "controlP95Max": 16092
+      },
+      "totalBasisPoints": 7313,
+      "p95BasisPoints": 7630
+    },
+    {
+      "batch": 3,
+      "order": [
+        "arithmetic",
+        "optimized"
+      ],
+      "semantic": {
+        "missing": 0,
+        "actionStream": 0,
+        "arguments": 0,
+        "result": 0,
+        "frames": 0,
+        "counts": 0,
+        "analysisOutcome": 0,
+        "terminalCategory": 0
+      },
+      "arithmeticFingerprint": {
+        "records": 16,
+        "sha256": "41450ea5557c2f2cce4fb5b948766c7608c2244c5d095afde1ff0b8340a7ae9c"
+      },
+      "optimizedFingerprint": {
+        "records": 16,
+        "sha256": "41450ea5557c2f2cce4fb5b948766c7608c2244c5d095afde1ff0b8340a7ae9c"
+      },
+      "arithmeticOutcome": {
+        "wins": 10,
+        "losses": 6,
+        "draws": 0,
+        "scoreBasisPoints": 6250
+      },
+      "optimizedOutcome": {
+        "wins": 10,
+        "losses": 6,
+        "draws": 0,
+        "scoreBasisPoints": 6250
+      },
+      "arithmetic": {
+        "candidateTotalMicros": 5579434,
+        "candidateP95Max": 15771,
+        "controlTotalMicros": 8871669,
+        "controlP95Max": 51045
+      },
+      "optimized": {
+        "candidateTotalMicros": 4792896,
+        "candidateP95Max": 16222,
+        "controlTotalMicros": 10078718,
+        "controlP95Max": 36095
+      },
+      "totalBasisPoints": 8590,
+      "p95BasisPoints": 10285
+    },
+    {
+      "batch": 4,
+      "order": [
+        "optimized",
+        "arithmetic"
+      ],
+      "semantic": {
+        "missing": 0,
+        "actionStream": 0,
+        "arguments": 0,
+        "result": 0,
+        "frames": 0,
+        "counts": 0,
+        "analysisOutcome": 0,
+        "terminalCategory": 0
+      },
+      "arithmeticFingerprint": {
+        "records": 16,
+        "sha256": "41450ea5557c2f2cce4fb5b948766c7608c2244c5d095afde1ff0b8340a7ae9c"
+      },
+      "optimizedFingerprint": {
+        "records": 16,
+        "sha256": "41450ea5557c2f2cce4fb5b948766c7608c2244c5d095afde1ff0b8340a7ae9c"
+      },
+      "arithmeticOutcome": {
+        "wins": 10,
+        "losses": 6,
+        "draws": 0,
+        "scoreBasisPoints": 6250
+      },
+      "optimizedOutcome": {
+        "wins": 10,
+        "losses": 6,
+        "draws": 0,
+        "scoreBasisPoints": 6250
+      },
+      "arithmetic": {
+        "candidateTotalMicros": 5756034,
+        "candidateP95Max": 15840,
+        "controlTotalMicros": 9197103,
+        "controlP95Max": 28539
+      },
+      "optimized": {
+        "candidateTotalMicros": 4936396,
+        "candidateP95Max": 12226,
+        "controlTotalMicros": 10032999,
+        "controlP95Max": 25347
+      },
+      "totalBasisPoints": 8576,
+      "p95BasisPoints": 7718
+    },
+    {
+      "batch": 5,
+      "order": [
+        "arithmetic",
+        "optimized"
+      ],
+      "semantic": {
+        "missing": 0,
+        "actionStream": 0,
+        "arguments": 0,
+        "result": 0,
+        "frames": 0,
+        "counts": 0,
+        "analysisOutcome": 0,
+        "terminalCategory": 0
+      },
+      "arithmeticFingerprint": {
+        "records": 16,
+        "sha256": "41450ea5557c2f2cce4fb5b948766c7608c2244c5d095afde1ff0b8340a7ae9c"
+      },
+      "optimizedFingerprint": {
+        "records": 16,
+        "sha256": "41450ea5557c2f2cce4fb5b948766c7608c2244c5d095afde1ff0b8340a7ae9c"
+      },
+      "arithmeticOutcome": {
+        "wins": 10,
+        "losses": 6,
+        "draws": 0,
+        "scoreBasisPoints": 6250
+      },
+      "optimizedOutcome": {
+        "wins": 10,
+        "losses": 6,
+        "draws": 0,
+        "scoreBasisPoints": 6250
+      },
+      "arithmetic": {
+        "candidateTotalMicros": 6110850,
+        "candidateP95Max": 14608,
+        "controlTotalMicros": 9685024,
+        "controlP95Max": 20750
+      },
+      "optimized": {
+        "candidateTotalMicros": 5040325,
+        "candidateP95Max": 16425,
+        "controlTotalMicros": 10583152,
+        "controlP95Max": 28833
+      },
+      "totalBasisPoints": 8248,
+      "p95BasisPoints": 11243
+    }
+  ],
+  "aggregate": {
+    "medianTotalBasisPoints": 8248,
+    "medianP95BasisPoints": 7718,
+    "optimizedTotalWins": 5,
+    "optimizedP95Wins": 3
+  },
+  "source": {
+    "referenceManifest": "/tmp/agentank-bp170-leaf-geometry-table-fixed16/manifest.json",
+    "productionRootSha256": "73e08f1471a450967e26e931c639c88bf88d986870cb5b07a72e456ec2a8b551",
+    "searchSha256": "e3d397a9013a3bbc869f74e4eccc798f82267325e22b381833733a0738715ee2",
+    "leafSha256": "77cad5edc6469a9abfbf8cdfb0051abb779349fe67c1592bd66fd22baa5e7fb9",
+    "pathSha256": "7bf2e51c2895efc182f87bb6620a319e1b24c4fb8ff5437404274948ca4fd38e"
+  },
+  "fingerprint": "95ea644ed1d7828ff79e02afc8da171b64530c8aa1baa7fc03118c0453b9472e"
+}

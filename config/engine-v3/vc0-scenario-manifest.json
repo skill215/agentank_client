@@ -1,0 +1,1759 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "V3_COMPONENT_CAUSAL_COHORT_V1",
+  "selectionSalt": "v3-v2-component-causal-vc0-2026-07-29",
+  "frozenAt": "2026-07-29T02:07:10.471Z",
+  "v1Sha256": "8da68843a292c6a6230a32baf60392916f9fb85aaa5d9a94feac7085ddc9e82e",
+  "dynamicSource": {
+    "snapshotId": "rolling-v1-1146092a302cb0d4",
+    "snapshotFingerprint": "21698f432c6148ec35661375b7722e8414426faf1cfe5236ae2ffb426b60ea09",
+    "available": 1243,
+    "unique": 1243,
+    "newAvailable": 977,
+    "frozenAvailable": 266
+  },
+  "contract": {
+    "scenarioCount": 64,
+    "matchCount": 128,
+    "newHistoryCount": 16,
+    "fixedHashCount": 48,
+    "discoveryScenarios": 16,
+    "holdoutScenarios": 48,
+    "seatSwapsPerScenario": 2,
+    "skills": [
+      "stun",
+      "stun"
+    ]
+  },
+  "scenarios": [
+    {
+      "index": 0,
+      "role": "DISCOVERY",
+      "sourceClass": "NEW_HISTORY",
+      "matchUrlId": "mat_FvgkFgwRgF217xan3",
+      "scenarioFingerprint": "fc745d6ce67d988cdcb331cf24f505ad9f24dec009cdfc34c67f8d0911bc7768",
+      "mapHash": "5d7600204d828163c81f8df66b6ab08f0489dc83b346115eff4b89efaaeb1001",
+      "originalFrames": 93,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 3
+    },
+    {
+      "index": 1,
+      "role": "HOLDOUT",
+      "sourceClass": "NEW_HISTORY",
+      "matchUrlId": "mat_9WXTvtqe4LbI1xSmT",
+      "scenarioFingerprint": "406792cac569a731d88f814ca945339a93fffd9f2e8e502ff4d3b898bb28025d",
+      "mapHash": "34c43ba2144da1f7a2bb0b991a4dbcffe529d3561082f77a86e0565a5d45c187",
+      "originalFrames": 55,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 2,
+      "role": "HOLDOUT",
+      "sourceClass": "NEW_HISTORY",
+      "matchUrlId": "mat_0Kp8RyZo8EHH22rub",
+      "scenarioFingerprint": "6fa96f5d85ddc71984bec776d054ab5b2f0450309ea5c6f7dcc944447abc3271",
+      "mapHash": "9a1c3750957b34ba527b5b35ef248ec2aff866b75674796ebd47d0c8c1244c75",
+      "originalFrames": 27,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 3,
+      "role": "HOLDOUT",
+      "sourceClass": "NEW_HISTORY",
+      "matchUrlId": "mat_7LNOcvQp3Oj55BekO",
+      "scenarioFingerprint": "9720b0477cc564ba03af09b921f031e8bf0762f1930f7e83c2fd876f9425a82f",
+      "mapHash": "66978eeeef1aadb26a8ed601fd77ef4567cf42386494ac635264425978dc6757",
+      "originalFrames": 62,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 3
+    },
+    {
+      "index": 4,
+      "role": "HOLDOUT",
+      "sourceClass": "NEW_HISTORY",
+      "matchUrlId": "mat_LYnr5MOyRoMFLR9zm",
+      "scenarioFingerprint": "758394e55682bd375253befca1cb4bef0a6a2d7fee78bc14d200181e8147fe4a",
+      "mapHash": "254e36f0f3b11d2e1c13bcd1e4bd8481e73496cd8828454ec50d66c3f1a6fbcf",
+      "originalFrames": 36,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 5,
+      "role": "HOLDOUT",
+      "sourceClass": "NEW_HISTORY",
+      "matchUrlId": "mat_8ncvbpafKSvAXjk5s",
+      "scenarioFingerprint": "03e383d76c14c51df4c4aa87c3a264477185ccafc0e0e4fe9ed27a3bbb48bb21",
+      "mapHash": "c2cd112b49f8fe76515ac6216d188c346391ad0f4dee479dbdb1c79775b7f7e5",
+      "originalFrames": 94,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 5
+    },
+    {
+      "index": 6,
+      "role": "DISCOVERY",
+      "sourceClass": "NEW_HISTORY",
+      "matchUrlId": "mat_2paPNpuAa461VkmvU",
+      "scenarioFingerprint": "05aae45afed438d7c9c5b760e9378e1f3f0339cd37b4f4b618fc70534b7360c3",
+      "mapHash": "a0c003160bd72e5c5ee74a7a59768062d753b0d08de04c7f239d1424afc8d8b7",
+      "originalFrames": 41,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 7,
+      "role": "DISCOVERY",
+      "sourceClass": "NEW_HISTORY",
+      "matchUrlId": "mat_2gFNyOiyJAA7Ajzdy",
+      "scenarioFingerprint": "84751230ccfe4ce15d259e56955861941aac60b797e5866fa2589feb82968bb9",
+      "mapHash": "f8eafdcb4ce1a41dd0e0ba938098ace17dedf96290b7409e07a632416e405b48",
+      "originalFrames": 100,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 4
+    },
+    {
+      "index": 8,
+      "role": "HOLDOUT",
+      "sourceClass": "NEW_HISTORY",
+      "matchUrlId": "mat_HT5bQROODWk50q4Fp",
+      "scenarioFingerprint": "c16306eba3f8b74222a21eaa8f15b735c376aa30a05aafddf88b8ce8538f682f",
+      "mapHash": "dc241fa0263580f73613ea59cb18b49e20748f3d377bb5739cd7ffcb4317eafa",
+      "originalFrames": 99,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 3
+    },
+    {
+      "index": 9,
+      "role": "HOLDOUT",
+      "sourceClass": "NEW_HISTORY",
+      "matchUrlId": "mat_39dOWFb6lXyF5DSPE",
+      "scenarioFingerprint": "025010246d9bd286b5fd1dc7b16a3d46b69f3f5a0775b93706e23f94f390854d",
+      "mapHash": "dcaf1432d55641b89b551b443d1923f2f6918be7d2df81ea212697ac4058fc0f",
+      "originalFrames": 112,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 4
+    },
+    {
+      "index": 10,
+      "role": "HOLDOUT",
+      "sourceClass": "NEW_HISTORY",
+      "matchUrlId": "mat_4OFo2469RAU1PDrYP",
+      "scenarioFingerprint": "2a3f272b1d451a0bae0a28af98eb6c2b508dfb13b91c4024062e0cf82e0e9600",
+      "mapHash": "3c2bdbd75aa0e26f81232465b44a3f3f87433b950af63a13028cc5a12da5d32e",
+      "originalFrames": 101,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 4
+    },
+    {
+      "index": 11,
+      "role": "HOLDOUT",
+      "sourceClass": "NEW_HISTORY",
+      "matchUrlId": "mat_5O2tHP9NT0lHI35Yg",
+      "scenarioFingerprint": "d43cbca2104ed27134adc01d5d19ef78a89acf870e735c3212a41e761e09bf27",
+      "mapHash": "0118751d31798875eeaf61fc1ef800973f284615898bb9cb421b24894bac6bbb",
+      "originalFrames": 92,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 3
+    },
+    {
+      "index": 12,
+      "role": "HOLDOUT",
+      "sourceClass": "NEW_HISTORY",
+      "matchUrlId": "mat_GgAsnbhfH6A18tCWD",
+      "scenarioFingerprint": "7d0325827a4acaee804d81d2e6e4bba9e0ef1482d2ca05ad85e1870f21bc764e",
+      "mapHash": "1e2a2148595805f7b10f1158a09df150d50e3f23714bdacb77cd41a840adaa03",
+      "originalFrames": 31,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 13,
+      "role": "HOLDOUT",
+      "sourceClass": "NEW_HISTORY",
+      "matchUrlId": "mat_J5E8gSGG2ew2Bm3JZ",
+      "scenarioFingerprint": "3009582c3451b6659feda12e8cbd502ea97c7735d3e4fc6902c3a381bff0f612",
+      "mapHash": "5463922fc23d1822d7d2ac6acc4c0717914b80db6969dabce8deeea32f81f0b3",
+      "originalFrames": 41,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 14,
+      "role": "DISCOVERY",
+      "sourceClass": "NEW_HISTORY",
+      "matchUrlId": "mat_AunfxoIKFbFKEMOFz",
+      "scenarioFingerprint": "1b96843529ba0a03a21fbcc9fcb499c4c66a502177e95bdf60cc7049d1b8930d",
+      "mapHash": "e739f91e49fe081117f2b068b8e98bf87f898a35e2d4fce24b260e69dc8a152a",
+      "originalFrames": 22,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 15,
+      "role": "HOLDOUT",
+      "sourceClass": "NEW_HISTORY",
+      "matchUrlId": "mat_LWkPWhE7n0KFhPoEJ",
+      "scenarioFingerprint": "18d116c8e7a8248eac02b862070a8137c95e99380f90466919cdd4b272ddb3c1",
+      "mapHash": "6d3b654122a6ee8f73e57b1bd9978facebae7a2ce5a253ab57507d124b0904c6",
+      "originalFrames": 40,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 16,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_4Gf6fKghiP6LsfypB",
+      "scenarioFingerprint": "482295d8b774b003a2cfc4bf39c23228cf748265f9bb0d336e1019e5aa9112ff",
+      "mapHash": "858aa032851698b0458890e42d23b510d1c317fe37585d638e651a08196097b7",
+      "originalFrames": 20,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 17,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_9pSz9FlzFmHGuSKTv",
+      "scenarioFingerprint": "c117c894bc01fdf408d5eb38884b64ab9f79af55e7907b641299512cbf0b36fd",
+      "mapHash": "e01f2262a682f03e1f8fac92b2c3ffe1f78fbefa64758954ddc6271b22224a0b",
+      "originalFrames": 17,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 18,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_BelcBi6efBDCwOgDA",
+      "scenarioFingerprint": "fb12515c7059458cd3ef8eadb7a2d9338af609f3331bbd7432483b9a60c07537",
+      "mapHash": "f1c46d1a2822555deb10826464a127701dfb3901c6dce2fbec53fa98aa23218b",
+      "originalFrames": 18,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 19,
+      "role": "DISCOVERY",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_E6YtQR4ItHDFpcJyJ",
+      "scenarioFingerprint": "43e278030188869a9b89ef041c222a3dfa5249f15fbebbcb777315ff3f87c7cc",
+      "mapHash": "7d13ce15de1ff7dc82ab0979d3db09df94db5ede62359cd5167c7d909abebb61",
+      "originalFrames": 40,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 20,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_5qWcbOhr9L3EEmVjJ",
+      "scenarioFingerprint": "26fe46c1b03946671efe42d7127e719cded8a094a1ae233865c12dc60fc1ff77",
+      "mapHash": "95ed454a930acce654d8e1725c382204071a8edd529b7e55ccaee94ce8009d3d",
+      "originalFrames": 25,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 21,
+      "role": "DISCOVERY",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_I1Khb1qFh9oLmzMZz",
+      "scenarioFingerprint": "c413c7627aad6b7e35f2147bece0313702c580c8d2dab7c762163d551b6c02b4",
+      "mapHash": "7f50e42baa9f64627fa493f960cc6e47f08ede7f99e3a8aec0b4d7890315f26b",
+      "originalFrames": 50,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 3
+    },
+    {
+      "index": 22,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_8d1aKO08AtpFDKE7X",
+      "scenarioFingerprint": "7421257ade3ca68b158015055b7dedb9b3294749fd78101759999905bd31c19b",
+      "mapHash": "3332ea92b022122d217c078f2f0e563aa277476687fb9886e65918f53f3137c0",
+      "originalFrames": 30,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 23,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_AjG9WiXjqXFJbMHMO",
+      "scenarioFingerprint": "7f05c4a45d6df8862f1d4b31036e301b4203ae23521ce7f1ac08137f7dca56b4",
+      "mapHash": "8c826d9f48cdaccb01ff2636b1329baeeb5058d35eb2f00b06f6820c7e520663",
+      "originalFrames": 21,
+      "originalSubjectSeat": 0,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 24,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_1BxFCwFBX5h7HZSCC",
+      "scenarioFingerprint": "676b86f42995009220f75cc3ee75a85a1bdae28433b6de3855d462e5625792ff",
+      "mapHash": "fc6201d30e09e8eda400ca2bc29c42cf50b66fbbee6d38ca1a6541e8da4f8858",
+      "originalFrames": 15,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 25,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_HQzxdZ2ynArIiAFAZ",
+      "scenarioFingerprint": "6ee3d0095001e2b4b0c58e6564f5ab00d8fe6ae15c941ab7312511133986b458",
+      "mapHash": "0adc064ecefa6feb8ca43543748260546459b590f0b09a979d9bf226dae146f0",
+      "originalFrames": 67,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 26,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_4SObF0tdlICGJOaw5",
+      "scenarioFingerprint": "4639034fcde2e51e452ee955b0a66c65f0f6145065039ba059433dabf43d6d18",
+      "mapHash": "f2d7b1279e0ff1ee7b354175722937387d49ffa3fc4982be2733525b46c6181d",
+      "originalFrames": 19,
+      "originalSubjectSeat": 0,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 27,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_0I6DlP05fuV6aTReQ",
+      "scenarioFingerprint": "c688e02adcb2af5a76e26309400e7a244c723662a7d0de0ded38b0fb37e79f1a",
+      "mapHash": "2565263d700091eef8a68e920ca00a3589a8af28a238de7141ac19111783fb6e",
+      "originalFrames": 40,
+      "originalSubjectSeat": 0,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 28,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_H2RhxmSEJmsJpcow1",
+      "scenarioFingerprint": "0a49e51088274fd9837e496ed85a3e5e163e0ec934727378df14a4c83c9299eb",
+      "mapHash": "4fdcfdca832501735c93460e0d1a74ccda97bd25c17e778b8ab2c6f04f73479f",
+      "originalFrames": 41,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 29,
+      "role": "DISCOVERY",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_AknA8mvFeuC33NgxL",
+      "scenarioFingerprint": "ca6278f68a79c5f249ed6654968162fc4b298d18bc74dfeff1b52e8506f6a02e",
+      "mapHash": "806026e9b0c12869cec8c82a5b2ce4f4f4e39c08ef1f65f28c34d6d662fb3c48",
+      "originalFrames": 21,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 30,
+      "role": "DISCOVERY",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_6K5rvfV5SofI3nXfG",
+      "scenarioFingerprint": "926d4acc4575a8935c8108d70510901e8667377c018638a5a454e1548bd310fe",
+      "mapHash": "44f8363f50e44437224483834293aa620ae6ce94e5bb1e716b7e63cef67ac278",
+      "originalFrames": 28,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 31,
+      "role": "DISCOVERY",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_DG1V4GQDJduE9RLQC",
+      "scenarioFingerprint": "587699572718afe0e1d1a058032774708984200ce4705dc7c1869cc90e81e105",
+      "mapHash": "e2ea2c4604bf1e3de219233777f0d19e72db6760b4baa110d25b83df5d7aa046",
+      "originalFrames": 128,
+      "originalSubjectSeat": 0,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 4
+    },
+    {
+      "index": 32,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_5Otv9qVrLIQK6fusd",
+      "scenarioFingerprint": "52e4a4c1c414e63f15ecab8f77b51bff1720a9863d655a7fdfae1ff36f043fa9",
+      "mapHash": "2892755dda8ddf5ce0da3bab5f4487d73d1e3d762b7cd01fa42e14fdca1c6bb4",
+      "originalFrames": 52,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 33,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_14tkHXX4Wt90HhDYa",
+      "scenarioFingerprint": "5952b8b2d13cd0464d50e7dcf2f5f3299d10b3e730a56bc5e80f0b337968af59",
+      "mapHash": "08a641486fabf7da7a3d6a4fc4e90c0aa5b47800721222bf086963f06882f943",
+      "originalFrames": 27,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 34,
+      "role": "DISCOVERY",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_5nexgrFokm72X1XGO",
+      "scenarioFingerprint": "1c3a0366db80d1006301aa69261c579694fbb51447e5d2273f51ba4b4345a2ad",
+      "mapHash": "da9c34e4a01fe691bbaba8ec11f5f371fa340e424d199b1be7d4cc5215cbd9f3",
+      "originalFrames": 19,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 35,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_3DLCiYQhEX5J5zkWx",
+      "scenarioFingerprint": "d74f0c7e5a31885942a1ce253290842a85e475a29a9ad22f373f301a803e4c41",
+      "mapHash": "722d3f34fca7f19e446d076a33ce68be0265ac0394d2656c224dee13a1bdb19d",
+      "originalFrames": 114,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 3
+    },
+    {
+      "index": 36,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_I99TeNLFi4AI3I9Qg",
+      "scenarioFingerprint": "dd25c47fb14139ae9735d5a7da411619befcf86ec7bb1a9cb449b5fcbd734657",
+      "mapHash": "628ab97f1ab65a9bec4e0f5ab079596af4d74b9fc1338c161aa723060b1db0eb",
+      "originalFrames": 35,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 37,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_6B0D9CUXh2fKBhNYa",
+      "scenarioFingerprint": "7e9317754d341668b22672f784f7cb7aa81879c0002bd7a4d7dee01c21ab842f",
+      "mapHash": "cedf1bfd0659de0d37591ed0a4f44c49b89e31fc06b4b4067d83b063cb18bad4",
+      "originalFrames": 33,
+      "originalSubjectSeat": 0,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 38,
+      "role": "DISCOVERY",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_3FMpLIePVMhEAIrgz",
+      "scenarioFingerprint": "096094d41e90684592a50a59b4f71a70154544d0b5e4ac4b55acc29cb2520202",
+      "mapHash": "1c0b6653747a81598431a40ba6d0c4010a813c7a551cb5deedab8758160fe2bb",
+      "originalFrames": 92,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 3
+    },
+    {
+      "index": 39,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_9wLYA6v4fMB2vRoQ9",
+      "scenarioFingerprint": "d65287f39a7f834d2b4fa8fb9ed35bc67386d592575655eb0f3848f9699ca17e",
+      "mapHash": "298134192031a8490e4bd85caf964081ff5943996da99da7765bf1f4b8a24fa2",
+      "originalFrames": 31,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 40,
+      "role": "DISCOVERY",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_L12DtDJ8liL9skibr",
+      "scenarioFingerprint": "c73f06f224f359c5d24c1e9908a72e01c27933c017c54808c7a2b2192db8a18a",
+      "mapHash": "4ce7f1a67c4f602c7925dc6a89d9ec8c4095d25105bdbc4b244509bdf852dcdb",
+      "originalFrames": 74,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 4
+    },
+    {
+      "index": 41,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_0t6YZ5T95Fa27pYWe",
+      "scenarioFingerprint": "bcd798a794845627e0e7d85f16162b4cd3a8d0a68d4a715b661b0fac4a9de151",
+      "mapHash": "439c06be66647062b0687369bdb44fd8597bef89f5aa7557968afacbe78b101d",
+      "originalFrames": 23,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 42,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_JiWLIh8ZO5cEFR1EL",
+      "scenarioFingerprint": "698dab6c82f50966ca3dbc05a245db1faef1789fb9a7678fef1e9a9673746803",
+      "mapHash": "3072503ecc8ada5b5f123a02936a335a78880951be831ff29aedafe3eab25367",
+      "originalFrames": 23,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 43,
+      "role": "DISCOVERY",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_IYaL8CRgtYW3kzsLs",
+      "scenarioFingerprint": "563462550eeb1c28f58c9fd669f1ef94236e94e1e3524ad4daf22c62c76a42d7",
+      "mapHash": "c3c6638b41320d3f83871396ef6a0f43c299d29e64458414774764a1a2adcbac",
+      "originalFrames": 23,
+      "originalSubjectSeat": 0,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 44,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_3SxiYZca7arBtV9mO",
+      "scenarioFingerprint": "d44de6200ac76d44587274a1230e985d383e7650ef7aef64e92907932851d9a6",
+      "mapHash": "18e46de02f5f77ec1aae026040b189d5e9fc94f18ab12a62add34e09cc52017b",
+      "originalFrames": 122,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 4
+    },
+    {
+      "index": 45,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_7IsbaC9lzfVGiNz77",
+      "scenarioFingerprint": "4f92402da3c54b51aa03159e702d50a8cc4e5bba406b3baed84059b6775ac496",
+      "mapHash": "f096d4e57ab810a4c9161d3d80a5546fd82586fe0431f62eed4090738d60218f",
+      "originalFrames": 29,
+      "originalSubjectSeat": 0,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 46,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_3rFwfwWcfwj8HTPex",
+      "scenarioFingerprint": "012c7022e74877e74084cc1fd1b832d4384bf41485588289309065d922d1b233",
+      "mapHash": "018e419ed53f9dc3e90890c70d9ad5408d26587a4986d50e29efe00f5fe9aea2",
+      "originalFrames": 21,
+      "originalSubjectSeat": 0,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 47,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_5Jf3hnxmURxAePYqM",
+      "scenarioFingerprint": "c1a27b9016ddd08e9662ce98502f4fda908d409fd786fe850741438519010044",
+      "mapHash": "927e2a39390a742080ff1ee41e8b3fea071a18c0f3a750ce9b6f3c10356fd0fb",
+      "originalFrames": 32,
+      "originalSubjectSeat": 0,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 48,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_K4C5L7QT7FYID6R1X",
+      "scenarioFingerprint": "cb9a319752f2824e4743e9c625c0d071c8688882a5f023621d758c8bf972b713",
+      "mapHash": "70580db8407e777902fc163fdde69cfef13cf8ea2ceaa8f3a82346ef8d17b4e5",
+      "originalFrames": 128,
+      "originalSubjectSeat": 0,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 5
+    },
+    {
+      "index": 49,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_0LGaeqLV2UtEfZSMU",
+      "scenarioFingerprint": "573dbce984e9b32fd9478c238d3fbdce9ae74f1681f0dfcf774003d6369b5467",
+      "mapHash": "0f4be46ff8f7a7a434c0cd0c2a331ca71d8202f510612ff0e6a4e839cf45823a",
+      "originalFrames": 40,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 50,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_6hCAalKTTfGFykR4M",
+      "scenarioFingerprint": "27b95963b8304308a0f634fe713a7525e662b5d528093fa9a34c3b6e9e330fd5",
+      "mapHash": "85e1fbd2f1a6a992c5a8d87e4971f7879fef11f5a4b641c7f18f462d169a711b",
+      "originalFrames": 40,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 51,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_BKlrQXUkLppJf1TaD",
+      "scenarioFingerprint": "0d3024196fc29b63c6fea15f163c1acce90dc32396233b030727375ff0ae8548",
+      "mapHash": "710ab26b33c5def4e9f61ecbad6e923464309f5aa79dbaf6426226930f4983e7",
+      "originalFrames": 36,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 52,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_96OHiZEeewKGHkegx",
+      "scenarioFingerprint": "d7096956886a58c1febd6f0960394f045add9e8c3f796d2016a03f199c81c1a3",
+      "mapHash": "a693f34ee8eeafef415a1c2afb226f17ae5c87a88d17edfdf5038837d70c57ca",
+      "originalFrames": 28,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 53,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_4eN1lLfLdaN2ESlX1",
+      "scenarioFingerprint": "476cc1816ee759feb9bdc2fe7623c0b5a9f2d5a9ffe6b4e30a6f0e712793c4d1",
+      "mapHash": "28477d95acfc9272094daeb0272b235aeeb5cb5a53bb6b5790ba73a606b6c07b",
+      "originalFrames": 25,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 54,
+      "role": "DISCOVERY",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_6UY5ctG4CLaGQgKMN",
+      "scenarioFingerprint": "4ae2b06e20fe3accb584100344c6752949e252cf967638c0b55cb8b0914db876",
+      "mapHash": "2e2853cdda42c9b57d34ffceb957dafbbbf42c637bcf33a1459e2b1e289a7d44",
+      "originalFrames": 16,
+      "originalSubjectSeat": 0,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 55,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_0PIB3JDbGLE9fuVgL",
+      "scenarioFingerprint": "fdec2e7bcf9d98aeebec60f578d74e89b6cf35ea992172440a73b8ae17008c2c",
+      "mapHash": "3a3054c160dad9da870003b89be7b5947214525fb9b59c255236e030ddbd88f3",
+      "originalFrames": 55,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 56,
+      "role": "DISCOVERY",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_J36XC2k0HtD7Ix8xS",
+      "scenarioFingerprint": "382bfe55ead3a1d0f33becab45bc4cb3589f67accd3c91b0f34c45e7611d8d25",
+      "mapHash": "78742ab56cfb6cf169bc542cbbc4f21492d2d4b6744b7fc05a5541c962f1b2fa",
+      "originalFrames": 28,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 57,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_LmbOK9Kf1DT4pile2",
+      "scenarioFingerprint": "2e2fd1125562676ee6aa6d2cb7aab231ce8c2a2d9f0dae4580b1a1ed749126a4",
+      "mapHash": "a41d0179e94c7fe1f7651b970f004d2d2edc5eee96717f338aa5c4ec64d19b92",
+      "originalFrames": 20,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 58,
+      "role": "DISCOVERY",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_F8USTlVr2Md7kmB8q",
+      "scenarioFingerprint": "9f12edb0260a886c5addc7e400288eaa76bb210b97ef812c497d9f3e11d95680",
+      "mapHash": "acb0d77400643f1278a6418910290ff418b74bfcba3f9edab1495679c4637286",
+      "originalFrames": 24,
+      "originalSubjectSeat": 0,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 59,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_2Ic9Ny0Qnn5HH34nX",
+      "scenarioFingerprint": "7bf3bc8cc191d3231262e48c935e9bb5489781230352b25f3cb6932bb152181a",
+      "mapHash": "3d8400ab3f6c9c195911694426125ee6f3cd39469ea46b7af6d07f2c6461d16b",
+      "originalFrames": 23,
+      "originalSubjectSeat": 0,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 60,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_FjBzCsgYH5CH2HaiG",
+      "scenarioFingerprint": "1b5c3d251e8230ee56810042eb887dcae51eb3b1212f97b2e48094272a8c0a14",
+      "mapHash": "87cbd7d7fca448dc0540a27bdaae4d098498be9ffa4ad5c840bb50d04d8bfca8",
+      "originalFrames": 45,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 2
+    },
+    {
+      "index": 61,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_JgoMir5PNvA4EabPf",
+      "scenarioFingerprint": "5aec6dcd9cf5ff57e60fe3e3e249a4c359bc15982ba2a33271d24a7552520bd4",
+      "mapHash": "4e8d67774ceae63cf9e33b6a044da725f802157c5fd299dc0216fe047238188b",
+      "originalFrames": 128,
+      "originalSubjectSeat": 0,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 4
+    },
+    {
+      "index": 62,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_HziASMvWojpJnX3mi",
+      "scenarioFingerprint": "6bf570301315f196b299f1c045f6e5f4ec97e3121b7cbeaba21a4349ce2d20c4",
+      "mapHash": "0f25c6ce6eb37559121e00ed4ab20b006fe841ee5d6056413b5eda4a096006e6",
+      "originalFrames": 25,
+      "originalSubjectSeat": 0,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 1
+    },
+    {
+      "index": 63,
+      "role": "HOLDOUT",
+      "sourceClass": "FIXED_HASH_SAMPLE",
+      "matchUrlId": "mat_JzdHcZRYeuH2cAy3S",
+      "scenarioFingerprint": "75450493bed66c4eb346f4e2ac7e38082f452886682fa13ee7a01b9ebce6eadd",
+      "mapHash": "93d01de44d4549b6300fb59bcb152035cfa2d7a0096154f73b47c1193592dfb9",
+      "originalFrames": 128,
+      "originalSubjectSeat": 1,
+      "starts": [
+        {
+          "position": [
+            2,
+            2
+          ],
+          "direction": "up"
+        },
+        {
+          "position": [
+            16,
+            12
+          ],
+          "direction": "down"
+        }
+      ],
+      "starCount": 6
+    }
+  ],
+  "fingerprint": "bcfc3a2de8675abefb04f531cc8c9e3c77fdd4cd600e65590ff50073321a6d70"
+}

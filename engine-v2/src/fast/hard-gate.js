@@ -17,6 +17,8 @@ class HardGate {
     this.lastAppliedOwnCell = NONE_CELL; this.lastAppliedOwnDirection = 0xff;
     this.rootMismatchCount = 0; this.staleReadCount = 0; this.checkedActions = 0;
     this.rejectCount = 0; this.policyRejectCount = 0; this.incompleteCount = 0; this.fastAllowCount = 0;
+    this.classifyCount = 0; this.reverseQueryCount = 0;
+    this.reverseCacheHitCount = 0; this.reverseBuildCount = 0;
     this.hotAllocationCount = 0;
   }
 
@@ -32,6 +34,7 @@ class HardGate {
 
   classifyApplied() {
     const state = this.kernel.state; const terminal = state.arrays[ARRAY.SCALAR][SCALAR.TERMINAL_CODE];
+    this.classifyCount += 1;
     this.lastTerminal = terminal; this.lastViable = -1;
     if (terminal) {
       const ownWin = this.perspectiveSeat === 0 ? TERMINAL.WIN0 : TERMINAL.WIN1;
@@ -43,7 +46,17 @@ class HardGate {
       return terminal === ownWin ? HARD_STATUS.ALLOW : HARD_STATUS.REJECT_PROVEN;
     }
     if (!this.hasCommittedThreat()) { this.fastAllowCount += 1; return HARD_STATUS.ALLOW; }
+    const beforeExactHits = this.hazard.reverseCacheHitCount;
+    const beforeLatticeHits = this.hazard.reverseLatticeHitCount;
+    const beforeLatticeMisses = this.hazard.reverseLatticeMissCount;
     const viable = this.hazard.reverseViable(this.perspectiveSeat); this.lastViable = viable;
+    this.reverseQueryCount += 1;
+    if (this.hazard.reverseCacheHitCount > beforeExactHits ||
+        this.hazard.reverseLatticeHitCount > beforeLatticeHits)
+      this.reverseCacheHitCount += 1;
+    else if (this.hazard.reverseLatticeMissCount > beforeLatticeMisses ||
+        !this.hazard.reverseLatticeEntries) this.reverseBuildCount += 1;
+    else this.reverseCacheHitCount += 1;
     return viable > 0 ? HARD_STATUS.ALLOW : viable === 0 ?
       HARD_STATUS.REJECT_PROVEN : HARD_STATUS.INCOMPLETE;
   }

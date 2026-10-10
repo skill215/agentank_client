@@ -1,0 +1,335 @@
+{
+  "objectKind": "BasePolicyOpponentContextMigrationEvidenceV1",
+  "generatedAt": "2026-09-02T05:18:32.259Z",
+  "productionDefaultChanged": false,
+  "contract": {
+    "migratedSlice": "V1_EXACT_OPPONENT_HISTORY_CONTENT",
+    "contextPolicy": "NATIVE_HISTORY_ON_EVERY_NATIVE_SEARCH_ROOT",
+    "rejectedPolicies": [
+      "V1_VM_STAGE_ELIGIBILITY_GATE",
+      "UNIFORM_CONTEXT"
+    ],
+    "reason": "V1 stage eligibility depends on a counterfactual V1 action history; it is not a valid native search ABI",
+    "fixedState": [
+      "four action counters",
+      "observations",
+      "GO streak",
+      "stationary streak",
+      "last visible pose",
+      "last bullet observation"
+    ],
+    "integerBlend": true,
+    "hotAllocationCount": 0
+  },
+  "deterministicStateEquivalence": {
+    "sequentialFrames": 4096,
+    "differences": 0,
+    "test": "test/minimax-core/base-policy-opponent-history.test.js",
+    "testSha256": "4a7c80e9f5bdae2f3706bf0dfc1b695922e53fbe88e23488ae807c694b4c8834"
+  },
+  "fixed16": {
+    "oracleGate": {
+      "wins": 22,
+      "losses": 10,
+      "draws": 0,
+      "scoreBasisPoints": 6875,
+      "stars": {
+        "candidate": 23,
+        "control": 22
+      },
+      "crashes": {
+        "candidate": 8,
+        "control": 17
+      },
+      "bullets": {
+        "candidate": 156,
+        "control": 157
+      },
+      "actions": {
+        "turn": 1301,
+        "stun": 113,
+        "go": 1074,
+        "fire": 156,
+        "throwBomb": 34,
+        "none": 8
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 244,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 244,
+        "jointDominatedSelection": 0
+      }
+    },
+    "nativeAlways": {
+      "wins": 21,
+      "losses": 11,
+      "draws": 0,
+      "scoreBasisPoints": 6563,
+      "stars": {
+        "candidate": 21,
+        "control": 21
+      },
+      "crashes": {
+        "candidate": 8,
+        "control": 17
+      },
+      "bullets": {
+        "candidate": 161,
+        "control": 164
+      },
+      "actions": {
+        "turn": 1309,
+        "stun": 114,
+        "go": 1039,
+        "fire": 161,
+        "throwBomb": 36,
+        "none": 9
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 240,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 240,
+        "jointDominatedSelection": 0
+      }
+    },
+    "nativeGated": {
+      "wins": 22,
+      "losses": 10,
+      "draws": 0,
+      "scoreBasisPoints": 6875,
+      "stars": {
+        "candidate": 23,
+        "control": 22
+      },
+      "crashes": {
+        "candidate": 8,
+        "control": 17
+      },
+      "bullets": {
+        "candidate": 156,
+        "control": 157
+      },
+      "actions": {
+        "turn": 1301,
+        "stun": 113,
+        "go": 1074,
+        "fire": 156,
+        "throwBomb": 34,
+        "none": 8
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 244,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 244,
+        "jointDominatedSelection": 0
+      }
+    },
+    "uniform": {
+      "wins": 16,
+      "losses": 14,
+      "draws": 2,
+      "scoreBasisPoints": 5313,
+      "stars": {
+        "candidate": 20,
+        "control": 26
+      },
+      "crashes": {
+        "candidate": 8,
+        "control": 13
+      },
+      "bullets": {
+        "candidate": 172,
+        "control": 188
+      },
+      "actions": {
+        "turn": 1463,
+        "stun": 133,
+        "go": 1259,
+        "fire": 172,
+        "throwBomb": 35,
+        "none": 9
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 341,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 341,
+        "jointDominatedSelection": 0
+      }
+    },
+    "nativeVsOracleDifferences": {
+      "missing": 0,
+      "actionStream": 5,
+      "arguments": 0,
+      "result": 2,
+      "frames": 3,
+      "counts": 5,
+      "analysisOutcome": 1,
+      "terminalCategory": 2
+    },
+    "nativeHistoryAgreement": {
+      "compared": 1781,
+      "agreed": 1781,
+      "mismatched": 0
+    },
+    "interpretation": "uniform is materially worse; native history has value; one fixed16 result is sensitive to the invalid VM gate"
+  },
+  "discovery64": {
+    "oracleGate": {
+      "wins": 67,
+      "losses": 47,
+      "draws": 14,
+      "scoreBasisPoints": 5781,
+      "stars": {
+        "candidate": 94,
+        "control": 107
+      },
+      "crashes": {
+        "candidate": 31,
+        "control": 55
+      },
+      "bullets": {
+        "candidate": 890,
+        "control": 724
+      },
+      "actions": {
+        "turn": 5634,
+        "stun": 511,
+        "go": 4786,
+        "fire": 891,
+        "throwBomb": 168,
+        "none": 47
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 1066,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 1066,
+        "jointDominatedSelection": 0
+      }
+    },
+    "nativeAlways": {
+      "wins": 67,
+      "losses": 48,
+      "draws": 13,
+      "scoreBasisPoints": 5742,
+      "stars": {
+        "candidate": 93,
+        "control": 101
+      },
+      "crashes": {
+        "candidate": 35,
+        "control": 52
+      },
+      "bullets": {
+        "candidate": 875,
+        "control": 732
+      },
+      "actions": {
+        "turn": 5556,
+        "stun": 501,
+        "go": 4673,
+        "fire": 875,
+        "throwBomb": 164,
+        "none": 40
+      },
+      "invariants": {
+        "timeoutError": 0,
+        "avoidableHardReject": 0,
+        "riskDominatedSelection": 1029,
+        "rootRestoreFailure": 0,
+        "riskOnlyDominatedSelection": 1029,
+        "jointDominatedSelection": 0
+      }
+    },
+    "scoreBasisPointDelta": -39,
+    "paired": {
+      "transitions": {
+        "V1_WIN->V1_WIN": 40,
+        "V2_WIN->V2_WIN": 60,
+        "V2_WIN->V1_WIN": 7,
+        "DRAW->V1_WIN": 1,
+        "DRAW->DRAW": 11,
+        "DRAW->V2_WIN": 2,
+        "V1_WIN->V2_WIN": 5,
+        "V1_WIN->DRAW": 2
+      },
+      "actionStreamDifferences": 38,
+      "resultDifferences": 23,
+      "frameDifferences": 25,
+      "positiveHalfPoints": 14,
+      "negativeHalfPoints": 15,
+      "netHalfPoints": -1
+    },
+    "nativeHistoryAgreement": {
+      "compared": 8018,
+      "agreed": 8018,
+      "mismatched": 0
+    },
+    "oracleFingerprint": "d73ed6459c008f3b03ed4e2c187ac20c28cb0c58eeb8687d41ae9421ca9f3409",
+    "nativeFingerprint": "1bd01a6f5dffa4bdc4eea6c3cac94b361d1b7a1bd4580d18671e24932e3a6a2e"
+  },
+  "source": {
+    "path": "engine-v2/src/base-policy/opponent-history.js",
+    "sha256": "426ede1180feb8b69aea132a123c8203e5ac467edb0bf0cd875abc8aa614b9f6"
+  },
+  "productionRoot": {
+    "path": "engine-v2/src/runtime/production-root.js",
+    "sha256": "73e08f1471a450967e26e931c639c88bf88d986870cb5b07a72e456ec2a8b551"
+  },
+  "artifacts": {
+    "fixedOracle": {
+      "path": "/tmp/agentank-bp158-owner-domain-intent-thin-r2",
+      "manifestSha256": "17c520f0cbf705ed6b74332ea9d83255bbd586f6148d9f0d7b06d01a7a04e3b9",
+      "overviewSha256": "47304b80fdad76692dedd6ef4dcdb928904e42b55cc6c2264d0ec2a1509e1afb",
+      "matchesSha256": "753cfef8f9a00abe3b8eb2644881ab7b10e6c034a5361ba62909fd3bea630b52"
+    },
+    "fixedNative": {
+      "path": "/tmp/agentank-bp159-opponent-native-active",
+      "manifestSha256": "a2f8948938146e7030377ddc8ccbddbff9230dc2047d22b8bdeb938118e0871d",
+      "overviewSha256": "f100f726564522f082eb13af67d7ea48065e472363be5680d2f602529c1cd1e5",
+      "matchesSha256": "88e687ce43e696dacf0e8ec5ff6e42a4a4b6c5dc31fc00dd94400f5948472491"
+    },
+    "fixedGated": {
+      "path": "/tmp/agentank-bp159-opponent-native-gated",
+      "manifestSha256": "2680994e0d788b7a2cdb0ed397de726e10c2da858200d1d6e1162da86e2cd25c",
+      "overviewSha256": "626370ee90bb60c74e34dc295fed03d767d326d2d29b85f3ace09ebbd562bd69",
+      "matchesSha256": "2fc17c4e29d810fbdf6f000a832f810e0479f0ce5ba2f6d639e6487cdcee61a3"
+    },
+    "fixedUniform": {
+      "path": "/tmp/agentank-bp159-opponent-uniform-fixed16",
+      "manifestSha256": "e6f7e2933acdddfff7864556c23ab15f4bbb1dbdd46eb0534b89b7db559a96d6",
+      "overviewSha256": "e39efc6ad9c4b020b3c2aecc5017922edbbbb325cc9e53284d2aa9e4a08617ce",
+      "matchesSha256": "b7f283a7f4e7965b9948589c42f7aee947bc741a4fd08b08afc1367ee99a06e0"
+    },
+    "discoveryOracle": {
+      "path": "/tmp/agentank-bp159-opponent-oracle-discovery64",
+      "manifestSha256": "67fcfe7ac48d4e754502e56b4c0b17a945444d67bc1f500256ec5d5c40e1bc87",
+      "overviewSha256": "8ebb3acd96efd89c9a9f20638659c336949b190b286b3e9c14e4727f3ac5dcfa",
+      "matchesSha256": "467f8468127afbf353d64ba518f3c7fd57547867e43a7bf5303312bacb3ac9b0"
+    },
+    "discoveryNative": {
+      "path": "/tmp/agentank-bp159-opponent-native-discovery64",
+      "manifestSha256": "e298844278f4aadf61574e3f58c7c0ffcef56c20a29a9cd18a510105b14f9687",
+      "overviewSha256": "5d90f181ed3a91e8d4e70b0d4b7512b6dafa282ce87a93dee546887fb7dba077",
+      "matchesSha256": "90817d7604023ec04e93cb49c06b11abde39fc44acaa6aeba9a84c7eec47b7cc"
+    }
+  },
+  "verdicts": [
+    "OPPONENT_HISTORY_CONTENT_IS_NATIVE_AND_EXACT",
+    "UNIFORM_OPPONENT_CONTEXT_IS_REJECTED",
+    "COUNTERFACTUAL_V1_STAGE_GATE_IS_REJECTED_AS_A_NATIVE_ABI",
+    "NATIVE_ALWAYS_IS_DISCOVERY64_NEUTRAL_WITH_MINUS_39_BASIS_POINTS",
+    "PRODUCTION_DEFAULT_REMAINS_UNCHANGED",
+    "NEXT_SLICE_IS_BOUNDED_POLICY_SEARCH_REACHABLE_CLOSURE"
+  ],
+  "fingerprint": "547b7af9f7fad3c4d2aeeb33f328f540419821638b85f0f53b30778902cd039c"
+}

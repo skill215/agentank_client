@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_ATTACK_EXECUTION_INTERVAL_EVIDENCE_V1",
+  "stage": "BP120",
+  "status": "REJECT_ONE_STEP_ROUTE_PROGRESS_OWNER",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "source": {
+    "executionIntervalShadowSha256": "6c58fe73fc75b05eb3ede20ffd116ecd25bacb510ba98d027407c513cdf755ba",
+    "diagnosticBotSha256": "cc07e2ed2ddc401886d554588cb63d770415d5d06119d6aeaa37ea3e8f6c36e4",
+    "arenaSha256": "4be51f4a825a1aee42847dfc647dc1273c61ff882f14ee4b52fff1459440b6e3",
+    "testSha256": "9b498d9f4e9bf5ed56b3730d1bf057f747866728269b8562be87f1dedc4f147a"
+  },
+  "cohort": {
+    "role": "DISCOVERY",
+    "scenarioCount": 16,
+    "candidateMatches": 32,
+    "physicalMatches": 64,
+    "skillMode": "STUN",
+    "cohortFingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667"
+  },
+  "strictDomain": {
+    "decisions": 3030,
+    "semanticAttackEpochFrames": 1851,
+    "strictExecutionSupport": 134,
+    "strictExecutionGaps": 1717,
+    "suspendedFrames": 307,
+    "evaluatedGapFrames": 1408
+  },
+  "routeGenerator": {
+    "fieldBuilds": 947,
+    "cacheHits": 62,
+    "visitedPoses": 740940,
+    "progressRoots": 704,
+    "differentSafeCandidates": 306,
+    "sameAsCurrent": 395,
+    "noCandidate": 707,
+    "candidateByAction": {
+      "GO": 9,
+      "TURN_LEFT": 165,
+      "TURN_RIGHT": 132,
+      "FIRE": 0
+    },
+    "hotAllocationCount": 0
+  },
+  "twoOptionMinimax": {
+    "attempts": 306,
+    "searched": 217,
+    "complete": 208,
+    "runtimeSkipped": 89,
+    "incomplete": 9,
+    "candidateWorse": 208,
+    "equal": 0,
+    "strictDominance": 0,
+    "totalNodes": 20770,
+    "maximumNodes": 256,
+    "rootRestoreFailures": 0,
+    "hotAllocationCount": 0
+  },
+  "diagnosticCorrection": {
+    "issue": "The first BP120 run used the semantic epoch execution mask, which includes POSITION aliases, instead of BP119's fully qualified strict ATTACK rows.",
+    "fix": "Share SemanticAttackOptionCoverageShadow and gate only on its per-frame lastStrictMask.",
+    "result": "The corrected run exactly reproduces BP119's 1851 ATTACK frames, 134 supported frames, and 1717 strict execution gaps."
+  },
+  "behaviorNeutral": {
+    "scoreBasisPointDelta": 0,
+    "winDelta": 0,
+    "lossDelta": 0,
+    "drawDelta": 0,
+    "starDelta": 0,
+    "crashDelta": 0,
+    "fireDelta": 0,
+    "timeoutError": 0,
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "overviewSha256": "6cf013192dc25b7ca86c9deed857f6530c8748793a2dbcb6b65863b45206cadb"
+  },
+  "decision": {
+    "retain": [
+      "semantic ATTACK epoch",
+      "strict ATTACK coverage domain",
+      "complete two-Option Minimax refutation",
+      "route field as a candidate generator only"
+    ],
+    "reject": [
+      "one-step distance-to-firing-pose as action ownership evidence",
+      "activating any of the 306 generated movement candidates",
+      "blaming Risk or Hard for these rejected candidates"
+    ],
+    "next": "Keep the semantic enemy target and ATTACK_APPROACH policy identity stable while allowing the concrete firing pose to replan after state changes; compare that branch-local continuation against the incumbent continuation without sharing policy identity."
+  }
+}

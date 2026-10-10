@@ -14,6 +14,13 @@ function clamp(value, minimum, maximum) {
   return value < minimum ? minimum : value > maximum ? maximum : value;
 }
 
+function valueSupportComplete(source, information) {
+  if (!source || source.completedDepth < 1) return 0;
+  if (information)
+    return source.supportComplete === 1 && source.approximate === 0 ? 1 : 0;
+  return source.representativeSupportComplete === 1 ? 1 : 0;
+}
+
 class ActionOutcomeSlab {
   constructor(maxActions = SEARCH_CAPACITY.MAX_OUR_ACTIONS) {
     this.maxActions = maxActions; this.hard = new Uint8Array(maxActions);
@@ -22,6 +29,7 @@ class ActionOutcomeSlab {
     this.earliestFatalFrame = new Uint8Array(maxActions); this.escapeSlack = new Int8Array(maxActions);
     this.coverage = new Uint16Array(maxActions); this.worstValue = new Int16Array(maxActions);
     this.nominalRobustLower = new Int16Array(maxActions);
+    this.searchEstimate = new Int16Array(maxActions);
     this.robustLower = new Int16Array(maxActions); this.expectedValue = new Int16Array(maxActions);
     this.tacticalValue = new Int16Array(maxActions); this.acceptable = new Uint8Array(maxActions);
     this.dominated = new Uint8Array(maxActions); this.count = 0; this.hotAllocationCount = 0;
@@ -32,8 +40,13 @@ class ActionOutcomeSlab {
     this.purposeCompleteness = new Uint16Array(maxActions); this.postFireEscape = new Uint8Array(maxActions);
     this.combatPressure = new Int16Array(maxActions); this.combatRobustPressure = new Int16Array(maxActions);
     this.committedFatalMass = new Uint16Array(maxActions);
+    this.committedChanceFatalMass = new Uint16Array(maxActions);
     this.possibleProjectileFatalMass = new Uint16Array(maxActions);
     this.futureFireFatalMass = new Uint16Array(maxActions);
+    // When every action is rejected by the risk thresholds, coarse UNKNOWN
+    // mass often ties at 10000. This bounded pose risk only breaks that tie;
+    // it never participates in the normal acceptable set or Pareto frontier.
+    this.unknownFallbackRisk = new Uint16Array(maxActions);
     // Escape Quality from DeadlineKernel per-successor (not committedPressure).
     this.escapeSuccessorProof = new Uint8Array(maxActions);
     this.escapeSuccessorExposed = new Uint8Array(maxActions);
@@ -41,6 +54,7 @@ class ActionOutcomeSlab {
     this.escapeSuccessorBranches = new Uint8Array(maxActions);
     this.escapeSuccessorCoverage = new Uint8Array(maxActions);
     this.escapeSuccessorReady = 0;
+    this.searchEstimateEnabled = 0;
   }
   reset(count) {
     this.count = count; this.hard.fill(0, 0, count); this.safety.fill(SAFETY_STATUS.UNKNOWN, 0, count);
@@ -49,6 +63,7 @@ class ActionOutcomeSlab {
     this.escapeSlack.fill(0, 0, count); this.coverage.fill(0, 0, count);
     this.worstValue.fill(-10000, 0, count); this.robustLower.fill(-10000, 0, count);
     this.nominalRobustLower.fill(-10000, 0, count);
+    this.searchEstimate.fill(-10000, 0, count);
     this.expectedValue.fill(-10000, 0, count); this.tacticalValue.fill(-10000, 0, count);
     this.acceptable.fill(0, 0, count); this.dominated.fill(0, 0, count);
     this.combatPurpose.fill(0, 0, count); this.hitDeadline.fill(255, 0, count);
@@ -57,14 +72,17 @@ class ActionOutcomeSlab {
     this.purposeCompleteness.fill(0, 0, count); this.postFireEscape.fill(0, 0, count);
     this.combatPressure.fill(0, 0, count); this.combatRobustPressure.fill(0, 0, count);
     this.committedFatalMass.fill(0, 0, count);
+    this.committedChanceFatalMass.fill(0, 0, count);
     this.possibleProjectileFatalMass.fill(0, 0, count);
     this.futureFireFatalMass.fill(0, 0, count);
+    this.unknownFallbackRisk.fill(0, 0, count);
     this.escapeSuccessorProof.fill(0, 0, count);
     this.escapeSuccessorExposed.fill(0, 0, count);
     this.escapeSuccessorSlack.fill(-128, 0, count);
     this.escapeSuccessorBranches.fill(0, 0, count);
     this.escapeSuccessorCoverage.fill(0, 0, count);
     this.escapeSuccessorReady = 0;
+    this.searchEstimateEnabled = 0;
   }
   copySafety(row, hard, safety) {
     this.hard[row] = hard; this.safety[row] = safety.status[row];
@@ -92,17 +110,31 @@ class ActionOutcomeSlab {
 }
 
 class RiskAcceptanceController {
-  constructor() {
+  constructor(options = {}) {
     this.outcome = new ActionOutcomeSlab(); this.risk = 0; this.stateRiskClass = 0;
     this.immediateLimit = 0; this.horizonLimit = 0; this.unknownLimit = 0;
     this.minimumEscapeSlack = 0; this.safeFloor = -10000; this.acceptableCount = 0;
     this.noAcceptableAction = 0; this.lastSelected = -1; this.stageMatrixUseCount = 0;
     this.combatAppliedCount = 0;
     this.continuationCommitCount = 0; this.continuationInvalidatedCount = 0;
-    this.riskProfile = new RiskProfile(); this.safetyBackupCount = 0;
+    this.riskProfile = options.riskProfile || new RiskProfile(); this.safetyBackupCount = 0;
     this.searchDivisor = 2;
     this.gateCount = 0;
     this.hotAllocationCount = 0;
+    this.completeValueOwnerCount = 0;
+    this.incompleteValueOwnerCount = 0;
+    this.incompleteValueEvidenceOnlyCount = 0;
+    // Soft InformationSafety escape slack is a threshold/tie-break signal.
+    // Keep the historical behavior by default so diagnostics can compare a
+    // single ownership change without silently changing production.
+    this.softEscapeSlackDominance = options.softEscapeSlackDominance === false ? 0 : 1;
+    // Diagnostic reproduction of the pre projected-pose emergency ordering.
+    // Production keeps pose risk ahead of soft slack.
+    this.legacyEmergencySlackFirst = options.legacyEmergencySlackFirst ? 1 : 0;
+    // Diagnostic reproduction only. Production never lets a truncated value
+    // search write the scalar fields consumed by root action owners.
+    this.incompleteSearchOwnership = options.incompleteSearchOwnership ? 1 : 0;
+    this.softSearchProposalEvidence = options.softSearchProposalEvidence ? 1 : 0;
   }
   adjustedRisk(baseRisk, stateRiskClass) {
     const bounded = clamp(baseRisk | 0, 0, 100); const factor = stateRiskClass === 1 ? 50 :
@@ -122,13 +154,35 @@ class RiskAcceptanceController {
       searchDivisor : 2;
     const information = informationSearch && informationSearch.completedDepth > 0;
     const physical = depthSearch && depthSearch.completedDepth > 0;
-    const search = information ? informationSearch : physical ? depthSearch : null;
+    const candidateSource = information ? informationSearch : physical ? depthSearch : null;
+    const candidateComplete = candidateSource ? valueSupportComplete(candidateSource,
+      information ? 1 : 0) : 0;
+    if (candidateSource) {
+      if (candidateComplete) this.completeValueOwnerCount += 1;
+      else if (this.incompleteSearchOwnership) this.incompleteValueOwnerCount += 1;
+      else this.incompleteValueEvidenceOnlyCount += 1;
+    }
+    // A completed iteration is not necessarily complete evidence.  In
+    // particular, Information search can publish a useful approximate bound
+    // after world/direction/budget truncation.  That bound remains available
+    // to diagnostics and risk envelopes, but it must not silently become the
+    // root action owner through robust/expected values.
+    const search = information ?
+      (this.incompleteSearchOwnership || candidateComplete ?
+        informationSearch : null) : physical &&
+      (this.incompleteSearchOwnership || candidateComplete) ? depthSearch : null;
+    outcome.searchEstimateEnabled = this.softSearchProposalEvidence;
     for (let row = 0; row < count; row += 1) {
       outcome.copySafety(row, hard[row], safety);
       const committedPressure = combat ? combat.robustPressure[row] : 0;
       const tacticalValue = clamp(tactical[row] + committedPressure, -10000, 10000);
       outcome.tacticalValue[row] = tacticalValue;
       let worst = tacticalValue; let robust = tacticalValue; let expected = tacticalValue;
+      let searchEstimate = tacticalValue;
+      if (candidateSource) {
+        const searchPart = Math.trunc(candidateSource.rootScore[row] / this.searchDivisor);
+        searchEstimate = clamp(tacticalValue + searchPart, -10000, 10000);
+      }
       if (search) {
         const searchPart = Math.trunc(search.rootScore[row] / this.searchDivisor);
         robust = clamp(tacticalValue + searchPart, -10000, 10000);
@@ -142,6 +196,7 @@ class RiskAcceptanceController {
         }
         if (enemyCount === 0) worst = robust;
       }
+      outcome.searchEstimate[row] = searchEstimate;
       outcome.worstValue[row] = worst; outcome.nominalRobustLower[row] = robust;
       outcome.robustLower[row] = robust;
       outcome.expectedValue[row] = expected;
@@ -170,11 +225,13 @@ class RiskAcceptanceController {
       if (o.nominalRobustLower[row] === VALUE_MIN && o.robustLower[row] !== VALUE_MIN)
         o.nominalRobustLower[row] = o.robustLower[row];
       let value = o.nominalRobustLower[row];
-      value = this.binaryFatalBackup(value, o.committedFatalMass[row], chance);
+      value = this.binaryFatalBackup(value, Math.max(o.committedFatalMass[row],
+        o.committedChanceFatalMass[row]), chance);
       value = this.binaryFatalBackup(value, o.possibleProjectileFatalMass[row], hidden);
       value = this.binaryFatalBackup(value, o.futureFireFatalMass[row], enemy);
       o.robustLower[row] = value;
-      if (o.committedFatalMass[row] || o.possibleProjectileFatalMass[row] ||
+      if (o.committedFatalMass[row] || o.committedChanceFatalMass[row] ||
+          o.possibleProjectileFatalMass[row] ||
           o.futureFireFatalMass[row]) o.worstValue[row] = VALUE_MIN;
     }
     this.safetyBackupCount += 1;
@@ -182,25 +239,28 @@ class RiskAcceptanceController {
   strictlyDominates(left, right) {
     const o = this.outcome;
     const noMoreRisk = o.immediateFatalMass[left] <= o.immediateFatalMass[right] &&
+      o.committedChanceFatalMass[left] <= o.committedChanceFatalMass[right] &&
       o.horizonFatalMass[left] <= o.horizonFatalMass[right] && o.unknownMass[left] <= o.unknownMass[right] &&
       o.earliestFatalFrame[left] >= o.earliestFatalFrame[right] &&
-      o.escapeSlack[left] >= o.escapeSlack[right];
+      (!this.softEscapeSlackDominance ||
+       o.escapeSlack[left] >= o.escapeSlack[right]);
     const noLessCommitted = !o.escapeSuccessorReady ||
       (o.escapeSuccessorProof[left] >= o.escapeSuccessorProof[right] &&
        o.escapeSuccessorExposed[left] <= o.escapeSuccessorExposed[right] &&
        o.escapeSuccessorSlack[left] >= o.escapeSuccessorSlack[right]);
-    const noLessValue = o.robustLower[left] >= o.robustLower[right] &&
-      o.expectedValue[left] >= o.expectedValue[right] && o.tacticalValue[left] >= o.tacticalValue[right];
     const strict = o.immediateFatalMass[left] < o.immediateFatalMass[right] ||
+      o.committedChanceFatalMass[left] < o.committedChanceFatalMass[right] ||
       o.horizonFatalMass[left] < o.horizonFatalMass[right] || o.unknownMass[left] < o.unknownMass[right] ||
       o.earliestFatalFrame[left] > o.earliestFatalFrame[right] ||
-      o.escapeSlack[left] > o.escapeSlack[right] ||
+      (this.softEscapeSlackDominance &&
+       o.escapeSlack[left] > o.escapeSlack[right]) ||
       (o.escapeSuccessorReady && (o.escapeSuccessorProof[left] > o.escapeSuccessorProof[right] ||
        o.escapeSuccessorExposed[left] < o.escapeSuccessorExposed[right] ||
-       o.escapeSuccessorSlack[left] > o.escapeSuccessorSlack[right])) ||
-      o.robustLower[left] > o.robustLower[right] ||
-      o.expectedValue[left] > o.expectedValue[right] || o.tacticalValue[left] > o.tacticalValue[right];
-    return noMoreRisk && noLessCommitted && noLessValue && strict;
+       o.escapeSuccessorSlack[left] > o.escapeSuccessorSlack[right]));
+    // Risk owns only risk and committed viability. Tactical/search values are
+    // compared after this gate by the mode owner; allowing them to dominate
+    // here silently turns shallow Minimax back into the global strategy.
+    return noMoreRisk && noLessCommitted && strict;
   }
   gate(baseRisk, stateRiskClass = 0) {
     this.thresholds(baseRisk, stateRiskClass); this.gateCount += 1;
@@ -216,6 +276,7 @@ class RiskAcceptanceController {
       const hardAllowed = o.hard[row] !== HARD_STATUS.REJECT_PROVEN &&
         o.hard[row] !== HARD_STATUS.REJECT_POLICY;
       let accepted = hardAllowed && o.immediateFatalMass[row] <= this.immediateLimit &&
+        o.committedChanceFatalMass[row] <= this.immediateLimit &&
         o.horizonFatalMass[row] <= this.horizonLimit && o.unknownMass[row] <= this.unknownLimit &&
         o.escapeSlack[row] >= this.minimumEscapeSlack;
       if (this.risk === 0 && completeSafeWitness)
@@ -240,15 +301,19 @@ class RiskAcceptanceController {
   riskStrictlyDominates(left, right) {
     const o = this.outcome; const noMore =
       o.immediateFatalMass[left] <= o.immediateFatalMass[right] &&
+      o.committedChanceFatalMass[left] <= o.committedChanceFatalMass[right] &&
       o.horizonFatalMass[left] <= o.horizonFatalMass[right] &&
       o.unknownMass[left] <= o.unknownMass[right] &&
       o.earliestFatalFrame[left] >= o.earliestFatalFrame[right] &&
-      o.escapeSlack[left] >= o.escapeSlack[right];
+      (!this.softEscapeSlackDominance ||
+       o.escapeSlack[left] >= o.escapeSlack[right]);
     return noMore && (o.immediateFatalMass[left] < o.immediateFatalMass[right] ||
+      o.committedChanceFatalMass[left] < o.committedChanceFatalMass[right] ||
       o.horizonFatalMass[left] < o.horizonFatalMass[right] ||
       o.unknownMass[left] < o.unknownMass[right] ||
       o.earliestFatalFrame[left] > o.earliestFatalFrame[right] ||
-      o.escapeSlack[left] > o.escapeSlack[right]);
+      (this.softEscapeSlackDominance &&
+       o.escapeSlack[left] > o.escapeSlack[right]));
   }
   commitContinuation(row) {
     const o = this.outcome;
@@ -293,6 +358,8 @@ class RiskAcceptanceController {
     if (right < 0) return 1; const o = this.outcome;
     if (o.immediateFatalMass[left] !== o.immediateFatalMass[right])
       return o.immediateFatalMass[left] < o.immediateFatalMass[right];
+    if (o.committedChanceFatalMass[left] !== o.committedChanceFatalMass[right])
+      return o.committedChanceFatalMass[left] < o.committedChanceFatalMass[right];
     if (o.horizonFatalMass[left] !== o.horizonFatalMass[right])
       return o.horizonFatalMass[left] < o.horizonFatalMass[right];
     if (o.unknownMass[left] !== o.unknownMass[right]) return o.unknownMass[left] < o.unknownMass[right];
@@ -304,9 +371,33 @@ class RiskAcceptanceController {
   }
   emergencyRiskLess(left, right) {
     if (right < 0) return 1;
-    return this.lexicographicRiskLess(left, right);
+    const o = this.outcome;
+    if (o.immediateFatalMass[left] !== o.immediateFatalMass[right])
+      return o.immediateFatalMass[left] < o.immediateFatalMass[right];
+    if (o.committedChanceFatalMass[left] !== o.committedChanceFatalMass[right])
+      return o.committedChanceFatalMass[left] < o.committedChanceFatalMass[right];
+    if (o.horizonFatalMass[left] !== o.horizonFatalMass[right])
+      return o.horizonFatalMass[left] < o.horizonFatalMass[right];
+    if (o.unknownMass[left] !== o.unknownMass[right])
+      return o.unknownMass[left] < o.unknownMass[right];
+    if (o.earliestFatalFrame[left] !== o.earliestFatalFrame[right])
+      return o.earliestFatalFrame[left] > o.earliestFatalFrame[right];
+    if (this.legacyEmergencySlackFirst && o.escapeSlack[left] !== o.escapeSlack[right])
+      return o.escapeSlack[left] > o.escapeSlack[right];
+    if (o.unknownFallbackRisk[left] !== o.unknownFallbackRisk[right])
+      return o.unknownFallbackRisk[left] < o.unknownFallbackRisk[right];
+    // When every row is outside the normal acceptable set, a soft escape
+    // estimate must not outrank the concrete projected pose.  In particular,
+    // moving closer along an enemy firing line can look mobile while making
+    // the following frame forced-dead.  The packed pose risk is used only by
+    // this emergency branch; normal Risk membership is unchanged.
+    if (!this.legacyEmergencySlackFirst && o.escapeSlack[left] !== o.escapeSlack[right])
+      return o.escapeSlack[left] > o.escapeSlack[right];
+    if (o.robustLower[left] !== o.robustLower[right])
+      return o.robustLower[left] > o.robustLower[right];
+    return left < right;
   }
-  select(seed, policyProbability = null) {
+  select(seed, policyProbability = null, selectionMask = null) {
     const o = this.outcome; let fallback = -1; let total = 0;
     for (let row = 0; row < o.count; row += 1) {
       const hardAllowed = o.hard[row] !== HARD_STATUS.REJECT_PROVEN &&
@@ -314,7 +405,8 @@ class RiskAcceptanceController {
       if (hardAllowed && this.acceptableCount === 0 &&
           this.emergencyRiskLess(row, fallback))
         fallback = row;
-      if (o.acceptable[row] && !o.dominated[row] && o.robustLower[row] >= this.safeFloor)
+      if (o.acceptable[row] && !o.dominated[row] &&
+          (!selectionMask || selectionMask[row]))
         total += policyProbability ? policyProbability[row] : 0;
     }
     if (this.acceptableCount === 0) {
@@ -323,14 +415,16 @@ class RiskAcceptanceController {
     if (total > 0) {
       let target = (seed >>> 0) % total;
       for (let row = 0; row < o.count; row += 1)
-        if (o.acceptable[row] && !o.dominated[row] && o.robustLower[row] >= this.safeFloor) {
+        if (o.acceptable[row] && !o.dominated[row] &&
+            (!selectionMask || selectionMask[row])) {
           const weight = policyProbability[row]; if (target < weight) {
             this.lastSelected = row; return row; } target -= weight;
         }
     }
     let best = -1;
     for (let row = 0; row < o.count; row += 1)
-      if (o.acceptable[row] && !o.dominated[row] && o.robustLower[row] >= this.safeFloor &&
+      if (o.acceptable[row] && !o.dominated[row] &&
+          (!selectionMask || selectionMask[row]) &&
           (best < 0 || o.expectedValue[row] > o.expectedValue[best] ||
            (o.expectedValue[row] === o.expectedValue[best] &&
             (o.tacticalValue[row] > o.tacticalValue[best] ||
@@ -340,4 +434,4 @@ class RiskAcceptanceController {
 }
 
 module.exports = { NO_ACCEPTABLE_ACTION, MATERIAL_EXPECTED_GAIN,
-  ActionOutcomeSlab, RiskAcceptanceController };
+  ActionOutcomeSlab, RiskAcceptanceController, valueSupportComplete };

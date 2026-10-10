@@ -1,0 +1,73 @@
+{
+  "seq": 33,
+  "previous": "38069fbfe0fac2614ed1472af1bd8c874df8e103c1f0937992ba54cb5586a1d0",
+  "record": {
+    "version": 1,
+    "type": "register",
+    "at": "2026-10-09T03:31:06.361Z",
+    "process": "OPT-P-005",
+    "registration": "prospective",
+    "scope": "8 independent maps across24 pairs, same V3 policy with3 loadouts; not different algorithm opponents. Small exploratory sample, no production adoption.",
+    "baseline": "285f9863227d6af3638bed74e008f0260fd25440034d95eec5e3f8cac44d9120",
+    "falsifier": "Incomplete fixed batch or unfrozen rules",
+    "nextStep": "Complete48 games, close by frozen subgroup and aggregate rules",
+    "alternatives": [
+      {
+        "name": "继续单一对手",
+        "benefit": "便宜",
+        "risk": "泛化未知",
+        "reason": "不采用"
+      },
+      {
+        "name": "三技能共同地图对照",
+        "benefit": "快速发现配置退步",
+        "risk": "仍为同一策略且小样本",
+        "reason": "采用"
+      }
+    ],
+    "budget": {
+      "games": 24,
+      "seconds": 600
+    },
+    "id": "OPT-D-0017",
+    "category": "process",
+    "parent": "OPT-D-0013",
+    "title": "固化多目标快筛与分层复核规范",
+    "hypothesis": "固定多目标流程产生可审计的快速保留或停止决策",
+    "criteria": [
+      {
+        "id": "integrity",
+        "metric": "all48 hash and pairing checks",
+        "rule": "all complete and valid",
+        "unit": "game",
+        "kind": "hard"
+      },
+      {
+        "id": "selection",
+        "metric": "frozen process applied",
+        "rule": "subgroup results retained, no threshold changes",
+        "unit": "campaign",
+        "kind": "hard"
+      }
+    ],
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp422-opponent-validation/baseline-plan.json",
+        "sha256": "ebad7a9f0b797357d92fca1b870a7b93ea64184b6ecdc337a2a7b14bf3e80025"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp422-opponent-validation/campaign.json",
+        "sha256": "ce6147459798bb34f34068a7a2d2fe5c29b7b27e9a5136d3e0a788f48c2faf4b"
+      },
+      {
+        "path": "docs/implementation/optimization-decisions/fast-multi-objective-opt-p005.md",
+        "sha256": "0e1667fbeb38d59d40bb8f43bcda50743cca17b7c6c89cc78663c3869569c34d"
+      },
+      {
+        "path": "tools/agentank/diagnostics/opponent-skill-screen.js",
+        "sha256": "0d5a82d789ac61956333a7058494c451c708be9940d879dad2e86daf11b0b69d"
+      }
+    ]
+  },
+  "sha256": "c13a38ce15e86aff5148ec333066599ece0f4923a81121b19f0840112666cf31"
+}

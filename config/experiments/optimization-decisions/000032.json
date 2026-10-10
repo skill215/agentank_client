@@ -1,0 +1,94 @@
+{
+  "seq": 32,
+  "previous": "6cc9550f79f7da0ff5c65b119ed507ed8a1d7d6a5fb6b86bf2f01533660d480e",
+  "record": {
+    "version": 1,
+    "type": "review",
+    "id": "OPT-D-0016",
+    "reviewId": "OPT-R-0016",
+    "at": "2026-10-09T03:22:04.023Z",
+    "stage": "independent",
+    "disposition": "reject",
+    "outcome": "failed",
+    "primaryCause": "REGRESSION",
+    "secondaryCauses": [],
+    "reason": "Fails frozen eligibility; stop this configuration.",
+    "nextStep": "Close fixed block; retain evidence.",
+    "limitations": "Exploratory comparison of concrete proposals;12 maps against one opponent. Not universal superiority of selection methods, not production performance; transition count is work proxy. Pairwise interval is conservative, not simultaneous selection correction.",
+    "experiments": [
+      "BP421_COMBINED"
+    ],
+    "assessments": [
+      {
+        "criterion": "integrity",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp421-method-comparison/summary.json"
+      },
+      {
+        "criterion": "eligible",
+        "status": "fail",
+        "evidencePath": "artifacts/native-causal-audit/bp421-method-comparison/summary.json"
+      },
+      {
+        "criterion": "release",
+        "status": "unknown",
+        "evidencePath": "artifacts/native-causal-audit/bp421-method-comparison/summary.json"
+      }
+    ],
+    "cost": {
+      "attemptedGames": 12,
+      "completedGames": 12,
+      "independentUnits": 12,
+      "executionSeconds": 26.363975886000002,
+      "analysisSeconds": null
+    },
+    "metrics": [
+      {
+        "name": "score",
+        "value": 6,
+        "unit": "total over12",
+        "source": "artifacts/native-causal-audit/bp421-method-comparison/summary.json"
+      },
+      {
+        "name": "deaths",
+        "value": 6,
+        "unit": "count over12",
+        "source": "artifacts/native-causal-audit/bp421-method-comparison/summary.json"
+      },
+      {
+        "name": "transitions",
+        "value": 76969,
+        "unit": "count",
+        "source": "artifacts/native-causal-audit/bp421-method-comparison/summary.json"
+      }
+    ],
+    "productionAdoption": false,
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp421-method-comparison/summary.json",
+        "sha256": "8494ec1aae7af1ed4321edb1245a5bfe3e1cfaf998b9546460868f32c142a8e6"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp421-method-comparison/per-game-metrics.json",
+        "sha256": "a38b3224ac56d0c686465eb3ee8e5f01e952067e4184bf7c8f4ce4c6edfab426"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp421-method-comparison/combined-review.json",
+        "sha256": "6ec5827d32d29590098025ac6132224e1f15e2c8f05c1d66b05c3ac5dca837a3"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp421-method-comparison/combined-run/state.json",
+        "sha256": "d0ddba8a0456da25a8d9c2aea9042399faee1f7b8d667caf35f524340783497e"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp421-method-comparison/core-tests.txt",
+        "sha256": "2bd207f0c14808334d20fb2cc3d1f8634875033721269fe1258548db59e41c0f"
+      },
+      {
+        "path": "docs/implementation/optimization-decisions/bp421-method-review.md",
+        "sha256": "1f7d7a9717b8ae1215aaeb5ce9f90dd8a6ca69357b1d6bcc26860921ef31ba09"
+      }
+    ]
+  },
+  "sha256": "38069fbfe0fac2614ed1472af1bd8c874df8e103c1f0937992ba54cb5586a1d0"
+}

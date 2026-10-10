@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "OBJECTIVE_CONDITIONED_CONTINUATION_EVIDENCE_V1",
+  "status": "DIAGNOSTIC_SIGNAL_PRODUCTION_REJECTED",
+  "productionChanged": false,
+  "cohort": {
+    "fingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667",
+    "scenarios": 16,
+    "matchesPerImplementation": 32,
+    "physicalRecordsPerExperiment": 64,
+    "role": "KNOWN_FIXED16_POC"
+  },
+  "structuralFindings": {
+    "optionAwareSearchGap": "continuation representatives and cache identity are option-aware, but POSITION and STAR_CONTROL leaves still use one global utility",
+    "targetOwnershipGap": "a movement row without an explicit option can inherit the visible star as a POSITION target in OptionPortfolioSlab.buildTyped",
+    "riskOwnershipGap": "future-FIRE horizon mass can delete a same-target movement alternative before objective-conditioned continuation compares it",
+    "informationBoundary": "the POC evaluates one observed PhysicalState while Observation support is incomplete, so it is nominal evidence and cannot own an action"
+  },
+  "shadow": {
+    "currentTarget": {
+      "attempts": 3242,
+      "triggered": 80,
+      "completed": 74,
+      "differentWinner": 51,
+      "riskConflictWinner": 51,
+      "sameWinner": 23,
+      "nodes": 9455,
+      "maximumNodes": 756,
+      "rootRestoreFailures": 0,
+      "hotAllocationCount": 0,
+      "proposalCount": 0,
+      "overviewSha256": "e53b9c8759acf047391f7d9d5eefe0081a2c910df0679e255477a37d056e4407"
+    },
+    "sameTargetPositionRiskConflict": {
+      "roots": 39,
+      "committedWorse": 0,
+      "immediateWorse": 0,
+      "unknownWorse": 0,
+      "possibleProjectileWorse": 0,
+      "horizonWorse": 39,
+      "futureFireWorse": 34,
+      "escapeSlackWorse": 6,
+      "patterns": {
+        "horizon+future": 31,
+        "horizon+slack": 3,
+        "horizon": 2,
+        "horizon+future+slack": 3
+      }
+    },
+    "strictTarget": {
+      "attempts": 3242,
+      "triggered": 80,
+      "completed": 74,
+      "differentWinner": 52,
+      "maximumNodes": 726,
+      "overviewSha256": "184af400220a028ea6668567414fc711e0105147d386dfce06a0f9d335716f6c"
+    },
+    "dynamicContactTarget": {
+      "attempts": 3242,
+      "triggered": 80,
+      "completed": 75,
+      "differentWinner": 55,
+      "maximumNodes": 690,
+      "overviewSha256": "f5bc87ded641f6358bb4337f38ac79ed2fa92b90ea6ec7884a248e1f4ad2fa7b"
+    }
+  },
+  "activePoc": {
+    "baseline": {
+      "wins": 4,
+      "losses": 27,
+      "draws": 1,
+      "scoreBasisPoints": 1406,
+      "candidateStars": 8,
+      "candidateCrashes": 11,
+      "candidateFire": 152
+    },
+    "strictTarget": {
+      "wins": 5,
+      "losses": 25,
+      "draws": 2,
+      "scoreBasisPoints": 1875,
+      "scoreBasisPointDelta": 469,
+      "candidateStarDelta": 0,
+      "candidateCrashDelta": 1,
+      "candidateFireDelta": -4,
+      "qualifiedOverrides": 32,
+      "riskDominatedSelections": 32,
+      "rootRestoreFailures": 0,
+      "hotAllocationCount": 0,
+      "overviewSha256": "daca75b9b4b08df8942c3a7be38d95666b3504280465fa8bb23d15b51dac7f94"
+    },
+    "dynamicContactTarget": {
+      "wins": 5,
+      "losses": 25,
+      "draws": 2,
+      "scoreBasisPoints": 1875,
+      "scoreBasisPointDelta": 469,
+      "candidateStarDelta": 0,
+      "candidateCrashDelta": 2,
+      "candidateFireDelta": 0,
+      "qualifiedOverrides": 33,
+      "riskDominatedSelections": 33,
+      "rootRestoreFailures": 0,
+      "hotAllocationCount": 0,
+      "overviewSha256": "04e1981a6c3c7fc162489e885bf85b0995d907c7988b8a2eb31438865bad9215"
+    },
+    "pairedTransitions": {
+      "V1_WIN_TO_V2_WIN": 3,
+      "V2_WIN_TO_V1_WIN": 2,
+      "V1_WIN_TO_DRAW": 1,
+      "V1_WIN_TO_V1_WIN": 23,
+      "V2_WIN_TO_V2_WIN": 2,
+      "DRAW_TO_DRAW": 1
+    },
+    "interpretation": "the option/risk ordering has causal leverage, but nominal Physical evidence trades wins in both directions and deliberately crosses the current soft-risk Pareto boundary"
+  },
+  "decision": {
+    "activateProduction": false,
+    "readIndependentHoldout": false,
+    "continueFixed16Tuning": false,
+    "keepDiagnosticImplementation": true,
+    "reason": "the +4.69 percentage-point known-cohort signal includes two WIN-to-LOSS regressions, 32/33 soft-risk-dominated selections, and no gain from dynamic target over strict target",
+    "nextArchitecture": [
+      "make explicit objective generation authoritative; generic movement must not inherit STAR_CONTROL",
+      "bind POSITION/contact to a dynamic enemy entity and STAR_CONTROL to a generation-bound star target",
+      "keep committed and possible-projectile safety non-relaxable",
+      "carry future-FIRE horizon risk as a separate post-search tradeoff dimension instead of deleting an objective alternative before continuation",
+      "require a sound InformationState option interval before granting action ownership",
+      "validate once on a new blind Discovery/Holdout rather than tuning the known fixed16 cohort"
+    ]
+  },
+  "source": {
+    "productionRootSha256": "deec4848d8595969682ba3033f44a37c3edaa4cc1ec8cc1f3b65b703f753fb79",
+    "riskAcceptanceControllerSha256": "04a7233b41ed9c03a15e5b9c405fbb5e537a444c94bff3fa148686db220f53b4",
+    "actionContinuationEnvelopeSha256": "054477c9bcfd49ee4d4782861ef79d93aae883c2aa91a0ecf67448d6f4f5b243",
+    "optionAwareDepthSearchSha256": "7a5eea0ff3bd5a9c2004f841f1c6f79e968d532b52175d76fffdd990e299f768",
+    "optionPortfolioSha256": "aebc5894fb08f62367bb8d0cc23a401f609c1a4bc9c028f99491b12040b3f0d2",
+    "diagnosticBotSha256": "29babd029abeb432a080d5f764a578943159de0f6df73e02a558664bdd9c94e1",
+    "arenaSha256": "e3ea337ddd716f152a1c3ed3f44403ebb1dacb028f461c215966a5070080880f"
+  },
+  "fullArenaPerformed": false,
+  "officialPlatformWritePerformed": false
+}

@@ -1,0 +1,14 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict');
+const {inspectPhase,inspectEarlyTerminal}=require('../../tools/agentank/diagnostics/simulator-terminal-phase-witness');
+const {inspectRoot}=require('../../tools/agentank/diagnostics/terminal-phase-composition-audit');
+const {loadSimulator}=require('../../tools/agentank/simulation/paired-arena');
+function scene(){return {frame:10,map:Array.from({length:6},()=>Array(5).fill('.')),bombs:[],players:[{position:[2,2],stars:1,crashed:false,effects:{}},{position:[3,2],stars:0,crashed:false,effects:{}}],bullets:[{objectId:'fresh',ownerIndex:0,position:[2,2],direction:'right',crashed:false}]};}
+test('phase witness requires fresh clear ray and positive post-action margin',()=>{const s=scene();assert.equal(inspectPhase(s,0,new Set()),'CLEAR_FRESH_SHOT');assert.equal(inspectPhase(s,0,new Set(['fresh'])),'NO_CLEAR_FRESH_SHOT');s.players[1].stars=1;assert.equal(inspectPhase(s,0,new Set()),'NONPOSITIVE_MARGIN');});
+test('phase witness rejects obstacle, shield and due bomb without guessing destruction',()=>{const s=scene();s.players[1].position=[4,2];for(const tile of ['x','m']){s.map[3][2]=tile;assert.equal(inspectPhase(s,0,new Set()),'NO_CLEAR_FRESH_SHOT');}s.map[3][2]='.';s.players[1].effects.self={type:'shield'};assert.equal(inspectPhase(s,0,new Set()),'SHIELD_OUTSIDE_DOMAIN');s.players[1].effects.self=null;s.bombs=[{explodesAt:10}];assert.equal(inspectPhase(s,0,new Set()),'DUE_BOMB');});
+test('early terminal cannot borrow an unevaluated ballistic witness',()=>{const s=scene();s.result={winner:0};assert.equal(inspectEarlyTerminal(s,0),'UNSUPPORTED_EARLY_EXIT');s.players[1].crashed=true;assert.equal(inspectEarlyTerminal(s,0),'EARLY_TERMINAL_LEADING_WIN');s.players[1].stars=1;assert.equal(inspectEarlyTerminal(s,0),'UNSUPPORTED_EARLY_EXIT');});
+test('independent simulator response closure rejects escape and star-margin collapse',async()=>{const {module}=await loadSimulator(process.cwd());const make=(direction,star)=>new module.AgenTankSimulator({map:Array.from({length:6},()=>Array(5).fill('.')),tanks:[{position:[2,2],direction:'right',stars:1},{position:[3,2],direction,stars:0}],skills:['stun','stun'],starLimit:false,star,seed:1});const step=module.AgenTankSimulator.prototype.step;
+ const direct=inspectRoot(make('left'),0,step);assert.equal(direct.cells.length,7);assert.equal(direct.allBranchesSupported,true);assert.equal(direct.enemyFireSuppressionCovered,true);
+ const dodge=inspectRoot(make('down'),0,step);assert.equal(dodge.allBranchesSupported,false);assert.equal(dodge.cells.find(c=>c.enemyAction===1).witness,'NO_CLEAR_FRESH_SHOT');
+ const pickup=inspectRoot(make('right',[4,2]),0,step);assert.equal(pickup.allBranchesSupported,false);assert.equal(pickup.cells.find(c=>c.enemyAction===1).witness,'NONPOSITIVE_MARGIN');
+});

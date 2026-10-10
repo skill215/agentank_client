@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "HP21_SELECTIVE_STUN_DIRECT_P2_EVIDENCE_V1",
+  "status": "ACCEPTED",
+  "productionDefaultChanged": true,
+  "rootChanceMatrixNodeLimit": 48,
+  "sourceFingerprint": "0ca00e2d0abe38d4cd6fed4f0f54b45316d62d4aa0dca4aac369eeaf68f68a68",
+  "discovery": {
+    "role": "DISCOVERY",
+    "scenarios": 16,
+    "matchesPerProfile": 32,
+    "reportFingerprint": "1da0ea8f5ca77cc441311592d94aafdc16c632c26c6fa50c6f8605c3dc76c034",
+    "reportSha256": "0117909c7d14c368b1f83ed6850de21655480f31a54c01d15e06ca7c2b2e4a49",
+    "legacy": {
+      "physicalNodes": 24366,
+      "workUnits": 4383247,
+      "valueSupportDepthHistogram": [0, 19, 47, 3, 1, 0, 0, 0]
+    },
+    "current": {
+      "physicalNodes": 26241,
+      "workUnits": 4411383,
+      "valueSupportDepthHistogram": [0, 14, 52, 3, 1, 0, 0, 0],
+      "directStunRoots": 11,
+      "directStunP2Completed": 9,
+      "directStunP2Failed": 2
+    },
+    "delta": {
+      "exactP2Owners": 5,
+      "physicalNodes": 1875,
+      "workUnits": 28136,
+      "actionStreamChanges": 0,
+      "outcomeChanges": 0
+    }
+  },
+  "holdout": {
+    "role": "TACTICAL_HOLDOUT",
+    "scenarios": 32,
+    "matchesPerProfile": 64,
+    "reportFingerprint": "9b5e2e12dfa2ba4fe1fcb69a0976bcf62ba709cb89c39d7f4e78070a53a23491",
+    "reportSha256": "03782e6faac70d28b77b80fccd022e3c47beb45146ab0f10110344ab0ac03fe0",
+    "legacy": {
+      "physicalNodes": 58633,
+      "workUnits": 9072728,
+      "valueSupportDepthHistogram": [0, 32, 112, 0, 3, 0, 1, 0]
+    },
+    "current": {
+      "physicalNodes": 59409,
+      "workUnits": 9080070,
+      "valueSupportDepthHistogram": [0, 28, 116, 0, 3, 0, 1, 0],
+      "directStunRoots": 30,
+      "directStunP2Completed": 22,
+      "directStunP2Failed": 8
+    },
+    "delta": {
+      "exactP2Owners": 4,
+      "physicalNodes": 776,
+      "workUnits": 7342,
+      "actionStreamChanges": 0,
+      "outcomeChanges": 0
+    }
+  },
+  "wideRootBenchmark": {
+    "node": "v24.16.0",
+    "scenarios": 16,
+    "warmupBatches": 1,
+    "measuredBatches": 5,
+    "callsPerProfile": 80,
+    "rootMatrixNodes": 90,
+    "reportFingerprint": "57f380d5357582f87f7de9558b62c1b9b30e4d3e11b06d7462abf1ae244462fd",
+    "reportSha256": "d4ec457944248fa921cb414d3a4d8861c9dce7b8bcc8f683d28695a64dcb1fb4",
+    "nodeDelta": 0,
+    "supportDepthChanges": 0,
+    "rootRestoreFailures": 0,
+    "hotAllocations": 0
+  },
+  "calibration": {
+    "status": "PASS",
+    "profileCount": 24,
+    "callsPerProfile": 80,
+    "reportFingerprint": "cb9fb8a9e9d19d905aec7b5bdb5301c08513bd34e1fcd4b08a9dfa6b61eb6699",
+    "comparisonFingerprint": "b642054d903e0deb8a3762009bfd2dad9a57bc92b247cf575901326006103086",
+    "baselineFingerprint": "5da896b0c111742cbd8b96380f2c85c8800f83e2b9869b35d204314f585b383a",
+    "baseline": "config/engine-v2/minimax-depth-baselines/after-hp21.json",
+    "invariants": {
+      "rootRestoreFailures": 0,
+      "rootTransitionReplayFailures": 0,
+      "rootRestoreMismatches": 0,
+      "hotAllocations": 0,
+      "warmColdSemanticMismatches": 0
+    }
+  },
+  "tests": {
+    "minimaxCore": { "passed": 152, "failed": 0 },
+    "diagnostics": { "passed": 108, "failed": 0 },
+    "gr0": { "passed": 286, "failed": 0 },
+    "imp5": { "passed": 14, "failed": 0 }
+  },
+  "decision": {
+    "reason": "Small stun ChanceOutcome matrices gain exact P2 owners; matrices above 48 nodes retain the legacy schedule with zero node delta.",
+    "gameplayTuningUsed": false,
+    "next": "PROFILE_THE_REMAINING_P2_SUPPORT_ABORTS_WITHOUT_CHANGING_VALUE_SEMANTICS"
+  }
+}

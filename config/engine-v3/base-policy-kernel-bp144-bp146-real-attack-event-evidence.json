@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_REAL_ATTACK_EVENT_EVIDENCE_V1",
+  "stages": ["BP144", "BP145", "BP146"],
+  "status": "ACCEPT_REAL_ROOTS_STRICT_PROOF_AND_POSITIVE_EXACT_POC",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "bp144": {
+    "sourceMatchCount": 192,
+    "historicalFireRootCount": 932,
+    "historicalKillRootCount": 65,
+    "matchedNoKillRootCount": 65,
+    "pairedFirstDivergenceCount": 192,
+    "missedFireRootCount": 346,
+    "exactCounts": {"historicalProof": 130, "paired": 192, "missedFire": 346},
+    "replay": {"matchCount": 295, "terminalReproduced": 295, "actionStreamMismatch": 0},
+    "artifact": {
+      "directory": "artifacts/v2-native-initiative/bp144-semantic-attack-real-opportunity-corpus-v4",
+      "manifestSha256": "5209d07d0241de6287996fff7d44409475afd4248715036f0a235c4e081896ea",
+      "overviewSha256": "61e051cdf14b8f4e92871ebce4d56179017655e72ef5b45dc7521d6560209eec",
+      "rootsSha256": "927750e5acf005a3df29ea4eb14338ed45c7010e4c00dd3631b4b065f41f86f2",
+      "fingerprint": "13d48ba53edcc36a7470fb01a22e20c81146f2dd78e2e7a440edd9dae8e86bea",
+      "totalBytes": 134168
+    }
+  },
+  "bp145": {
+    "rootCount": 476,
+    "exactRootCount": 476,
+    "fireGeneratedCount": 476,
+    "fireHardAllowedCount": 469,
+    "safeThreatExecutableRootCount": 48,
+    "doomedTargetExecutableRootCount": 30,
+    "historicalKill": {"roots": 65, "safeThreat": 40, "doomedTarget": 30},
+    "matchedNoKill": {"roots": 65, "safeThreat": 4, "doomedTarget": 0},
+    "missedFire": {"roots": 346, "safeThreat": 4, "doomedTarget": 0},
+    "incompleteRootCount": 1,
+    "unsafeExecutableCount": 0,
+    "performance": {
+      "totalNodes": 35721,
+      "maximumNodes": 868,
+      "budgetStopCount": 0,
+      "ttCapacityStopCount": 0,
+      "rootRestoreFailureCount": 0,
+      "hotAllocationCount": 0
+    },
+    "artifact": {
+      "directory": "artifacts/v2-native-initiative/bp145-semantic-attack-real-event-proof-v2",
+      "manifestSha256": "18cf95262235ec45fafedb3c7aaa4600c9a9ac9cf5e9bb827be3888a4f92f879",
+      "overviewSha256": "bbd2a8236cf2e6d434dd655cb4af2bacd7f31e77ef96d2f90c963b536a1878f1",
+      "rootsSha256": "367c8bea247a66aae63b4b53daa228ab2170d0dc70bc130da612afae9df76014",
+      "fingerprint": "78b2f094720ef73f0a8e40c65474cbd9844c6b053a1e6b1d862f19b57e5f9e87",
+      "totalBytes": 37644
+    }
+  },
+  "bp146": {
+    "rootCount": 4,
+    "armCount": 8,
+    "exactArmCount": 8,
+    "transitions": {"DRAW_TO_DRAW": 1, "V1_WIN_TO_V2_WIN": 1, "V1_WIN_TO_V1_WIN": 2},
+    "positiveCount": 1,
+    "negativeCount": 0,
+    "equalCount": 3,
+    "controlPoints": 1,
+    "activePoints": 3,
+    "pointDelta": 2,
+    "hardFailureCount": 0,
+    "restoreFailureCount": 0,
+    "artifact": {
+      "directory": "artifacts/v2-native-initiative/bp146-semantic-attack-real-event-active-poc",
+      "manifestSha256": "eead9f738ad9a661535da00b23aec5e0a1f5e15d03af44adb328bc08a484524a",
+      "overviewSha256": "d39edde2b7054c010289b77b9e9fcb458c297f3d2b330f6471a8982f98ebdf6f",
+      "rootsSha256": "98ede48d54591964fefaec341dddbc8da51b63052d4e53afb875e009c049d43e",
+      "fingerprint": "f50c552a9a1e76c24a167d448a3aba97036857d1e8d023b17e834a06db056e7f",
+      "totalBytes": 2720
+    }
+  },
+  "source": {
+    "bp144ToolSha256": "76a0646943e6b35695c5b76c05eb0c08d8e5b5c552f617b1d062b788181913ed",
+    "bp144TestSha256": "3e3e219669c2884c3abb60c817f6ab1b861f2290e03130647502c8f1b85d8758",
+    "bp145ToolSha256": "28866827775038bbf5751b7f69e946a890652fd8de551de8430ea29a16fbce45",
+    "bp145TestSha256": "8de4282fb272b599f85d1b74e8ac1210b8f78255660c191b3282cd38019d6022",
+    "bp146ToolSha256": "fb41f0d7e8f5c05c3beb6ac8175d2b129940aa46f7b1226ecc1463ef4e6e00f2",
+    "bp146TestSha256": "f01fab698debeb85ff4c69efc360307f54f87079687b51135e430e9121ba8cc1"
+  },
+  "decision": {
+    "productionOwnerEnabled": false,
+    "retain": [
+      "real projectile-attributed attack roots",
+      "recorded command as replay-physics authority",
+      "strict all-enemy all-chance all-rule-world FIRE proof",
+      "explicit incomplete UNKNOWN isolation",
+      "four-root positive exact causal POC"
+    ],
+    "reject": [
+      "global FIRE score bonus",
+      "historical kill label as an online proof",
+      "hash-specific production patches",
+      "safe threat interpreted as guaranteed kill"
+    ],
+    "next": "BP147 extracts hash-independent structural necessary conditions from the 48 executable safe-threat roots, controls false positives on the 65+65 historical matched roots, and pre-registers Discovery/Holdout over the 346 missed-FIRE roots before any production owner is considered."
+  }
+}

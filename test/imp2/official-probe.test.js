@@ -77,6 +77,35 @@ test("single-tank star pickup is not promoted to a star-contest rule", () => {
   assert.equal(analysis.targetEventReached, false); assert.equal(analysis.outcome, "INCONCLUSIVE");
 });
 
+test("move contest recognizes a marked GO blocked by a stationary occupied tank", () => {
+  const response = { replay: { meta: { players: [
+    { tank: { id: "a", position: [2, 1] } },
+    { tank: { id: "b", position: [1, 1] } }
+  ] }, records: [[
+    { type: "speech", action: "say", by: 0, objectId: "a", text: "P2MC:1,1" },
+    { type: "bullet", action: "created", objectId: "p", tank: {
+      id: "b", position: [1, 1], direction: "down" } }
+  ]] } };
+  const analysis = analyzeProbeResponse("P2-MOVE-CONTEST", response);
+  assert.equal(analysis.targetEventReached, true);
+  assert.equal(analysis.outcome, "CONCLUSIVE");
+  assert.equal(analysis.inferredVariant, "STATIC_OCCUPIED_BLOCK");
+  assert.deepEqual(analysis.staticOccupiedBlockFrames, [0]);
+  assert.equal(analysis.staticOccupiedBlockCount, 1);
+});
+
+test("move contest does not infer a block when the marked target was empty", () => {
+  const response = { replay: { meta: { players: [
+    { tank: { id: "a", position: [2, 1] } },
+    { tank: { id: "b", position: [4, 1] } }
+  ] }, records: [[
+    { type: "speech", action: "say", by: 0, objectId: "a", text: "P2MC:1,1" }
+  ]] } };
+  const analysis = analyzeProbeResponse("P2-MOVE-CONTEST", response);
+  assert.equal(analysis.targetEventReached, false);
+  assert.equal(analysis.outcome, "INCONCLUSIVE");
+});
+
 test("exact runtime tie is conclusive only when both stars and integer runtime are equal", () => {
   const tied = analyzeProbeResponse("P2-EXACT-RUNTIME-TIE", { replay: { meta: { players: [
     { runTime: 4, tank: { id: "a", position: [1, 1] } },

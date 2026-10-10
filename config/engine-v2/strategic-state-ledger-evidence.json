@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "STRATEGIC_STATE_LEDGER_EVIDENCE_V1",
+  "generatedAt": "2026-08-17T00:00:00.000Z",
+  "status": "SHADOW_ACCEPTED_ACTIVE_NOT_AUTHORIZED",
+  "scope": "behavior-neutral StrategicStateLedger + TargetLifecycleShadow",
+  "cohort": {
+    "manifest": "config/engine-v2/objective-option-cohort.json",
+    "fingerprint": "c992c61113c8913c47699b6b084c06f8c7ff37b90520a5282806554999b717db",
+    "role": "DISCOVERY",
+    "scenarios": 32,
+    "candidateMatches": 64,
+    "physicalMatches": 128
+  },
+  "source": {
+    "productionRootSha256": "deec4848d8595969682ba3033f44a37c3edaa4cc1ec8cc1f3b65b703f753fb79",
+    "riskAcceptanceControllerSha256": "04a7233b41ed9c03a15e5b9c405fbb5e537a444c94bff3fa148686db220f53b4",
+    "strategicStateLedgerShadowSha256": "42ebbd5abf23682ef1446da474478eac8d57485c885053ddd829985e349ad372"
+  },
+  "behaviorNeutrality": {
+    "baseline": { "wins": 9, "losses": 52, "draws": 3, "scoreBasisPoints": 1641 },
+    "shadow": { "wins": 9, "losses": 52, "draws": 3, "scoreBasisPoints": 1641 },
+    "winDelta": 0,
+    "lossDelta": 0,
+    "drawDelta": 0,
+    "starDelta": 0,
+    "crashDelta": 0,
+    "fireDelta": 0,
+    "bombDelta": 0,
+    "skillDelta": 0,
+    "hotAllocationCount": 0,
+    "invariants": {
+      "timeoutError": 0,
+      "avoidableHardReject": 0,
+      "riskDominatedSelection": 0,
+      "rootRestoreFailure": 0
+    }
+  },
+  "strategicState": {
+    "decisions": 6974,
+    "tiedFrames": 1821,
+    "leadingFrames": 238,
+    "trailingFrames": 4915,
+    "trailingBasisPoints": 7047,
+    "positionSelections": 3781,
+    "starSelections": 1035,
+    "attackSelections": 411,
+    "resourceSelections": 329,
+    "terminalSelections": 565,
+    "committedRescueSelections": 104,
+    "untrackedSelections": 870
+  },
+  "targetLifecycle": {
+    "trackedSelections": 6104,
+    "trackedBasisPoints": 8753,
+    "targetRuns": 1987,
+    "targetRunFrames": 6104,
+    "averageRunFramesTimes100": 307,
+    "maximumRunFrames": 30,
+    "generationSwitches": 1622,
+    "eventSwitches": 654,
+    "unsignaledSwitches": 968,
+    "unsignaledSwitchShareBasisPoints": 5968
+  },
+  "planLifecycle": {
+    "commits": 6928,
+    "commitsPerDecisionBasisPoints": 9934,
+    "activations": 473,
+    "completions": 6749,
+    "sameTargetCommits": 4089,
+    "sameTargetCompletions": 4030,
+    "sameCallbackCommitCompletions": 6380,
+    "sameTargetCommitPerContinuationBasisPoints": 9932
+  },
+  "objectiveConflict": {
+    "qualifiedAttackRoots": 586,
+    "qualifiedStarRoots": 831,
+    "starSelectedWithQualifiedAttack": 191,
+    "attackSelectedWithQualifiedStar": 9,
+    "tiedStarSelectedWithQualifiedAttack": 72,
+    "trailingStarSelectedWithQualifiedAttack": 119,
+    "leadingAttackStarPathRegression": 0,
+    "leadingResourceStarPathRegression": 0,
+    "interpretation": "The fixed cohort shows a strong STAR-over-ATTACK ownership asymmetry, but the previously tested primitive FIRE-over-STAR override reduced score from 16.41% to 8.59%; the next owner must compare durable multi-frame objectives rather than primitive actions."
+  },
+  "conclusion": {
+    "primary": "The root lacks a durable semantic objective owner. It rematerializes an execution Plan on almost every callback even while the semantic target generation is unchanged.",
+    "secondary": "The controller spends 70.47% of frames behind in stars and resolves observed ATTACK/STAR conflicts toward STAR 191 times versus 9 in the reverse direction.",
+    "rejectedShortcut": "Do not restore qualified FIRE > STAR. It increased FIRE but caused a -7.82 percentage-point score regression on this same frozen cohort.",
+    "next": "Build one StrategicConflictArbiter POC whose unit is a persistent target generation and whose ATTACK/STAR alternatives each carry a multi-frame interval, deadline, semantic progress and abort conditions. Keep it SHADOW until a new blind Discovery identifies a narrow ownership rule."
+  },
+  "artifact": "artifacts/v2-native-initiative/strategic-state-ledger-shadow-discovery"
+}

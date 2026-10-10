@@ -1,0 +1,70 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP6_EVIDENCE_V1",
+  "status": "ACCEPTED_DIAGNOSTIC_NO_POLICY_CHANGE",
+  "productionDefault": "off",
+  "productionRootSha256": "c4443ddbd2a7a651d77f1582e5b68ce3715dfc87af7cf40ac7432396def39c48",
+  "cohort": {
+    "scenarios": 16,
+    "candidateMatches": 32,
+    "skill": "stun",
+    "fingerprint": "c96a557cfa994001b951de10e4ce98bcd570dd7ca3033ff376ce341f53c80667"
+  },
+  "sources": {
+    "tacticalOwnerSha256": "d5737f3ebef88a3fa1d5a5c01dabb1d742f86186809b99f1cb02658cb6a41733",
+    "arenaSha256": "06cd8eb40bfbea0828d9f9401da3239932f6ac731c0e821c6979942da8ba7c0a"
+  },
+  "run": {
+    "overviewSha256": "391897aab4ccff8d0febe11c60373aa2d4cade7cdc1fa1dd4585e2be1ccdeae9",
+    "wins": 16,
+    "losses": 14,
+    "draws": 2,
+    "scoreBasisPoints": 5313,
+    "candidateFire": 186,
+    "controlFire": 172,
+    "candidateDecisionCount": 2736,
+    "controlDecisionCount": 2736,
+    "candidateCrashes": 11,
+    "searchPrepareCount": 1538,
+    "searchNodes": 290322,
+    "budgetLeaves": 103618
+  },
+  "stunWindowFireFunnel": {
+    "roots": 202,
+    "strictSkip": 0,
+    "committedSkip": 1,
+    "completeSearch": 201,
+    "incompleteSearch": 0,
+    "fireMissing": 0,
+    "fireHardBlocked": 0,
+    "fireSourceDomainBlocked": 201,
+    "fireOwnerDomainBlocked": 0,
+    "fireIntentBlocked": 0,
+    "ownProjectile": 0,
+    "fireLock": 0,
+    "fireEligible": 0,
+    "fireMinimaxBest": 0,
+    "fireFinalSelected": 0,
+    "directKill": 0,
+    "possibleHit": 0,
+    "intercept": 0,
+    "aimSetup": 0,
+    "postFireEscape": 201,
+    "purposeComplete": 0,
+    "verifiedOpportunity": 0,
+    "incumbentActionCount": [0, 147, 53, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "minimaxActionCount": [0, 128, 62, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "finalActionCount": [0, 128, 62, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  },
+  "invariants": {
+    "timeoutError": 0,
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0,
+    "hotAllocationCount": 0
+  },
+  "decision": {
+    "acceptedBaseline": "BP5_ENEMY_DISABLED_ONLY",
+    "fireDomainChange": "REJECTED_WITHOUT_ACTIVE_POC",
+    "reason": "Every newly searched enemy-stunned FIRE row was excluded by the V1-shaped tactical action source, but none had direct, possible-hit, intercept, aim-setup, or purpose-complete evidence. Post-fire escape alone is not an attack purpose. Expanding FIRE or changing scores would therefore add unsupported actions rather than repair Minimax."
+  }
+}

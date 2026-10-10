@@ -1,0 +1,46 @@
+{
+  "objectKind": "BASE_POLICY_KERNEL_BP2_EVIDENCE_V1",
+  "status": "ACCEPTED_DIAGNOSTIC_NOT_PRODUCTION",
+  "productionRootSha256": "c4443ddbd2a7a651d77f1582e5b68ce3715dfc87af7cf40ac7432396def39c48",
+  "fixedScenarios": 16,
+  "physicalMatches": 32,
+  "stunTransition": {
+    "beforeMismatchCount": 7007,
+    "afterMismatchCount": 539,
+    "deepBeforeMismatchCount": 9073,
+    "deepAfterMismatchCount": 446
+  },
+  "valueAttribution": {
+    "auditRoots": 1674,
+    "rootDomainExact": 161,
+    "sampledTransitionExact": 135,
+    "strictComplete": 12,
+    "pairCompared": [461, 383, 32],
+    "pairAgreement": [401, 338, 29],
+    "bestCompared": [161, 135, 12],
+    "bestAgreement": [136, 116, 11]
+  },
+  "actionAgreement": {
+    "bp1Compared": 2024,
+    "bp1Agreed": 1249,
+    "bp2Compared": 2024,
+    "bp2Agreed": 1595
+  },
+  "activePoc": {
+    "baseline": { "wins": 2, "losses": 28, "draws": 2, "scoreBasisPoints": 938, "fire": 151 },
+    "candidate": { "wins": 10, "losses": 22, "draws": 0, "scoreBasisPoints": 3125, "fire": 250 },
+    "scoreBasisPointDelta": 2187,
+    "candidateTotalMicros": 16137691,
+    "v1TotalMicros": 9303132,
+    "invariants": { "timeoutError": 0, "avoidableHardReject": 0, "riskDominatedSelection": 0, "rootRestoreFailure": 0 }
+  },
+  "artifacts": {
+    "stunManifestSha256": "2a491ed1980035488a8f30a1fbc1fbefcf5c541196a19da322fccabdc700a5b8",
+    "stunOverviewSha256": "10d86e38a32b555e405c0644b47ae58a799ddc06a3c5e4e43ce7cd503224e3b9",
+    "valueManifestSha256": "9298b16ab446e5f9a78552ce8e20a66561b7558239f2ddb308ffb8a4a3f19009",
+    "valueOverviewSha256": "482fb3c38c10dc909aefee5bf2a801215cb290a09030493d7549fd2f5d94ee20",
+    "activeManifestSha256": "4c9b0752e30f8f8024cf7771e4542977d6b3b01564d49d65306f71e9f4693fd9",
+    "activeOverviewSha256": "e51318201d69b7ee162ff8a4aeecfa93d3009b33a593fcadbd1de02e709f0748"
+  },
+  "next": "BP3_POLICY_LOCAL_SEARCH_KERNEL"
+}

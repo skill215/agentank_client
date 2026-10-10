@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_RESPONSE_MATRIX_EVIDENCE_V1",
+  "stage": "BP136",
+  "status": "ACCEPT_RESPONSE_QUANTIFIER_MISALIGNMENT_CLASSIFIED",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "contract": {
+    "fixedPairRootCount": 211,
+    "analyzedRootCount": 35,
+    "movementWorldCount": 3,
+    "completeRootCount": 35,
+    "incompleteRootCount": 0,
+    "crossWorldMismatchCount": 0,
+    "normalizationCollisionCount": 0,
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0,
+    "behaviorNeutral": true,
+    "actionOwnership": false
+  },
+  "pointwise": {
+    "tradeoff": 21,
+    "equal": 8,
+    "candidateDominates": 4,
+    "incumbentDominates": 2
+  },
+  "normalization": {
+    "identityWorldRoots": 99,
+    "scaleWorldRoots": 6,
+    "shiftWorldRoots": 0,
+    "collisionCount": 0,
+    "contract": "One positive affine transform is shared by both rows and every enemy column of one root. Integer scaling is recorded and never treated as strict proof."
+  },
+  "historicalDirection": {
+    "regressions": {
+      "roots": 2,
+      "pointwise": { "tradeoff": 2 },
+      "raw": { "fullCandidateSupport": 2, "probabilities": [10000, 10000] },
+      "robust": { "fullCandidateSupport": 1, "mixedCandidateSupport": 1,
+        "probabilities": [9988, 10000] }
+    },
+    "improvements": {
+      "roots": 2,
+      "pointwise": { "tradeoff": 2 },
+      "raw": { "mixedCandidateSupport": 2, "probabilities": [2870, 2043] },
+      "robust": { "mixedCandidateSupport": 2, "probabilities": [2904, 5548] }
+    },
+    "interpretation": "The common matrix assigns stronger support to both known regressions than to either known improvement. Shared simultaneous quantification alone is therefore directionally insufficient."
+  },
+  "solver": {
+    "rawExactWorldRoots": 75,
+    "rawApproximateWorldRoots": 30,
+    "rawMaximumGap": 8,
+    "robustApproximateWorldRoots": 105,
+    "robustMaximumGap": 4,
+    "iterationBudget": 8192
+  },
+  "performance": {
+    "elapsedMs": 55398,
+    "shadowArtifactBytes": 388954,
+    "reportArtifactBytes": 8777
+  },
+  "artifacts": {
+    "shadowDirectory": "artifacts/v2-native-initiative/bp136-depth3-response-matrix-shadow",
+    "shadowManifestSha256": "893fc994da37930c7d1ce9df34af105557f933ca79e0bb6e7344c4bcf2b7a4e4",
+    "shadowOverviewSha256": "8f5145e08a212110b163f6255e44d29682606eb446653a3112b743b9ebca9e55",
+    "shadowMatchesSha256": "a1bab3fc4b5f633cd48c618da2f833d7765aa5353c332e803f3136f3ca7dd03c",
+    "reportDirectory": "artifacts/v2-native-initiative/bp136-semantic-attack-depth3-response-matrix",
+    "reportManifestSha256": "05b526a00716b5f0b9648b54202e39cd0cc08a169d1b6252d83c9fe72f03a0d8",
+    "reportOverviewSha256": "c71730d9b3c30cc94498642044b3bdbbd850bd863462be36138c17d09488e611",
+    "reportRootsSha256": "2f9398119774269a126d56c32a885522eb39b92e258706b2daf77c4a91956774",
+    "reportFingerprint": "534bc636ec22204552d1dbdda11b7f2b4fadf5a5bf4973500c9779d9b81ff58b"
+  },
+  "source": {
+    "responseMatrixShadowSha256": "f336121bfd0c318eddcb23bba7b3758d684d9f47f7a5bb1fc580d12aca51980d",
+    "responseMatrixReportSha256": "a7b36d094a6931a533f4cfb7a3c879008bd79d30119346749b39c0ba231650f0",
+    "policyIntervalShadowSha256": "2bd448e08ff64591b36f6470094112dc789a74a2336afd73d9eb758ae6b3441d",
+    "productionDiagnosticBotSha256": "8a09da7507c9bad729cc9eb240a84b731a58767c4dd789b56a8963f3d12f3955",
+    "arenaSha256": "aa167ec6026e2e6d34bb7777512b888f9b228c7dee0fbc677b2efd2b1aa903e5",
+    "responseMatrixShadowTestSha256": "25178af1416fbe81fedc4f80999940c98ebde6703b7729d233250a5dd53805fc",
+    "responseMatrixReportTestSha256": "71938e4a97cc4ab8a60b3150ef400587ee329c7e1230006ce78119bf194f8a83"
+  },
+  "decision": {
+    "retain": [
+      "shared 2xN enemy-response cells as diagnostic evidence",
+      "pointwise dominance as a separate relation",
+      "read-only opponent nominal snapshot",
+      "explicit affine normalization audit",
+      "production fail-closed behavior"
+    ],
+    "reject": [
+      "common StageMatrix support as an action certificate",
+      "mixed equilibrium probability as action ownership",
+      "epsilon-contamination as a repair for false attack leaf evidence",
+      "tuning solver iterations, scalar weights or risk from these roots"
+    ],
+    "next": "BP137 conditions enemy response evidence on the observable root/controller policy and separates verified attack progress from the scalar ATTACK leaf family. It remains Shadow until both historical regressions are rejected without losing positive roots."
+  }
+}

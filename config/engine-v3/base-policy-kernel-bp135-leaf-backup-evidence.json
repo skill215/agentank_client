@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_LEAF_BACKUP_EVIDENCE_V1",
+  "stage": "BP135",
+  "status": "ACCEPT_LEAF_BACKUP_CAUSES_CLASSIFIED",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "contract": {
+    "fixedPairRootCount": 211,
+    "analyzedRootCount": 35,
+    "leafLaneCount": 8,
+    "movementWorldCount": 3,
+    "completeRootsPerLane": 35,
+    "agreementRootsPerLane": 35,
+    "disagreementRootsPerLane": 0,
+    "fullParityMismatchCount": 0,
+    "backupVariantDisagreementCount": 0,
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0,
+    "behaviorNeutral": true
+  },
+  "leafAblation": {
+    "FULL": { "candidateHigher": 17, "equal": 9, "candidateLower": 9 },
+    "NO_STAR": { "candidateHigher": 17, "equal": 9, "candidateLower": 9 },
+    "NO_ORDNANCE": { "candidateHigher": 19, "equal": 9, "candidateLower": 7 },
+    "NO_ATTACK": { "candidateHigher": 8, "equal": 19, "candidateLower": 8 },
+    "NO_MOBILITY": { "candidateHigher": 16, "equal": 11, "candidateLower": 8 },
+    "NO_STATUS": { "candidateHigher": 13, "equal": 8, "candidateLower": 14 },
+    "NO_HISTORY": { "candidateHigher": 16, "equal": 9, "candidateLower": 10 },
+    "ZERO_LEAF": { "candidateHigher": 0, "equal": 34, "candidateLower": 1 }
+  },
+  "causalFindings": {
+    "star": "Removing all star, star-race and terminal-urgency leaf terms changes zero root relations. Star preference is not the cause on this corpus.",
+    "attack": "Removing attack geometry changes both historical regressions from candidate-higher to equal. Attack geometry is a necessary contributor to both known false positives, but removing it does not recover both historical improvements.",
+    "ordnance": "Removing projectile and bomb terms changes both historical improvements away from their FULL candidate-lower relation, but only one becomes candidate-higher. This is not a safe standalone correction.",
+    "other": "Mobility, status and history change several neutral roots but leave both regressions higher and both improvements lower. No single scalar family separates truth from error.",
+    "zeroLeaf": "With all non-terminal leaf terms and history removed, 34 roots become equal and one remains lower. The observed direction is overwhelmingly leaf-driven rather than terminal or Hard-driven."
+  },
+  "backupAudit": {
+    "uniformResponseMean": {
+      "candidateHigher": 23,
+      "equal": 8,
+      "candidateLower": 4
+    },
+    "historicalRegressions": {
+      "roots": 2,
+      "maximin": { "candidateHigher": 2 },
+      "uniformMean": { "candidateHigher": 2 },
+      "perResponsePattern": { "6/0/1": 2 }
+    },
+    "historicalImprovements": {
+      "roots": 2,
+      "maximin": { "candidateLower": 2 },
+      "uniformMean": { "candidateHigher": 2 },
+      "perResponsePattern": { "4/0/3": 1, "4/1/2": 1 }
+    },
+    "interpretation": "The two true improvements are response tradeoffs, not pointwise dominance. A plain uniform mean recovers them but also keeps both regressions positive, so it cannot own actions. Independent row maximin and uniform mean are both insufficient classifiers."
+  },
+  "performance": {
+    "elapsedMs": 41193,
+    "fullNodesByWorld": [21774, 21774, 21773],
+    "zeroLeafNodesByWorld": [16484, 16484, 16595]
+  },
+  "artifacts": {
+    "shadowDirectory": "artifacts/v2-native-initiative/bp135-depth3-leaf-backup-shadow",
+    "shadowManifestSha256": "d6b7fc1568fcc208d3224c8c78567e759282ec11b039eb27fb5e26a3686b55af",
+    "shadowOverviewSha256": "a2d4e0f93a17870199c32d0cc06fa4f479ec51153af3406119f5af8d442cdfc1",
+    "shadowMatchesSha256": "890f7ff18fe51bbc977f0e3b2fb1c6e26c82d898a74f241de2481433f2352561",
+    "shadowBytes": 381066,
+    "reportDirectory": "artifacts/v2-native-initiative/bp135-semantic-attack-depth3-leaf-backup",
+    "reportManifestSha256": "b30d5b43f8b149412a735c2fbe633ad4abd57b90a0c3ebf70a55ce849884a967",
+    "reportOverviewSha256": "00f86125cc08e55c7b7152c1e1504a8a64416c86b7023ddc0b9864bd5db8bda3",
+    "reportRootsSha256": "bdc228e1284cedc4bad76896fb018ad47549f6c20d28ecf8d9586e8c94cdf566",
+    "reportFingerprint": "bf4b773f8bbefbda40429cb4fdc06fd2604728865840c4db7512f861892aad57",
+    "reportBytes": 21345
+  },
+  "source": {
+    "tacticalEvaluatorSha256": "547f5fd352f38c6d08e00e1faa2455f7108f2f17214584159a78c63a5c4ec7c0",
+    "policySearchSha256": "47dfab2023dafa0af205da43fd9d25725930857098b2615549831b2c08623574",
+    "leafBackupShadowSha256": "ff3cf566df9392cae1f0d2fa57f4371a86b08c289054c4404a04c50b411d2b8d",
+    "leafBackupReportSha256": "4e12c8fee64c327d494fc09a41b8c3ff62aa27717de6d9e49f158dc17c51a491",
+    "policyIntervalShadowSha256": "606bf72f6e19f35170a6b51f55da01775f880d72766e80417e3190e017f9398f",
+    "productionDiagnosticBotSha256": "124eca732d8b85d569bd464215d5a88b910d87e33db64e28ea31bcd200c7f26d",
+    "arenaSha256": "800a917f1b514b13c2add6165c2daec831041b69d6dcfad5e91c408289864cc0",
+    "tacticalEvaluatorTestSha256": "0e5714b58d04718ac7729026c874f577c50877dc86ffdcb7edd4e47ea406b00f",
+    "leafBackupShadowTestSha256": "b0f49dc4fb35b1ff5e6d25dfd6df46d55a6b7a572759974a7530763f4e3f5f51",
+    "leafBackupReportTestSha256": "213e405f534a41894af9d68346ddff03bb143df040f4086a7965ac379278406a"
+  },
+  "decision": {
+    "retain": [
+      "separate integer leaf families as diagnostic dimensions",
+      "per-enemy-response cell vectors",
+      "three-world invariant attribution",
+      "production fail-closed physical semantics"
+    ],
+    "reject": [
+      "tuning the scalar star or attack weights from these 35 roots",
+      "removing attack geometry globally",
+      "replacing maximin with a uniform response mean",
+      "allowing any BP135 lane to own a production action"
+    ],
+    "next": "BP136 builds one common 2xN simultaneous StageMatrix from the incumbent and candidate response vectors. It compares pointwise dominance, mixed-equilibrium support and risk-contaminated common-policy backup without changing search depth, physical rules or production ownership."
+  }
+}

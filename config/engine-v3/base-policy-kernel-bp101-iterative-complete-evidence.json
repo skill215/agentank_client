@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "status": "STRUCTURALLY_ACCEPTED_DEFAULT_OFF",
+  "semantics": "LAST_COMPLETE_COMMON_HORIZON_WITH_SHARED_HARD_POLICY_NODE_BUDGET",
+  "cohort": {
+    "role": "DISCOVERY",
+    "scenarioCount": 16,
+    "matchCount": 32,
+    "skillMode": "STUN"
+  },
+  "current": {
+    "depthSchedule": "v1-state",
+    "nodeBudget": 128,
+    "wins": 22,
+    "losses": 10,
+    "draws": 0,
+    "scoreBasisPoints": 6875,
+    "policyNodes": 315030,
+    "candidateTotalMicros": 22602849
+  },
+  "iterative": [
+    {
+      "nodeBudget": 128,
+      "wins": 16,
+      "losses": 14,
+      "draws": 2,
+      "scoreBasisPoints": 5313,
+      "policyNodes": 220158,
+      "candidateTotalMicros": 20202226,
+      "publishedDepthCount": [0, 1315, 411, 0, 21]
+    },
+    {
+      "nodeBudget": 256,
+      "wins": 12,
+      "losses": 17,
+      "draws": 3,
+      "scoreBasisPoints": 4219,
+      "policyNodes": 418651,
+      "candidateTotalMicros": 22507210,
+      "publishedDepthCount": [0, 761, 949, 1, 22]
+    },
+    {
+      "nodeBudget": 512,
+      "wins": 13,
+      "losses": 16,
+      "draws": 3,
+      "scoreBasisPoints": 4531,
+      "policyNodes": 808245,
+      "candidateTotalMicros": 27866468,
+      "publishedDepthCount": [0, 312, 1362, 28, 29]
+    }
+  ],
+  "invariants": {
+    "rootRestoreFailure": 0,
+    "timeoutError": 0,
+    "avoidableHardReject": 0,
+    "jointDominatedSelection": 0,
+    "hotAllocation": 0
+  },
+  "decision": {
+    "productionDefault": false,
+    "performanceBaseline": true,
+    "reason": "Common-depth execution is structurally correct and cheaper at budget 128, but complete P2/P3 values expose a finite-horizon objective defect and regress the fixed cohort."
+  }
+}

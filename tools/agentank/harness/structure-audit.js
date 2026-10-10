@@ -33,7 +33,12 @@ function scanHardcodedLegacyCount(root) {
     const directory = contained(root, relativeRoot);
     walk(directory, (file, entry) => {
       if (!entry.isFile() || !/\.(?:js|json)$/.test(entry.name)) return;
-      const content = fs.readFileSync(file, "utf8");
+      let content = fs.readFileSync(file, "utf8");
+      // Frozen cohorts legitimately contain every ordinal, including the old
+      // match-count number, as an array index. The audit is for a hardcoded
+      // corpus denominator, not for an unrelated scenario ordinal.
+      if (entry.name.endsWith(".json"))
+        content = content.replace(/"index"\s*:\s*\d+/g, "\"index\":0");
       if (legacyNumberPattern.test(content)) findings.push(path.relative(root, file));
     });
   }

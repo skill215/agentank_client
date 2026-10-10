@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_ONE_DEVIATION_EVIDENCE_V1",
+  "stage": "BP142",
+  "status": "ACCEPT_POLICY_IMPROVEMENT_REJECT_ACTION_OWNER",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "contract": {
+    "rootCount": 35,
+    "movementWorldCount": 3,
+    "variantInstanceCount": 105,
+    "completeVariantInstanceCount": 105,
+    "maximumDepth": 4,
+    "nodeBudgetPerSideWorld": 32768,
+    "transpositionCapacity": 8192,
+    "ownContinuation": "DIRECT_WITH_AT_MOST_ONE_OBSERVED_STATE_DEVIATION",
+    "deviationPrivilege": "ONE_PER_WORLD_LINE_AFTER_FIXED_ROOT_ACTION",
+    "simultaneousEnemyActionObservable": false,
+    "chanceOutcomeObservableBeforeAction": false,
+    "enemyContinuation": "ALL_GENERATED_ACTIONS",
+    "chanceContinuation": "ALL_GENERATED_OUTCOMES",
+    "monotonicityFailureCount": 0,
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0,
+    "actionOwnership": false
+  },
+  "result": {
+    "classifications": {
+      "LOCAL_EQUAL": 13,
+      "LOCAL_TRADEOFF": 9,
+      "LOCAL_ROBUST_INCUMBENT": 5,
+      "LOCAL_ROBUST_CANDIDATE": 8,
+      "INCOMPLETE": 0
+    },
+    "baselineToImproved": {
+      "LOCAL_EQUAL/LOCAL_TRADEOFF": 5,
+      "LOCAL_TRADEOFF/LOCAL_TRADEOFF": 4,
+      "LOCAL_EQUAL/LOCAL_EQUAL": 11,
+      "LOCAL_TRADEOFF/LOCAL_ROBUST_INCUMBENT": 2,
+      "LOCAL_EQUAL/LOCAL_ROBUST_CANDIDATE": 6,
+      "LOCAL_ROBUST_INCUMBENT/LOCAL_ROBUST_CANDIDATE": 2,
+      "LOCAL_EQUAL/LOCAL_ROBUST_INCUMBENT": 3,
+      "LOCAL_TRADEOFF/LOCAL_EQUAL": 2
+    },
+    "incumbentPolicyImprovement": { "strict": 31, "equal": 4 },
+    "candidatePolicyImprovement": { "strict": 30, "equal": 5 },
+    "candidateCertificateAudit": {
+      "rootCount": 8,
+      "historicalEqual": 8,
+      "historicalCandidateBetter": 0,
+      "historicalIncumbentBetter": 0,
+      "historicalTransitionV1WinToV1Win": 8,
+      "candidateRootTurnRight": 8,
+      "decisiveDimensions": {
+        "terminal": 0,
+        "committedSafety": 0,
+        "attackStage": 0,
+        "counterSafety": 2,
+        "lineControl": 0,
+        "mobilityPressure": 2,
+        "proximity": 3,
+        "starDelta": 0,
+        "starRace": 0,
+        "resourceBalance": 1
+      },
+      "attackQualifiedCount": 0
+    }
+  },
+  "policyActivity": {
+    "deviationStates": 200931,
+    "deviationCandidates": 340628,
+    "deviationSelections": 18702,
+    "selectedActions": {
+      "NONE": 10785,
+      "GO": 6260,
+      "TURN_LEFT": 1232,
+      "TURN_RIGHT": 48,
+      "FIRE": 377
+    },
+    "interpretation": "The adaptive policy changes local positional value, but no candidate certificate is decided by terminal, committed safety, settled attack, or line control."
+  },
+  "performance": {
+    "q1SinglePolicyNodes": 333717,
+    "finalNodes": 2340564,
+    "nodeMultiplierBasisPointsVsQ1": 70136,
+    "maximumNodesPerSideWorld": 17465,
+    "transpositionHits": 70205,
+    "absoluteLowerBoundCutoffs": 12076,
+    "dominatedRowCutoffs": 321510,
+    "fourRootUnprunedNodes": 800615,
+    "fourRootPrunedNodes": 327304,
+    "pruningReductionBasisPoints": 5911,
+    "budgetStopCount": 0,
+    "transpositionCapacityStopCount": 0,
+    "unsupportedGenerationStopCount": 0,
+    "fastIncompleteCount": 0,
+    "hardIncompleteCount": 0
+  },
+  "artifacts": {
+    "directory": "artifacts/v2-native-initiative/bp142-semantic-attack-one-deviation-b32768",
+    "manifestSha256": "4bd07a0c9eb11b425588bbdc78b1958f73ea2586113b39c9eb56b7f97b81f9d2",
+    "overviewSha256": "588af76bc55ea98d2c430eadd3d88ccfc60ba303aced39786c660df082490eb7",
+    "rootsSha256": "b36d9ea96968ca4512a3a605cb711b40a241fd6490b2746a08af3c17fe433343",
+    "fingerprint": "1325fddb4b97a46f3828bf84268c305d1c0749472734645230c5863e856d2e7e",
+    "totalBytes": 17774
+  },
+  "source": {
+    "valueSearchSha256": "3406d4146f75b0bb6d50880e248a46eb22fd1fe8afb85f5f1ad0e7887a27d620",
+    "corpusSha256": "ff18c79e53cbea8275413d6f549e1aec63e3c16e45251e50ae61a1b96aaafa46",
+    "valueSearchTestSha256": "8d2eb72092e36ac02562b2f9d1e288731773c97a8462db2ecff276c61b0eaa2b",
+    "corpusTestSha256": "02bbdcbee3c0416da752e6424cf035ff763acb90ff3e3c462579b8d7d326138c"
+  },
+  "decision": {
+    "retain": [
+      "deviation-availability as explicit search and cache state",
+      "strict baseline-tie preservation",
+      "exact dominated-row maximin cutoff",
+      "8192-slot fixed diagnostic transposition table",
+      "eight local candidate certificates as the BP143 attack-event input cohort"
+    ],
+    "reject": [
+      "overriding only the certified first action without its continuation policy",
+      "treating lower-priority positional dimensions as verified attack evidence",
+      "wiring the 7.0136x offline search into production",
+      "running ACTIVE before an executable attack-event-qualified policy exists"
+    ],
+    "next": "BP143 runs a one-deviation safe-attack event proof on the eight candidate roots. It must prove a committed safe threat or doomed-target FIRE across complete enemy/chance support and export an executable continuation policy before any ACTIVE POC."
+  }
+}

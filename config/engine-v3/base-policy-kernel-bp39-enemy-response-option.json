@@ -1,0 +1,45 @@
+{
+  "objectKind": "BasePolicyKernelEvidenceV1",
+  "stage": "BP39",
+  "status": "REJECTED_AS_VALUE_REPLACEMENT",
+  "scope": "diagnostic-only",
+  "productionChanged": false,
+  "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7",
+  "sourceSha256": "e0364a79617ca9b90186eb7184a20930f0842b17b951c95288fdf04333c22ad8",
+  "cohort": { "scenarios": 8, "physicalMatches": 16, "skill": "STUN" },
+  "shadowTransparency": {
+    "baseline": { "wins": 8, "losses": 7, "draws": 1 },
+    "candidate": { "wins": 8, "losses": 7, "draws": 1 },
+    "rootMismatchCount": 0,
+    "rootRestoreFailureCount": 0,
+    "hotAllocationCount": 0
+  },
+  "fidelity": {
+    "roots": 259,
+    "relationAgreement": 109,
+    "relationDisagreement": 150,
+    "agreementBasisPoints": 4208,
+    "fullCompleteRoots": 124,
+    "fullCompleteRelationAgreement": 70,
+    "fullCompleteAgreementBasisPoints": 5645,
+    "exactMass": 5,
+    "optionComplete": 220,
+    "optionIncomplete": 39,
+    "fullComplete": 124,
+    "fullIncomplete": 135
+  },
+  "work": {
+    "optionNodes": 7967,
+    "fullNodes": 189313,
+    "optionTransitions": 8883,
+    "fullTransitions": 217805,
+    "optionTransitionRatioBasisPoints": 408,
+    "optionBudgetStops": 0,
+    "fullBudgetStops": 56
+  },
+  "decision": "A single state-conditioned enemy nominal policy removes about 96 percent of transitions but preserves too little of the full primitive response relation. It may remain a workload lower bound, never Hard, Proof, or action ownership evidence.",
+  "overview": {
+    "path": "/tmp/agentank-bp39-option-fixed-8/overview.json",
+    "sha256": "7247e8dd340387ae22d2854893ad227dcfceebd735e2e19804890a5add68b341"
+  }
+}

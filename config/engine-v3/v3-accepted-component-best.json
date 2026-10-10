@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "V3_ACCEPTED_COMPONENT_BEST_V1",
+  "status": "ACCEPTED_EXPERIMENTAL",
+  "asOf": "2026-08-03",
+  "mode": "BEST_ACCEPTED_COMPONENTS",
+  "scope": {
+    "experimentHost": "V3",
+    "productionV2Changed": false,
+    "officialPlatformOperationPerformed": false,
+    "performanceQualifiedForProduction": false
+  },
+  "active": {
+    "factServices": [
+      "SHARED_V2_OBSERVATION_AND_PHYSICAL_EVIDENCE"
+    ],
+    "actionOwners": [
+      "FINAL_ONLY_STRICT_COMMITTED_RESCUE"
+    ],
+    "rescueContract": [
+      "COMMITTED_SUPPORT_COMPLETE",
+      "V1_FINAL_ACTION_PROVEN_DEAD",
+      "REPLACEMENT_PROVEN_VIABLE",
+      "PHYSICAL_HARD_ALLOW"
+    ]
+  },
+  "notActionOwners": [
+    "VERIFIED_DIRECT_KILL",
+    "PREEMPTIVE_INFORMATION_SAFETY",
+    "INLINE_STABILITY",
+    "FULL_TACTICAL_CORE",
+    "STRATEGIC_NAVIGATION",
+    "PERSISTENT_PLAN"
+  ],
+  "frozenInput": {
+    "v1Sha256": "8da68843a292c6a6230a32baf60392916f9fb85aaa5d9a94feac7085ddc9e82e",
+    "cohortFingerprint": "bcfc3a2de8675abefb04f531cc8c9e3c77fdd4cd600e65590ff50073321a6d70",
+    "cohortFileSha256": "6af59b951ec38b97b8db56992c17be74deaf4b7b01350e0294daea641a039b92",
+    "scenarios": 64,
+    "matches": 128,
+    "seatSwapsPerScenario": 2,
+    "skills": [
+      "stun",
+      "stun"
+    ]
+  },
+  "sourceSha256": {
+    "v3Controller": "e91d84d175287cc83f4e442949bda4f660f642740ede04ace95e051b8e7e5a65",
+    "v2BridgeKernel": "4ec65f2cf8bf6652be12ce99dc6c3630774551b34601e0a71f4938d6e7d4b8c4",
+    "committedEscapeAdapter": "100a4a21275bc1f8663280446dedee02c41fd2ace9195d1c0605c30861d14d6d",
+    "componentArena": "020547bbe3ce23f4669a5eeea9ac37f27a33c642f3bb7a2eabc90456f33dc437",
+    "productionV2Root": "d16040f03f94234a0ad3d2a71eeebc863ad9759592b1e81fb78ef0b004699f19"
+  },
+  "cumulativeHeadToHead": {
+    "artifactManifestSha256": "b79b2d5a39ad128a7c01a3ed0cfbd15ce8e255150b4acd0e35ef99acc8192ad9",
+    "artifactFingerprint": "86fb507da2cc297abf8288223ee39fd443b467241dfb63dce872e474cdb7d2ad",
+    "wins": 63,
+    "losses": 61,
+    "draws": 4,
+    "scoreBasisPoints": 5078,
+    "candidateCrashes": 52,
+    "controlCrashes": 57,
+    "candidateStars": 75,
+    "controlStars": 76,
+    "strictRescueProposals": 6,
+    "strictRescueMatches": 5,
+    "rootRestoreFailures": 0,
+    "searchNodes": 0,
+    "hotAllocations": 0,
+    "pairedPPartsPerMillion": 1000000
+  },
+  "performance": {
+    "candidateToControlTotalBasisPoints": 10987,
+    "candidateToControlMaximumP95BasisPoints": 11863,
+    "classification": "DIAGNOSTIC_HOST_OVERHEAD_NOT_PERFORMANCE_POSITIVE"
+  },
+  "classification": {
+    "factLayer": "CORRECT",
+    "strictRescue": "CORRECT_POSITIVE_SAFETY",
+    "generalBehaviorImprovement": "NOT_SIGNIFICANT",
+    "nextBoundary": "NATIVE_V2_INTEGRATION_REQUIRES_EVIDENCE_SCHEDULING"
+  }
+}

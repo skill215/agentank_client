@@ -76,6 +76,7 @@ DD1 已把 3 秒 `timeout`、128-record 终局、同星 `runTime` 结算和主 F
 | 应避免浏览器 API 与网络调用 | GUIDE_CONFIRMED | 单线程、无 Worker/网络 |
 | 平台 JavaScript 能力 | PLATFORM_REPLAY_CONFIRMED（局部） | `Math.imul` 不存在；Uint16Array/Uint32Array 可用。其余语法、字节上限、冷启动和TypedArray性能仍需能力profile与平台Benchmark |
 | 同帧双方 action 固定 seat0 后 seat1 | PLATFORM_REPLAY_CONFIRMED | 9,642 个双 action frame 全部一致；seat 是平台身份，不等于固定我/敌先手 |
+| 双方普通GO时可进入对方在同一record确定腾空的帧初位置 | PLATFORM_REPLAY_CONFIRMED | 当前动态历史池1,283个去重replay中有31个单位移动样本，seat0跟随17个、seat1跟随14个；只闭合普通无effect GO，swap/同目标仍UNKNOWN |
 | timed effect expiry 在 action 前 | PLATFORM_REPLAY_CONFIRMED | timed expiry 通常先于当帧 action；overload 消耗 expiry 作为独立事件 |
 | star spawn 在 action 前；collection 在双方 action 后、projectile 前 | PLATFORM_REPLAY_CONFIRMED | 345 次 collection 全在 action 后；95 个与 projectile 共帧样本全在 projectile 前 |
 | projectile 在双方 action 后，bomb explosion 在 projectile 后 | PLATFORM_REPLAY_CONFIRMED | 3,305 个 action+bullet frame、38 个 bomb explosion frame；外部模拟器 bomb-before-action 候选被否定 |

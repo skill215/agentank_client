@@ -1,0 +1,87 @@
+{
+  "seq": 15,
+  "previous": "b4c3efb0a64aaa434266a2786ceb483a12e2763bbf165c5a98ab7b5090d7770c",
+  "record": {
+    "version": 1,
+    "type": "register",
+    "id": "OPT-D-0008",
+    "at": "2026-10-08T07:32:56.107Z",
+    "process": "OPT-P-002",
+    "category": "algorithm",
+    "registration": "prospective",
+    "parent": "OPT-D-0007",
+    "title": "无即时威胁的远距离局面禁用战术覆盖消融",
+    "hypothesis": "在距离>=7、不直线对射、无炮弹炸弹且自身无效果的局面，保留已通过门槛的基准动作，可能比战术搜索覆盖更利于争星。",
+    "scope": "One diagnostic candidate; existing navigation early return only; same8 historical games then optional16 fresh pairs; max40 games/1800sec",
+    "baseline": "285f9863227d6af3638bed74e008f0260fd25440034d95eec5e3f8cac44d9120",
+    "falsifier": "preflight no actual behavioral change or8game gain<1/deaths increase; fresh gain<2/deaths increase",
+    "nextStep": "首局验证触发，成功后余7局；任何阶段失败立即停止。",
+    "alternatives": [
+      {
+        "name": "继续争星路线平分优化",
+        "benefit": "已有代码",
+        "risk": "上轮已退步",
+        "reason": "不采用"
+      },
+      {
+        "name": "消融低接触场景战术覆盖",
+        "benefit": "直接测试搜索是否有负收益",
+        "risk": "可能漏掉准备性战术收益",
+        "reason": "唯一候选"
+      }
+    ],
+    "criteria": [
+      {
+        "id": "trigger",
+        "metric": "actual behavior",
+        "rule": "skip>0 and full signature differs",
+        "unit": "game",
+        "kind": "hard"
+      },
+      {
+        "id": "old",
+        "metric": "8game score/death",
+        "rule": "gain>=1 deathDelta<=0",
+        "unit": "historical game",
+        "kind": "soft"
+      },
+      {
+        "id": "fresh",
+        "metric": "16pairs score/death",
+        "rule": "gain>=2 deathDelta<=0",
+        "unit": "fresh terrain pair",
+        "kind": "soft"
+      },
+      {
+        "id": "release",
+        "metric": "target runtime and platform",
+        "rule": "not qualified by local screening",
+        "unit": "platform",
+        "kind": "hard"
+      }
+    ],
+    "budget": {
+      "games": 40,
+      "seconds": 1800
+    },
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp419-quiet-search/campaign.json",
+        "sha256": "05204b786cc3825e614a9c71165438535572437f8ba228e37e46aa79942990b7"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp419-quiet-search/preflight-plan.json",
+        "sha256": "10c8a591551169726f9cf5ec43f01dca10aef51aff9e064351b2ebc2f8723445"
+      },
+      {
+        "path": "tools/agentank/diagnostics/quiet-search-ablation.js",
+        "sha256": "e04766945a43f8f145eca2262dd9dccefa7587d64bcc8910ef68c8edcd0b8c01"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp417-fast-star/trace-summary.json",
+        "sha256": "9a1e6e322a9bb407fbfbac71a8ad9a8a73916566f515247862813b4a3d7f0e2e"
+      }
+    ]
+  },
+  "sha256": "699f1725e4023a0450dfd5d11c513d45d85e1e40aec06ae89f3a3efe94b324cf"
+}

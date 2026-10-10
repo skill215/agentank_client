@@ -1,0 +1,144 @@
+{
+  "objectKind": "BasePolicyIntentMigrationEvidenceV1",
+  "generatedAt": "2026-09-02T04:45:35.309Z",
+  "productionDefaultChanged": false,
+  "contract": {
+    "classification": "v1-exact",
+    "mapping": "v1-action",
+    "continuity": "v1-epoch",
+    "valueMode": "bonus",
+    "reachableMethods": [
+      "observeContext",
+      "prepare",
+      "member",
+      "bonus",
+      "commitSelection"
+    ],
+    "excludedDiagnosticBranches": [
+      "oracle matrices",
+      "simple classifier",
+      "frontier quality",
+      "single-quality mapping",
+      "direct-attack shortcut",
+      "preemptive-safety shortcut"
+    ],
+    "fixedScratch": [
+      "rowBonus",
+      "rowMember",
+      "pathDistance",
+      "pathQueue",
+      "pathFirst"
+    ],
+    "hotAllocationCount": 0
+  },
+  "stateEquivalence": {
+    "deterministicSequentialRoots": 4096,
+    "comparedState": [
+      "context signature",
+      "proposed intent",
+      "committed intent",
+      "mapped action",
+      "row membership",
+      "row bonus",
+      "context epoch",
+      "commit continuity"
+    ],
+    "differences": 0,
+    "test": "test/minimax-core/base-policy-strategic-intent.test.js",
+    "testSha256": "45ee67f737129e993dbbdaeea95565b8bb567ac20f3d0850d0353726e4c29730"
+  },
+  "fixed16Equivalence": {
+    "records": 64,
+    "differences": {
+      "missing": 0,
+      "actionStream": 0,
+      "arguments": 0,
+      "result": 0,
+      "frames": 0,
+      "counts": 0,
+      "analysisOutcome": 0,
+      "terminalCategory": 0
+    },
+    "zeroDifference": true,
+    "candidateFingerprint": {
+      "diagnosticIntent": "33c5b8ebf82d6eee72123ed70f6f3538641083624544ca5c6322b3c50d11b925",
+      "thinIntent": "33c5b8ebf82d6eee72123ed70f6f3538641083624544ca5c6322b3c50d11b925"
+    },
+    "outcome": {
+      "wins": 22,
+      "losses": 10,
+      "draws": 0,
+      "scoreBasisPoints": 6875
+    },
+    "invariants": {
+      "timeoutError": 0,
+      "avoidableHardReject": 0,
+      "riskDominatedSelection": 244,
+      "rootRestoreFailure": 0,
+      "riskOnlyDominatedSelection": 244,
+      "jointDominatedSelection": 0
+    }
+  },
+  "size": {
+    "diagnosticContainerRawBytes": 114600,
+    "thinRawBytes": 19013,
+    "rawBasisPoints": 1659,
+    "diagnosticContainerMinifiedBytes": 65196,
+    "thinStandaloneMinifiedBytes": 10524,
+    "minifiedBasisPoints": 1614,
+    "note": "diagnostic container also includes domain leaf pose and history experiments"
+  },
+  "localPerformance": {
+    "previous": {
+      "candidateTotalMicros": 22660150,
+      "controlTotalMicros": 13211851,
+      "candidateP95Max": 28222,
+      "controlP95Max": 22694
+    },
+    "thin": {
+      "candidateTotalMicros": 30030992,
+      "controlTotalMicros": 17796511,
+      "candidateP95Max": 47869,
+      "controlP95Max": 41764
+    },
+    "absoluteTotalBasisPoints": 13252,
+    "absoluteP95BasisPoints": 16961,
+    "previousCandidateVsControlBasisPoints": 17151,
+    "thinCandidateVsControlBasisPoints": 16874,
+    "previousP95VsControlBasisPoints": 12435,
+    "thinP95VsControlBasisPoints": 11461,
+    "interpretation": "LOCAL_MATCHED_CONTROL_NORMALIZATION_ONLY_NOT_PLATFORM_3000MS_EVIDENCE"
+  },
+  "sources": {
+    "thin": {
+      "path": "engine-v2/src/base-policy/strategic-intent.js",
+      "sha256": "e6e465a2b8cb2fb1195f149c305990c6f54f63f7695402ad3bf241cb70db7b33"
+    },
+    "diagnostic": {
+      "path": "tools/agentank/diagnostics/native-tactical-domain-evaluator-poc.js",
+      "sha256": "547f5fd352f38c6d08e00e1faa2455f7108f2f17214584159a78c63a5c4ec7c0"
+    }
+  },
+  "artifacts": {
+    "previous": {
+      "path": "/tmp/agentank-bp157-owner-domain-thin-r2",
+      "manifestSha256": "16a05b520bcf9e98861cc6c482e81fc2e6641f09790fb26613fde0145d222ab6",
+      "overviewSha256": "803d9209e28976a5bd6a3a65e944a9f7d5699f7e590193156e1fc983254aa70a",
+      "matchesSha256": "9356de29bdc6354bfcb2381f277b614c8025caad1a49bb32c2b2d1efbdaa562a"
+    },
+    "thin": {
+      "path": "/tmp/agentank-bp158-owner-domain-intent-thin-r2",
+      "manifestSha256": "17c520f0cbf705ed6b74332ea9d83255bbd586f6148d9f0d7b06d01a7a04e3b9",
+      "overviewSha256": "47304b80fdad76692dedd6ef4dcdb928904e42b55cc6c2264d0ec2a1509e1afb",
+      "matchesSha256": "753cfef8f9a00abe3b8eb2644881ab7b10e6c034a5361ba62909fd3bea630b52"
+    }
+  },
+  "verdicts": [
+    "REACHABLE_BP68_INTENT_CLOSURE_IS_EXPLICIT",
+    "THIN_INTENT_IS_STATE_AND_FIXED16_EQUIVALENT",
+    "BP68_OUTCOME_REMAINS_22_10_0",
+    "PRODUCTION_DEFAULT_REMAINS_UNCHANGED",
+    "NEXT_SLICE_IS_BOUNDED_POLICY_SEARCH"
+  ],
+  "fingerprint": "0e20ec3c8ec8cf0dc6dc8a35afbc6e05a5d7fafdd41d08e137c44cbb0d38b781"
+}

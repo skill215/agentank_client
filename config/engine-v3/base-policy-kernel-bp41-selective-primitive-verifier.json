@@ -1,0 +1,51 @@
+{
+  "objectKind": "BasePolicyKernelEvidenceV1",
+  "stage": "BP41",
+  "status": "ACCEPTED_FOR_EXECUTION_POC",
+  "scope": "counterfactual-work-ledger",
+  "productionChanged": false,
+  "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7",
+  "cohort": { "scenarios": 16, "physicalMatches": 32, "skill": "STUN" },
+  "schedule": {
+    "nominal": "prefix-1 ATTACK/POSITION/DEFENSE portfolio",
+    "trigger": "portfolio relation is CANDIDATE_DOMINATES",
+    "verifier": "complete primitive response mass with exact Stun TURN compaction",
+    "incomplete": "no ownership"
+  },
+  "results": {
+    "roots": 606,
+    "fullCompleteRoots": 295,
+    "fullIncompleteRoots": 311,
+    "verifierAttempts": 87,
+    "certified": 28,
+    "rejected": 37,
+    "incomplete": 22,
+    "missedCertificates": 1,
+    "certificateRecallBasisPoints": 9655,
+    "portfolioNodes": 146018,
+    "verifierNodes": 69278,
+    "selectiveNodes": 215296,
+    "fullEveryRootNodes": 438685,
+    "nodeRatioBasisPoints": 4908,
+    "portfolioTransitions": 162768,
+    "verifierTransitions": 78532,
+    "selectiveTransitions": 241300,
+    "fullEveryRootTransitions": 502893,
+    "transitionRatioBasisPoints": 4798,
+    "portfolioBudgetStops": 0,
+    "fullOracleBudgetStops": 144,
+    "rootRestoreFailures": 0,
+    "hotAllocations": 0
+  },
+  "safety": {
+    "approximateCandidateDominanceMayOwn": false,
+    "completeVerifierCandidateDominanceMayProposeExactValue": true,
+    "hardOrProofUsePortfolio": false,
+    "verifierIncompleteMayOwn": false
+  },
+  "decision": "Implement a real selective execution POC. Run the prefix-1 portfolio first and invoke the complete primitive verifier only on candidate-dominance proposals. Start in shadow; ACTIVE is allowed only for verifier-certified, FinalGate-allowed rows.",
+  "overview": {
+    "path": "/tmp/agentank-bp41-selective-verifier-16/overview.json",
+    "sha256": "4456bb27b5b383acea8b31090e16729de2cbd919d379659e45fd48bba9062ccf"
+  }
+}

@@ -8,8 +8,13 @@ const { PathDistanceField } = require("./path-distance-field");
 // Production-only cache layout. Diagnostic counters and FeatureCacheAdapter
 // are deliberately absent so probes and writes pay only semantic work.
 class ProductionCanonicalCache {
-  constructor(cacheId) {
-    const entryCount = CACHE_CONFIG.ENTRY_COUNT[cacheId]; const ways = CACHE_CONFIG.WAYS[cacheId];
+  constructor(cacheId, entryCountOverride = 0) {
+    const configured = CACHE_CONFIG.ENTRY_COUNT[cacheId]; const ways = CACHE_CONFIG.WAYS[cacheId];
+    const overrideBuckets = entryCountOverride / ways;
+    const entryCount = Number.isSafeInteger(entryCountOverride) && entryCountOverride >= ways &&
+      entryCountOverride % ways === 0 &&
+      (overrideBuckets & (overrideBuckets - 1)) === 0 ?
+      entryCountOverride : configured;
     this.entryCount = entryCount; this.ways = ways; this.bucketMask = entryCount / ways - 1;
     this.enabled = CACHE_CONFIG.ENABLED[cacheId]; this.valid = new Uint8Array(entryCount);
     this.flags = new Uint8Array(entryCount); this.depth = new Uint8Array(entryCount);
@@ -76,8 +81,13 @@ class ProductionCanonicalCache {
 }
 
 class ProductionCacheBank {
-  constructor() { this.caches = new Array(CACHE_ID.COUNT); this.generation = 1; this.byteSize = 0;
-    for (let id = 0; id < CACHE_ID.COUNT; id += 1) { const cache = new ProductionCanonicalCache(id);
+  constructor(options = null) {
+    this.caches = new Array(CACHE_ID.COUNT); this.generation = 1; this.byteSize = 0;
+    const physicalEntries = options && Number.isSafeInteger(options.physicalValueEntries) ?
+      options.physicalValueEntries : 0;
+    for (let id = 0; id < CACHE_ID.COUNT; id += 1) {
+      const cache = new ProductionCanonicalCache(id,
+        id === CACHE_ID.PHYSICAL_VALUE_TT ? physicalEntries : 0);
       this.caches[id] = cache; this.byteSize += cache.byteSize; }
     this.pathField = new PathDistanceField(); this.byteSize += this.pathField.byteSize; }
   get(cacheId) { return cacheId >= 0 && cacheId < CACHE_ID.COUNT ? this.caches[cacheId] : null; }

@@ -1,0 +1,100 @@
+{
+  "seq": 36,
+  "previous": "ca692fe7ab4858b8a2ecbc35bc836d9dc587e7cea17000816266be3ac8af9a13",
+  "record": {
+    "version": 1,
+    "type": "review",
+    "id": "OPT-D-0018",
+    "reviewId": "OPT-R-0018",
+    "at": "2026-10-09T03:33:46.552Z",
+    "stage": "independent",
+    "disposition": "reject",
+    "outcome": "failed",
+    "primaryCause": "REGRESSION",
+    "secondaryCauses": [
+      "MODEL_SCOPE"
+    ],
+    "reason": "Reject general promotion:score -1, deaths +6; subgroup guards fail. Shield/teleport actions unobserved.",
+    "nextStep": "Inspect existing paired regression replays; require actual opponent behavior coverage before a new confirmation campaign.",
+    "limitations": "Same V3 policy with3 skills,8 independent map clusters. Work proxy not platform time; diagnostic runtime concurrent and descriptive only. No proof of universal opponent generalization. Initial missing evidence pin corrected before any game. Shield and teleport usage zero in both arms; cannot infer ability versus active skills.",
+    "experiments": [
+      "BP422_REWARD"
+    ],
+    "assessments": [
+      {
+        "criterion": "integrity",
+        "status": "pass",
+        "evidencePath": "artifacts/native-causal-audit/bp422-opponent-validation/summary.json"
+      },
+      {
+        "criterion": "eligible",
+        "status": "fail",
+        "evidencePath": "artifacts/native-causal-audit/bp422-opponent-validation/summary.json"
+      },
+      {
+        "criterion": "release",
+        "status": "unknown",
+        "evidencePath": "artifacts/native-causal-audit/bp422-opponent-validation/summary.json"
+      }
+    ],
+    "cost": {
+      "attemptedGames": 24,
+      "completedGames": 24,
+      "independentUnits": 8,
+      "executionSeconds": 24.087892145999998,
+      "analysisSeconds": null
+    },
+    "metrics": [
+      {
+        "name": "score",
+        "value": 12.5,
+        "unit": "total over24",
+        "source": "artifacts/native-causal-audit/bp422-opponent-validation/summary.json"
+      },
+      {
+        "name": "deaths",
+        "value": 8,
+        "unit": "count over24",
+        "source": "artifacts/native-causal-audit/bp422-opponent-validation/summary.json"
+      },
+      {
+        "name": "transitions",
+        "value": 316330,
+        "unit": "count",
+        "source": "artifacts/native-causal-audit/bp422-opponent-validation/summary.json"
+      }
+    ],
+    "productionAdoption": false,
+    "evidence": [
+      {
+        "path": "artifacts/native-causal-audit/bp422-opponent-validation/summary.json",
+        "sha256": "ef31487ae79f7eacfcf62d6b3d0946240cd17e87d50799e9343b046325aadf54"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp422-opponent-validation/paired-metrics.json",
+        "sha256": "27ee08dd076627c389696b0037d035dc82a92dcbf2ebf8c5a4de6c684de51b77"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp422-opponent-validation/reward-review.json",
+        "sha256": "77a68023e7b5ddf9c219464b6efda20a99abc7a6f76dd509f365a69095389f42"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp422-opponent-validation/reward-run/state.json",
+        "sha256": "66c138189be79233ce0a10947af11518824307850861cb0dd13ff1ad9b8db5fb"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp422-opponent-validation/preflight-correction.json",
+        "sha256": "a4225f7d22c38564cc2f9d5cb7e4b2baf427be7a778127fdfafc100342f46edf"
+      },
+      {
+        "path": "docs/implementation/optimization-decisions/bp422-opponent-review.md",
+        "sha256": "adb20f60589c5dfc7ffe380f7ce8d6d0c15f59eb04048a70aaf0c2825f9ef6f6"
+      },
+      {
+        "path": "artifacts/native-causal-audit/bp422-opponent-validation/core-tests.txt",
+        "sha256": "0d0acffa31c33117e000f7209f0216f4033b824e3e5b7fa533937146a5bb1e85"
+      }
+    ]
+  },
+  "sha256": "23a00d0d7e2c95ae2b28e73d7715f5375dbfb18869b0d86f5bfbafe26b81bd0a"
+}

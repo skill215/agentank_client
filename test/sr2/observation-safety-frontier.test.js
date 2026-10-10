@@ -164,6 +164,28 @@ test("SR2 ObservationSafetyFrontier matches an independent exhaustive oracle on 
       }
 });
 
+test("SR2 three-frame frontier separates a stunned fatal turn from bounded alternatives", () => {
+  const map = boxedMap(7, 7); map[3][2] = "m";
+  const item = built(
+    tank(0, [2, 2], "right", { stunUntilFrame: 22,
+      skillId: "poison", skillReadyFrame: 30 }),
+    tank(1, [2, 5], "left", { skillId: "stun", skillReadyFrame: 30 }),
+    { frame: 19, map: { width: 7, height: 7, terrainColumnMajor: map } });
+  const rootSignature = item.state.rootSignature();
+  const go = classify(item, fast.ACTION.GO, 3, 640);
+  const turnLeft = classify(item, fast.ACTION.TURN_LEFT, 3, 640);
+  const turnRight = classify(item, fast.ACTION.TURN_RIGHT, 3, 640);
+  const bomb = classify(item, fast.ACTION.THROW_BOMB, 3, 640);
+  assert.equal(go.result, FRONTIER_STATUS.WINDOW_SAFE);
+  assert.equal(bomb.result, FRONTIER_STATUS.WINDOW_SAFE);
+  assert.equal(turnLeft.result, FRONTIER_STATUS.NO_WITNESS);
+  assert.equal(turnRight.result, FRONTIER_STATUS.NO_WITNESS);
+  assert.ok(turnRight.frontier.nodes <= 640);
+  assert.equal(turnRight.frontier.earliestFatalFrame, 2);
+  assert.equal(turnRight.frontier.rootRestoreFailures, 0);
+  assert.equal(item.state.rootSignature(), rootSignature);
+});
+
 test("SR2 ObservationSafetyFrontier owns only fixed integer slabs and reports zero hot allocation", () => {
   const item = built(tank(0, [1, 1], "right"), tank(1, [5, 5], "left"));
   const { frontier } = classify(item, fast.ACTION.NONE, 1);

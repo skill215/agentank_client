@@ -1,0 +1,82 @@
+{
+  "objectKind": "BasePolicyKernelDeepTransitionReplayAblationV1",
+  "stage": "BP35",
+  "status": "REJECTED",
+  "actionOwnership": false,
+  "budgetSemantics": "CHARGED_IDENTICALLY_TO_BASELINE",
+  "semanticIdentity": {
+    "winsLossesDraws": true,
+    "pairCompleteness": true,
+    "relations": true,
+    "massVectors": true,
+    "nodeCounts": true,
+    "logicalTransitionCounts": true,
+    "budgetStops": true,
+    "fastAndHardIncomplete": true,
+    "rootRestoreFailureCount": 0,
+    "replayFailureCount": 0
+  },
+  "fixed16": {
+    "baseline": {
+      "candidateTotalMicros": 25471586,
+      "candidateP95MaxMicros": 31283,
+      "elapsedMs": 51059,
+      "overviewSha256": "fbf2019ef342a0bc8ef4dc07f9e861bce1cd9686ddcf4bee319234c0124a56ca"
+    },
+    "baseFirst": {
+      "cacheStores": 329652,
+      "replayHits": 35607,
+      "candidateTotalMicros": 30623546,
+      "candidateP95MaxMicros": 47520,
+      "elapsedMs": 61706,
+      "overviewSha256": "81e8bf7a59e286e2a7a1f50daeb742894a5f24a095b628e2870f5c1923d6d86c"
+    },
+    "candidateFirst": {
+      "cacheStores": 205486,
+      "replayHits": 35607,
+      "candidateTotalMicros": 26598368,
+      "candidateP95MaxMicros": 47174,
+      "elapsedMs": 53010,
+      "overviewSha256": "8c6917ab4c64cea3adee820098986583b52c84fa9fac2593899699426d5a1b38"
+    }
+  },
+  "fiveBatchFixed8": {
+    "batchesPerArm": 5,
+    "order": "ALTERNATING",
+    "baseline": {
+      "elapsedMs": 112637,
+      "candidateTotalMicros": 55441286,
+      "controlTotalMicros": 26592691,
+      "meanCandidateControlRatio": 2.088760372118198,
+      "meanP95Ratio": 2.209740308350579,
+      "completePairs": 615,
+      "incompletePairs": 680
+    },
+    "candidateFirstReplay": {
+      "elapsedMs": 113019,
+      "candidateTotalMicros": 56248151,
+      "controlTotalMicros": 26438251,
+      "meanCandidateControlRatio": 2.1289158153367573,
+      "meanP95Ratio": 2.0782692786956973,
+      "completePairs": 615,
+      "incompletePairs": 680,
+      "replayHits": 79690
+    },
+    "deltaBasisPoints": {
+      "elapsedMs": 34,
+      "candidateTotalMicros": 146,
+      "meanCandidateControlRatio": 192,
+      "meanP95Ratio": -595
+    },
+    "summarySha256": "020ab5b62e56c562b198c5360fa06ed9126e7463d8cde4702d5c399608056f86",
+    "aggregateSha256": "0cc236595ef2700503011f7b52a4762b693d331568f5047b0e6ffe5f450915c7"
+  },
+  "decision": {
+    "runtimeCodeRetained": false,
+    "reason": "Exact replay avoids 6.65 percent of physics calls but hash lookup, cache population and delta replay do not improve total throughput. Five paired batches regress normalized candidate cost by 1.92 percent.",
+    "nextTarget": "Prove cheap pre-execution action equivalence for cross-command identical successors; do not cache every transition."
+  },
+  "fingerprints": {
+    "productionRootSha256": "43eb56b8fb1d6aebde7f57b5c2c3af2da67853a5293bcdccb6f9ef96bd3ffcf7"
+  }
+}

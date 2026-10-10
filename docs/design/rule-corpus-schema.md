@@ -159,7 +159,7 @@ allowedIncompleteReasons
 | Seat action order | `SEAT_0_THEN_1` | 平台 replay confirmed，生成唯一 phase table |
 | Boost free turn repoll | `NO_REPOLL` / `SAME_FRAME_REPOLL` | active 为 NO_REPOLL；依赖差异时 Proof UNKNOWN |
 | Frozen empty queue poll | `POLL_AND_HOLD` / `NO_POLL` | 进入 command HiddenWorld；Fast 只推进相同物理结果 |
-| Contested move | `SEQUENTIAL_BLOCK` / `INTENT_BLOCK` / `COLLISION_CRASH` | contested branch Reference-only，Fast strict disabled |
+| Contested same-target/swap move | `SEQUENTIAL_BLOCK` / `INTENT_BLOCK` / `COLLISION_CRASH` | 普通GO进入同record确定腾空的帧初位置已有平台共同fast path；same-target/swap及boost/teleport/effect复合仍为Reference/诊断variant，Fast strict disabled |
 | Star contest | `SEAT_PRIORITY` / `NO_COLLECTION` / `COLLISION_RESULT` | no-cooccupancy fast path不受影响 |
 | Projectile shared resource | `SEQUENTIAL_PLATFORM_ORDER` / `SUBSTEP_BATCH` | dirt/shield/terminal 受影响则 UNKNOWN_RULE |
 | Multiple due bombs | `SEQUENTIAL_PLACEMENT_ORDER` / `BATCH_START_TERRAIN` | 受共享 terrain/shield 影响则 UNKNOWN_RULE |

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "objectKind": "BASE_POLICY_KERNEL_OPTION_ARBITRATION_EVIDENCE_V1",
+  "stage": "BP115_BP116",
+  "status": "POSITION_OBJECTIVE_IDENTITY_REJECTED",
+  "productionBehaviorChanged": false,
+  "productionRootSha256": "0a8f09c3bf54e7ecd708346b08ff1133a716aa62634484b10e549968a0cbc23e",
+  "source": {
+    "optionArbiterSha256": "f78ed084a6bd0c5c84dcaf7d0f1964d3fc15efeec37462dd5e87c472e6330f04",
+    "optionIntervalSearchSha256": "7d2e89d797e1b33e43ab4afc3d945cb3b667d1d8937cbcbbd7e786ef636c0a62",
+    "diagnosticBotSha256": "87f4e8efe798062342de3b09e68a85279d827c0fbfb1576938322a7ee7ce537e",
+    "arenaSha256": "7a0f2621005a1d8656bc638c2f4080c05110a766f2ed560b3c7ba2a14481a297",
+    "testSha256": "971f96c20c1a00302cbef8cdb9b1e2d81922a69564f6e62d3f79d72e8e400356"
+  },
+  "cohort": { "role": "DISCOVERY", "scenarioCount": 16, "candidateMatches": 32,
+    "skillMode": "STUN" },
+  "strictOptionArbiter": {
+    "decisions": 3030,
+    "inactive": 75,
+    "suspended": 332,
+    "noStrictOption": 967,
+    "currentInside": 1347,
+    "currentOutside": 309,
+    "currentOptionSupported": 309,
+    "currentOptionMissing": 0,
+    "verifiedAttackYield": 70,
+    "candidateRoots": 239,
+    "candidateActions": { "TURN_LEFT": 203, "TURN_RIGHT": 33, "FIRE": 3 },
+    "existingSearchComparable": 0,
+    "existingSearchUnavailable": 239,
+    "hotAllocationCount": 0,
+    "overviewSha256": "d62f7139a7eed1d60ec11d5721653fc2b891d1391445e1f3b7a39137e2da08f0"
+  },
+  "targetedOptionMinimax": {
+    "attempts": 239,
+    "triggered": 236,
+    "complete": 232,
+    "incomplete": 4,
+    "supportSkipped": 1,
+    "runtimeSkipped": 2,
+    "candidateWorse": 230,
+    "equal": 0,
+    "candidateStrictlyDominates": 2,
+    "totalNodes": 18115,
+    "averageNodesPerTrigger": 77,
+    "maximumNodes": 256,
+    "rootRestoreFailures": 0,
+    "hotAllocationCount": 0,
+    "byObjective": {
+      "ATTACK": { "attempts": 3, "complete": 3, "worse": 3, "dominates": 0 },
+      "STAR_CONTROL": { "attempts": 0, "complete": 0, "worse": 0, "dominates": 0 },
+      "POSITION": { "attempts": 236, "complete": 229, "worse": 227,
+        "dominates": 2, "incomplete": 4, "skipped": 3 }
+    },
+    "overviewSha256": "902921f8a1584d27f1f9fbfd1c057e8c18aaf0f388366e14a23e480074937e87"
+  },
+  "behaviorNeutral": {
+    "scoreBasisPointDelta": 0,
+    "starDelta": 0,
+    "crashDelta": 0,
+    "fireDelta": 0,
+    "timeoutError": 0,
+    "avoidableHardReject": 0,
+    "riskDominatedSelection": 0,
+    "rootRestoreFailure": 0
+  },
+  "decision": {
+    "retain": [
+      "targeted two-Option Minimax schedule",
+      "support-complete Option-only arbitration",
+      "verified attack priority"
+    ],
+    "reject": [
+      "POSITION as an independent persistent objective",
+      "objective progress without option-level value evidence",
+      "global Minimax expansion to solve sparse objective conflicts"
+    ],
+    "next": "Replace kind/generation epoch identity with semantic target signature/generation. POSITION becomes an execution alias of ATTACK or STAR, never an independent strategic objective."
+  }
+}
