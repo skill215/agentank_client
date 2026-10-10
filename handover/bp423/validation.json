@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-10",
+  "cleanGitArchiveBase": "88fc306039be865d30a5ec01a468f9ef30eee191",
+  "restoredFiles": 311,
+  "repeatRestoreNewFiles": 0,
+  "ledgerEventsVerified": 38,
+  "dependencies": "npm ci --ignore-scripts --no-audit --no-fund succeeded; offline cache incomplete",
+  "existingFileTamperRefused": true,
+  "scope": "Clean checkout restoration, ledger and simulator checks; no new games executed",
+  "pinnedSimulatorLoad": "passed",
+  "productionHash": "285f9863227d6af3638bed74e008f0260fd25440034d95eec5e3f8cac44d9120",
+  "evidenceSecretPatternScan": {
+    "files": 311,
+    "findings": 0,
+    "sizeLimit": false
+  },
+  "completeBatchManifestsVerified": [
+    "BP422",
+    "BP423"
+  ]
+}
